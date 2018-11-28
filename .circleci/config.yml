@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/slovensko-digital/navody.slovensko.digital
 
     docker:
-      - image: circleci/ruby:2.5.1-node-browsers
+      - image: circleci/ruby:2.5.2-node-browsers
         environment:
           RAILS_ENV: test
 
