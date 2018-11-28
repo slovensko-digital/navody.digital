@@ -23,8 +23,6 @@ jobs:
       - run: bundle install --path vendor/bundle
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
       - run: dockerize -wait tcp://localhost:5432 -timeout 60s
-      - run: dockerize -wait tcp://localhost:6379 -timeout 60s
-      - run: dockerize -wait tcp://localhost:9200 -timeout 60s
       - run: mv .circleci/database.yml config/database.yml
       - run: bundle exec rake db:create db:structure:load --trace
       - run: bundle exec rake db:second_base:create db:second_base:structure:load --trace
