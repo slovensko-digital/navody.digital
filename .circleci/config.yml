@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/slovensko-digital/navody.slovensko.digital
+
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          RAILS_ENV: test
+
+      - image: circleci/postgres:10-alpine-ram
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_PASSWORD: ''
+
+    steps:
+      - checkout
+      - run: echo "deb http://apt.postgresql.org/pub/repos/apt stretch-pgdg main" | sudo tee -a /etc/apt/sources.list.d/pgdg.list
+      - run: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-10
+      - restore_cache: { keys: ['{{ checksum "Gemfile.lock" }}'] }
+      - run: bundle install --path vendor/bundle
+      - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
+      - run: dockerize -wait tcp://localhost:5432 -timeout 60s
+      - run: dockerize -wait tcp://localhost:6379 -timeout 60s
+      - run: dockerize -wait tcp://localhost:9200 -timeout 60s
+      - run: mv .circleci/database.yml config/database.yml
+      - run: bundle exec rake db:create db:structure:load --trace
+      - run: bundle exec rake db:second_base:create db:second_base:structure:load --trace
+      - run: bundle exec rspec
