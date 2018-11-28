@@ -1,0 +1,1 @@
+# navody.slovensko.digital
