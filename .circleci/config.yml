@@ -29,6 +29,8 @@ jobs:
 
   deploy:
     working_directory: ~/slovensko-digital/navody.slovensko.digital
+    machine:
+      enabled: true
     steps:
       - checkout
       - run: git remote add staging dokku@ekosystem.staging.slovensko.digital:navody
