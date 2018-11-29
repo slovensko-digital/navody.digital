@@ -35,3 +35,15 @@ jobs:
       - checkout
       - run: git remote add staging dokku@ekosystem.staging.slovensko.digital:navody
       - run: git push staging
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
