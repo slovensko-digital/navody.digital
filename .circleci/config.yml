@@ -18,7 +18,7 @@ jobs:
       - run: echo "deb http://apt.postgresql.org/pub/repos/apt stretch-pgdg main" | sudo tee -a /etc/apt/sources.list.d/pgdg.list
       - run: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-10 libhunspell-dev
+      - run: sudo apt-get install postgresql-client-10
       - restore_cache: { keys: ['{{ checksum "Gemfile.lock" }}'] }
       - run: bundle install --path vendor/bundle
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }

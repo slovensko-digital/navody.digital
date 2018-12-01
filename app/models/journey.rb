@@ -10,6 +10,6 @@ class Journey < ApplicationRecord
   private
 
   def generate_search_terms
-    self.search_terms = Settings.stemmer.call("#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip)
+    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip
   end
 end
