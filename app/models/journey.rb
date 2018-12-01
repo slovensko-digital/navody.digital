@@ -8,6 +8,7 @@ class Journey < ApplicationRecord
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
+  # FIXME: fill in position from id!
 
   default_scope do
     order(position: :asc)

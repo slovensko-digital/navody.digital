@@ -5,6 +5,7 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :type, presence: true
+  # FIXME: fill in position from id!
 
   default_scope do
     order(position: :asc)

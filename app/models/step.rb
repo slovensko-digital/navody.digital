@@ -7,6 +7,8 @@ class Step < ApplicationRecord
   validates :description, presence: true
   validates :is_waiting_step, inclusion: { in: [true, false] }
 
+  # FIXME: fill in position from id!
+
   default_scope do
     order(position: :asc)
   end
