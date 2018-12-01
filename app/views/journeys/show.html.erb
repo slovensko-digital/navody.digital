@@ -1,13 +1,31 @@
+<%= content_for(:headerline, @journey.title) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
     <div class="sdn-timeline">
       <ol start=0 class="sdn-timeline__list">
-        <% @journey.steps.each do |step| %>
         <li class="sdn-timeline__step sdn-timeline__step--done">
           <div class="sdn-timeline__bullet"></div>
-          <%= link_to step.title, journey_step_path(id: @journey.slug, step_slug: step.slug), class: 'sdn-timeline__link' %>
+          <% if @step == nil %>
+            <strong>
+              <%= link_to 'Úvod', journey_path(slug: @journey.slug), class: 'sdn-timeline__link' %>
+            </strong>
+          <% else %>
+            <%= link_to 'Úvod', journey_path(slug: @journey.slug), class: 'sdn-timeline__link' %>
+          <% end %>
         </li>
-      <% end %>
+        <% @journey.steps.each do |step| %>
+          <li class="sdn-timeline__step sdn-timeline__step--done">
+            <div class="sdn-timeline__bullet"></div>
+            <% if @step == step %>
+              <strong>
+                <%= link_to step.title, journey_step_path(slug: @journey.slug, step_slug: step.slug), class: 'sdn-timeline__link' %>
+              </strong>
+            <% else %>
+              <%= link_to step.title, journey_step_path(slug: @journey.slug, step_slug: step.slug), class: 'sdn-timeline__link' %>
+            <% end %>
+          </li>
+        <% end %>
       </ol>
     </div>
   </div>
@@ -18,10 +36,12 @@
       <h2>Zoznam podúloh</h2>
       <ul>
         <% @step.tasks.each do |task| %>
-        <li><%= render "journeys/tasks/#{task.class.name.underscore}", task: task %></li>
+          <li><%= render "journeys/tasks/#{task.class.name.underscore}", task: task %></li>
         <% end %>
       </ul>
     <% end %>
+
+    <%= link_to 'Začať', create_user_journey_path(journey_id: @journey.id, step_id: @starting_step.id), method: :post %>
   </div>
 </div>
 

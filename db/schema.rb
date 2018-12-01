@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_01_145710) do
+ActiveRecord::Schema.define(version: 2018_12_01_174333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 2018_12_01_145710) do
     t.datetime "updated_at", null: false
     t.text "description", null: false
     t.integer "position", default: 0, null: false
+    t.string "search_terms", null: false
+    t.integer "featured_position", default: 0, null: false
+    t.index "to_tsvector('simple'::regconfig, (search_terms)::text)", name: "journeys_fulltext_idx", using: :gin
   end
 
   create_table "pages", force: :cascade do |t|
@@ -46,6 +49,8 @@ ActiveRecord::Schema.define(version: 2018_12_01_145710) do
     t.datetime "updated_at", null: false
     t.text "description", null: false
     t.integer "position", default: 0, null: false
+    t.string "search_terms", null: false
+    t.index "to_tsvector('simple'::regconfig, (search_terms)::text)", name: "steps_fulltext_idx", using: :gin
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 
