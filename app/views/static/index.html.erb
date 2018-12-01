@@ -2,5 +2,5 @@
 
 
 <% @pages.each do |page| %>
-  <p><%= link_to page.title, static_page_path(slug: page.slug) %></p>
+  <p><%= link_to page.title, page.is_faq? ? faq_page_path(slug: page.slug) : static_page_path(slug: page.slug) %></p>
 <% end %>
