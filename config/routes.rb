@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   root to: 'static#index'
 
-  # get '/zivotne-situacie/:id/:step_slug', to: 'journeys#show', as: 'journey_step' # TODO
-
   get '/zivotne-situacie', to: redirect('/')
   get '/zivotne-situacie/:slug', to: 'journeys#show', as: 'journey'
   get '/zivotne-situacie/:slug/:step_slug', to: 'journeys#show', as: 'journey_step'
@@ -18,5 +16,8 @@ Rails.application.routes.draw do
 
   resources :faqs, path: 'casto-kladene-otazky'
   get '/:slug', to: 'static#show', as: :static_page
+
+  post '/user_task/mark_as_complete', to: 'user_tasks#mark_as_complete', as: 'mark_user_task_as_complete'
+  post '/user_task/mark_as_incomplete', to: 'user_tasks#mark_as_incomplete', as: 'mark_user_task_as_incomplete'
 
 end
