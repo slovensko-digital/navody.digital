@@ -20,9 +20,9 @@
         <td><%= task.title %></td>
         <td><%= task.type %></td>
         <td><%= task.url %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [:admin, task.step.journey, task.step, task] %></td>
+        <td><%= link_to 'Edit', edit_admin_journey_step_task_path(task.step.journey, task.step, task) %></td>
+        <td><%= link_to 'Destroy', [:admin, task.step.journey, task.step, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to 'New Task', new_admin_journey_step_task_path(@journey, @step) %>

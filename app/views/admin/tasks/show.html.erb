@@ -20,5 +20,5 @@
   <%= @task.url %>
 </p>
 
-<%= link_to 'Edit', edit_admin_task_path(@task) %> |
-<%= link_to 'Back', admin_tasks_path %>
+<%= link_to 'Edit', edit_admin_journey_step_task_path(@task.step.journey, @task.step, @task) %> |
+<%= link_to 'Back', admin_journey_step_tasks_path(@task.step.journey, @task.step) %>

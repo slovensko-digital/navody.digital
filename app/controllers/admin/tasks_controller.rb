@@ -1,9 +1,11 @@
 class Admin::TasksController < Admin::AdminController
+  before_action :set_journey
+  before_action :set_step
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = @step.tasks.all
   end
 
   # GET /tasks/1
@@ -12,7 +14,7 @@ class Admin::TasksController < Admin::AdminController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = @step.tasks.new
   end
 
   # GET /tasks/1/edit
@@ -21,10 +23,10 @@ class Admin::TasksController < Admin::AdminController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
+    @task = @step.tasks.new(task_params)
 
     if @task.save
-      redirect_to [:admin, @task], notice: 'Task was successfully created.'
+      redirect_to admin_journey_step_task_url(@task.step.journey, @task.step, @task), notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -33,7 +35,7 @@ class Admin::TasksController < Admin::AdminController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      redirect_to [:admin, @task], notice: 'Task was successfully updated.'
+      redirect_to admin_journey_step_task_url(@task.step.journey, @task.step, @task), notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -42,14 +44,22 @@ class Admin::TasksController < Admin::AdminController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    redirect_to admin_tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to admin_journey_step_tasks_url(@task.step.journey, @task.step), notice: 'Task was successfully destroyed.'
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def set_journey
+    @journey = Journey.find(params[:journey_id])
+  end
+
+  def set_step
+    @step = @journey.steps.find(params[:step_id])
+  end
+
   def set_task
-    @task = Task.find(params[:id])
+    @task = @step.tasks.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

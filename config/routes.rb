@@ -5,9 +5,10 @@ Rails.application.routes.draw do
     root to: redirect('admin/journeys#index')
 
     resources :journeys do
-      resources :steps
+      resources :steps do
+        resources :tasks
+      end
     end
-    resources :tasks
   end
 
   root to: 'static#index'
