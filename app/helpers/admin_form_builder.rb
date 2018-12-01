@@ -45,4 +45,8 @@ class AdminFormBuilder < ActionView::Helpers::FormBuilder
       @template.label(:label, method, class: 'govuk-label govuk-checkboxes__label')
     end
   end
+
+  def submit(value=nil, options={})
+    super(value, options.merge({class: 'govuk-button'}))
+  end
 end
