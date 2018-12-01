@@ -1,6 +1,8 @@
 class Journey < ApplicationRecord
   has_many :steps
 
+  # FIXME: fill in position from id!
+
   default_scope do
     order(position: :asc)
   end
