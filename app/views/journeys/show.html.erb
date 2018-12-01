@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-one-third">
     <div class="sdn-timeline">
       <ol start=0 class="sdn-timeline__list">
-        <li class="sdn-timeline__step sdn-timeline__step--done">
+        <li class="sdn-timeline__step">
           <div class="sdn-timeline__bullet"></div>
           <% if @step == nil %>
             <strong>
@@ -15,7 +15,7 @@
           <% end %>
         </li>
         <% @journey.steps.each do |step| %>
-          <li class="sdn-timeline__step sdn-timeline__step--done">
+          <li class="sdn-timeline__step">
             <div class="sdn-timeline__bullet"></div>
             <% if @step == step %>
               <strong>
