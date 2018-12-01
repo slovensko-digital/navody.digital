@@ -6,7 +6,7 @@ class AddCreateZivnostJourney < ActiveRecord::Migration[5.2]
       description: "<h1>Založenie živnosti: krok po kroku</h1>
 <p>Zistite, čo treba vybaviť na založenie živnosti.</p>
 <p>Založenie živnosti zvyčajne trvá 5 až 10 pracovných dní.</p>",
-      published_status: "live"
+      published_status: "PUBLISHED"
     )
 
     step = journey.steps.create!(
