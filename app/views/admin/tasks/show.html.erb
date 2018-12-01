@@ -1,5 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, admin_journey_url(@journey)],
+    ['Steps', admin_journey_steps_url(@journey)],
+    [@step.title, admin_journey_step_url(@journey, @step)],
+    ['Tasks', admin_journey_step_tasks_path(@journey, @step)],
+  ], current: @task.title %>
+
+
 <p>
   <strong>Step:</strong>
   <%= @task.step %>

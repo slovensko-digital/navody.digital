@@ -1,4 +1,11 @@
-<h1>Editing Task</h1>
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, admin_journey_url(@journey)],
+    ['Steps', admin_journey_steps_url(@journey)],
+    [@step.title, admin_journey_step_url(@journey, @step)],
+    ['Tasks', admin_journey_step_tasks_path(@journey, @step)],
+    [@task.title, admin_journey_step_task_path(@journey, @step, @task)]
+  ], current: 'Edit' %>
 
 <%= render 'form', task: @task %>
 

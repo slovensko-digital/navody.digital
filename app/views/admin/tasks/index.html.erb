@@ -1,28 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Tasks</h1>
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, admin_journey_url(@journey)],
+    ['Steps', admin_journey_steps_url(@journey)],
+    [@step.title, admin_journey_step_url(@journey, @step)],
+  ], current: 'Tasks' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Step</th>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Url</th>
-      <th colspan="3"></th>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Pos</th>
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="govuk-table__body">
     <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.step %></td>
-        <td><%= task.title %></td>
-        <td><%= task.type %></td>
-        <td><%= task.url %></td>
-        <td><%= link_to 'Show', [:admin, task.step.journey, task.step, task] %></td>
-        <td><%= link_to 'Edit', edit_admin_journey_step_task_path(task.step.journey, task.step, task) %></td>
-        <td><%= link_to 'Destroy', [:admin, task.step.journey, task.step, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= task.position %></td>
+        <td class="govuk-table__cell"><%= link_to task.title, [:admin, task.step.journey, task.step, task] %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_step_task_path(task.step.journey, task.step, task) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, task.step.journey, task.step, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_admin_journey_step_task_path(@journey, @step) %>
+<%= link_to 'New Task', new_admin_journey_step_task_path(@journey, @step), {class: 'govuk-button'} %>
