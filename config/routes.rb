@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'static#index'
 
+  get :search, to: 'search#show'
+
   get '/zivotne-situacie', to: redirect('/')
   get '/zivotne-situacie/:slug', to: 'journeys#show', as: 'journey'
   get '/zivotne-situacie/:slug/:step_slug', to: 'journeys#show', as: 'journey_step'
