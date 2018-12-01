@@ -5,8 +5,6 @@ class StaticController < ApplicationController
   end
 
   def show
-    is_faq = !!params[:is_faq]
-    @page = Page.where(is_faq: is_faq).find_by_slug(params[:slug])
-    raise ActionController::RoutingError.new('Not Found') unless @page
+    @page = Page.where(is_faq: false).find_by_slug(params[:slug])
   end
 end

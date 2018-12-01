@@ -1,8 +1,6 @@
 class JourneysController < ApplicationController
-  layout "application"
-
   def show
-    @journey = Journey.find_by!(slug: params[:slug])
+    @journey = Journey.find_by!(slug: params[:id])
     @step = @journey.steps.find_by(slug: params[:step_slug])
 
     if @step
