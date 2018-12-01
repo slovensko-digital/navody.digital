@@ -38,4 +38,11 @@ class AdminFormBuilder < ActionView::Helpers::FormBuilder
       super(method, options.merge({class: 'govuk-input' + (has_errors ? ' govuk-input--error' : '')}))
     end
   end
+
+  def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+    @template.content_tag(:div, class: 'govuk-checkboxes__item') do
+      super(method, options.merge({class: 'govuk-checkboxes__input'}), checked_value = "1", unchecked_value = "0") +
+      @template.label(:label, method, class: 'govuk-label govuk-checkboxes__label')
+    end
+  end
 end
