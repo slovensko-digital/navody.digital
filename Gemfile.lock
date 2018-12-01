@@ -80,6 +80,8 @@ GEM
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     ffi (1.9.25)
+    ffi-hunspell (0.4.0)
+      ffi (~> 1.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hirb (0.7.3)
@@ -221,6 +223,7 @@ DEPENDENCIES
   chromedriver-helper
   dotenv-rails
   factory_bot_rails
+  ffi-hunspell
   hirb
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)

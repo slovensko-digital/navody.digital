@@ -1,0 +1,5959 @@
+SET UTF-8
+TRY aoeintsvrlkmdpuhjzácbyčžíšýúťéľôďgfňäóŕxĺwěřqůAOEINTSVRLKMDPUHJZÁCBYČŽÍŠÝÚŤÉĽÔĎGFŇÄÓŔXĹWĚŘQŮ
+REP 52
+REP a á
+REP á a
+REP í i
+REP i í
+REP ó o
+REP o ó
+REP o ô
+REP ú u
+REP u ú
+REP u ű
+REP ű ü
+REP ü ű
+REP y z
+REP z y
+REP 2 ľ
+REP 3 š
+REP 4 č
+REP 5 ť
+REP 6 ž
+REP 7 ý
+REP 8 á
+REP 9 í
+REP 0 é
+REP a ä
+REP e ä
+REP ä e
+REP y ý
+REP ý y
+REP ý í
+REP í ý
+REP c č
+REP č c
+REP p b
+REP b p
+REP s z
+REP z s
+REP d ď
+REP ď d
+REP z ž
+REP ž z
+REP n ň
+REP ň n
+REP s š
+REP š s
+REP e é
+REP é e
+REP l ľ
+REP l ĺ
+REP ľ l
+REP ĺ l
+REP ĺ ľ
+REP ľ ĺ
+FLAG num
+LANG sk_SK
+SFX 1 N 1
+SFX 1 ec ca .
+SFX 2 N 1
+SFX 2 ec covi .
+SFX 3 N 1
+SFX 3 ec com .
+SFX 4 N 1
+SFX 4 ec ci .
+SFX 5 N 1
+SFX 5 ec cov .
+SFX 6 N 1
+SFX 6 ec coch .
+SFX 7 N 1
+SFX 7 ec cami .
+SFX 8 N 1
+SFX 8 a y .
+SFX 9 N 1
+SFX 9 a e .
+SFX 10 N 1
+SFX 10 a u .
+SFX 11 N 1
+SFX 11 a ou .
+SFX 12 N 1
+SFX 12 ka ok .
+SFX 13 N 1
+SFX 13 0 m .
+SFX 14 N 1
+SFX 14 0 ch .
+SFX 15 N 1
+SFX 15 0 mi .
+SFX 16 N 1
+SFX 16 o a .
+SFX 17 N 1
+SFX 17 o u .
+SFX 18 N 1
+SFX 18 a i .
+SFX 19 N 1
+SFX 19 0 a .
+SFX 20 N 1
+SFX 20 0 ovi .
+SFX 21 N 1
+SFX 21 0 om .
+SFX 22 N 1
+SFX 22 0 ia .
+SFX 23 N 1
+SFX 23 0 ov .
+SFX 24 N 1
+SFX 24 0 och .
+SFX 25 N 1
+SFX 25 ka iek .
+SFX 26 N 1
+SFX 26 0 u .
+SFX 27 N 1
+SFX 27 0 e .
+SFX 28 N 1
+SFX 28 0 ovia .
+SFX 29 N 1
+SFX 29 0 ami .
+SFX 30 N 1
+SFX 30 0 ych .
+SFX 31 N 1
+SFX 31 0 ym .
+SFX 32 N 1
+SFX 32 0 ymi .
+SFX 33 N 1
+SFX 33 0 ej .
+SFX 34 N 1
+SFX 34 0 ou .
+SFX 35 N 1
+SFX 35 0 ho .
+SFX 36 N 1
+SFX 36 0 mu .
+SFX 37 N 1
+SFX 37 0 i .
+SFX 38 N 1
+SFX 38 0 o .
+SFX 39 N 1
+SFX 39 i ov .
+SFX 40 N 1
+SFX 40 i om .
+SFX 41 N 1
+SFX 41 i och .
+SFX 42 N 1
+SFX 42 i ami .
+SFX 43 N 1
+SFX 43 es a .
+SFX 44 N 1
+SFX 44 es ovi .
+SFX 45 N 1
+SFX 45 es om .
+SFX 46 N 1
+SFX 46 es ovia .
+SFX 47 N 1
+SFX 47 es ov .
+SFX 48 N 1
+SFX 48 es och .
+SFX 49 N 1
+SFX 49 es mi .
+SFX 50 N 1
+SFX 50 a 0 .
+SFX 51 N 1
+SFX 51 0 vi .
+SFX 52 N 1
+SFX 52 0 via .
+SFX 53 N 1
+SFX 53 0 v .
+SFX 54 N 1
+SFX 54 o ami .
+SFX 55 N 1
+SFX 55 ela iel .
+SFX 56 N 1
+SFX 56 a iam .
+SFX 57 N 1
+SFX 57 a iach .
+SFX 58 N 1
+SFX 58 o mi .
+SFX 59 N 1
+SFX 59 ena ien .
+SFX 60 N 1
+SFX 60 er ra .
+SFX 61 N 1
+SFX 61 er rovi .
+SFX 62 N 1
+SFX 62 er rom .
+SFX 63 N 1
+SFX 63 er rovia .
+SFX 64 N 1
+SFX 64 er rov .
+SFX 65 N 1
+SFX 65 er roch .
+SFX 66 N 1
+SFX 66 er rami .
+SFX 67 N 1
+SFX 67 ra ier .
+SFX 68 N 1
+SFX 68 eta iet .
+SFX 69 N 1
+SFX 69 na ien .
+SFX 70 N 1
+SFX 70 um a .
+SFX 71 N 1
+SFX 71 m 0 .
+SFX 72 N 1
+SFX 72 um e .
+SFX 73 N 1
+SFX 73 um om .
+SFX 74 N 1
+SFX 74 y 0 .
+SFX 75 N 1
+SFX 75 y am .
+SFX 76 N 1
+SFX 76 y ach .
+SFX 77 N 1
+SFX 77 y ami .
+SFX 78 N 1
+SFX 78 ok ka .
+SFX 79 N 1
+SFX 79 ok kovi .
+SFX 80 N 1
+SFX 80 ok ku .
+SFX 81 N 1
+SFX 81 ok kom .
+SFX 82 N 1
+SFX 82 a ej .
+SFX 83 N 1
+SFX 83 h ze .
+SFX 84 N 1
+SFX 84 e a .
+SFX 85 N 1
+SFX 85 e u .
+SFX 86 N 1
+SFX 86 e 0 .
+SFX 87 N 1
+SFX 87 e m .
+SFX 88 N 1
+SFX 88 e am .
+SFX 89 N 1
+SFX 89 e ach .
+SFX 90 N 1
+SFX 90 e ami .
+SFX 91 N 1
+SFX 91 e iam .
+SFX 92 N 1
+SFX 92 e iach .
+SFX 93 N 1
+SFX 93 k ci .
+SFX 94 N 1
+SFX 94 any ian .
+SFX 95 N 1
+SFX 95 y om .
+SFX 96 N 1
+SFX 96 y och .
+SFX 97 N 1
+SFX 97 y mi .
+SFX 98 N 1
+SFX 98 o e .
+SFX 99 N 1
+SFX 99 e om .
+SFX 100 N 1
+SFX 100 e ym .
+SFX 101 N 1
+SFX 101 0 y .
+SFX 102 N 1
+SFX 102 ec cu .
+SFX 103 N 1
+SFX 103 s 0 .
+SFX 104 N 1
+SFX 104 us e .
+SFX 105 N 1
+SFX 105 us om .
+SFX 106 N 1
+SFX 106 es ami .
+SFX 107 N 1
+SFX 107 y ov .
+SFX 108 N 1
+SFX 108 a ovi .
+SFX 109 N 1
+SFX 109 a om .
+SFX 110 N 1
+SFX 110 era ier .
+SFX 111 N 1
+SFX 111 ek ka .
+SFX 112 N 1
+SFX 112 ek kovi .
+SFX 113 N 1
+SFX 113 ek kom .
+SFX 114 N 1
+SFX 114 ek kovia .
+SFX 115 N 1
+SFX 115 ek kov .
+SFX 116 N 1
+SFX 116 ek koch .
+SFX 117 N 1
+SFX 117 ek kami .
+SFX 118 N 1
+SFX 118 a ovia .
+SFX 119 N 1
+SFX 119 a ov .
+SFX 120 N 1
+SFX 120 a och .
+SFX 121 N 1
+SFX 121 e ovi .
+SFX 122 N 1
+SFX 122 e ovia .
+SFX 123 N 1
+SFX 123 e ov .
+SFX 124 N 1
+SFX 124 e och .
+SFX 125 N 1
+SFX 125 e mi .
+SFX 126 N 1
+SFX 126 i 0 .
+SFX 127 N 1
+SFX 127 i am .
+SFX 128 N 1
+SFX 128 i ach .
+SFX 129 N 1
+SFX 129 el la .
+SFX 130 N 1
+SFX 130 el lu .
+SFX 131 N 1
+SFX 131 el li .
+SFX 132 N 1
+SFX 132 el lom .
+SFX 133 N 1
+SFX 133 ma iem .
+SFX 134 N 1
+SFX 134 us a .
+SFX 135 N 1
+SFX 135 us ovi .
+SFX 136 N 1
+SFX 136 us ovia .
+SFX 137 N 1
+SFX 137 us ov .
+SFX 138 N 1
+SFX 138 us och .
+SFX 139 N 1
+SFX 139 us ami .
+SFX 140 N 1
+SFX 140 ce iec .
+SFX 141 N 1
+SFX 141 ery ier .
+SFX 142 N 1
+SFX 142 e i .
+SFX 143 N 1
+SFX 143 ec ce .
+SFX 144 N 1
+SFX 144 ga ieg .
+SFX 145 N 1
+SFX 145 el lovi .
+SFX 146 N 1
+SFX 146 el lovia .
+SFX 147 N 1
+SFX 147 el lov .
+SFX 148 N 1
+SFX 148 el loch .
+SFX 149 N 1
+SFX 149 el lami .
+SFX 150 N 1
+SFX 150 ol la .
+SFX 151 N 1
+SFX 151 ol lovi .
+SFX 152 N 1
+SFX 152 ol lom .
+SFX 153 N 1
+SFX 153 ol lovia .
+SFX 154 N 1
+SFX 154 ol lov .
+SFX 155 N 1
+SFX 155 ol loch .
+SFX 156 N 1
+SFX 156 ol lami .
+SFX 157 N 1
+SFX 157 la iel .
+SFX 158 N 1
+SFX 158 en ne .
+SFX 159 N 1
+SFX 159 en ni .
+SFX 160 N 1
+SFX 160 en nou .
+SFX 161 N 1
+SFX 161 os a .
+SFX 162 N 1
+SFX 162 s vi .
+SFX 163 N 1
+SFX 163 s m .
+SFX 164 N 1
+SFX 164 s via .
+SFX 165 N 1
+SFX 165 s v .
+SFX 166 N 1
+SFX 166 s ch .
+SFX 167 N 1
+SFX 167 os ami .
+SFX 168 N 1
+SFX 168 as ovi .
+SFX 169 N 1
+SFX 169 as om .
+SFX 170 N 1
+SFX 170 er ru .
+SFX 171 N 1
+SFX 171 er ri .
+SFX 172 N 1
+SFX 172 us mi .
+SFX 173 N 1
+SFX 173 iec ca .
+SFX 174 N 1
+SFX 174 iec cu .
+SFX 175 N 1
+SFX 175 iec ci .
+SFX 176 N 1
+SFX 176 iec com .
+SFX 177 N 1
+SFX 177 y eho .
+SFX 178 N 1
+SFX 178 y emu .
+SFX 179 N 1
+SFX 179 ec covia .
+SFX 180 N 1
+SFX 180 le el .
+SFX 181 N 1
+SFX 181 i eho .
+SFX 182 N 1
+SFX 182 i emu .
+SFX 183 N 1
+SFX 183 Zeus Dia .
+SFX 184 N 1
+SFX 184 Zeus Diovi .
+SFX 185 N 1
+SFX 185 Zeus Diom .
+SFX 186 N 1
+SFX 186 y i .
+SFX 187 N 1
+SFX 187 y e .
+SFX 188 N 1
+SFX 188 y a .
+SFX 189 N 1
+SFX 189 y ej .
+SFX 190 N 1
+SFX 190 y u .
+SFX 191 N 1
+SFX 191 y ou .
+SFX 192 N 1
+SFX 192 ovat ujem .
+SFX 193 N 1
+SFX 193 ovat ujes .
+SFX 194 N 1
+SFX 194 ovat uje .
+SFX 195 N 1
+SFX 195 ovat ujeme .
+SFX 196 N 1
+SFX 196 ovat ujete .
+SFX 197 N 1
+SFX 197 ovat uju .
+SFX 198 N 1
+SFX 198 ovat uj .
+SFX 199 N 1
+SFX 199 ovat ujme .
+SFX 200 N 1
+SFX 200 ovat ujte .
+SFX 201 N 1
+SFX 201 ovat ujuc .
+SFX 202 N 1
+SFX 202 t l .
+SFX 203 N 1
+SFX 203 t la .
+SFX 204 N 1
+SFX 204 t lo .
+SFX 205 N 1
+SFX 205 t li .
+SFX 206 N 1
+SFX 206 eda ied .
+SFX 207 N 1
+SFX 207 y ejsi .
+SFX 208 N 1
+SFX 208 y ejsieho .
+SFX 209 N 1
+SFX 209 y ejsiemu .
+SFX 210 N 1
+SFX 210 y ejsom .
+SFX 211 N 1
+SFX 211 y ejsim .
+SFX 212 N 1
+SFX 212 y ejsich .
+SFX 213 N 1
+SFX 213 y ejsimi .
+SFX 214 N 1
+SFX 214 y ejsie .
+SFX 215 N 1
+SFX 215 y ejsia .
+SFX 216 N 1
+SFX 216 y ejsej .
+SFX 217 N 1
+SFX 217 y ejsiu .
+SFX 218 N 1
+SFX 218 y ejsou .
+SFX 219 Y 1
+SFX 219 y ejsi .
+PFX 219 Y 1
+PFX 219 0 naj .
+SFX 220 Y 1
+SFX 220 y ejsieho .
+PFX 220 Y 1
+PFX 220 0 naj .
+SFX 221 Y 1
+SFX 221 y ejsiemu .
+PFX 221 Y 1
+PFX 221 0 naj .
+SFX 222 Y 1
+SFX 222 y ejsom .
+PFX 222 Y 1
+PFX 222 0 naj .
+SFX 223 Y 1
+SFX 223 y ejsim .
+PFX 223 Y 1
+PFX 223 0 naj .
+SFX 224 Y 1
+SFX 224 y ejsich .
+PFX 224 Y 1
+PFX 224 0 naj .
+SFX 225 Y 1
+SFX 225 y ejsimi .
+PFX 225 Y 1
+PFX 225 0 naj .
+SFX 226 Y 1
+SFX 226 y ejsie .
+PFX 226 Y 1
+PFX 226 0 naj .
+SFX 227 Y 1
+SFX 227 y ejsia .
+PFX 227 Y 1
+PFX 227 0 naj .
+SFX 228 Y 1
+SFX 228 y ejsej .
+PFX 228 Y 1
+PFX 228 0 naj .
+SFX 229 Y 1
+SFX 229 y ejsiu .
+PFX 229 Y 1
+PFX 229 0 naj .
+SFX 230 Y 1
+SFX 230 y ejsou .
+PFX 230 Y 1
+PFX 230 0 naj .
+SFX 231 N 1
+SFX 231 0 jsie .
+SFX 232 Y 1
+SFX 232 0 jsie .
+PFX 232 Y 1
+PFX 232 0 naj .
+SFX 233 N 1
+SFX 233 0 iam .
+SFX 234 N 1
+SFX 234 0 iach .
+SFX 235 N 1
+SFX 235 us y .
+SFX 236 N 1
+SFX 236 um 0 .
+SFX 237 N 1
+SFX 237 um am .
+SFX 238 N 1
+SFX 238 um ach .
+SFX 239 N 1
+SFX 239 um ami .
+SFX 240 N 1
+SFX 240 vo iev .
+SFX 241 N 1
+SFX 241 o am .
+SFX 242 N 1
+SFX 242 o ach .
+SFX 243 N 1
+SFX 243 um i .
+SFX 244 N 1
+SFX 244 no ien .
+SFX 245 N 1
+SFX 245 t m .
+SFX 246 N 1
+SFX 246 t s .
+SFX 247 N 1
+SFX 247 t 0 .
+SFX 248 N 1
+SFX 248 t me .
+SFX 249 N 1
+SFX 249 t ju .
+SFX 250 N 1
+SFX 250 t j .
+SFX 251 N 1
+SFX 251 t jme .
+SFX 252 N 1
+SFX 252 t jte .
+SFX 253 N 1
+SFX 253 t juc .
+SFX 254 N 1
+SFX 254 o i .
+SFX 255 N 1
+SFX 255 a mi .
+SFX 256 N 1
+SFX 256 0 am .
+SFX 257 N 1
+SFX 257 0 ach .
+SFX 258 N 1
+SFX 258 us i .
+SFX 259 N 1
+SFX 259 esa ies .
+SFX 260 N 1
+SFX 260 0 eho .
+SFX 261 N 1
+SFX 261 0 emu .
+SFX 262 N 1
+SFX 262 i ej .
+SFX 263 N 1
+SFX 263 i ou .
+SFX 264 N 1
+SFX 264 ut em .
+SFX 265 N 1
+SFX 265 ut es .
+SFX 266 N 1
+SFX 266 ut e .
+SFX 267 N 1
+SFX 267 ut eme .
+SFX 268 N 1
+SFX 268 ut ete .
+SFX 269 N 1
+SFX 269 ut i .
+SFX 270 N 1
+SFX 270 ut ime .
+SFX 271 N 1
+SFX 271 ut ite .
+SFX 272 N 1
+SFX 272 t c .
+SFX 273 N 1
+SFX 273 nut ol .
+SFX 274 N 1
+SFX 274 nut la .
+SFX 275 N 1
+SFX 275 nut lo .
+SFX 276 N 1
+SFX 276 nut li .
+SFX 277 N 1
+SFX 277 e ia .
+SFX 278 N 1
+SFX 278 e ii .
+SFX 279 N 1
+SFX 279 e iami .
+SFX 280 N 1
+SFX 280 ro ier .
+SFX 281 N 1
+SFX 281 o 0 .
+SFX 282 N 1
+SFX 282 ento ient .
+SFX 283 N 1
+SFX 283 ok ky .
+SFX 284 N 1
+SFX 284 ok kov .
+SFX 285 N 1
+SFX 285 ok koch .
+SFX 286 N 1
+SFX 286 ok kami .
+SFX 287 N 1
+SFX 287 on a .
+SFX 288 N 1
+SFX 288 on u .
+SFX 289 N 1
+SFX 289 on e .
+SFX 290 N 1
+SFX 290 n m .
+SFX 291 N 1
+SFX 291 on 0 .
+SFX 292 N 1
+SFX 292 on am .
+SFX 293 N 1
+SFX 293 on ach .
+SFX 294 N 1
+SFX 294 on ami .
+SFX 295 N 1
+SFX 295 el le .
+SFX 296 N 1
+SFX 296 el ly .
+SFX 297 N 1
+SFX 297 er re .
+SFX 298 N 1
+SFX 298 ek ku .
+SFX 299 N 1
+SFX 299 ek ky .
+PFX 300 N 1
+PFX 300 aky ake .
+PFX 301 N 1
+PFX 301 aky akych .
+PFX 302 N 1
+PFX 302 aky akym .
+PFX 303 N 1
+PFX 303 aky akymi .
+PFX 304 N 1
+PFX 304 aky aka .
+PFX 305 N 1
+PFX 305 aky akej .
+PFX 306 N 1
+PFX 306 aky aku .
+PFX 307 N 1
+PFX 307 aky akou .
+PFX 308 N 1
+PFX 308 aky akeho .
+PFX 309 N 1
+PFX 309 aky akemu .
+PFX 310 N 1
+PFX 310 aky akom .
+PFX 311 N 1
+PFX 311 aky aki .
+SFX 312 N 1
+SFX 312 ysi esi .
+SFX 313 N 1
+SFX 313 si chsi .
+SFX 314 N 1
+SFX 314 si msi .
+SFX 315 N 1
+SFX 315 si misi .
+SFX 316 N 1
+SFX 316 ysi asi .
+SFX 317 N 1
+SFX 317 ysi ejsi .
+SFX 318 N 1
+SFX 318 ysi usi .
+SFX 319 N 1
+SFX 319 ysi ousi .
+SFX 320 N 1
+SFX 320 ysi ehosi .
+SFX 321 N 1
+SFX 321 ysi emusi .
+SFX 322 N 1
+SFX 322 ysi omsi .
+SFX 323 N 1
+SFX 323 ysi isi .
+SFX 324 N 1
+SFX 324 yze ehoze .
+SFX 325 N 1
+SFX 325 yze emuze .
+SFX 326 N 1
+SFX 326 yze omze .
+SFX 327 N 1
+SFX 327 ze mze .
+SFX 328 N 1
+SFX 328 yze ize .
+SFX 329 N 1
+SFX 329 ze chze .
+SFX 330 N 1
+SFX 330 ze mize .
+SFX 331 N 1
+SFX 331 yze eze .
+SFX 332 N 1
+SFX 332 yze aze .
+SFX 333 N 1
+SFX 333 yze ejze .
+SFX 334 N 1
+SFX 334 yze uze .
+SFX 335 N 1
+SFX 335 yze ouze .
+SFX 336 N 1
+SFX 336 i e .
+SFX 337 N 1
+SFX 337 i a .
+SFX 338 N 1
+SFX 338 i u .
+SFX 339 N 1
+SFX 339 na iek .
+SFX 340 N 1
+SFX 340 eto iet .
+SFX 341 N 1
+SFX 341 etto iett .
+SFX 342 N 1
+SFX 342 or ru .
+SFX 343 N 1
+SFX 343 or re .
+SFX 344 N 1
+SFX 344 or rom .
+SFX 345 N 1
+SFX 345 or ry .
+SFX 346 N 1
+SFX 346 or rov .
+SFX 347 N 1
+SFX 347 or roch .
+SFX 348 N 1
+SFX 348 or rami .
+SFX 349 N 1
+SFX 349 lo iel .
+SFX 350 N 1
+SFX 350 ba ieb .
+SFX 351 N 1
+SFX 351 o uovi .
+SFX 352 N 1
+SFX 352 os u .
+SFX 353 N 1
+SFX 353 os y .
+SFX 354 N 1
+SFX 354 os mi .
+SFX 355 N 1
+SFX 355 0 ta .
+SFX 356 N 1
+SFX 356 0 tu .
+SFX 357 N 1
+SFX 357 0 ti .
+SFX 358 N 1
+SFX 358 0 tom .
+SFX 359 N 1
+SFX 359 0 t .
+SFX 360 N 1
+SFX 360 0 tam .
+SFX 361 N 1
+SFX 361 0 tach .
+SFX 362 N 1
+SFX 362 0 tami .
+SFX 363 N 1
+SFX 363 or ra .
+SFX 364 N 1
+SFX 364 or rovi .
+SFX 365 N 1
+SFX 365 or ri .
+SFX 366 N 1
+SFX 366 eka iek .
+SFX 367 N 1
+SFX 367 mpa p .
+SFX 368 N 1
+SFX 368 esta iest .
+SFX 369 N 1
+SFX 369 ta iet .
+SFX 370 N 1
+SFX 370 eby ieb .
+SFX 371 N 1
+SFX 371 en nam .
+SFX 372 N 1
+SFX 372 en nach .
+SFX 373 N 1
+SFX 373 en nami .
+SFX 374 N 1
+SFX 374 en na .
+SFX 375 N 1
+SFX 375 en nu .
+SFX 376 N 1
+SFX 376 en nom .
+SFX 377 N 1
+SFX 377 en nov .
+SFX 378 N 1
+SFX 378 en noch .
+SFX 379 N 1
+SFX 379 ko ok .
+SFX 380 N 1
+SFX 380 o ejsie .
+SFX 381 Y 1
+SFX 381 o ejsie .
+PFX 381 Y 1
+PFX 381 0 naj .
+SFX 382 N 1
+SFX 382 at em .
+SFX 383 N 1
+SFX 383 at es .
+SFX 384 N 1
+SFX 384 at e .
+SFX 385 N 1
+SFX 385 at eme .
+SFX 386 N 1
+SFX 386 at ete .
+SFX 387 N 1
+SFX 387 at u .
+SFX 388 N 1
+SFX 388 at i .
+SFX 389 N 1
+SFX 389 at ime .
+SFX 390 N 1
+SFX 390 at ite .
+SFX 391 N 1
+SFX 391 at uc .
+SFX 392 N 1
+SFX 392 t a .
+SFX 393 N 1
+SFX 393 it 0 .
+SFX 394 N 1
+SFX 394 it me .
+SFX 395 N 1
+SFX 395 it te .
+SFX 396 N 1
+SFX 396 t ac .
+SFX 397 N 1
+SFX 397 iet eju .
+SFX 398 N 1
+SFX 398 iet ej .
+SFX 399 N 1
+SFX 399 iet ejme .
+SFX 400 N 1
+SFX 400 iet ejte .
+SFX 401 N 1
+SFX 401 iet ejuc .
+SFX 402 N 1
+SFX 402 iet el .
+SFX 403 N 1
+SFX 403 iet ela .
+SFX 404 N 1
+SFX 404 iet elo .
+SFX 405 N 1
+SFX 405 iet eli .
+SFX 406 N 1
+SFX 406 e y .
+SFX 407 N 1
+SFX 407 e ou .
+SFX 408 N 1
+SFX 408 a ence .
+SFX 409 N 1
+SFX 409 a iat .
+SFX 410 N 1
+SFX 410 a eniec .
+SFX 411 N 1
+SFX 411 a encom .
+SFX 412 N 1
+SFX 412 a encoch .
+SFX 413 N 1
+SFX 413 a encami .
+SFX 414 N 1
+SFX 414 0 q .
+SFX 415 N 1
+SFX 415 ok kovia .
+SFX 416 N 1
+SFX 416 anto iant .
+SFX 417 N 1
+SFX 417 o y .
+SFX 418 N 1
+SFX 418 ch si .
+SFX 419 N 1
+SFX 419 a ee .
+SFX 420 N 1
+SFX 420 a ich .
+SFX 421 N 1
+SFX 421 a im .
+SFX 422 N 1
+SFX 422 a imi .
+SFX 423 Y 1
+SFX 423 a 0 .
+PFX 423 Y 1
+PFX 423 b bi .
+SFX 424 N 1
+SFX 424 et tu .
+SFX 425 N 1
+SFX 425 et te .
+SFX 426 N 1
+SFX 426 et tom .
+SFX 427 N 1
+SFX 427 et ty .
+SFX 428 N 1
+SFX 428 et tov .
+SFX 429 N 1
+SFX 429 et toch .
+SFX 430 N 1
+SFX 430 et tami .
+SFX 431 N 1
+SFX 431 at im .
+SFX 432 N 1
+SFX 432 at is .
+SFX 433 N 1
+SFX 433 at ia .
+SFX 434 N 1
+SFX 434 at 0 .
+SFX 435 N 1
+SFX 435 at me .
+SFX 436 N 1
+SFX 436 at te .
+SFX 437 N 1
+SFX 437 at iac .
+SFX 438 N 1
+SFX 438 mo iem .
+SFX 439 Y 1
+SFX 439 at ime .
+PFX 439 Y 1
+PFX 439 0 po .
+SFX 440 Y 1
+SFX 440 at ite .
+PFX 440 Y 1
+PFX 440 0 po .
+SFX 441 Y 1
+SFX 441 at ia .
+PFX 441 Y 1
+PFX 441 0 po .
+SFX 442 Y 1
+SFX 442 at im .
+PFX 442 Y 1
+PFX 442 0 po .
+SFX 443 Y 1
+SFX 443 at is .
+PFX 443 Y 1
+PFX 443 0 po .
+SFX 444 Y 1
+SFX 444 at i .
+PFX 444 Y 1
+PFX 444 0 po .
+SFX 445 N 1
+SFX 445 e ch .
+SFX 446 N 1
+SFX 446 en niam .
+SFX 447 N 1
+SFX 447 en niach .
+SFX 448 Y 1
+SFX 448 lo sie .
+PFX 448 Y 1
+PFX 448 b b .
+SFX 449 Y 1
+SFX 449 lo sie .
+PFX 449 Y 1
+PFX 449 b najb .
+SFX 450 Y 1
+SFX 450 y si .
+PFX 450 Y 1
+PFX 450 bi b .
+SFX 451 Y 1
+SFX 451 ly sieho .
+PFX 451 Y 1
+PFX 451 b b .
+SFX 452 Y 1
+SFX 452 ly siemu .
+PFX 452 Y 1
+PFX 452 b b .
+SFX 453 Y 1
+SFX 453 y som .
+PFX 453 Y 1
+PFX 453 bi b .
+SFX 454 Y 1
+SFX 454 y sim .
+PFX 454 Y 1
+PFX 454 bi b .
+SFX 455 Y 1
+SFX 455 y sich .
+PFX 455 Y 1
+PFX 455 bi b .
+SFX 456 Y 1
+SFX 456 y simi .
+PFX 456 Y 1
+PFX 456 bi b .
+SFX 457 Y 1
+SFX 457 ly sie .
+PFX 457 Y 1
+PFX 457 b b .
+SFX 458 Y 1
+SFX 458 y sia .
+PFX 458 Y 1
+PFX 458 bi b .
+SFX 459 Y 1
+SFX 459 y sej .
+PFX 459 Y 1
+PFX 459 bi b .
+SFX 460 Y 1
+SFX 460 y siu .
+PFX 460 Y 1
+PFX 460 bi b .
+SFX 461 Y 1
+SFX 461 y sou .
+PFX 461 Y 1
+PFX 461 bi b .
+SFX 462 Y 1
+SFX 462 y si .
+PFX 462 Y 1
+PFX 462 bi najb .
+SFX 463 Y 1
+SFX 463 ly sieho .
+PFX 463 Y 1
+PFX 463 b najb .
+SFX 464 Y 1
+SFX 464 ly siemu .
+PFX 464 Y 1
+PFX 464 b najb .
+SFX 465 Y 1
+SFX 465 y som .
+PFX 465 Y 1
+PFX 465 bi najb .
+SFX 466 Y 1
+SFX 466 y sim .
+PFX 466 Y 1
+PFX 466 bi najb .
+SFX 467 Y 1
+SFX 467 y sich .
+PFX 467 Y 1
+PFX 467 bi najb .
+SFX 468 Y 1
+SFX 468 y simi .
+PFX 468 Y 1
+PFX 468 bi najb .
+SFX 469 Y 1
+SFX 469 ly sie .
+PFX 469 Y 1
+PFX 469 b najb .
+SFX 470 Y 1
+SFX 470 y sia .
+PFX 470 Y 1
+PFX 470 bi najb .
+SFX 471 Y 1
+SFX 471 y sej .
+PFX 471 Y 1
+PFX 471 bi najb .
+SFX 472 Y 1
+SFX 472 y siu .
+PFX 472 Y 1
+PFX 472 bi najb .
+SFX 473 Y 1
+SFX 473 y sou .
+PFX 473 Y 1
+PFX 473 bi najb .
+SFX 474 N 1
+SFX 474 ky iek .
+SFX 475 N 1
+SFX 475 rum ier .
+SFX 476 N 1
+SFX 476 t jem .
+SFX 477 N 1
+SFX 477 t jes .
+SFX 478 N 1
+SFX 478 t je .
+SFX 479 N 1
+SFX 479 t jeme .
+SFX 480 N 1
+SFX 480 t jete .
+SFX 481 N 1
+SFX 481 iat ajem .
+SFX 482 N 1
+SFX 482 iat ajes .
+SFX 483 N 1
+SFX 483 iat aje .
+SFX 484 N 1
+SFX 484 iat ajeme .
+SFX 485 N 1
+SFX 485 iat ajete .
+SFX 486 N 1
+SFX 486 iat aju .
+SFX 487 N 1
+SFX 487 iat aj .
+SFX 488 N 1
+SFX 488 iat ajme .
+SFX 489 N 1
+SFX 489 iat ajte .
+SFX 490 N 1
+SFX 490 iat ajuc .
+SFX 491 N 1
+SFX 491 va iev .
+SFX 492 N 1
+SFX 492 o sie .
+SFX 493 Y 1
+SFX 493 o sie .
+PFX 493 Y 1
+PFX 493 0 naj .
+SFX 494 N 1
+SFX 494 tat cem .
+SFX 495 N 1
+SFX 495 tat ces .
+SFX 496 N 1
+SFX 496 tat ce .
+SFX 497 N 1
+SFX 497 tat ceme .
+SFX 498 N 1
+SFX 498 tat cete .
+SFX 499 N 1
+SFX 499 tat cu .
+SFX 500 N 1
+SFX 500 tat c .
+SFX 501 N 1
+SFX 501 tat cme .
+SFX 502 N 1
+SFX 502 tat cte .
+SFX 503 N 1
+SFX 503 tat cuc .
+SFX 504 N 1
+SFX 504 y si .
+SFX 505 N 1
+SFX 505 y sieho .
+SFX 506 N 1
+SFX 506 y siemu .
+SFX 507 N 1
+SFX 507 y som .
+SFX 508 N 1
+SFX 508 y sim .
+SFX 509 N 1
+SFX 509 y sich .
+SFX 510 N 1
+SFX 510 y simi .
+SFX 511 N 1
+SFX 511 y sie .
+SFX 512 N 1
+SFX 512 y sia .
+SFX 513 N 1
+SFX 513 y sej .
+SFX 514 N 1
+SFX 514 y siu .
+SFX 515 N 1
+SFX 515 y sou .
+SFX 516 Y 1
+SFX 516 y si .
+PFX 516 Y 1
+PFX 516 0 naj .
+SFX 517 Y 1
+SFX 517 y sieho .
+PFX 517 Y 1
+PFX 517 0 naj .
+SFX 518 Y 1
+SFX 518 y siemu .
+PFX 518 Y 1
+PFX 518 0 naj .
+SFX 519 Y 1
+SFX 519 y som .
+PFX 519 Y 1
+PFX 519 0 naj .
+SFX 520 Y 1
+SFX 520 y sim .
+PFX 520 Y 1
+PFX 520 0 naj .
+SFX 521 Y 1
+SFX 521 y sich .
+PFX 521 Y 1
+PFX 521 0 naj .
+SFX 522 Y 1
+SFX 522 y simi .
+PFX 522 Y 1
+PFX 522 0 naj .
+SFX 523 Y 1
+SFX 523 y sie .
+PFX 523 Y 1
+PFX 523 0 naj .
+SFX 524 Y 1
+SFX 524 y sia .
+PFX 524 Y 1
+PFX 524 0 naj .
+SFX 525 Y 1
+SFX 525 y sej .
+PFX 525 Y 1
+PFX 525 0 naj .
+SFX 526 Y 1
+SFX 526 y siu .
+PFX 526 Y 1
+PFX 526 0 naj .
+SFX 527 Y 1
+SFX 527 y sou .
+PFX 527 Y 1
+PFX 527 0 naj .
+SFX 528 N 1
+SFX 528 on na .
+SFX 529 N 1
+SFX 529 on novi .
+SFX 530 N 1
+SFX 530 on nom .
+SFX 531 N 1
+SFX 531 on ni .
+SFX 532 N 1
+SFX 532 on nov .
+SFX 533 N 1
+SFX 533 on noch .
+SFX 534 N 1
+SFX 534 on nami .
+SFX 535 N 1
+SFX 535 ko sie .
+SFX 536 N 1
+SFX 536 ko 0 .
+SFX 537 Y 1
+SFX 537 ko sie .
+PFX 537 Y 1
+PFX 537 0 naj .
+SFX 538 Y 1
+SFX 538 ko 0 .
+PFX 538 Y 1
+PFX 538 0 naj .
+SFX 539 N 1
+SFX 539 ky si .
+SFX 540 N 1
+SFX 540 ky sieho .
+SFX 541 N 1
+SFX 541 ky siemu .
+SFX 542 N 1
+SFX 542 ky som .
+SFX 543 N 1
+SFX 543 ky sim .
+SFX 544 N 1
+SFX 544 ky sich .
+SFX 545 N 1
+SFX 545 ky simi .
+SFX 546 N 1
+SFX 546 ky sie .
+SFX 547 N 1
+SFX 547 ky sia .
+SFX 548 N 1
+SFX 548 ky sej .
+SFX 549 N 1
+SFX 549 ky siu .
+SFX 550 N 1
+SFX 550 ky sou .
+SFX 551 Y 1
+SFX 551 ky si .
+PFX 551 Y 1
+PFX 551 0 naj .
+SFX 552 Y 1
+SFX 552 ky sieho .
+PFX 552 Y 1
+PFX 552 0 naj .
+SFX 553 Y 1
+SFX 553 ky siemu .
+PFX 553 Y 1
+PFX 553 0 naj .
+SFX 554 Y 1
+SFX 554 ky som .
+PFX 554 Y 1
+PFX 554 0 naj .
+SFX 555 Y 1
+SFX 555 ky sim .
+PFX 555 Y 1
+PFX 555 0 naj .
+SFX 556 Y 1
+SFX 556 ky sich .
+PFX 556 Y 1
+PFX 556 0 naj .
+SFX 557 Y 1
+SFX 557 ky simi .
+PFX 557 Y 1
+PFX 557 0 naj .
+SFX 558 Y 1
+SFX 558 ky sie .
+PFX 558 Y 1
+PFX 558 0 naj .
+SFX 559 Y 1
+SFX 559 ky sia .
+PFX 559 Y 1
+PFX 559 0 naj .
+SFX 560 Y 1
+SFX 560 ky sej .
+PFX 560 Y 1
+PFX 560 0 naj .
+SFX 561 Y 1
+SFX 561 ky siu .
+PFX 561 Y 1
+PFX 561 0 naj .
+SFX 562 Y 1
+SFX 562 ky sou .
+PFX 562 Y 1
+PFX 562 0 naj .
+SFX 563 N 1
+SFX 563 to oho .
+SFX 564 N 1
+SFX 564 to omu .
+SFX 565 N 1
+SFX 565 to om .
+SFX 566 N 1
+SFX 566 to ym .
+SFX 567 N 1
+SFX 567 o im .
+SFX 568 N 1
+SFX 568 ko iek .
+SFX 569 N 1
+SFX 569 ero ier .
+SFX 570 N 1
+SFX 570 et m .
+SFX 571 N 1
+SFX 571 et s .
+SFX 572 N 1
+SFX 572 et 0 .
+SFX 573 N 1
+SFX 573 et me .
+SFX 574 N 1
+SFX 574 et a .
+SFX 575 N 1
+SFX 575 iet 0 .
+SFX 576 N 1
+SFX 576 iet me .
+SFX 577 N 1
+SFX 577 iet te .
+SFX 578 N 1
+SFX 578 et ac .
+SFX 579 N 1
+SFX 579 o ae .
+SFX 580 N 1
+SFX 580 ky ok .
+SFX 581 N 1
+SFX 581 el och .
+SFX 582 N 1
+SFX 582 rat eriem .
+SFX 583 N 1
+SFX 583 rat eries .
+SFX 584 N 1
+SFX 584 rat erie .
+SFX 585 N 1
+SFX 585 rat erieme .
+SFX 586 N 1
+SFX 586 rat eriete .
+SFX 587 N 1
+SFX 587 rat eru .
+SFX 588 N 1
+SFX 588 rat er .
+SFX 589 N 1
+SFX 589 rat erme .
+SFX 590 N 1
+SFX 590 rat erte .
+SFX 591 N 1
+SFX 591 rat eruc .
+SFX 592 N 1
+SFX 592 tat ci .
+SFX 593 N 1
+SFX 593 tat cime .
+SFX 594 N 1
+SFX 594 tat cite .
+SFX 595 N 1
+SFX 595 chat sem .
+SFX 596 N 1
+SFX 596 chat ses .
+SFX 597 N 1
+SFX 597 chat se .
+SFX 598 N 1
+SFX 598 chat seme .
+SFX 599 N 1
+SFX 599 chat sete .
+SFX 600 N 1
+SFX 600 chat su .
+SFX 601 N 1
+SFX 601 chat s .
+SFX 602 N 1
+SFX 602 chat sme .
+SFX 603 N 1
+SFX 603 chat ste .
+SFX 604 N 1
+SFX 604 chat suc .
+SFX 605 N 1
+SFX 605 eno ien .
+SFX 606 N 1
+SFX 606 a ena .
+SFX 607 N 1
+SFX 607 a enu .
+SFX 608 N 1
+SFX 608 a ene .
+SFX 609 N 1
+SFX 609 a enom .
+SFX 610 N 1
+SFX 610 a ien .
+SFX 611 N 1
+SFX 611 a enam .
+SFX 612 N 1
+SFX 612 a enach .
+SFX 613 N 1
+SFX 613 a enami .
+SFX 614 N 1
+SFX 614 eza iez .
+SFX 615 N 1
+SFX 615 it a .
+SFX 616 N 1
+SFX 616 it ac .
+SFX 617 N 1
+SFX 617 no an .
+SFX 618 N 1
+SFX 618 on nu .
+SFX 619 N 1
+SFX 619 on ne .
+SFX 620 N 1
+SFX 620 on ny .
+SFX 621 N 1
+SFX 621 ta at .
+SFX 622 N 1
+SFX 622 ea ou .
+SFX 623 N 1
+SFX 623 rsa s .
+SFX 624 N 1
+SFX 624 oa uovi .
+SFX 625 N 1
+SFX 625 oa uom .
+SFX 626 N 1
+SFX 626 oa uovia .
+SFX 627 N 1
+SFX 627 oa uov .
+SFX 628 N 1
+SFX 628 oa uoch .
+SFX 629 N 1
+SFX 629 a ych .
+SFX 630 N 1
+SFX 630 a ym .
+SFX 631 N 1
+SFX 631 a ymi .
+SFX 632 N 1
+SFX 632 yt udeme .
+SFX 633 N 1
+SFX 633 yt udete .
+SFX 634 N 1
+SFX 634 yt udu .
+SFX 635 N 1
+SFX 635 yt udem .
+SFX 636 N 1
+SFX 636 yt udes .
+SFX 637 N 1
+SFX 637 yt ude .
+SFX 638 N 1
+SFX 638 byt som .
+SFX 639 N 1
+SFX 639 byt si .
+SFX 640 N 1
+SFX 640 byt je .
+PFX 641 N 1
+PFX 641 by jes .
+SFX 642 Y 1
+SFX 642 0 o .
+PFX 642 Y 1
+PFX 642 by jes .
+SFX 643 N 1
+SFX 643 byt sme .
+SFX 644 Y 1
+SFX 644 0 e .
+PFX 644 Y 1
+PFX 644 by s .
+SFX 645 N 1
+SFX 645 byt su .
+SFX 646 N 1
+SFX 646 yt ud .
+SFX 647 N 1
+SFX 647 yt udme .
+SFX 648 N 1
+SFX 648 yt udte .
+SFX 649 N 1
+SFX 649 byt suc .
+SFX 650 N 1
+SFX 650 yt ol .
+SFX 651 N 1
+SFX 651 yt ola .
+SFX 652 N 1
+SFX 652 yt olo .
+SFX 653 N 1
+SFX 653 yt oli .
+SFX 654 N 1
+SFX 654 at ojim .
+SFX 655 N 1
+SFX 655 at ojis .
+SFX 656 N 1
+SFX 656 at oji .
+SFX 657 N 1
+SFX 657 at ojime .
+SFX 658 N 1
+SFX 658 at ojite .
+SFX 659 N 1
+SFX 659 at oja .
+SFX 660 N 1
+SFX 660 at oj .
+SFX 661 N 1
+SFX 661 at ojme .
+SFX 662 N 1
+SFX 662 at ojte .
+SFX 663 N 1
+SFX 663 at ojac .
+SFX 664 Y 1
+SFX 664 a 0 .
+PFX 664 Y 1
+PFX 664 c ci .
+SFX 665 N 1
+SFX 665 ev vi .
+SFX 666 N 1
+SFX 666 ev vou .
+SFX 667 N 1
+SFX 667 ev vam .
+SFX 668 N 1
+SFX 668 ev vach .
+SFX 669 N 1
+SFX 669 ev vami .
+SFX 670 N 1
+SFX 670 ov vi .
+SFX 671 N 1
+SFX 671 ov vou .
+SFX 672 N 1
+SFX 672 ov vam .
+SFX 673 N 1
+SFX 673 ov vach .
+SFX 674 N 1
+SFX 674 ov vami .
+SFX 675 Y 1
+SFX 675 o 0 .
+PFX 675 Y 1
+PFX 675 c ci .
+SFX 676 Y 1
+SFX 676 ovat ujeme .
+PFX 676 Y 1
+PFX 676 0 po .
+SFX 677 Y 1
+SFX 677 ovat ujete .
+PFX 677 Y 1
+PFX 677 0 po .
+SFX 678 Y 1
+SFX 678 ovat uju .
+PFX 678 Y 1
+PFX 678 0 po .
+SFX 679 Y 1
+SFX 679 ovat ujem .
+PFX 679 Y 1
+PFX 679 0 po .
+SFX 680 Y 1
+SFX 680 ovat ujes .
+PFX 680 Y 1
+PFX 680 0 po .
+SFX 681 Y 1
+SFX 681 ovat uje .
+PFX 681 Y 1
+PFX 681 0 po .
+SFX 682 N 1
+SFX 682 _on en .
+SFX 683 N 1
+SFX 683 _ono en .
+SFX 684 N 1
+SFX 684 iet em .
+SFX 685 N 1
+SFX 685 iet es .
+SFX 686 N 1
+SFX 686 iet e .
+SFX 687 N 1
+SFX 687 iet eme .
+SFX 688 N 1
+SFX 688 iet ete .
+SFX 689 N 1
+SFX 689 iet u .
+SFX 690 N 1
+SFX 690 iet uc .
+SFX 691 N 1
+SFX 691 ieb eba .
+SFX 692 N 1
+SFX 692 ieb ebu .
+SFX 693 N 1
+SFX 693 ieb ebe .
+SFX 694 N 1
+SFX 694 ieb ebom .
+SFX 695 N 1
+SFX 695 ieb eby .
+SFX 696 N 1
+SFX 696 ieb ebov .
+SFX 697 N 1
+SFX 697 ieb eboch .
+SFX 698 N 1
+SFX 698 ieb ebmi .
+SFX 699 N 1
+SFX 699 ol lu .
+SFX 700 N 1
+SFX 700 ol le .
+SFX 701 N 1
+SFX 701 ol ly .
+SFX 702 N 1
+SFX 702 en ny .
+SFX 703 N 1
+SFX 703 at ta .
+SFX 704 N 1
+SFX 704 at tu .
+SFX 705 N 1
+SFX 705 at tom .
+SFX 706 N 1
+SFX 706 at ty .
+SFX 707 N 1
+SFX 707 at tov .
+SFX 708 N 1
+SFX 708 at toch .
+SFX 709 N 1
+SFX 709 at tami .
+SFX 710 N 1
+SFX 710 iet ejem .
+SFX 711 N 1
+SFX 711 iet ejes .
+SFX 712 N 1
+SFX 712 iet eje .
+SFX 713 N 1
+SFX 713 iet ejeme .
+SFX 714 N 1
+SFX 714 iet ejete .
+SFX 715 N 1
+SFX 715 at iam .
+SFX 716 N 1
+SFX 716 at ias .
+SFX 717 N 1
+SFX 717 at iame .
+SFX 718 N 1
+SFX 718 at iate .
+SFX 719 N 1
+SFX 719 i mi .
+SFX 720 N 1
+SFX 720 unt a .
+SFX 721 N 1
+SFX 721 nt 0 .
+SFX 722 N 1
+SFX 722 unt om .
+SFX 723 N 1
+SFX 723 unt 0 .
+SFX 724 N 1
+SFX 724 unt ach .
+SFX 725 N 1
+SFX 725 unt ami .
+SFX 726 N 1
+SFX 726 i ejsi .
+SFX 727 N 1
+SFX 727 i ejsieho .
+SFX 728 N 1
+SFX 728 i ejsiemu .
+SFX 729 N 1
+SFX 729 i ejsom .
+SFX 730 N 1
+SFX 730 i ejsim .
+SFX 731 N 1
+SFX 731 i ejsich .
+SFX 732 N 1
+SFX 732 i ejsimi .
+SFX 733 N 1
+SFX 733 i ejsie .
+SFX 734 N 1
+SFX 734 i ejsia .
+SFX 735 N 1
+SFX 735 i ejsej .
+SFX 736 N 1
+SFX 736 i ejsiu .
+SFX 737 N 1
+SFX 737 i ejsou .
+SFX 738 Y 1
+SFX 738 i ejsi .
+PFX 738 Y 1
+PFX 738 0 naj .
+SFX 739 Y 1
+SFX 739 i ejsieho .
+PFX 739 Y 1
+PFX 739 0 naj .
+SFX 740 Y 1
+SFX 740 i ejsiemu .
+PFX 740 Y 1
+PFX 740 0 naj .
+SFX 741 Y 1
+SFX 741 i ejsom .
+PFX 741 Y 1
+PFX 741 0 naj .
+SFX 742 Y 1
+SFX 742 i ejsim .
+PFX 742 Y 1
+PFX 742 0 naj .
+SFX 743 Y 1
+SFX 743 i ejsich .
+PFX 743 Y 1
+PFX 743 0 naj .
+SFX 744 Y 1
+SFX 744 i ejsimi .
+PFX 744 Y 1
+PFX 744 0 naj .
+SFX 745 Y 1
+SFX 745 i ejsie .
+PFX 745 Y 1
+PFX 745 0 naj .
+SFX 746 Y 1
+SFX 746 i ejsia .
+PFX 746 Y 1
+PFX 746 0 naj .
+SFX 747 Y 1
+SFX 747 i ejsej .
+PFX 747 Y 1
+PFX 747 0 naj .
+SFX 748 Y 1
+SFX 748 i ejsiu .
+PFX 748 Y 1
+PFX 748 0 naj .
+SFX 749 Y 1
+SFX 749 i ejsou .
+PFX 749 Y 1
+PFX 749 0 naj .
+SFX 750 Y 1
+SFX 750 a 0 .
+PFX 750 Y 1
+PFX 750 d di .
+SFX 751 Y 1
+SFX 751 o 0 .
+PFX 751 Y 1
+PFX 751 d di .
+SFX 752 N 1
+SFX 752 at iatich .
+SFX 753 N 1
+SFX 753 at iatim .
+SFX 754 N 1
+SFX 754 at iatimi .
+SFX 755 N 1
+SFX 755 at iati .
+SFX 756 N 1
+SFX 756 0 ich .
+SFX 757 N 1
+SFX 757 0 im .
+SFX 758 N 1
+SFX 758 0 imi .
+SFX 759 N 1
+SFX 759 es u .
+SFX 760 N 1
+SFX 760 es y .
+SFX 761 N 1
+SFX 761 ol li .
+SFX 762 N 1
+SFX 762 iat ejem .
+SFX 763 N 1
+SFX 763 iat ejes .
+SFX 764 N 1
+SFX 764 iat eje .
+SFX 765 N 1
+SFX 765 iat ejeme .
+SFX 766 N 1
+SFX 766 iat ejete .
+SFX 767 N 1
+SFX 767 iat eju .
+SFX 768 N 1
+SFX 768 iat ej .
+SFX 769 N 1
+SFX 769 iat ejme .
+SFX 770 N 1
+SFX 770 iat ejte .
+SFX 771 N 1
+SFX 771 iat ejuc .
+SFX 772 N 1
+SFX 772 ce ec .
+SFX 773 Y 1
+SFX 773 a i .
+PFX 773 Y 1
+PFX 773 di d .
+SFX 774 Y 1
+SFX 774 a om .
+PFX 774 Y 1
+PFX 774 di d .
+SFX 775 Y 1
+SFX 775 a och .
+PFX 775 Y 1
+PFX 775 di d .
+SFX 776 Y 1
+SFX 776 a mi .
+PFX 776 Y 1
+PFX 776 di d .
+SFX 777 N 1
+SFX 777 on ch .
+SFX 778 N 1
+SFX 778 on mi .
+SFX 779 N 1
+SFX 779 _on n .
+SFX 780 N 1
+SFX 780 _on nho .
+SFX 781 N 1
+SFX 781 _ono n .
+SFX 782 Y 1
+SFX 782 0 psie .
+PFX 782 Y 1
+PFX 782 dobr l .
+SFX 783 Y 1
+SFX 783 0 psie .
+PFX 783 Y 1
+PFX 783 dobr najl .
+SFX 784 N 1
+SFX 784 dobry lepsi .
+SFX 785 Y 1
+SFX 785 bry 0 .
+PFX 785 Y 1
+PFX 785 d lepsieh .
+SFX 786 N 1
+SFX 786 dobry lepsiemu .
+SFX 787 Y 1
+SFX 787 bry m .
+PFX 787 Y 1
+PFX 787 d leps .
+SFX 788 N 1
+SFX 788 dobry lepsim .
+SFX 789 N 1
+SFX 789 dobry lepsich .
+SFX 790 N 1
+SFX 790 dobry lepsimi .
+SFX 791 N 1
+SFX 791 dobry lepsie .
+SFX 792 N 1
+SFX 792 dobry lepsia .
+SFX 793 N 1
+SFX 793 dobry lepsej .
+SFX 794 N 1
+SFX 794 dobry lepsiu .
+SFX 795 Y 1
+SFX 795 bry u .
+PFX 795 Y 1
+PFX 795 d leps .
+SFX 796 N 1
+SFX 796 dobry najlepsi .
+SFX 797 Y 1
+SFX 797 bry 0 .
+PFX 797 Y 1
+PFX 797 d najlepsieh .
+SFX 798 N 1
+SFX 798 dobry najlepsiemu .
+SFX 799 Y 1
+SFX 799 bry m .
+PFX 799 Y 1
+PFX 799 d najleps .
+SFX 800 N 1
+SFX 800 dobry najlepsim .
+SFX 801 N 1
+SFX 801 dobry najlepsich .
+SFX 802 N 1
+SFX 802 dobry najlepsimi .
+SFX 803 N 1
+SFX 803 dobry najlepsie .
+SFX 804 N 1
+SFX 804 dobry najlepsia .
+SFX 805 N 1
+SFX 805 dobry najlepsej .
+SFX 806 N 1
+SFX 806 dobry najlepsiu .
+SFX 807 Y 1
+SFX 807 bry u .
+PFX 807 Y 1
+PFX 807 d najleps .
+SFX 808 N 1
+SFX 808 rat em .
+SFX 809 N 1
+SFX 809 rat es .
+SFX 810 N 1
+SFX 810 rat e .
+SFX 811 N 1
+SFX 811 rat eme .
+SFX 812 N 1
+SFX 812 rat ete .
+SFX 813 N 1
+SFX 813 rat i .
+SFX 814 N 1
+SFX 814 rat ime .
+SFX 815 N 1
+SFX 815 rat ite .
+SFX 816 N 1
+SFX 816 lat em .
+SFX 817 N 1
+SFX 817 lat es .
+SFX 818 N 1
+SFX 818 lat e .
+SFX 819 N 1
+SFX 819 lat eme .
+SFX 820 N 1
+SFX 820 lat ete .
+SFX 821 N 1
+SFX 821 lat i .
+SFX 822 N 1
+SFX 822 lat ime .
+SFX 823 N 1
+SFX 823 lat ite .
+SFX 824 N 1
+SFX 824 mat em .
+SFX 825 N 1
+SFX 825 mat es .
+SFX 826 N 1
+SFX 826 mat e .
+SFX 827 N 1
+SFX 827 mat eme .
+SFX 828 N 1
+SFX 828 mat ete .
+SFX 829 N 1
+SFX 829 mat i .
+SFX 830 N 1
+SFX 830 mat ime .
+SFX 831 N 1
+SFX 831 mat ite .
+SFX 832 N 1
+SFX 832 hnat zeniem .
+SFX 833 N 1
+SFX 833 hnat zenies .
+SFX 834 N 1
+SFX 834 hnat zenie .
+SFX 835 N 1
+SFX 835 hnat zenieme .
+SFX 836 N 1
+SFX 836 hnat zeniete .
+SFX 837 N 1
+SFX 837 hnat zenu .
+SFX 838 N 1
+SFX 838 hnat zen .
+SFX 839 N 1
+SFX 839 hnat zenme .
+SFX 840 N 1
+SFX 840 hnat zente .
+SFX 841 N 1
+SFX 841 hnat zenuc .
+SFX 842 N 1
+SFX 842 ut iem .
+SFX 843 N 1
+SFX 843 ut ies .
+SFX 844 N 1
+SFX 844 ut ie .
+SFX 845 N 1
+SFX 845 ut ieme .
+SFX 846 N 1
+SFX 846 ut iete .
+SFX 847 N 1
+SFX 847 ut 0 .
+SFX 848 N 1
+SFX 848 ut me .
+SFX 849 N 1
+SFX 849 ut te .
+SFX 850 N 1
+SFX 850 t iem .
+SFX 851 N 1
+SFX 851 t ies .
+SFX 852 N 1
+SFX 852 t ie .
+SFX 853 N 1
+SFX 853 t ieme .
+SFX 854 N 1
+SFX 854 t iete .
+SFX 855 N 1
+SFX 855 t u .
+SFX 856 N 1
+SFX 856 t uc .
+SFX 857 N 1
+SFX 857 t ol .
+SFX 858 N 1
+SFX 858 dit im .
+SFX 859 N 1
+SFX 859 dit is .
+SFX 860 N 1
+SFX 860 dit i .
+SFX 861 N 1
+SFX 861 dit ime .
+SFX 862 N 1
+SFX 862 dit ite .
+SFX 863 N 1
+SFX 863 dit ii .
+SFX 864 N 1
+SFX 864 dit iic .
+SFX 865 N 1
+SFX 865 at mem .
+SFX 866 N 1
+SFX 866 at mes .
+SFX 867 N 1
+SFX 867 at meme .
+SFX 868 N 1
+SFX 868 at mete .
+SFX 869 N 1
+SFX 869 at mu .
+SFX 870 N 1
+SFX 870 at mi .
+SFX 871 N 1
+SFX 871 at mime .
+SFX 872 N 1
+SFX 872 at mite .
+SFX 873 N 1
+SFX 873 at muc .
+SFX 874 N 1
+SFX 874 em mu .
+SFX 875 N 1
+SFX 875 em me .
+SFX 876 N 1
+SFX 876 em mom .
+SFX 877 N 1
+SFX 877 em my .
+SFX 878 N 1
+SFX 878 em mov .
+SFX 879 N 1
+SFX 879 em moch .
+SFX 880 N 1
+SFX 880 em mami .
+SFX 881 N 1
+SFX 881 st m .
+SFX 882 N 1
+SFX 882 st 0 .
+SFX 883 N 1
+SFX 883 st me .
+SFX 884 N 1
+SFX 884 st te .
+SFX 885 N 1
+SFX 885 st dia .
+SFX 886 N 1
+SFX 886 st dz .
+SFX 887 N 1
+SFX 887 st dzme .
+SFX 888 N 1
+SFX 888 st dzte .
+SFX 889 N 1
+SFX 889 st diac .
+SFX 890 N 1
+SFX 890 st dol .
+SFX 891 N 1
+SFX 891 st dla .
+SFX 892 N 1
+SFX 892 st dlo .
+SFX 893 N 1
+SFX 893 st dli .
+SFX 894 N 1
+SFX 894 lat olem .
+SFX 895 N 1
+SFX 895 lat oles .
+SFX 896 N 1
+SFX 896 lat ole .
+SFX 897 N 1
+SFX 897 lat oleme .
+SFX 898 N 1
+SFX 898 lat olete .
+SFX 899 N 1
+SFX 899 lat olu .
+SFX 900 N 1
+SFX 900 lat ol .
+SFX 901 N 1
+SFX 901 lat olme .
+SFX 902 N 1
+SFX 902 lat olte .
+SFX 903 N 1
+SFX 903 lat oluc .
+SFX 904 N 1
+SFX 904 iezt eziem .
+SFX 905 N 1
+SFX 905 iezt ezies .
+SFX 906 N 1
+SFX 906 iezt ezie .
+SFX 907 N 1
+SFX 907 iezt ezieme .
+SFX 908 N 1
+SFX 908 iezt eziete .
+SFX 909 N 1
+SFX 909 iezt ezu .
+SFX 910 N 1
+SFX 910 iezt ez .
+SFX 911 N 1
+SFX 911 iezt ezme .
+SFX 912 N 1
+SFX 912 iezt ezte .
+SFX 913 N 1
+SFX 913 iezt ezuc .
+SFX 914 N 1
+SFX 914 liet eliem .
+SFX 915 N 1
+SFX 915 liet elies .
+SFX 916 N 1
+SFX 916 liet elie .
+SFX 917 N 1
+SFX 917 liet elieme .
+SFX 918 Y 1
+SFX 918 0 e .
+PFX 918 Y 1
+PFX 918 dom dome .
+SFX 919 N 1
+SFX 919 liet elu .
+SFX 920 N 1
+SFX 920 liet el .
+SFX 921 N 1
+SFX 921 liet elme .
+SFX 922 N 1
+SFX 922 liet elte .
+SFX 923 N 1
+SFX 923 liet eluc .
+SFX 924 N 1
+SFX 924 ct zem .
+SFX 925 N 1
+SFX 925 ct zes .
+SFX 926 N 1
+SFX 926 ct ze .
+SFX 927 N 1
+SFX 927 ct zeme .
+SFX 928 N 1
+SFX 928 ct zete .
+SFX 929 N 1
+SFX 929 ct zu .
+SFX 930 N 1
+SFX 930 ct z .
+SFX 931 N 1
+SFX 931 ct zme .
+SFX 932 N 1
+SFX 932 ct zte .
+SFX 933 N 1
+SFX 933 ct zuc .
+SFX 934 N 1
+SFX 934 ct hol .
+SFX 935 N 1
+SFX 935 ct hla .
+SFX 936 N 1
+SFX 936 ct hlo .
+SFX 937 N 1
+SFX 937 ct hli .
+SFX 938 N 1
+SFX 938 iest esiem .
+SFX 939 N 1
+SFX 939 iest esies .
+SFX 940 N 1
+SFX 940 iest esie .
+SFX 941 N 1
+SFX 941 iest esieme .
+SFX 942 N 1
+SFX 942 iest esiete .
+SFX 943 N 1
+SFX 943 iest esu .
+SFX 944 N 1
+SFX 944 iest es .
+SFX 945 N 1
+SFX 945 iest esme .
+SFX 946 N 1
+SFX 946 iest este .
+SFX 947 N 1
+SFX 947 iest esuc .
+SFX 948 N 1
+SFX 948 at iem .
+SFX 949 N 1
+SFX 949 at ies .
+SFX 950 N 1
+SFX 950 at ie .
+SFX 951 N 1
+SFX 951 at ieme .
+SFX 952 N 1
+SFX 952 at iete .
+SFX 953 N 1
+SFX 953 iect eciem .
+SFX 954 N 1
+SFX 954 iect ecies .
+SFX 955 N 1
+SFX 955 iect ecie .
+SFX 956 N 1
+SFX 956 iect ecieme .
+SFX 957 N 1
+SFX 957 iect eciete .
+SFX 958 N 1
+SFX 958 iect ecu .
+SFX 959 N 1
+SFX 959 iect ec .
+SFX 960 N 1
+SFX 960 iect ecme .
+SFX 961 N 1
+SFX 961 iect ecte .
+SFX 962 N 1
+SFX 962 iect ecuc .
+SFX 963 N 1
+SFX 963 ct kol .
+SFX 964 N 1
+SFX 964 ct kla .
+SFX 965 N 1
+SFX 965 ct klo .
+SFX 966 N 1
+SFX 966 ct kli .
+SFX 967 N 1
+SFX 967 iest etiem .
+SFX 968 N 1
+SFX 968 iest eties .
+SFX 969 N 1
+SFX 969 iest etie .
+SFX 970 N 1
+SFX 970 iest etieme .
+SFX 971 N 1
+SFX 971 iest etiete .
+SFX 972 N 1
+SFX 972 iest etu .
+SFX 973 N 1
+SFX 973 iest et .
+SFX 974 N 1
+SFX 974 iest etme .
+SFX 975 N 1
+SFX 975 iest ette .
+SFX 976 N 1
+SFX 976 iest etuc .
+SFX 977 N 1
+SFX 977 st tol .
+SFX 978 N 1
+SFX 978 st tla .
+SFX 979 N 1
+SFX 979 st tlo .
+SFX 980 N 1
+SFX 980 st tli .
+SFX 981 N 1
+SFX 981 edat iem .
+SFX 982 N 1
+SFX 982 edat ies .
+SFX 983 N 1
+SFX 983 edat ie .
+SFX 984 N 1
+SFX 984 edat ieme .
+SFX 985 N 1
+SFX 985 edat iete .
+SFX 986 N 1
+SFX 986 at z .
+SFX 987 N 1
+SFX 987 at zme .
+SFX 988 N 1
+SFX 988 at zte .
+SFX 989 N 1
+SFX 989 iast adiem .
+SFX 990 N 1
+SFX 990 iast adies .
+SFX 991 N 1
+SFX 991 iast adie .
+SFX 992 N 1
+SFX 992 iast adieme .
+SFX 993 N 1
+SFX 993 iast adiete .
+SFX 994 N 1
+SFX 994 iast adu .
+SFX 995 N 1
+SFX 995 iast ad .
+SFX 996 N 1
+SFX 996 iast adme .
+SFX 997 N 1
+SFX 997 iast adte .
+SFX 998 N 1
+SFX 998 iast aduc .
+SFX 999 N 1
+SFX 999 at nem .
+SFX 1000 N 1
+SFX 1000 at nes .
+SFX 1001 N 1
+SFX 1001 at ne .
+SFX 1002 N 1
+SFX 1002 at neme .
+SFX 1003 N 1
+SFX 1003 at nete .
+SFX 1004 N 1
+SFX 1004 at nu .
+SFX 1005 N 1
+SFX 1005 at ni .
+SFX 1006 N 1
+SFX 1006 at nime .
+SFX 1007 N 1
+SFX 1007 at nite .
+SFX 1008 N 1
+SFX 1008 at nuc .
+SFX 1009 N 1
+SFX 1009 ct kni .
+SFX 1010 N 1
+SFX 1010 ct knime .
+SFX 1011 N 1
+SFX 1011 ct knite .
+SFX 1012 N 1
+SFX 1012 0 iem .
+SFX 1013 N 1
+SFX 1013 0 ies .
+SFX 1014 N 1
+SFX 1014 0 ie .
+SFX 1015 N 1
+SFX 1015 0 ieme .
+SFX 1016 N 1
+SFX 1016 0 iete .
+SFX 1017 N 1
+SFX 1017 0 ime .
+SFX 1018 N 1
+SFX 1018 0 me .
+SFX 1019 N 1
+SFX 1019 0 te .
+SFX 1020 N 1
+SFX 1020 0 ite .
+SFX 1021 N 1
+SFX 1021 0 uc .
+SFX 1022 N 1
+SFX 1022 0 ol .
+SFX 1023 N 1
+SFX 1023 0 la .
+SFX 1024 N 1
+SFX 1024 0 lo .
+SFX 1025 N 1
+SFX 1025 0 li .
+SFX 1026 N 1
+SFX 1026 ka ak .
+SFX 1027 N 1
+SFX 1027 kat cem .
+SFX 1028 N 1
+SFX 1028 kat ces .
+SFX 1029 N 1
+SFX 1029 kat ce .
+SFX 1030 N 1
+SFX 1030 kat ceme .
+SFX 1031 N 1
+SFX 1031 kat cete .
+SFX 1032 N 1
+SFX 1032 kat cu .
+SFX 1033 N 1
+SFX 1033 kat c .
+SFX 1034 N 1
+SFX 1034 kat cme .
+SFX 1035 N 1
+SFX 1035 kat cte .
+SFX 1036 N 1
+SFX 1036 kat cuc .
+SFX 1037 N 1
+SFX 1037 t nem .
+SFX 1038 N 1
+SFX 1038 t nes .
+SFX 1039 N 1
+SFX 1039 t ne .
+SFX 1040 N 1
+SFX 1040 t neme .
+SFX 1041 N 1
+SFX 1041 t nete .
+SFX 1042 N 1
+SFX 1042 t nu .
+SFX 1043 N 1
+SFX 1043 t n .
+SFX 1044 N 1
+SFX 1044 t nme .
+SFX 1045 N 1
+SFX 1045 t nte .
+SFX 1046 N 1
+SFX 1046 t nuc .
+SFX 1047 N 1
+SFX 1047 iest ediem .
+SFX 1048 N 1
+SFX 1048 iest edies .
+SFX 1049 N 1
+SFX 1049 iest edie .
+SFX 1050 N 1
+SFX 1050 iest edieme .
+SFX 1051 N 1
+SFX 1051 iest ediete .
+SFX 1052 N 1
+SFX 1052 iest edu .
+SFX 1053 N 1
+SFX 1053 iest ed .
+SFX 1054 N 1
+SFX 1054 iest edme .
+SFX 1055 N 1
+SFX 1055 iest edte .
+SFX 1056 N 1
+SFX 1056 iest educ .
+SFX 1057 N 1
+SFX 1057 nut em .
+SFX 1058 N 1
+SFX 1058 nut es .
+SFX 1059 N 1
+SFX 1059 nut e .
+SFX 1060 N 1
+SFX 1060 nut eme .
+SFX 1061 N 1
+SFX 1061 nut ete .
+SFX 1062 N 1
+SFX 1062 nut i .
+SFX 1063 N 1
+SFX 1063 nut ime .
+SFX 1064 N 1
+SFX 1064 nut ite .
+SFX 1065 N 1
+SFX 1065 dnut ol .
+SFX 1066 N 1
+SFX 1066 dnut la .
+SFX 1067 N 1
+SFX 1067 dnut lo .
+SFX 1068 N 1
+SFX 1068 dnut li .
+SFX 1069 N 1
+SFX 1069 ediet iem .
+SFX 1070 N 1
+SFX 1070 ediet ies .
+SFX 1071 N 1
+SFX 1071 ediet ie .
+SFX 1072 N 1
+SFX 1072 ediet ieme .
+SFX 1073 N 1
+SFX 1073 ediet iete .
+SFX 1074 N 1
+SFX 1074 bat em .
+SFX 1075 N 1
+SFX 1075 bat es .
+SFX 1076 N 1
+SFX 1076 bat e .
+SFX 1077 N 1
+SFX 1077 bat eme .
+SFX 1078 N 1
+SFX 1078 bat ete .
+SFX 1079 N 1
+SFX 1079 bat i .
+SFX 1080 N 1
+SFX 1080 bat ime .
+SFX 1081 N 1
+SFX 1081 bat ite .
+SFX 1082 N 1
+SFX 1082 vat em .
+SFX 1083 N 1
+SFX 1083 vat es .
+SFX 1084 N 1
+SFX 1084 vat e .
+SFX 1085 N 1
+SFX 1085 vat eme .
+SFX 1086 N 1
+SFX 1086 vat ete .
+SFX 1087 N 1
+SFX 1087 vat i .
+SFX 1088 N 1
+SFX 1088 vat ime .
+SFX 1089 N 1
+SFX 1089 vat ite .
+SFX 1090 N 1
+SFX 1090 vat jem .
+SFX 1091 N 1
+SFX 1091 vat jes .
+SFX 1092 N 1
+SFX 1092 vat je .
+SFX 1093 N 1
+SFX 1093 vat jeme .
+SFX 1094 N 1
+SFX 1094 vat jete .
+SFX 1095 N 1
+SFX 1095 vat ju .
+SFX 1096 N 1
+SFX 1096 vat j .
+SFX 1097 N 1
+SFX 1097 vat jme .
+SFX 1098 N 1
+SFX 1098 vat jte .
+SFX 1099 N 1
+SFX 1099 vat juc .
+SFX 1100 N 1
+SFX 1100 evo iev .
+SFX 1101 N 1
+SFX 1101 tat ctaj .
+SFX 1102 N 1
+SFX 1102 tat ctajte .
+SFX 1103 N 1
+SFX 1103 e ych .
+SFX 1104 N 1
+SFX 1104 e ymi .
+SFX 1105 N 1
+SFX 1105 er rermi .
+SFX 1106 N 1
+SFX 1106 a oma .
+SFX 1107 N 1
+SFX 1107 a omi .
+SFX 1108 N 1
+SFX 1108 0 ja .
+SFX 1109 N 1
+SFX 1109 cia iec .
+SFX 1110 N 1
+SFX 1110 ia ami .
+SFX 1111 N 1
+SFX 1111 ere ier .
+SFX 1112 N 1
+SFX 1112 r om .
+SFX 1113 N 1
+SFX 1113 lo el .
+SFX 1114 N 1
+SFX 1114 st dem .
+SFX 1115 N 1
+SFX 1115 st des .
+SFX 1116 N 1
+SFX 1116 st de .
+SFX 1117 N 1
+SFX 1117 st deme .
+SFX 1118 N 1
+SFX 1118 st dete .
+SFX 1119 N 1
+SFX 1119 st du .
+SFX 1120 N 1
+SFX 1120 st di .
+SFX 1121 N 1
+SFX 1121 st dime .
+SFX 1122 N 1
+SFX 1122 st dite .
+SFX 1123 N 1
+SFX 1123 st duc .
+SFX 1124 N 1
+SFX 1124 jst siel .
+SFX 1125 N 1
+SFX 1125 jst sla .
+SFX 1126 N 1
+SFX 1126 jst slo .
+SFX 1127 N 1
+SFX 1127 jst sli .
+SFX 1128 N 1
+SFX 1128 in nami .
+SFX 1129 N 1
+SFX 1129 ba ob .
+SFX 1130 Y 1
+SFX 1130 y ejsich .
+PFX 1130 Y 1
+PFX 1130 0 najd .
+SFX 1131 N 1
+SFX 1131 edo ied .
+SFX 1132 N 1
+SFX 1132 erto iert .
+SFX 1133 N 1
+SFX 1133 iaze azi .
+SFX 1134 N 1
+SFX 1134 by ieb .
+SFX 1135 N 1
+SFX 1135 lum iel .
+SFX 1136 N 1
+SFX 1136 os se .
+SFX 1137 N 1
+SFX 1137 os si .
+SFX 1138 N 1
+SFX 1138 os sou .
+SFX 1139 N 1
+SFX 1139 os siam .
+SFX 1140 N 1
+SFX 1140 os siach .
+SFX 1141 N 1
+SFX 1141 os sami .
+SFX 1142 N 1
+SFX 1142 x gu .
+SFX 1143 N 1
+SFX 1143 x gom .
+SFX 1144 N 1
+SFX 1144 x gy .
+SFX 1145 N 1
+SFX 1145 x gov .
+SFX 1146 N 1
+SFX 1146 x goch .
+SFX 1147 N 1
+SFX 1147 x gami .
+SFX 1148 N 1
+SFX 1148 la b .
+SFX 1149 N 1
+SFX 1149 ga b .
+SFX 1150 N 1
+SFX 1150 ik ka .
+SFX 1151 N 1
+SFX 1151 ik ku .
+SFX 1152 N 1
+SFX 1152 ik kom .
+SFX 1153 N 1
+SFX 1153 ik ky .
+SFX 1154 N 1
+SFX 1154 ik kov .
+SFX 1155 N 1
+SFX 1155 ik koch .
+SFX 1156 N 1
+SFX 1156 ik kami .
+SFX 1157 N 1
+SFX 1157 o ah .
+SFX 1158 N 1
+SFX 1158 eba ieb .
+SFX 1159 N 1
+SFX 1159 na b .
+SFX 1160 N 1
+SFX 1160 er ry .
+SFX 1161 N 1
+SFX 1161 asa ias .
+SFX 1162 Y 1
+SFX 1162 o 0 .
+PFX 1162 Y 1
+PFX 1162 g gi .
+SFX 1163 N 1
+SFX 1163 on i .
+SFX 1164 N 1
+SFX 1164 on anmi .
+SFX 1165 N 1
+SFX 1165 ter etra .
+SFX 1166 N 1
+SFX 1166 0 s .
+SFX 1167 N 1
+SFX 1167 ra ar .
+SFX 1168 N 1
+SFX 1168 en ie .
+SFX 1169 N 1
+SFX 1169 en ych .
+SFX 1170 N 1
+SFX 1170 en ym .
+SFX 1171 N 1
+SFX 1171 en ymi .
+SFX 1172 N 1
+SFX 1172 en oho .
+SFX 1173 N 1
+SFX 1173 en omu .
+SFX 1174 N 1
+SFX 1174 en om .
+SFX 1175 N 1
+SFX 1175 en i .
+SFX 1176 N 1
+SFX 1176 o ie .
+SFX 1177 N 1
+SFX 1177 o ych .
+SFX 1178 N 1
+SFX 1178 o ym .
+SFX 1179 N 1
+SFX 1179 o ymi .
+SFX 1180 N 1
+SFX 1180 a ie .
+SFX 1181 N 1
+SFX 1181 lo iev .
+SFX 1182 N 1
+SFX 1182 oko sie .
+SFX 1183 Y 1
+SFX 1183 oko sie .
+PFX 1183 Y 1
+PFX 1183 0 naj .
+SFX 1184 N 1
+SFX 1184 oky si .
+SFX 1185 N 1
+SFX 1185 oky sieho .
+SFX 1186 N 1
+SFX 1186 oky siemu .
+SFX 1187 N 1
+SFX 1187 oky som .
+SFX 1188 N 1
+SFX 1188 oky sim .
+SFX 1189 N 1
+SFX 1189 oky sich .
+SFX 1190 N 1
+SFX 1190 oky simi .
+SFX 1191 N 1
+SFX 1191 oky sie .
+SFX 1192 N 1
+SFX 1192 oky sia .
+SFX 1193 N 1
+SFX 1193 oky sej .
+SFX 1194 N 1
+SFX 1194 oky siu .
+SFX 1195 N 1
+SFX 1195 oky sou .
+SFX 1196 Y 1
+SFX 1196 oky si .
+PFX 1196 Y 1
+PFX 1196 0 naj .
+SFX 1197 Y 1
+SFX 1197 oky sieho .
+PFX 1197 Y 1
+PFX 1197 0 naj .
+SFX 1198 Y 1
+SFX 1198 oky siemu .
+PFX 1198 Y 1
+PFX 1198 0 naj .
+SFX 1199 Y 1
+SFX 1199 oky som .
+PFX 1199 Y 1
+PFX 1199 0 naj .
+SFX 1200 Y 1
+SFX 1200 oky sim .
+PFX 1200 Y 1
+PFX 1200 0 naj .
+SFX 1201 Y 1
+SFX 1201 oky sich .
+PFX 1201 Y 1
+PFX 1201 0 naj .
+SFX 1202 Y 1
+SFX 1202 oky simi .
+PFX 1202 Y 1
+PFX 1202 0 naj .
+SFX 1203 Y 1
+SFX 1203 oky sie .
+PFX 1203 Y 1
+PFX 1203 0 naj .
+SFX 1204 Y 1
+SFX 1204 oky sia .
+PFX 1204 Y 1
+PFX 1204 0 naj .
+SFX 1205 Y 1
+SFX 1205 oky sej .
+PFX 1205 Y 1
+PFX 1205 0 naj .
+SFX 1206 Y 1
+SFX 1206 oky siu .
+PFX 1206 Y 1
+PFX 1206 0 naj .
+SFX 1207 Y 1
+SFX 1207 oky sou .
+PFX 1207 Y 1
+PFX 1207 0 naj .
+SFX 1208 Y 1
+SFX 1208 at ieme .
+PFX 1208 Y 1
+PFX 1208 h poze .
+SFX 1209 Y 1
+SFX 1209 at iete .
+PFX 1209 Y 1
+PFX 1209 h poze .
+SFX 1210 Y 1
+SFX 1210 at u .
+PFX 1210 Y 1
+PFX 1210 h poze .
+SFX 1211 Y 1
+SFX 1211 at iem .
+PFX 1211 Y 1
+PFX 1211 h poze .
+SFX 1212 Y 1
+SFX 1212 at ies .
+PFX 1212 Y 1
+PFX 1212 h poze .
+SFX 1213 Y 1
+SFX 1213 at ie .
+PFX 1213 Y 1
+PFX 1213 h poze .
+SFX 1214 Y 1
+SFX 1214 at iem .
+PFX 1214 Y 1
+PFX 1214 h ze .
+SFX 1215 Y 1
+SFX 1215 at ies .
+PFX 1215 Y 1
+PFX 1215 h ze .
+SFX 1216 Y 1
+SFX 1216 at ie .
+PFX 1216 Y 1
+PFX 1216 h ze .
+SFX 1217 Y 1
+SFX 1217 at ieme .
+PFX 1217 Y 1
+PFX 1217 h ze .
+SFX 1218 Y 1
+SFX 1218 at iete .
+PFX 1218 Y 1
+PFX 1218 h ze .
+SFX 1219 Y 1
+SFX 1219 at u .
+PFX 1219 Y 1
+PFX 1219 h ze .
+SFX 1220 Y 1
+SFX 1220 at 0 .
+PFX 1220 Y 1
+PFX 1220 h ze .
+SFX 1221 Y 1
+SFX 1221 at me .
+PFX 1221 Y 1
+PFX 1221 h ze .
+SFX 1222 Y 1
+SFX 1222 at te .
+PFX 1222 Y 1
+PFX 1222 h ze .
+SFX 1223 Y 1
+SFX 1223 at uc .
+PFX 1223 Y 1
+PFX 1223 h ze .
+SFX 1224 Y 1
+SFX 1224 t 0 .
+PFX 1224 Y 1
+PFX 1224 hn hnet .
+SFX 1225 N 1
+SFX 1225 ado iad .
+SFX 1226 N 1
+SFX 1226 le iel .
+SFX 1227 N 1
+SFX 1227 iebst ebiem .
+SFX 1228 N 1
+SFX 1228 iebst ebies .
+SFX 1229 N 1
+SFX 1229 iebst ebie .
+SFX 1230 N 1
+SFX 1230 iebst ebieme .
+SFX 1231 N 1
+SFX 1231 iebst ebiete .
+SFX 1232 N 1
+SFX 1232 iebst ebu .
+SFX 1233 N 1
+SFX 1233 iebst eb .
+SFX 1234 N 1
+SFX 1234 iebst ebme .
+SFX 1235 N 1
+SFX 1235 iebst ebte .
+SFX 1236 N 1
+SFX 1236 iebst ebuc .
+SFX 1237 N 1
+SFX 1237 st ol .
+SFX 1238 N 1
+SFX 1238 st la .
+SFX 1239 N 1
+SFX 1239 st lo .
+SFX 1240 N 1
+SFX 1240 st li .
+SFX 1241 N 1
+SFX 1241 iec ce .
+SFX 1242 N 1
+SFX 1242 iec cov .
+SFX 1243 N 1
+SFX 1243 iec coch .
+SFX 1244 N 1
+SFX 1244 iec cami .
+SFX 1245 Y 1
+SFX 1245 ut ieme .
+PFX 1245 Y 1
+PFX 1245 0 po .
+SFX 1246 Y 1
+SFX 1246 ut iete .
+PFX 1246 Y 1
+PFX 1246 0 po .
+SFX 1247 Y 1
+SFX 1247 t 0 .
+PFX 1247 Y 1
+PFX 1247 0 po .
+SFX 1248 Y 1
+SFX 1248 ut iem .
+PFX 1248 Y 1
+PFX 1248 0 po .
+SFX 1249 Y 1
+SFX 1249 ut ies .
+PFX 1249 Y 1
+PFX 1249 0 po .
+SFX 1250 Y 1
+SFX 1250 ut ie .
+PFX 1250 Y 1
+PFX 1250 0 po .
+SFX 1251 N 1
+SFX 1251 s a .
+SFX 1252 N 1
+SFX 1252 s ovi .
+SFX 1253 N 1
+SFX 1253 s om .
+SFX 1254 N 1
+SFX 1254 s ovia .
+SFX 1255 N 1
+SFX 1255 s ov .
+SFX 1256 N 1
+SFX 1256 s och .
+SFX 1257 N 1
+SFX 1257 st diem .
+SFX 1258 N 1
+SFX 1258 st dies .
+SFX 1259 N 1
+SFX 1259 st die .
+SFX 1260 N 1
+SFX 1260 st dieme .
+SFX 1261 N 1
+SFX 1261 st diete .
+SFX 1262 N 1
+SFX 1262 st d .
+SFX 1263 N 1
+SFX 1263 st dme .
+SFX 1264 N 1
+SFX 1264 st dte .
+SFX 1265 N 1
+SFX 1265 va ev .
+SFX 1266 N 1
+SFX 1266 la al .
+SFX 1267 N 1
+SFX 1267 um ier .
+PFX 1268 N 1
+PFX 1268 j mn .
+PFX 1269 N 1
+PFX 1269 j m .
+SFX 1270 N 1
+SFX 1270 ja mne .
+SFX 1271 N 1
+SFX 1271 ja mi .
+SFX 1272 N 1
+SFX 1272 ja mnou .
+SFX 1273 N 1
+SFX 1273 ada iad .
+SFX 1274 N 1
+SFX 1274 en nych .
+SFX 1275 N 1
+SFX 1275 en nym .
+SFX 1276 N 1
+SFX 1276 en nymi .
+SFX 1277 N 1
+SFX 1277 en nej .
+SFX 1278 N 1
+SFX 1278 en neho .
+SFX 1279 N 1
+SFX 1279 en nemu .
+SFX 1280 N 1
+SFX 1280 en no .
+SFX 1281 N 1
+SFX 1281 lo al .
+SFX 1282 N 1
+SFX 1282 ro ar .
+SFX 1283 N 1
+SFX 1283 ety iet .
+SFX 1284 Y 1
+SFX 1284 a 0 .
+PFX 1284 Y 1
+PFX 1284 k ki .
+SFX 1285 N 1
+SFX 1285 or rovia .
+SFX 1286 N 1
+SFX 1286 eso ies .
+SFX 1287 N 1
+SFX 1287 os e .
+PFX 1288 N 1
+PFX 1288 kt koh .
+PFX 1289 N 1
+PFX 1289 kto komu .
+PFX 1290 N 1
+PFX 1290 kto kom .
+PFX 1291 N 1
+PFX 1291 kto kym .
+PFX 1292 N 1
+PFX 1292 ktory ktore .
+PFX 1293 N 1
+PFX 1293 ktory ktorych .
+PFX 1294 N 1
+PFX 1294 ktory ktorym .
+PFX 1295 N 1
+PFX 1295 ktory ktorymi .
+PFX 1296 N 1
+PFX 1296 ktory ktora .
+PFX 1297 N 1
+PFX 1297 ktory ktorej .
+PFX 1298 N 1
+PFX 1298 ktory ktoru .
+PFX 1299 N 1
+PFX 1299 ktory ktorou .
+PFX 1300 N 1
+PFX 1300 ktory ktoreho .
+PFX 1301 N 1
+PFX 1301 ktory ktoremu .
+PFX 1302 N 1
+PFX 1302 ktory ktorom .
+PFX 1303 N 1
+PFX 1303 ktory ktori .
+SFX 1304 Y 1
+SFX 1304 ut eme .
+PFX 1304 Y 1
+PFX 1304 0 po .
+SFX 1305 Y 1
+SFX 1305 ut ete .
+PFX 1305 Y 1
+PFX 1305 0 po .
+SFX 1306 Y 1
+SFX 1306 ut em .
+PFX 1306 Y 1
+PFX 1306 0 po .
+SFX 1307 Y 1
+SFX 1307 ut es .
+PFX 1307 Y 1
+PFX 1307 0 po .
+SFX 1308 Y 1
+SFX 1308 ut e .
+PFX 1308 Y 1
+PFX 1308 0 po .
+SFX 1309 N 1
+SFX 1309 y ieho .
+SFX 1310 N 1
+SFX 1310 y iemu .
+SFX 1311 N 1
+SFX 1311 y ie .
+SFX 1312 N 1
+SFX 1312 et ta .
+SFX 1313 N 1
+SFX 1313 et ti .
+SFX 1314 N 1
+SFX 1314 ze hoze .
+PFX 1315 N 1
+PFX 1315 ky kieho .
+SFX 1316 N 1
+SFX 1316 ze muze .
+PFX 1317 N 1
+PFX 1317 ky kiemu .
+PFX 1318 N 1
+PFX 1318 ky kom .
+PFX 1319 N 1
+PFX 1319 ky ki .
+PFX 1320 N 1
+PFX 1320 ky ke .
+PFX 1321 N 1
+PFX 1321 ky kie .
+PFX 1322 N 1
+PFX 1322 ky ka .
+PFX 1323 N 1
+PFX 1323 ky kej .
+PFX 1324 N 1
+PFX 1324 ky ku .
+PFX 1325 N 1
+PFX 1325 ky kou .
+PFX 1326 N 1
+PFX 1326 ky keho .
+PFX 1327 N 1
+PFX 1327 ky kemu .
+SFX 1328 Y 1
+SFX 1328 a 0 .
+PFX 1328 Y 1
+PFX 1328 kl kli .
+SFX 1329 N 1
+SFX 1329 no en .
+SFX 1330 N 1
+SFX 1330 enda iend .
+SFX 1331 N 1
+SFX 1331 no iel .
+SFX 1332 Y 1
+SFX 1332 a 0 .
+PFX 1332 Y 1
+PFX 1332 l li .
+SFX 1333 Y 1
+SFX 1333 0 i .
+PFX 1333 Y 1
+PFX 1333 le l .
+SFX 1334 Y 1
+SFX 1334 0 ou .
+PFX 1334 Y 1
+PFX 1334 le l .
+SFX 1335 Y 1
+SFX 1335 0 iam .
+PFX 1335 Y 1
+PFX 1335 le l .
+SFX 1336 Y 1
+SFX 1336 0 iach .
+PFX 1336 Y 1
+PFX 1336 le l .
+SFX 1337 Y 1
+SFX 1337 0 ami .
+PFX 1337 Y 1
+PFX 1337 le l .
+SFX 1338 Y 1
+SFX 1338 et me .
+PFX 1338 Y 1
+PFX 1338 0 po .
+SFX 1339 Y 1
+SFX 1339 et te .
+PFX 1339 Y 1
+PFX 1339 0 po .
+SFX 1340 Y 1
+SFX 1340 et a .
+PFX 1340 Y 1
+PFX 1340 0 po .
+SFX 1341 Y 1
+SFX 1341 et m .
+PFX 1341 Y 1
+PFX 1341 0 po .
+SFX 1342 Y 1
+SFX 1342 et s .
+PFX 1342 Y 1
+PFX 1342 0 po .
+SFX 1343 Y 1
+SFX 1343 et 0 .
+PFX 1343 Y 1
+PFX 1343 0 po .
+SFX 1344 Y 1
+SFX 1344 o 0 .
+PFX 1344 Y 1
+PFX 1344 l li .
+SFX 1345 N 1
+SFX 1345 ik kovi .
+SFX 1346 Y 1
+SFX 1346 zt ieme .
+PFX 1346 Y 1
+PFX 1346 l pol .
+SFX 1347 Y 1
+SFX 1347 zt iete .
+PFX 1347 Y 1
+PFX 1347 l pol .
+SFX 1348 Y 1
+SFX 1348 t u .
+PFX 1348 Y 1
+PFX 1348 li pol .
+SFX 1349 Y 1
+SFX 1349 zt iem .
+PFX 1349 Y 1
+PFX 1349 l pol .
+SFX 1350 Y 1
+SFX 1350 zt ies .
+PFX 1350 Y 1
+PFX 1350 l pol .
+SFX 1351 Y 1
+SFX 1351 zt ie .
+PFX 1351 Y 1
+PFX 1351 l pol .
+SFX 1352 Y 1
+SFX 1352 zt iem .
+PFX 1352 Y 1
+PFX 1352 l l .
+SFX 1353 Y 1
+SFX 1353 zt ies .
+PFX 1353 Y 1
+PFX 1353 l l .
+SFX 1354 Y 1
+SFX 1354 zt ie .
+PFX 1354 Y 1
+PFX 1354 l l .
+SFX 1355 Y 1
+SFX 1355 zt ieme .
+PFX 1355 Y 1
+PFX 1355 l l .
+SFX 1356 Y 1
+SFX 1356 zt iete .
+PFX 1356 Y 1
+PFX 1356 l l .
+SFX 1357 Y 1
+SFX 1357 t u .
+PFX 1357 Y 1
+PFX 1357 li l .
+SFX 1358 Y 1
+SFX 1358 t 0 .
+PFX 1358 Y 1
+PFX 1358 li l .
+SFX 1359 Y 1
+SFX 1359 t me .
+PFX 1359 Y 1
+PFX 1359 li l .
+SFX 1360 Y 1
+SFX 1360 0 e .
+PFX 1360 Y 1
+PFX 1360 li l .
+SFX 1361 Y 1
+SFX 1361 t uc .
+PFX 1361 Y 1
+PFX 1361 li l .
+SFX 1362 N 1
+SFX 1362 en novi .
+SFX 1363 N 1
+SFX 1363 oz zi .
+SFX 1364 N 1
+SFX 1364 oz zou .
+SFX 1365 N 1
+SFX 1365 oz ziam .
+SFX 1366 N 1
+SFX 1366 oz ziach .
+SFX 1367 N 1
+SFX 1367 oz zami .
+SFX 1368 N 1
+SFX 1368 hat zem .
+SFX 1369 N 1
+SFX 1369 hat zes .
+SFX 1370 N 1
+SFX 1370 hat ze .
+SFX 1371 N 1
+SFX 1371 hat zeme .
+SFX 1372 N 1
+SFX 1372 hat zete .
+SFX 1373 N 1
+SFX 1373 hat zu .
+SFX 1374 N 1
+SFX 1374 hat z .
+SFX 1375 N 1
+SFX 1375 hat zme .
+SFX 1376 N 1
+SFX 1376 hat zte .
+SFX 1377 N 1
+SFX 1377 hat zuc .
+SFX 1378 N 1
+SFX 1378 esto iest .
+SFX 1379 N 1
+SFX 1379 aly ensi .
+SFX 1380 N 1
+SFX 1380 aly ensieho .
+SFX 1381 N 1
+SFX 1381 aly ensiemu .
+SFX 1382 N 1
+SFX 1382 aly ensom .
+SFX 1383 N 1
+SFX 1383 aly ensim .
+SFX 1384 N 1
+SFX 1384 aly ensich .
+SFX 1385 N 1
+SFX 1385 aly ensimi .
+SFX 1386 N 1
+SFX 1386 aly ensie .
+SFX 1387 N 1
+SFX 1387 aly ensia .
+SFX 1388 N 1
+SFX 1388 aly ensej .
+SFX 1389 N 1
+SFX 1389 aly ensiu .
+SFX 1390 N 1
+SFX 1390 aly ensou .
+SFX 1391 Y 1
+SFX 1391 aly jmensi .
+PFX 1391 Y 1
+PFX 1391 0 n .
+SFX 1392 Y 1
+SFX 1392 aly jmensieho .
+PFX 1392 Y 1
+PFX 1392 0 n .
+SFX 1393 Y 1
+SFX 1393 aly jmensiemu .
+PFX 1393 Y 1
+PFX 1393 0 n .
+SFX 1394 Y 1
+SFX 1394 aly jmensom .
+PFX 1394 Y 1
+PFX 1394 0 n .
+SFX 1395 Y 1
+SFX 1395 aly jmensim .
+PFX 1395 Y 1
+PFX 1395 0 n .
+SFX 1396 Y 1
+SFX 1396 aly jmensich .
+PFX 1396 Y 1
+PFX 1396 0 n .
+SFX 1397 Y 1
+SFX 1397 aly jmensimi .
+PFX 1397 Y 1
+PFX 1397 0 n .
+SFX 1398 Y 1
+SFX 1398 aly jmensie .
+PFX 1398 Y 1
+PFX 1398 0 n .
+SFX 1399 Y 1
+SFX 1399 aly jmensia .
+PFX 1399 Y 1
+PFX 1399 0 n .
+SFX 1400 Y 1
+SFX 1400 aly jmensej .
+PFX 1400 Y 1
+PFX 1400 0 n .
+SFX 1401 Y 1
+SFX 1401 aly jmensiu .
+PFX 1401 Y 1
+PFX 1401 0 n .
+SFX 1402 Y 1
+SFX 1402 aly jmensou .
+PFX 1402 Y 1
+PFX 1402 0 n .
+SFX 1403 N 1
+SFX 1403 i ere .
+SFX 1404 N 1
+SFX 1404 i eri .
+SFX 1405 N 1
+SFX 1405 i erou .
+SFX 1406 N 1
+SFX 1406 i eriam .
+SFX 1407 N 1
+SFX 1407 i eriach .
+SFX 1408 N 1
+SFX 1408 i erami .
+SFX 1409 N 1
+SFX 1409 0 ere .
+SFX 1410 N 1
+SFX 1410 0 eri .
+SFX 1411 N 1
+SFX 1411 0 erou .
+SFX 1412 N 1
+SFX 1412 0 eriam .
+SFX 1413 N 1
+SFX 1413 0 eriach .
+SFX 1414 N 1
+SFX 1414 0 erami .
+SFX 1415 Y 1
+SFX 1415 a 0 .
+PFX 1415 Y 1
+PFX 1415 m mi .
+SFX 1416 Y 1
+SFX 1416 o 0 .
+PFX 1416 Y 1
+PFX 1416 m mi .
+SFX 1417 N 1
+SFX 1417 g mog .
+SFX 1418 N 1
+SFX 1418 iast atiem .
+SFX 1419 N 1
+SFX 1419 iast aties .
+SFX 1420 N 1
+SFX 1420 iast atie .
+SFX 1421 N 1
+SFX 1421 iast atieme .
+SFX 1422 N 1
+SFX 1422 iast atiete .
+SFX 1423 N 1
+SFX 1423 iast atu .
+SFX 1424 N 1
+SFX 1424 iast at .
+SFX 1425 N 1
+SFX 1425 iast atme .
+SFX 1426 N 1
+SFX 1426 iast atte .
+SFX 1427 N 1
+SFX 1427 iast atuc .
+SFX 1428 Y 1
+SFX 1428 st m .
+PFX 1428 Y 1
+PFX 1428 m met .
+SFX 1429 Y 1
+SFX 1429 t 0 .
+PFX 1429 Y 1
+PFX 1429 m met .
+SFX 1430 Y 1
+SFX 1430 st 0 .
+PFX 1430 Y 1
+PFX 1430 m met .
+SFX 1431 Y 1
+SFX 1431 st me .
+PFX 1431 Y 1
+PFX 1431 m met .
+SFX 1432 Y 1
+SFX 1432 st te .
+PFX 1432 Y 1
+PFX 1432 m met .
+SFX 1433 N 1
+SFX 1433 aty iat .
+SFX 1434 N 1
+SFX 1434 i ych .
+SFX 1435 N 1
+SFX 1435 i ym .
+SFX 1436 N 1
+SFX 1436 i ymi .
+SFX 1437 Y 1
+SFX 1437 t m .
+PFX 1437 Y 1
+PFX 1437 m me .
+SFX 1438 Y 1
+SFX 1438 t s .
+PFX 1438 Y 1
+PFX 1438 m me .
+SFX 1439 Y 1
+SFX 1439 t 0 .
+PFX 1439 Y 1
+PFX 1439 m me .
+SFX 1440 Y 1
+SFX 1440 t me .
+PFX 1440 Y 1
+PFX 1440 m me .
+SFX 1441 Y 1
+SFX 1441 0 e .
+PFX 1441 Y 1
+PFX 1441 m me .
+SFX 1442 N 1
+SFX 1442 mnoho viacej .
+SFX 1443 N 1
+SFX 1443 mnoho viac .
+SFX 1444 Y 1
+SFX 1444 oho ajviacej .
+PFX 1444 Y 1
+PFX 1444 m 0 .
+SFX 1445 Y 1
+SFX 1445 oho ajviac .
+PFX 1445 Y 1
+PFX 1445 m 0 .
+SFX 1446 N 1
+SFX 1446 og gu .
+SFX 1447 N 1
+SFX 1447 og gom .
+SFX 1448 N 1
+SFX 1448 og gy .
+SFX 1449 N 1
+SFX 1449 og gov .
+SFX 1450 N 1
+SFX 1450 og goch .
+SFX 1451 N 1
+SFX 1451 og gami .
+SFX 1452 N 1
+SFX 1452 ik kovia .
+SFX 1453 N 1
+SFX 1453 my nas .
+SFX 1454 Y 1
+SFX 1454 y 0 .
+PFX 1454 Y 1
+PFX 1454 0 na .
+SFX 1455 Y 1
+SFX 1455 y i .
+PFX 1455 Y 1
+PFX 1455 0 na .
+SFX 1456 N 1
+SFX 1456 el lou .
+SFX 1457 N 1
+SFX 1457 el liam .
+SFX 1458 N 1
+SFX 1458 el liach .
+SFX 1459 Y 1
+SFX 1459 a 0 .
+PFX 1459 Y 1
+PFX 1459 m mie .
+SFX 1460 N 1
+SFX 1460 alo enej .
+SFX 1461 Y 1
+SFX 1461 alo jmenej .
+PFX 1461 Y 1
+PFX 1461 0 n .
+SFX 1462 N 1
+SFX 1462 vec ca .
+SFX 1463 N 1
+SFX 1463 vec cu .
+SFX 1464 N 1
+SFX 1464 vec ci .
+SFX 1465 N 1
+SFX 1465 vec com .
+SFX 1466 N 1
+SFX 1466 vec ce .
+SFX 1467 N 1
+SFX 1467 vec cov .
+SFX 1468 N 1
+SFX 1468 vec coch .
+SFX 1469 N 1
+SFX 1469 vec cami .
+SFX 1470 N 1
+SFX 1470 t iel .
+SFX 1471 N 1
+SFX 1471 k ce .
+SFX 1472 N 1
+SFX 1472 clovek ludia .
+SFX 1473 N 1
+SFX 1473 clovek ludi .
+SFX 1474 N 1
+SFX 1474 clovek ludom .
+SFX 1475 N 1
+SFX 1475 clovek ludoch .
+SFX 1476 N 1
+SFX 1476 clovek ludmi .
+SFX 1477 Y 1
+SFX 1477 0 e .
+PFX 1477 Y 1
+PFX 1477 nam name .
+SFX 1478 N 1
+SFX 1478 lat eliem .
+SFX 1479 N 1
+SFX 1479 lat elies .
+SFX 1480 N 1
+SFX 1480 lat elie .
+SFX 1481 N 1
+SFX 1481 lat elieme .
+SFX 1482 N 1
+SFX 1482 lat eliete .
+SFX 1483 N 1
+SFX 1483 lat elu .
+SFX 1484 N 1
+SFX 1484 lat el .
+SFX 1485 N 1
+SFX 1485 lat elme .
+SFX 1486 N 1
+SFX 1486 lat elte .
+SFX 1487 N 1
+SFX 1487 lat eluc .
+SFX 1488 Y 1
+SFX 1488 ko sie .
+PFX 1488 Y 1
+PFX 1488 na nanaj .
+SFX 1489 N 1
+SFX 1489 iast asiem .
+SFX 1490 N 1
+SFX 1490 iast asies .
+SFX 1491 N 1
+SFX 1491 iast asie .
+SFX 1492 N 1
+SFX 1492 iast asieme .
+SFX 1493 N 1
+SFX 1493 iast asiete .
+SFX 1494 N 1
+SFX 1494 iast asu .
+SFX 1495 N 1
+SFX 1495 iast as .
+SFX 1496 N 1
+SFX 1496 iast asme .
+SFX 1497 N 1
+SFX 1497 iast aste .
+SFX 1498 N 1
+SFX 1498 iast asuc .
+SFX 1499 N 1
+SFX 1499 esia ies .
+SFX 1500 Y 1
+SFX 1500 at ime .
+PFX 1500 Y 1
+PFX 1500 ne nepo .
+SFX 1501 Y 1
+SFX 1501 at ite .
+PFX 1501 Y 1
+PFX 1501 ne nepo .
+SFX 1502 Y 1
+SFX 1502 at ia .
+PFX 1502 Y 1
+PFX 1502 ne nepo .
+SFX 1503 Y 1
+SFX 1503 at im .
+PFX 1503 Y 1
+PFX 1503 ne nepo .
+SFX 1504 Y 1
+SFX 1504 at is .
+PFX 1504 Y 1
+PFX 1504 ne nepo .
+SFX 1505 Y 1
+SFX 1505 at i .
+PFX 1505 Y 1
+PFX 1505 ne nepo .
+SFX 1506 N 1
+SFX 1506 ebyt ieto .
+SFX 1507 N 1
+SFX 1507 ebyt iet .
+SFX 1508 N 1
+SFX 1508 byt ni .
+SFX 1509 Y 1
+SFX 1509 ovat ujeme .
+PFX 1509 Y 1
+PFX 1509 ne nepo .
+SFX 1510 Y 1
+SFX 1510 ovat ujete .
+PFX 1510 Y 1
+PFX 1510 ne nepo .
+SFX 1511 Y 1
+SFX 1511 ovat uju .
+PFX 1511 Y 1
+PFX 1511 ne nepo .
+SFX 1512 Y 1
+SFX 1512 ovat ujem .
+PFX 1512 Y 1
+PFX 1512 ne nepo .
+SFX 1513 Y 1
+SFX 1513 ovat ujes .
+PFX 1513 Y 1
+PFX 1513 ne nepo .
+SFX 1514 Y 1
+SFX 1514 ovat uje .
+PFX 1514 Y 1
+PFX 1514 ne nepo .
+SFX 1515 N 1
+SFX 1515 ciet tiac .
+SFX 1516 N 1
+SFX 1516 liet eliete .
+SFX 1517 Y 1
+SFX 1517 a 0 .
+PFX 1517 Y 1
+PFX 1517 n ni .
+SFX 1518 N 1
+SFX 1518 hnat pozenieme .
+SFX 1519 N 1
+SFX 1519 hnat pozeniete .
+SFX 1520 N 1
+SFX 1520 hnat pozenu .
+SFX 1521 N 1
+SFX 1521 hnat pozeniem .
+SFX 1522 N 1
+SFX 1522 hnat pozenies .
+SFX 1523 N 1
+SFX 1523 hnat pozenie .
+SFX 1524 Y 1
+SFX 1524 ut ieme .
+PFX 1524 Y 1
+PFX 1524 ne nepo .
+SFX 1525 Y 1
+SFX 1525 ut iete .
+PFX 1525 Y 1
+PFX 1525 ne nepo .
+SFX 1526 Y 1
+SFX 1526 t 0 .
+PFX 1526 Y 1
+PFX 1526 ne nepo .
+SFX 1527 Y 1
+SFX 1527 ut iem .
+PFX 1527 Y 1
+PFX 1527 ne nepo .
+SFX 1528 Y 1
+SFX 1528 ut ies .
+PFX 1528 Y 1
+PFX 1528 ne nepo .
+SFX 1529 Y 1
+SFX 1529 ut ie .
+PFX 1529 Y 1
+PFX 1529 ne nepo .
+SFX 1530 N 1
+SFX 1530 jst pojdeme .
+SFX 1531 N 1
+SFX 1531 jst pojdete .
+SFX 1532 N 1
+SFX 1532 jst pojdu .
+SFX 1533 N 1
+SFX 1533 jst pojdem .
+SFX 1534 N 1
+SFX 1534 jst pojdes .
+SFX 1535 N 1
+SFX 1535 jst pojde .
+SFX 1536 N 1
+SFX 1536 jst chod .
+SFX 1537 N 1
+SFX 1537 jst id .
+SFX 1538 N 1
+SFX 1538 jst pod .
+SFX 1539 N 1
+SFX 1539 jst podme .
+SFX 1540 N 1
+SFX 1540 jst chodme .
+SFX 1541 N 1
+SFX 1541 jst idme .
+SFX 1542 N 1
+SFX 1542 jst idte .
+SFX 1543 N 1
+SFX 1543 jst chodte .
+SFX 1544 N 1
+SFX 1544 jst podte .
+SFX 1545 N 1
+SFX 1545 jst isiel .
+SFX 1546 N 1
+SFX 1546 jst isla .
+SFX 1547 N 1
+SFX 1547 jst islo .
+SFX 1548 N 1
+SFX 1548 jst isli .
+SFX 1549 Y 1
+SFX 1549 ut eme .
+PFX 1549 Y 1
+PFX 1549 ne nepo .
+SFX 1550 Y 1
+SFX 1550 ut ete .
+PFX 1550 Y 1
+PFX 1550 ne nepo .
+SFX 1551 Y 1
+SFX 1551 ut em .
+PFX 1551 Y 1
+PFX 1551 ne nepo .
+SFX 1552 Y 1
+SFX 1552 ut es .
+PFX 1552 Y 1
+PFX 1552 ne nepo .
+SFX 1553 Y 1
+SFX 1553 ut e .
+PFX 1553 Y 1
+PFX 1553 ne nepo .
+SFX 1554 Y 1
+SFX 1554 et me .
+PFX 1554 Y 1
+PFX 1554 ne nepo .
+SFX 1555 Y 1
+SFX 1555 et te .
+PFX 1555 Y 1
+PFX 1555 ne nepo .
+SFX 1556 Y 1
+SFX 1556 et a .
+PFX 1556 Y 1
+PFX 1556 ne nepo .
+SFX 1557 Y 1
+SFX 1557 et m .
+PFX 1557 Y 1
+PFX 1557 ne nepo .
+SFX 1558 Y 1
+SFX 1558 et s .
+PFX 1558 Y 1
+PFX 1558 ne nepo .
+SFX 1559 Y 1
+SFX 1559 et 0 .
+PFX 1559 Y 1
+PFX 1559 ne nepo .
+SFX 1560 N 1
+SFX 1560 liezt polezieme .
+SFX 1561 N 1
+SFX 1561 liezt poleziete .
+SFX 1562 N 1
+SFX 1562 liezt polezu .
+SFX 1563 N 1
+SFX 1563 liezt poleziem .
+SFX 1564 N 1
+SFX 1564 liezt polezies .
+SFX 1565 N 1
+SFX 1565 liezt polezie .
+SFX 1566 Y 1
+SFX 1566 0 e .
+PFX 1566 Y 1
+PFX 1566 nem neme .
+SFX 1567 N 1
+SFX 1567 niest ponesieme .
+SFX 1568 N 1
+SFX 1568 niest ponesiete .
+SFX 1569 N 1
+SFX 1569 niest ponesu .
+SFX 1570 N 1
+SFX 1570 niest ponesiem .
+SFX 1571 Y 1
+SFX 1571 t 0 .
+PFX 1571 Y 1
+PFX 1571 nen nepones .
+SFX 1572 N 1
+SFX 1572 niest ponesie .
+SFX 1573 N 1
+SFX 1573 at imem .
+SFX 1574 N 1
+SFX 1574 at imes .
+SFX 1575 N 1
+SFX 1575 at imeme .
+SFX 1576 N 1
+SFX 1576 at imete .
+SFX 1577 N 1
+SFX 1577 at imu .
+SFX 1578 N 1
+SFX 1578 at imme .
+SFX 1579 N 1
+SFX 1579 at imte .
+SFX 1580 N 1
+SFX 1580 at imuc .
+SFX 1581 N 1
+SFX 1581 ast ediem .
+SFX 1582 N 1
+SFX 1582 ast edas .
+SFX 1583 N 1
+SFX 1583 ast die .
+SFX 1584 N 1
+SFX 1584 ast edame .
+SFX 1585 N 1
+SFX 1585 ast edate .
+SFX 1586 N 1
+SFX 1586 ast du .
+SFX 1587 N 1
+SFX 1587 ast d .
+SFX 1588 N 1
+SFX 1588 ast edme .
+SFX 1589 N 1
+SFX 1589 ast edte .
+SFX 1590 N 1
+SFX 1590 ast educ .
+SFX 1591 N 1
+SFX 1591 echa iech .
+SFX 1592 N 1
+SFX 1592 knut ol .
+SFX 1593 N 1
+SFX 1593 knut la .
+SFX 1594 N 1
+SFX 1594 knut lo .
+SFX 1595 N 1
+SFX 1595 knut li .
+SFX 1596 Y 1
+SFX 1596 t me .
+PFX 1596 Y 1
+PFX 1596 ne nepo .
+SFX 1597 Y 1
+SFX 1597 0 e .
+PFX 1597 Y 1
+PFX 1597 ne nepo .
+SFX 1598 Y 1
+SFX 1598 t ju .
+PFX 1598 Y 1
+PFX 1598 ne nepo .
+SFX 1599 Y 1
+SFX 1599 t m .
+PFX 1599 Y 1
+PFX 1599 ne nepo .
+SFX 1600 Y 1
+SFX 1600 t s .
+PFX 1600 Y 1
+PFX 1600 ne nepo .
+SFX 1601 N 1
+SFX 1601 t vem .
+SFX 1602 N 1
+SFX 1602 t ves .
+SFX 1603 N 1
+SFX 1603 t ve .
+SFX 1604 N 1
+SFX 1604 t veme .
+SFX 1605 N 1
+SFX 1605 t vete .
+SFX 1606 N 1
+SFX 1606 t vu .
+SFX 1607 N 1
+SFX 1607 t vuc .
+SFX 1608 N 1
+SFX 1608 nat jmem .
+SFX 1609 N 1
+SFX 1609 nat jmes .
+SFX 1610 N 1
+SFX 1610 nat jme .
+SFX 1611 N 1
+SFX 1611 nat jmeme .
+SFX 1612 N 1
+SFX 1612 nat jmete .
+SFX 1613 N 1
+SFX 1613 nat jmu .
+SFX 1614 N 1
+SFX 1614 nat jmi .
+SFX 1615 N 1
+SFX 1615 nat jmime .
+SFX 1616 N 1
+SFX 1616 nat jmite .
+SFX 1617 N 1
+SFX 1617 nat jmuc .
+SFX 1618 N 1
+SFX 1618 ziat ezmem .
+SFX 1619 N 1
+SFX 1619 ziat ezmes .
+SFX 1620 N 1
+SFX 1620 ziat ezme .
+SFX 1621 N 1
+SFX 1621 ziat ezmeme .
+SFX 1622 N 1
+SFX 1622 ziat ezmete .
+SFX 1623 N 1
+SFX 1623 ziat ezmu .
+SFX 1624 N 1
+SFX 1624 ziat ezmi .
+SFX 1625 N 1
+SFX 1625 ziat ezmime .
+SFX 1626 N 1
+SFX 1626 ziat ezmite .
+SFX 1627 N 1
+SFX 1627 ziat ezmuc .
+SFX 1628 N 1
+SFX 1628 iat al .
+SFX 1629 N 1
+SFX 1629 iat ala .
+SFX 1630 N 1
+SFX 1630 iat alo .
+SFX 1631 N 1
+SFX 1631 iat ali .
+SFX 1632 N 1
+SFX 1632 iezt esiez .
+SFX 1633 N 1
+SFX 1633 iezt esieme .
+SFX 1634 N 1
+SFX 1634 iezt esiete .
+SFX 1635 N 1
+SFX 1635 rsat oprsime .
+SFX 1636 N 1
+SFX 1636 rsat oprsite .
+SFX 1637 N 1
+SFX 1637 rsat oprsia .
+SFX 1638 N 1
+SFX 1638 rsat oprsim .
+SFX 1639 N 1
+SFX 1639 rsat oprsis .
+SFX 1640 N 1
+SFX 1640 rsat oprsi .
+SFX 1641 N 1
+SFX 1641 utovat oputujeme .
+SFX 1642 N 1
+SFX 1642 utovat oputujete .
+SFX 1643 N 1
+SFX 1643 utovat oputuju .
+SFX 1644 N 1
+SFX 1644 utovat oputujem .
+SFX 1645 N 1
+SFX 1645 utovat oputujes .
+SFX 1646 N 1
+SFX 1646 utovat oputuje .
+SFX 1647 N 1
+SFX 1647 tat otnem .
+SFX 1648 N 1
+SFX 1648 tat otnes .
+SFX 1649 N 1
+SFX 1649 tat otne .
+SFX 1650 N 1
+SFX 1650 tat otneme .
+SFX 1651 N 1
+SFX 1651 tat otnete .
+SFX 1652 N 1
+SFX 1652 tat otnu .
+SFX 1653 N 1
+SFX 1653 tat otni .
+SFX 1654 N 1
+SFX 1654 tat otnime .
+SFX 1655 N 1
+SFX 1655 tat otnite .
+SFX 1656 N 1
+SFX 1656 tat otnuc .
+SFX 1657 N 1
+SFX 1657 0 sej .
+SFX 1658 Y 1
+SFX 1658 0 sej .
+PFX 1658 Y 1
+PFX 1658 0 naj .
+SFX 1659 Y 1
+SFX 1659 0 ieme .
+PFX 1659 Y 1
+PFX 1659 ne nepo .
+SFX 1660 Y 1
+SFX 1660 0 iete .
+PFX 1660 Y 1
+PFX 1660 ne nepo .
+SFX 1661 Y 1
+SFX 1661 0 u .
+PFX 1661 Y 1
+PFX 1661 ne nepo .
+SFX 1662 Y 1
+SFX 1662 0 iem .
+PFX 1662 Y 1
+PFX 1662 ne nepo .
+SFX 1663 Y 1
+SFX 1663 0 ies .
+PFX 1663 Y 1
+PFX 1663 ne nepo .
+SFX 1664 Y 1
+SFX 1664 0 ie .
+PFX 1664 Y 1
+PFX 1664 ne nepo .
+SFX 1665 Y 1
+SFX 1665 t a .
+PFX 1665 Y 1
+PFX 1665 ne nepo .
+SFX 1666 Y 1
+SFX 1666 o 0 .
+PFX 1666 Y 1
+PFX 1666 0 naj .
+SFX 1667 N 1
+SFX 1667 zt hol .
+SFX 1668 N 1
+SFX 1668 zt hla .
+SFX 1669 N 1
+SFX 1669 zt hlo .
+SFX 1670 N 1
+SFX 1670 zt hli .
+SFX 1671 N 1
+SFX 1671 at zem .
+SFX 1672 N 1
+SFX 1672 at zes .
+SFX 1673 N 1
+SFX 1673 at ze .
+SFX 1674 N 1
+SFX 1674 at zeme .
+SFX 1675 N 1
+SFX 1675 at zete .
+SFX 1676 N 1
+SFX 1676 at zu .
+SFX 1677 N 1
+SFX 1677 at zuc .
+SFX 1678 N 1
+SFX 1678 iet z .
+SFX 1679 N 1
+SFX 1679 iet zme .
+SFX 1680 N 1
+SFX 1680 iet zte .
+SFX 1681 N 1
+SFX 1681 viest povedieme .
+SFX 1682 N 1
+SFX 1682 viest povediete .
+SFX 1683 N 1
+SFX 1683 viest povedu .
+SFX 1684 N 1
+SFX 1684 viest povediem .
+SFX 1685 Y 1
+SFX 1685 t 0 .
+PFX 1685 Y 1
+PFX 1685 nev nepoved .
+SFX 1686 N 1
+SFX 1686 viest povedie .
+SFX 1687 N 1
+SFX 1687 viezt povezieme .
+SFX 1688 N 1
+SFX 1688 viezt poveziete .
+SFX 1689 N 1
+SFX 1689 viezt povezu .
+SFX 1690 N 1
+SFX 1690 viezt poveziem .
+SFX 1691 N 1
+SFX 1691 viezt povezies .
+SFX 1692 N 1
+SFX 1692 viezt povezie .
+SFX 1693 N 1
+SFX 1693 vliect povlecieme .
+SFX 1694 N 1
+SFX 1694 vliect povleciete .
+SFX 1695 N 1
+SFX 1695 vliect povlecu .
+SFX 1696 N 1
+SFX 1696 vliect povleciem .
+SFX 1697 N 1
+SFX 1697 vliect povlecies .
+SFX 1698 N 1
+SFX 1698 vliect povlecie .
+SFX 1699 N 1
+SFX 1699 ba d .
+SFX 1700 N 1
+SFX 1700 ist pojdeme .
+SFX 1701 N 1
+SFX 1701 ist pojdete .
+SFX 1702 N 1
+SFX 1702 ist pojdu .
+SFX 1703 N 1
+SFX 1703 ist pojdem .
+SFX 1704 N 1
+SFX 1704 ist pojdes .
+SFX 1705 N 1
+SFX 1705 ist pojde .
+SFX 1706 N 1
+SFX 1706 ist chod .
+SFX 1707 N 1
+SFX 1707 ist pod .
+SFX 1708 N 1
+SFX 1708 ist podme .
+SFX 1709 N 1
+SFX 1709 ist chodme .
+SFX 1710 N 1
+SFX 1710 ist podte .
+SFX 1711 N 1
+SFX 1711 ist chodte .
+SFX 1712 N 1
+SFX 1712 ist siel .
+SFX 1713 N 1
+SFX 1713 ist sla .
+SFX 1714 N 1
+SFX 1714 ist slo .
+SFX 1715 N 1
+SFX 1715 ist sli .
+SFX 1716 N 1
+SFX 1716 otat cem .
+SFX 1717 N 1
+SFX 1717 otat tam .
+SFX 1718 N 1
+SFX 1718 otat ces .
+SFX 1719 N 1
+SFX 1719 otat tas .
+SFX 1720 N 1
+SFX 1720 otat ce .
+SFX 1721 N 1
+SFX 1721 otat ta .
+SFX 1722 N 1
+SFX 1722 otat ceme .
+SFX 1723 N 1
+SFX 1723 otat tame .
+SFX 1724 N 1
+SFX 1724 otat cete .
+SFX 1725 N 1
+SFX 1725 otat tate .
+SFX 1726 N 1
+SFX 1726 otat cu .
+SFX 1727 N 1
+SFX 1727 otat taju .
+SFX 1728 N 1
+SFX 1728 otat ci .
+SFX 1729 N 1
+SFX 1729 otat taj .
+SFX 1730 N 1
+SFX 1730 otat cime .
+SFX 1731 N 1
+SFX 1731 otat tajme .
+SFX 1732 N 1
+SFX 1732 otat cite .
+SFX 1733 N 1
+SFX 1733 otat tajte .
+SFX 1734 N 1
+SFX 1734 otat tajuc .
+SFX 1735 N 1
+SFX 1735 otat tal .
+SFX 1736 N 1
+SFX 1736 otat tala .
+SFX 1737 N 1
+SFX 1737 otat talo .
+SFX 1738 N 1
+SFX 1738 otat tali .
+SFX 1739 Y 1
+SFX 1739 st ieme .
+PFX 1739 Y 1
+PFX 1739 n pon .
+SFX 1740 Y 1
+SFX 1740 st iete .
+PFX 1740 Y 1
+PFX 1740 n pon .
+SFX 1741 Y 1
+SFX 1741 t u .
+PFX 1741 Y 1
+PFX 1741 ni pon .
+SFX 1742 Y 1
+SFX 1742 st iem .
+PFX 1742 Y 1
+PFX 1742 n pon .
+SFX 1743 Y 1
+SFX 1743 t 0 .
+PFX 1743 Y 1
+PFX 1743 n pones .
+SFX 1744 Y 1
+SFX 1744 st ie .
+PFX 1744 Y 1
+PFX 1744 n pon .
+SFX 1745 Y 1
+SFX 1745 st iem .
+PFX 1745 Y 1
+PFX 1745 n n .
+SFX 1746 Y 1
+SFX 1746 t 0 .
+PFX 1746 Y 1
+PFX 1746 n nes .
+SFX 1747 Y 1
+SFX 1747 st ie .
+PFX 1747 Y 1
+PFX 1747 n n .
+SFX 1748 Y 1
+SFX 1748 st ieme .
+PFX 1748 Y 1
+PFX 1748 n n .
+SFX 1749 Y 1
+SFX 1749 st iete .
+PFX 1749 Y 1
+PFX 1749 n n .
+SFX 1750 Y 1
+SFX 1750 t u .
+PFX 1750 Y 1
+PFX 1750 ni n .
+SFX 1751 Y 1
+SFX 1751 t 0 .
+PFX 1751 Y 1
+PFX 1751 ni n .
+SFX 1752 Y 1
+SFX 1752 t me .
+PFX 1752 Y 1
+PFX 1752 ni n .
+SFX 1753 Y 1
+SFX 1753 0 e .
+PFX 1753 Y 1
+PFX 1753 ni n .
+SFX 1754 Y 1
+SFX 1754 t uc .
+PFX 1754 Y 1
+PFX 1754 ni n .
+SFX 1755 N 1
+SFX 1755 0 oho .
+SFX 1756 N 1
+SFX 1756 0 omu .
+SFX 1757 N 1
+SFX 1757 om mu .
+SFX 1758 N 1
+SFX 1758 om me .
+SFX 1759 N 1
+SFX 1759 om mom .
+SFX 1760 N 1
+SFX 1760 om my .
+SFX 1761 N 1
+SFX 1761 om mov .
+SFX 1762 N 1
+SFX 1762 om moch .
+SFX 1763 N 1
+SFX 1763 om mami .
+SFX 1764 N 1
+SFX 1764 ov vu .
+SFX 1765 N 1
+SFX 1765 ov ve .
+SFX 1766 N 1
+SFX 1766 ov vom .
+SFX 1767 N 1
+SFX 1767 ov vy .
+SFX 1768 N 1
+SFX 1768 ov vov .
+SFX 1769 N 1
+SFX 1769 ov voch .
+PFX 1770 N 1
+PFX 1770 o_ 0 .
+SFX 1771 Y 1
+SFX 1771 0 ho .
+PFX 1771 Y 1
+PFX 1771 o_ 0 .
+SFX 1772 Y 1
+SFX 1772 o 0 .
+PFX 1772 Y 1
+PFX 1772 o_ 0 .
+SFX 1773 N 1
+SFX 1773 ec cou .
+SFX 1774 N 1
+SFX 1774 ec ciam .
+SFX 1775 N 1
+SFX 1775 ec ciach .
+SFX 1776 N 1
+SFX 1776 ot tu .
+SFX 1777 N 1
+SFX 1777 ot te .
+SFX 1778 N 1
+SFX 1778 ot tom .
+SFX 1779 N 1
+SFX 1779 ot ty .
+SFX 1780 N 1
+SFX 1780 ot tov .
+SFX 1781 N 1
+SFX 1781 ot toch .
+SFX 1782 N 1
+SFX 1782 ot tami .
+SFX 1783 N 1
+SFX 1783 ko ci .
+SFX 1784 N 1
+SFX 1784 ko cu .
+SFX 1785 N 1
+SFX 1785 ko ciam .
+SFX 1786 N 1
+SFX 1786 ko ciach .
+SFX 1787 N 1
+SFX 1787 ko cami .
+SFX 1788 N 1
+SFX 1788 elo iel .
+SFX 1789 Y 1
+SFX 1789 t 0 .
+PFX 1789 Y 1
+PFX 1789 om omet .
+SFX 1790 Y 1
+SFX 1790 t m .
+PFX 1790 Y 1
+PFX 1790 om ome .
+SFX 1791 Y 1
+SFX 1791 t s .
+PFX 1791 Y 1
+PFX 1791 om ome .
+SFX 1792 Y 1
+SFX 1792 t 0 .
+PFX 1792 Y 1
+PFX 1792 om ome .
+SFX 1793 Y 1
+SFX 1793 t me .
+PFX 1793 Y 1
+PFX 1793 om ome .
+SFX 1794 Y 1
+SFX 1794 0 e .
+PFX 1794 Y 1
+PFX 1794 om ome .
+SFX 1795 Y 1
+SFX 1795 n 0 .
+PFX 1795 Y 1
+PFX 1795 0 jeh .
+SFX 1796 N 1
+SFX 1796 n eho .
+SFX 1797 Y 1
+SFX 1797 n 0 .
+PFX 1797 Y 1
+PFX 1797 0 h .
+SFX 1798 N 1
+SFX 1798 on jemu .
+SFX 1799 Y 1
+SFX 1799 0 emu .
+PFX 1799 Y 1
+PFX 1799 o 0 .
+SFX 1800 N 1
+SFX 1800 on mu .
+SFX 1801 N 1
+SFX 1801 n om .
+SFX 1802 Y 1
+SFX 1802 0 im .
+PFX 1802 Y 1
+PFX 1802 o 0 .
+SFX 1803 N 1
+SFX 1803 on ich .
+SFX 1804 Y 1
+SFX 1804 0 ich .
+PFX 1804 Y 1
+PFX 1804 o 0 .
+SFX 1805 N 1
+SFX 1805 on im .
+SFX 1806 Y 1
+SFX 1806 0 imi .
+PFX 1806 Y 1
+PFX 1806 o 0 .
+SFX 1807 Y 1
+SFX 1807 0 e .
+PFX 1807 Y 1
+PFX 1807 o 0 .
+SFX 1808 N 1
+SFX 1808 ona jej .
+SFX 1809 Y 1
+SFX 1809 a ej .
+PFX 1809 Y 1
+PFX 1809 o 0 .
+SFX 1810 N 1
+SFX 1810 ona ju .
+SFX 1811 Y 1
+SFX 1811 a u .
+PFX 1811 Y 1
+PFX 1811 o 0 .
+SFX 1812 N 1
+SFX 1812 na ou .
+SFX 1813 N 1
+SFX 1813 ona ich .
+SFX 1814 Y 1
+SFX 1814 a ich .
+PFX 1814 Y 1
+PFX 1814 o 0 .
+SFX 1815 N 1
+SFX 1815 ona im .
+SFX 1816 Y 1
+SFX 1816 a im .
+PFX 1816 Y 1
+PFX 1816 o 0 .
+SFX 1817 Y 1
+SFX 1817 a e .
+PFX 1817 Y 1
+PFX 1817 o 0 .
+SFX 1818 Y 1
+SFX 1818 a imi .
+PFX 1818 Y 1
+PFX 1818 o 0 .
+SFX 1819 N 1
+SFX 1819 n ho .
+SFX 1820 N 1
+SFX 1820 n mu .
+SFX 1821 N 1
+SFX 1821 n 0 .
+SFX 1822 N 1
+SFX 1822 en a .
+SFX 1823 N 1
+SFX 1823 n j .
+SFX 1824 N 1
+SFX 1824 en u .
+SFX 1825 N 1
+SFX 1825 en ou .
+SFX 1826 N 1
+SFX 1826 en o .
+SFX 1827 Y 1
+SFX 1827 no 0 .
+PFX 1827 Y 1
+PFX 1827 0 jeh .
+SFX 1828 N 1
+SFX 1828 no eho .
+SFX 1829 Y 1
+SFX 1829 no 0 .
+PFX 1829 Y 1
+PFX 1829 0 h .
+SFX 1830 N 1
+SFX 1830 ono jemu .
+SFX 1831 Y 1
+SFX 1831 o emu .
+PFX 1831 Y 1
+PFX 1831 o 0 .
+SFX 1832 N 1
+SFX 1832 ono mu .
+SFX 1833 Y 1
+SFX 1833 0 m .
+PFX 1833 Y 1
+PFX 1833 o 0 .
+SFX 1834 Y 1
+SFX 1834 o im .
+PFX 1834 Y 1
+PFX 1834 o 0 .
+SFX 1835 N 1
+SFX 1835 ono ich .
+SFX 1836 Y 1
+SFX 1836 o ich .
+PFX 1836 Y 1
+PFX 1836 o 0 .
+SFX 1837 N 1
+SFX 1837 ono im .
+SFX 1838 Y 1
+SFX 1838 o e .
+PFX 1838 Y 1
+PFX 1838 o 0 .
+SFX 1839 Y 1
+SFX 1839 o imi .
+PFX 1839 Y 1
+PFX 1839 o 0 .
+SFX 1840 N 1
+SFX 1840 y o .
+SFX 1841 Y 1
+SFX 1841 0 e .
+PFX 1841 Y 1
+PFX 1841 opi op .
+SFX 1842 N 1
+SFX 1842 em mich .
+SFX 1843 N 1
+SFX 1843 em mim .
+SFX 1844 N 1
+SFX 1844 em mimi .
+SFX 1845 N 1
+SFX 1845 em mi .
+SFX 1846 N 1
+SFX 1846 a enciam .
+SFX 1847 N 1
+SFX 1847 ca iec .
+SFX 1848 N 1
+SFX 1848 os sa .
+SFX 1849 N 1
+SFX 1849 os su .
+SFX 1850 N 1
+SFX 1850 os som .
+SFX 1851 N 1
+SFX 1851 os sy .
+SFX 1852 N 1
+SFX 1852 os sov .
+SFX 1853 N 1
+SFX 1853 os soch .
+SFX 1854 N 1
+SFX 1854 ok ci .
+SFX 1855 Y 1
+SFX 1855 a 0 .
+PFX 1855 Y 1
+PFX 1855 p pi .
+SFX 1856 Y 1
+SFX 1856 kne rajsie .
+PFX 1856 Y 1
+PFX 1856 p 0 .
+SFX 1857 Y 1
+SFX 1857 kne ajkrajsie .
+PFX 1857 Y 1
+PFX 1857 p 0 .
+SFX 1858 Y 1
+SFX 1858 ny rajsi .
+PFX 1858 Y 1
+PFX 1858 pe 0 .
+SFX 1859 Y 1
+SFX 1859 kny rajsieho .
+PFX 1859 Y 1
+PFX 1859 p 0 .
+SFX 1860 Y 1
+SFX 1860 kny rajsiemu .
+PFX 1860 Y 1
+PFX 1860 p 0 .
+SFX 1861 Y 1
+SFX 1861 ny rajsom .
+PFX 1861 Y 1
+PFX 1861 pe 0 .
+SFX 1862 Y 1
+SFX 1862 ny rajsim .
+PFX 1862 Y 1
+PFX 1862 pe 0 .
+SFX 1863 Y 1
+SFX 1863 ny rajsich .
+PFX 1863 Y 1
+PFX 1863 pe 0 .
+SFX 1864 Y 1
+SFX 1864 ny rajsimi .
+PFX 1864 Y 1
+PFX 1864 pe 0 .
+SFX 1865 Y 1
+SFX 1865 kny rajsie .
+PFX 1865 Y 1
+PFX 1865 p 0 .
+SFX 1866 Y 1
+SFX 1866 ny rajsia .
+PFX 1866 Y 1
+PFX 1866 pe 0 .
+SFX 1867 Y 1
+SFX 1867 kny rajsej .
+PFX 1867 Y 1
+PFX 1867 p 0 .
+SFX 1868 Y 1
+SFX 1868 ny rajsiu .
+PFX 1868 Y 1
+PFX 1868 pe 0 .
+SFX 1869 Y 1
+SFX 1869 ny rajsou .
+PFX 1869 Y 1
+PFX 1869 pe 0 .
+SFX 1870 Y 1
+SFX 1870 ny ajkrajsi .
+PFX 1870 Y 1
+PFX 1870 pe 0 .
+SFX 1871 Y 1
+SFX 1871 kny ajkrajsieho .
+PFX 1871 Y 1
+PFX 1871 p 0 .
+SFX 1872 Y 1
+SFX 1872 kny ajkrajsiemu .
+PFX 1872 Y 1
+PFX 1872 p 0 .
+SFX 1873 Y 1
+SFX 1873 ny ajkrajsom .
+PFX 1873 Y 1
+PFX 1873 pe 0 .
+SFX 1874 Y 1
+SFX 1874 ny ajkrajsim .
+PFX 1874 Y 1
+PFX 1874 pe 0 .
+SFX 1875 Y 1
+SFX 1875 ny ajkrajsich .
+PFX 1875 Y 1
+PFX 1875 pe 0 .
+SFX 1876 Y 1
+SFX 1876 ny ajkrajsimi .
+PFX 1876 Y 1
+PFX 1876 pe 0 .
+SFX 1877 Y 1
+SFX 1877 kny ajkrajsie .
+PFX 1877 Y 1
+PFX 1877 p 0 .
+SFX 1878 Y 1
+SFX 1878 ny ajkrajsia .
+PFX 1878 Y 1
+PFX 1878 pe 0 .
+SFX 1879 Y 1
+SFX 1879 kny ajkrajsej .
+PFX 1879 Y 1
+PFX 1879 p 0 .
+SFX 1880 Y 1
+SFX 1880 ny ajkrajsiu .
+PFX 1880 Y 1
+PFX 1880 pe 0 .
+SFX 1881 Y 1
+SFX 1881 ny ajkrajsou .
+PFX 1881 Y 1
+PFX 1881 pe 0 .
+SFX 1882 Y 1
+SFX 1882 o 0 .
+PFX 1882 Y 1
+PFX 1882 p pi .
+SFX 1883 N 1
+SFX 1883 es sa .
+SFX 1884 N 1
+SFX 1884 es sovi .
+SFX 1885 N 1
+SFX 1885 es som .
+SFX 1886 N 1
+SFX 1886 es sy .
+SFX 1887 N 1
+SFX 1887 es si .
+SFX 1888 N 1
+SFX 1888 es sov .
+SFX 1889 N 1
+SFX 1889 es soch .
+SFX 1890 N 1
+SFX 1890 es sami .
+SFX 1891 Y 1
+SFX 1891 ct iem .
+PFX 1891 Y 1
+PFX 1891 p p .
+SFX 1892 Y 1
+SFX 1892 ct ies .
+PFX 1892 Y 1
+PFX 1892 p p .
+SFX 1893 Y 1
+SFX 1893 ct ie .
+PFX 1893 Y 1
+PFX 1893 p p .
+SFX 1894 Y 1
+SFX 1894 ct ieme .
+PFX 1894 Y 1
+PFX 1894 p p .
+SFX 1895 Y 1
+SFX 1895 ct iete .
+PFX 1895 Y 1
+PFX 1895 p p .
+SFX 1896 Y 1
+SFX 1896 t u .
+PFX 1896 Y 1
+PFX 1896 pi p .
+SFX 1897 Y 1
+SFX 1897 t 0 .
+PFX 1897 Y 1
+PFX 1897 pi p .
+SFX 1898 Y 1
+SFX 1898 t me .
+PFX 1898 Y 1
+PFX 1898 pi p .
+SFX 1899 Y 1
+SFX 1899 0 e .
+PFX 1899 Y 1
+PFX 1899 pi p .
+SFX 1900 Y 1
+SFX 1900 t uc .
+PFX 1900 Y 1
+PFX 1900 pi p .
+SFX 1901 N 1
+SFX 1901 ece iec .
+SFX 1902 Y 1
+SFX 1902 a 0 .
+PFX 1902 Y 1
+PFX 1902 pl pli .
+SFX 1903 N 1
+SFX 1903 eva iev .
+SFX 1904 N 1
+SFX 1904 nec ca .
+SFX 1905 N 1
+SFX 1905 nec cu .
+SFX 1906 N 1
+SFX 1906 nec ci .
+SFX 1907 N 1
+SFX 1907 nec com .
+SFX 1908 N 1
+SFX 1908 nec ce .
+SFX 1909 N 1
+SFX 1909 nec cov .
+SFX 1910 N 1
+SFX 1910 nec coch .
+SFX 1911 N 1
+SFX 1911 nec cami .
+SFX 1912 Y 1
+SFX 1912 t 0 .
+PFX 1912 Y 1
+PFX 1912 pl plet .
+SFX 1913 N 1
+SFX 1913 e sie .
+SFX 1914 Y 1
+SFX 1914 e sie .
+PFX 1914 Y 1
+PFX 1914 0 naj .
+SFX 1915 Y 1
+SFX 1915 t me .
+PFX 1915 Y 1
+PFX 1915 0 po .
+SFX 1916 Y 1
+SFX 1916 0 e .
+PFX 1916 Y 1
+PFX 1916 0 po .
+SFX 1917 Y 1
+SFX 1917 t ju .
+PFX 1917 Y 1
+PFX 1917 0 po .
+SFX 1918 Y 1
+SFX 1918 t m .
+PFX 1918 Y 1
+PFX 1918 0 po .
+SFX 1919 Y 1
+SFX 1919 t s .
+PFX 1919 Y 1
+PFX 1919 0 po .
+SFX 1920 Y 1
+SFX 1920 0 e .
+PFX 1920 Y 1
+PFX 1920 pom pome .
+SFX 1921 N 1
+SFX 1921 iedko edsie .
+SFX 1922 Y 1
+SFX 1922 iedko edsie .
+PFX 1922 Y 1
+PFX 1922 0 naj .
+SFX 1923 N 1
+SFX 1923 a ejsie .
+SFX 1924 Y 1
+SFX 1924 a ejsie .
+PFX 1924 Y 1
+PFX 1924 0 naj .
+SFX 1925 N 1
+SFX 1925 ana ian .
+SFX 1926 N 1
+SFX 1926 ia ov .
+SFX 1927 N 1
+SFX 1927 ia om .
+SFX 1928 N 1
+SFX 1928 ia och .
+SFX 1929 N 1
+SFX 1929 ia mi .
+SFX 1930 N 1
+SFX 1930 a ce .
+SFX 1931 N 1
+SFX 1931 a iec .
+SFX 1932 N 1
+SFX 1932 a com .
+SFX 1933 N 1
+SFX 1933 a coch .
+SFX 1934 N 1
+SFX 1934 a cami .
+SFX 1935 N 1
+SFX 1935 ietor etra .
+SFX 1936 N 1
+SFX 1936 ietor etru .
+SFX 1937 N 1
+SFX 1937 ietor etre .
+SFX 1938 N 1
+SFX 1938 ietor etrom .
+SFX 1939 N 1
+SFX 1939 ietor etry .
+SFX 1940 N 1
+SFX 1940 ietor etrov .
+SFX 1941 N 1
+SFX 1941 ietor etroch .
+SFX 1942 N 1
+SFX 1942 ietor etrami .
+SFX 1943 N 1
+SFX 1943 ia 0 .
+SFX 1944 N 1
+SFX 1944 y km .
+SFX 1945 N 1
+SFX 1945 y kv .
+SFX 1946 N 1
+SFX 1946 y kch .
+SFX 1947 N 1
+SFX 1947 boh aboha .
+SFX 1948 N 1
+SFX 1948 boh ubohu .
+SFX 1949 N 1
+SFX 1949 boh eboze .
+SFX 1950 N 1
+SFX 1950 boh ombohom .
+SFX 1951 N 1
+SFX 1951 mo em .
+SFX 1952 Y 1
+SFX 1952 0 ich .
+PFX 1952 Y 1
+PFX 1952 p pi .
+SFX 1953 Y 1
+SFX 1953 0 im .
+PFX 1953 Y 1
+PFX 1953 p pi .
+SFX 1954 Y 1
+SFX 1954 0 imi .
+PFX 1954 Y 1
+PFX 1954 p pi .
+SFX 1955 Y 1
+SFX 1955 0 i .
+PFX 1955 Y 1
+PFX 1955 p pi .
+SFX 1956 Y 1
+SFX 1956 a 0 .
+PFX 1956 Y 1
+PFX 1956 r ri .
+SFX 1957 Y 1
+SFX 1957 ct iem .
+PFX 1957 Y 1
+PFX 1957 r r .
+SFX 1958 Y 1
+SFX 1958 ct ies .
+PFX 1958 Y 1
+PFX 1958 r r .
+SFX 1959 Y 1
+SFX 1959 ct ie .
+PFX 1959 Y 1
+PFX 1959 r r .
+SFX 1960 Y 1
+SFX 1960 ct ieme .
+PFX 1960 Y 1
+PFX 1960 r r .
+SFX 1961 Y 1
+SFX 1961 ct iete .
+PFX 1961 Y 1
+PFX 1961 r r .
+SFX 1962 Y 1
+SFX 1962 t u .
+PFX 1962 Y 1
+PFX 1962 ri r .
+SFX 1963 Y 1
+SFX 1963 t 0 .
+PFX 1963 Y 1
+PFX 1963 ri r .
+SFX 1964 Y 1
+SFX 1964 t me .
+PFX 1964 Y 1
+PFX 1964 ri r .
+SFX 1965 Y 1
+SFX 1965 0 e .
+PFX 1965 Y 1
+PFX 1965 ri r .
+SFX 1966 Y 1
+SFX 1966 t uc .
+PFX 1966 Y 1
+PFX 1966 ri r .
+SFX 1967 Y 1
+SFX 1967 dko sie .
+PFX 1967 Y 1
+PFX 1967 r r .
+SFX 1968 Y 1
+SFX 1968 dko sie .
+PFX 1968 Y 1
+PFX 1968 r najr .
+SFX 1969 Y 1
+SFX 1969 ky si .
+PFX 1969 Y 1
+PFX 1969 ri r .
+SFX 1970 Y 1
+SFX 1970 dky sieho .
+PFX 1970 Y 1
+PFX 1970 r r .
+SFX 1971 Y 1
+SFX 1971 dky siemu .
+PFX 1971 Y 1
+PFX 1971 r r .
+SFX 1972 Y 1
+SFX 1972 ky som .
+PFX 1972 Y 1
+PFX 1972 ri r .
+SFX 1973 Y 1
+SFX 1973 ky sim .
+PFX 1973 Y 1
+PFX 1973 ri r .
+SFX 1974 Y 1
+SFX 1974 ky sich .
+PFX 1974 Y 1
+PFX 1974 ri r .
+SFX 1975 Y 1
+SFX 1975 ky simi .
+PFX 1975 Y 1
+PFX 1975 ri r .
+SFX 1976 Y 1
+SFX 1976 dky sie .
+PFX 1976 Y 1
+PFX 1976 r r .
+SFX 1977 Y 1
+SFX 1977 ky sia .
+PFX 1977 Y 1
+PFX 1977 ri r .
+SFX 1978 Y 1
+SFX 1978 ky sej .
+PFX 1978 Y 1
+PFX 1978 ri r .
+SFX 1979 Y 1
+SFX 1979 ky siu .
+PFX 1979 Y 1
+PFX 1979 ri r .
+SFX 1980 Y 1
+SFX 1980 ky sou .
+PFX 1980 Y 1
+PFX 1980 ri r .
+SFX 1981 Y 1
+SFX 1981 ky si .
+PFX 1981 Y 1
+PFX 1981 ri najr .
+SFX 1982 Y 1
+SFX 1982 dky sieho .
+PFX 1982 Y 1
+PFX 1982 r najr .
+SFX 1983 Y 1
+SFX 1983 dky siemu .
+PFX 1983 Y 1
+PFX 1983 r najr .
+SFX 1984 Y 1
+SFX 1984 ky som .
+PFX 1984 Y 1
+PFX 1984 ri najr .
+SFX 1985 Y 1
+SFX 1985 ky sim .
+PFX 1985 Y 1
+PFX 1985 ri najr .
+SFX 1986 Y 1
+SFX 1986 ky sich .
+PFX 1986 Y 1
+PFX 1986 ri najr .
+SFX 1987 Y 1
+SFX 1987 ky simi .
+PFX 1987 Y 1
+PFX 1987 ri najr .
+SFX 1988 Y 1
+SFX 1988 dky sie .
+PFX 1988 Y 1
+PFX 1988 r najr .
+SFX 1989 Y 1
+SFX 1989 ky sia .
+PFX 1989 Y 1
+PFX 1989 ri najr .
+SFX 1990 Y 1
+SFX 1990 ky sej .
+PFX 1990 Y 1
+PFX 1990 ri najr .
+SFX 1991 Y 1
+SFX 1991 ky siu .
+PFX 1991 Y 1
+PFX 1991 ri najr .
+SFX 1992 Y 1
+SFX 1992 ky sou .
+PFX 1992 Y 1
+PFX 1992 ri najr .
+SFX 1993 N 1
+SFX 1993 ata iat .
+SFX 1994 Y 1
+SFX 1994 0 ieme .
+PFX 1994 Y 1
+PFX 1994 0 po .
+SFX 1995 Y 1
+SFX 1995 0 iete .
+PFX 1995 Y 1
+PFX 1995 0 po .
+SFX 1996 Y 1
+SFX 1996 0 u .
+PFX 1996 Y 1
+PFX 1996 0 po .
+SFX 1997 Y 1
+SFX 1997 0 iem .
+PFX 1997 Y 1
+PFX 1997 0 po .
+SFX 1998 Y 1
+SFX 1998 0 ies .
+PFX 1998 Y 1
+PFX 1998 0 po .
+SFX 1999 Y 1
+SFX 1999 0 ie .
+PFX 1999 Y 1
+PFX 1999 0 po .
+SFX 2000 Y 1
+SFX 2000 t a .
+PFX 2000 Y 1
+PFX 2000 0 po .
+SFX 2001 Y 1
+SFX 2001 em mich .
+PFX 2001 Y 1
+PFX 2001 s si .
+SFX 2002 Y 1
+SFX 2002 em mim .
+PFX 2002 Y 1
+PFX 2002 s si .
+SFX 2003 Y 1
+SFX 2003 em mimi .
+PFX 2003 Y 1
+PFX 2003 s si .
+SFX 2004 Y 1
+SFX 2004 em mi .
+PFX 2004 Y 1
+PFX 2004 s si .
+SFX 2005 Y 1
+SFX 2005 a 0 .
+PFX 2005 Y 1
+PFX 2005 s si .
+SFX 2006 Y 1
+SFX 2006 o 0 .
+PFX 2006 Y 1
+PFX 2006 s si .
+SFX 2007 N 1
+SFX 2007 o ej .
+SFX 2008 Y 1
+SFX 2008 o ej .
+PFX 2008 Y 1
+PFX 2008 0 naj .
+SFX 2009 Y 1
+SFX 2009 0 e .
+PFX 2009 Y 1
+PFX 2009 spi sp .
+SFX 2010 N 1
+SFX 2010 a ch .
+SFX 2011 N 1
+SFX 2011 a m .
+SFX 2012 N 1
+SFX 2012 ia ej .
+SFX 2013 N 1
+SFX 2013 ia ou .
+SFX 2014 Y 1
+SFX 2014 0 e .
+PFX 2014 Y 1
+PFX 2014 sti st .
+SFX 2015 N 1
+SFX 2015 e ho .
+SFX 2016 N 1
+SFX 2016 e mu .
+SFX 2017 N 1
+SFX 2017 e im .
+SFX 2018 N 1
+SFX 2018 ak ka .
+SFX 2019 N 1
+SFX 2019 ak kovi .
+SFX 2020 N 1
+SFX 2020 ak ku .
+SFX 2021 N 1
+SFX 2021 ak kom .
+SFX 2022 N 1
+SFX 2022 ak kovia .
+SFX 2023 N 1
+SFX 2023 ak kov .
+SFX 2024 N 1
+SFX 2024 ak koch .
+SFX 2025 N 1
+SFX 2025 ak kami .
+SFX 2026 N 1
+SFX 2026 x gmi .
+SFX 2027 N 1
+SFX 2027 ra er .
+SFX 2028 N 1
+SFX 2028 yto eto .
+SFX 2029 N 1
+SFX 2029 to chto .
+SFX 2030 N 1
+SFX 2030 to mto .
+SFX 2031 N 1
+SFX 2031 to mito .
+SFX 2032 N 1
+SFX 2032 yto ato .
+SFX 2033 N 1
+SFX 2033 yto ejto .
+SFX 2034 N 1
+SFX 2034 yto uto .
+SFX 2035 N 1
+SFX 2035 yto outo .
+SFX 2036 N 1
+SFX 2036 yto ehoto .
+SFX 2037 N 1
+SFX 2037 yto emuto .
+SFX 2038 N 1
+SFX 2038 yto omto .
+SFX 2039 N 1
+SFX 2039 yto ito .
+SFX 2040 Y 1
+SFX 2040 o 0 .
+PFX 2040 Y 1
+PFX 2040 t ti .
+SFX 2041 Y 1
+SFX 2041 0 hto .
+PFX 2041 Y 1
+PFX 2041 ten 0 .
+SFX 2042 Y 1
+SFX 2042 0 muto .
+PFX 2042 Y 1
+PFX 2042 ten 0 .
+SFX 2043 Y 1
+SFX 2043 0 mto .
+PFX 2043 Y 1
+PFX 2043 ten 0 .
+PFX 2044 N 1
+PFX 2044 ten tym .
+PFX 2045 N 1
+PFX 2045 ten ti .
+PFX 2046 N 1
+PFX 2046 ten tych .
+PFX 2047 N 1
+PFX 2047 ten tymi .
+PFX 2048 N 1
+PFX 2048 ten tie .
+PFX 2049 N 1
+PFX 2049 ten toho .
+PFX 2050 N 1
+PFX 2050 ten tomu .
+PFX 2051 N 1
+PFX 2051 ten tom .
+SFX 2052 Y 1
+SFX 2052 a 0 .
+PFX 2052 Y 1
+PFX 2052 t ti .
+SFX 2053 Y 1
+SFX 2053 ct iem .
+PFX 2053 Y 1
+PFX 2053 t t .
+SFX 2054 Y 1
+SFX 2054 ct ies .
+PFX 2054 Y 1
+PFX 2054 t t .
+SFX 2055 Y 1
+SFX 2055 ct ie .
+PFX 2055 Y 1
+PFX 2055 t t .
+SFX 2056 Y 1
+SFX 2056 ct ieme .
+PFX 2056 Y 1
+PFX 2056 t t .
+SFX 2057 Y 1
+SFX 2057 ct iete .
+PFX 2057 Y 1
+PFX 2057 t t .
+SFX 2058 Y 1
+SFX 2058 t u .
+PFX 2058 Y 1
+PFX 2058 ti t .
+SFX 2059 Y 1
+SFX 2059 t 0 .
+PFX 2059 Y 1
+PFX 2059 ti t .
+SFX 2060 Y 1
+SFX 2060 t me .
+PFX 2060 Y 1
+PFX 2060 ti t .
+SFX 2061 Y 1
+SFX 2061 0 e .
+PFX 2061 Y 1
+PFX 2061 ti t .
+SFX 2062 Y 1
+SFX 2062 t uc .
+PFX 2062 Y 1
+PFX 2062 ti t .
+SFX 2063 N 1
+SFX 2063 to hto .
+SFX 2064 N 1
+SFX 2064 to muto .
+SFX 2065 Y 1
+SFX 2065 to 0 .
+PFX 2065 Y 1
+PFX 2065 0 tym .
+SFX 2066 Y 1
+SFX 2066 to 0 .
+PFX 2066 Y 1
+PFX 2066 0 tie .
+SFX 2067 Y 1
+SFX 2067 to 0 .
+PFX 2067 Y 1
+PFX 2067 0 tych .
+SFX 2068 Y 1
+SFX 2068 to 0 .
+PFX 2068 Y 1
+PFX 2068 0 tymi .
+PFX 2069 N 1
+PFX 2069 to tie .
+PFX 2070 N 1
+PFX 2070 to tych .
+PFX 2071 N 1
+PFX 2071 to tym .
+PFX 2072 N 1
+PFX 2072 to tymi .
+PFX 2073 N 1
+PFX 2073 t toh .
+SFX 2074 N 1
+SFX 2074 y iech .
+SFX 2075 N 1
+SFX 2075 i oma .
+SFX 2076 N 1
+SFX 2076 i omi .
+SFX 2077 N 1
+SFX 2077 i aja .
+SFX 2078 Y 1
+SFX 2078 0 e .
+PFX 2078 Y 1
+PFX 2078 tri tr .
+SFX 2079 N 1
+SFX 2079 y eba .
+SFX 2080 N 1
+SFX 2080 y ebe .
+SFX 2081 N 1
+SFX 2081 y ebou .
+PFX 2082 N 1
+PFX 2082 ta tej .
+PFX 2083 N 1
+PFX 2083 ta tu .
+SFX 2084 Y 1
+SFX 2084 0 uto .
+PFX 2084 Y 1
+PFX 2084 ta 0 .
+PFX 2085 N 1
+PFX 2085 ta tie .
+PFX 2086 N 1
+PFX 2086 ta tych .
+PFX 2087 N 1
+PFX 2087 ta tym .
+PFX 2088 N 1
+PFX 2088 ta tymi .
+PFX 2089 N 1
+PFX 2089 ta tou .
+SFX 2090 N 1
+SFX 2090 _ono nho .
+SFX 2091 N 1
+SFX 2091 cho si .
+SFX 2092 N 1
+SFX 2092 cho su .
+SFX 2093 N 1
+SFX 2093 cho siam .
+SFX 2094 Y 1
+SFX 2094 o 0 .
+PFX 2094 Y 1
+PFX 2094 u usia .
+SFX 2095 N 1
+SFX 2095 cho sami .
+SFX 2096 N 1
+SFX 2096 ec ka .
+SFX 2097 N 1
+SFX 2097 ec kovi .
+SFX 2098 N 1
+SFX 2098 ec kom .
+SFX 2099 N 1
+SFX 2099 ec kovia .
+SFX 2100 N 1
+SFX 2100 ec kov .
+SFX 2101 N 1
+SFX 2101 ec koch .
+SFX 2102 N 1
+SFX 2102 ec kami .
+SFX 2103 Y 1
+SFX 2103 t 0 .
+PFX 2103 Y 1
+PFX 2103 un unes .
+SFX 2104 Y 1
+SFX 2104 0 e .
+PFX 2104 Y 1
+PFX 2104 uni un .
+SFX 2105 Y 1
+SFX 2105 0 e .
+PFX 2105 Y 1
+PFX 2105 upi up .
+SFX 2106 Y 1
+SFX 2106 0 e .
+PFX 2106 Y 1
+PFX 2106 uti ut .
+SFX 2107 Y 1
+SFX 2107 t 0 .
+PFX 2107 Y 1
+PFX 2107 uv uved .
+SFX 2108 Y 1
+SFX 2108 0 e .
+PFX 2108 Y 1
+PFX 2108 uvi uv .
+SFX 2109 N 1
+SFX 2109 er rem .
+SFX 2110 N 1
+SFX 2110 er rev .
+SFX 2111 N 1
+SFX 2111 er rech .
+SFX 2112 Y 1
+SFX 2112 a 0 .
+PFX 2112 Y 1
+PFX 2112 v vi .
+SFX 2113 Y 1
+SFX 2113 t m .
+PFX 2113 Y 1
+PFX 2113 ved v .
+SFX 2114 Y 1
+SFX 2114 t s .
+PFX 2114 Y 1
+PFX 2114 ved v .
+SFX 2115 Y 1
+SFX 2115 t 0 .
+PFX 2115 Y 1
+PFX 2115 ved v .
+SFX 2116 Y 1
+SFX 2116 t me .
+PFX 2116 Y 1
+PFX 2116 ved v .
+SFX 2117 Y 1
+SFX 2117 0 e .
+PFX 2117 Y 1
+PFX 2117 ved v .
+SFX 2118 Y 1
+SFX 2118 o 0 .
+PFX 2118 Y 1
+PFX 2118 v vi .
+SFX 2119 N 1
+SFX 2119 es sou .
+SFX 2120 N 1
+SFX 2120 es siam .
+SFX 2121 N 1
+SFX 2121 es siach .
+SFX 2122 N 1
+SFX 2122 ela iacej .
+SFX 2123 N 1
+SFX 2123 ela iac .
+SFX 2124 Y 1
+SFX 2124 ela jviacej .
+PFX 2124 Y 1
+PFX 2124 0 n .
+SFX 2125 Y 1
+SFX 2125 ela jviac .
+PFX 2125 Y 1
+PFX 2125 0 n .
+SFX 2126 N 1
+SFX 2126 elky acsi .
+SFX 2127 N 1
+SFX 2127 elky acsieho .
+SFX 2128 N 1
+SFX 2128 elky acsiemu .
+SFX 2129 N 1
+SFX 2129 elky acsom .
+SFX 2130 N 1
+SFX 2130 elky acsim .
+SFX 2131 N 1
+SFX 2131 elky acsich .
+SFX 2132 N 1
+SFX 2132 elky acsimi .
+SFX 2133 N 1
+SFX 2133 elky acsie .
+SFX 2134 N 1
+SFX 2134 elky acsia .
+SFX 2135 N 1
+SFX 2135 elky acsej .
+SFX 2136 N 1
+SFX 2136 elky acsiu .
+SFX 2137 N 1
+SFX 2137 elky acsou .
+SFX 2138 Y 1
+SFX 2138 elky acsi .
+PFX 2138 Y 1
+PFX 2138 0 naj .
+SFX 2139 Y 1
+SFX 2139 elky acsieho .
+PFX 2139 Y 1
+PFX 2139 0 naj .
+SFX 2140 Y 1
+SFX 2140 elky acsiemu .
+PFX 2140 Y 1
+PFX 2140 0 naj .
+SFX 2141 Y 1
+SFX 2141 elky acsom .
+PFX 2141 Y 1
+PFX 2141 0 naj .
+SFX 2142 Y 1
+SFX 2142 elky acsim .
+PFX 2142 Y 1
+PFX 2142 0 naj .
+SFX 2143 Y 1
+SFX 2143 elky acsich .
+PFX 2143 Y 1
+PFX 2143 0 naj .
+SFX 2144 Y 1
+SFX 2144 elky acsimi .
+PFX 2144 Y 1
+PFX 2144 0 naj .
+SFX 2145 Y 1
+SFX 2145 elky acsie .
+PFX 2145 Y 1
+PFX 2145 0 naj .
+SFX 2146 Y 1
+SFX 2146 elky acsia .
+PFX 2146 Y 1
+PFX 2146 0 naj .
+SFX 2147 Y 1
+SFX 2147 elky acsej .
+PFX 2147 Y 1
+PFX 2147 0 naj .
+SFX 2148 Y 1
+SFX 2148 elky acsiu .
+PFX 2148 Y 1
+PFX 2148 0 naj .
+SFX 2149 Y 1
+SFX 2149 elky acsou .
+PFX 2149 Y 1
+PFX 2149 0 naj .
+PFX 2150 N 1
+PFX 2150 vel vacs .
+PFX 2151 N 1
+PFX 2151 vel najvacs .
+SFX 2152 N 1
+SFX 2152 ly iel .
+SFX 2153 Y 1
+SFX 2153 st me .
+PFX 2153 Y 1
+PFX 2153 v poved .
+SFX 2154 Y 1
+SFX 2154 st te .
+PFX 2154 Y 1
+PFX 2154 v poved .
+SFX 2155 Y 1
+SFX 2155 iest edu .
+PFX 2155 Y 1
+PFX 2155 0 po .
+SFX 2156 Y 1
+SFX 2156 st m .
+PFX 2156 Y 1
+PFX 2156 v poved .
+SFX 2157 Y 1
+SFX 2157 t 0 .
+PFX 2157 Y 1
+PFX 2157 v poved .
+SFX 2158 Y 1
+SFX 2158 st 0 .
+PFX 2158 Y 1
+PFX 2158 v poved .
+SFX 2159 Y 1
+SFX 2159 st m .
+PFX 2159 Y 1
+PFX 2159 v ved .
+SFX 2160 Y 1
+SFX 2160 t 0 .
+PFX 2160 Y 1
+PFX 2160 v ved .
+SFX 2161 Y 1
+SFX 2161 st 0 .
+PFX 2161 Y 1
+PFX 2161 v ved .
+SFX 2162 Y 1
+SFX 2162 st me .
+PFX 2162 Y 1
+PFX 2162 v ved .
+SFX 2163 Y 1
+SFX 2163 st te .
+PFX 2163 Y 1
+PFX 2163 v ved .
+SFX 2164 Y 1
+SFX 2164 or ra .
+PFX 2164 Y 1
+PFX 2164 vi v .
+SFX 2165 Y 1
+SFX 2165 or ru .
+PFX 2165 Y 1
+PFX 2165 vi v .
+SFX 2166 Y 1
+SFX 2166 or re .
+PFX 2166 Y 1
+PFX 2166 vi v .
+SFX 2167 Y 1
+SFX 2167 or rom .
+PFX 2167 Y 1
+PFX 2167 vi v .
+SFX 2168 Y 1
+SFX 2168 or ry .
+PFX 2168 Y 1
+PFX 2168 vi v .
+SFX 2169 Y 1
+SFX 2169 or rov .
+PFX 2169 Y 1
+PFX 2169 vi v .
+SFX 2170 Y 1
+SFX 2170 or roch .
+PFX 2170 Y 1
+PFX 2170 vi v .
+SFX 2171 Y 1
+SFX 2171 or rami .
+PFX 2171 Y 1
+PFX 2171 vi v .
+SFX 2172 Y 1
+SFX 2172 zt ieme .
+PFX 2172 Y 1
+PFX 2172 v pov .
+SFX 2173 Y 1
+SFX 2173 zt iete .
+PFX 2173 Y 1
+PFX 2173 v pov .
+SFX 2174 Y 1
+SFX 2174 t u .
+PFX 2174 Y 1
+PFX 2174 vi pov .
+SFX 2175 Y 1
+SFX 2175 zt iem .
+PFX 2175 Y 1
+PFX 2175 v pov .
+SFX 2176 Y 1
+SFX 2176 zt ies .
+PFX 2176 Y 1
+PFX 2176 v pov .
+SFX 2177 Y 1
+SFX 2177 zt ie .
+PFX 2177 Y 1
+PFX 2177 v pov .
+SFX 2178 Y 1
+SFX 2178 zt iem .
+PFX 2178 Y 1
+PFX 2178 v v .
+SFX 2179 Y 1
+SFX 2179 zt ies .
+PFX 2179 Y 1
+PFX 2179 v v .
+SFX 2180 Y 1
+SFX 2180 zt ie .
+PFX 2180 Y 1
+PFX 2180 v v .
+SFX 2181 Y 1
+SFX 2181 zt ieme .
+PFX 2181 Y 1
+PFX 2181 v v .
+SFX 2182 Y 1
+SFX 2182 zt iete .
+PFX 2182 Y 1
+PFX 2182 v v .
+SFX 2183 Y 1
+SFX 2183 t u .
+PFX 2183 Y 1
+PFX 2183 vi v .
+SFX 2184 Y 1
+SFX 2184 t 0 .
+PFX 2184 Y 1
+PFX 2184 vi v .
+SFX 2185 Y 1
+SFX 2185 t me .
+PFX 2185 Y 1
+PFX 2185 vi v .
+SFX 2186 Y 1
+SFX 2186 0 e .
+PFX 2186 Y 1
+PFX 2186 vi v .
+SFX 2187 Y 1
+SFX 2187 t uc .
+PFX 2187 Y 1
+PFX 2187 vi v .
+SFX 2188 Y 1
+SFX 2188 iect ecieme .
+PFX 2188 Y 1
+PFX 2188 0 po .
+SFX 2189 Y 1
+SFX 2189 iect eciete .
+PFX 2189 Y 1
+PFX 2189 0 po .
+SFX 2190 Y 1
+SFX 2190 iect ecu .
+PFX 2190 Y 1
+PFX 2190 0 po .
+SFX 2191 Y 1
+SFX 2191 iect eciem .
+PFX 2191 Y 1
+PFX 2191 0 po .
+SFX 2192 Y 1
+SFX 2192 iect ecies .
+PFX 2192 Y 1
+PFX 2192 0 po .
+SFX 2193 Y 1
+SFX 2193 iect ecie .
+PFX 2193 Y 1
+PFX 2193 0 po .
+SFX 2194 Y 1
+SFX 2194 0 e .
+PFX 2194 Y 1
+PFX 2194 vli vl .
+SFX 2195 Y 1
+SFX 2195 t 0 .
+PFX 2195 Y 1
+PFX 2195 vm vmet .
+SFX 2196 Y 1
+SFX 2196 t 0 .
+PFX 2196 Y 1
+PFX 2196 vn vnes .
+SFX 2197 Y 1
+SFX 2197 0 e .
+PFX 2197 Y 1
+PFX 2197 vni vn .
+SFX 2198 N 1
+SFX 2198 et mu .
+SFX 2199 N 1
+SFX 2199 et mot .
+SFX 2200 N 1
+SFX 2200 et my .
+SFX 2201 N 1
+SFX 2201 et mov .
+SFX 2202 N 1
+SFX 2202 et moch .
+SFX 2203 N 1
+SFX 2203 et mati .
+SFX 2204 N 1
+SFX 2204 na en .
+SFX 2205 Y 1
+SFX 2205 0 e .
+PFX 2205 Y 1
+PFX 2205 vti vt .
+SFX 2206 N 1
+SFX 2206 y as .
+SFX 2207 Y 1
+SFX 2207 0 e .
+PFX 2207 Y 1
+PFX 2207 vym vyme .
+SFX 2208 N 1
+SFX 2208 0 sie .
+SFX 2209 Y 1
+SFX 2209 0 sie .
+PFX 2209 Y 1
+PFX 2209 0 naj .
+SFX 2210 N 1
+SFX 2210 aka iak .
+SFX 2211 N 1
+SFX 2211 ok kych .
+SFX 2212 N 1
+SFX 2212 ok kym .
+SFX 2213 N 1
+SFX 2213 ok kymi .
+SFX 2214 N 1
+SFX 2214 ok kej .
+SFX 2215 N 1
+SFX 2215 ok kou .
+SFX 2216 N 1
+SFX 2216 ok keho .
+SFX 2217 N 1
+SFX 2217 ok kemu .
+SFX 2218 N 1
+SFX 2218 ok ko .
+SFX 2219 N 1
+SFX 2219 o eho .
+SFX 2220 N 1
+SFX 2220 o emu .
+PFX 2221 N 1
+PFX 2221 zl horsi .
+PFX 2222 N 1
+PFX 2222 zl najhorsi .
+SFX 2223 Y 1
+SFX 2223 0 e .
+PFX 2223 Y 1
+PFX 2223 zli zl .
+SFX 2224 N 1
+SFX 2224 zly horsi .
+SFX 2225 N 1
+SFX 2225 zly horsieho .
+SFX 2226 N 1
+SFX 2226 zly horsiemu .
+SFX 2227 N 1
+SFX 2227 zly horsom .
+SFX 2228 N 1
+SFX 2228 zly horsim .
+SFX 2229 N 1
+SFX 2229 zly horsich .
+SFX 2230 N 1
+SFX 2230 zly horsimi .
+SFX 2231 N 1
+SFX 2231 zly horsie .
+SFX 2232 N 1
+SFX 2232 zly horsia .
+SFX 2233 N 1
+SFX 2233 zly horsej .
+SFX 2234 N 1
+SFX 2234 zly horsiu .
+SFX 2235 N 1
+SFX 2235 zly horsou .
+SFX 2236 N 1
+SFX 2236 zly najhorsi .
+SFX 2237 N 1
+SFX 2237 zly najhorsieho .
+SFX 2238 N 1
+SFX 2238 zly najhorsiemu .
+SFX 2239 N 1
+SFX 2239 zly najhorsom .
+SFX 2240 N 1
+SFX 2240 zly najhorsim .
+SFX 2241 N 1
+SFX 2241 zly najhorsich .
+SFX 2242 N 1
+SFX 2242 zly najhorsimi .
+SFX 2243 N 1
+SFX 2243 zly najhorsie .
+SFX 2244 N 1
+SFX 2244 zly najhorsia .
+SFX 2245 N 1
+SFX 2245 zly najhorsej .
+SFX 2246 N 1
+SFX 2246 zly najhorsiu .
+SFX 2247 N 1
+SFX 2247 zly najhorsou .
+SFX 2248 Y 1
+SFX 2248 t 0 .
+PFX 2248 Y 1
+PFX 2248 zm zmet .
+SFX 2249 Y 1
+SFX 2249 t m .
+PFX 2249 Y 1
+PFX 2249 zm zme .
+SFX 2250 Y 1
+SFX 2250 t s .
+PFX 2250 Y 1
+PFX 2250 zm zme .
+SFX 2251 Y 1
+SFX 2251 t 0 .
+PFX 2251 Y 1
+PFX 2251 zm zme .
+SFX 2252 Y 1
+SFX 2252 t me .
+PFX 2252 Y 1
+PFX 2252 zm zme .
+SFX 2253 Y 1
+SFX 2253 0 e .
+PFX 2253 Y 1
+PFX 2253 zm zme .
+SFX 2254 Y 1
+SFX 2254 t 0 .
+PFX 2254 Y 1
+PFX 2254 zn znes .
+SFX 2255 Y 1
+SFX 2255 0 e .
+PFX 2255 Y 1
+PFX 2255 zni zn .
+SFX 2256 Y 1
+SFX 2256 0 e .
+PFX 2256 Y 1
+PFX 2256 zom zome .
+SFX 2257 Y 1
+SFX 2257 0 e .
+PFX 2257 Y 1
+PFX 2257 zri zr .
+SFX 2258 Y 1
+SFX 2258 0 e .
+PFX 2258 Y 1
+PFX 2258 zved zv .
+SFX 2259 Y 1
+SFX 2259 t 0 .
+PFX 2259 Y 1
+PFX 2259 zv zved .
+SFX 2260 Y 1
+SFX 2260 0 e .
+PFX 2260 Y 1
+PFX 2260 zvi zv .
+SFX 2261 Y 1
+SFX 2261 ka iek .
+PFX 2261 Y 1
+PFX 2261 zv vz .
+SFX 2262 N 1
+SFX 2262 ava iav .
+SFX 2263 Y 1
+SFX 2263 o 0 .
+PFX 2263 Y 1
+PFX 2263 0 i .
+SFX 2264 Y 1
+SFX 2264 0 e .
+PFX 2264 Y 1
+PFX 2264 is pojde .
+SFX 2265 Y 1
+SFX 2265 t 0 .
+PFX 2265 Y 1
+PFX 2265 i pojde .
+SFX 2266 Y 1
+SFX 2266 0 e .
+PFX 2266 Y 1
+PFX 2266 is chod .
+SFX 2267 Y 1
+SFX 2267 0 e .
+PFX 2267 Y 1
+PFX 2267 is pod .
+SFX 2268 N 1
+SFX 2268 st iel .
+SFX 2269 Y 1
+SFX 2269 t la .
+PFX 2269 Y 1
+PFX 2269 i 0 .
+SFX 2270 Y 1
+SFX 2270 t lo .
+PFX 2270 Y 1
+PFX 2270 i 0 .
+SFX 2271 Y 1
+SFX 2271 y 0 .
+PFX 2271 Y 1
+PFX 2271 c ci .
+PFX 2272 N 1
+PFX 2272 c ci .
+SFX 2273 N 1
+SFX 2273 est ti .
+SFX 2274 N 1
+SFX 2274 est tou .
+SFX 2275 N 1
+SFX 2275 est tiam .
+SFX 2276 N 1
+SFX 2276 est tiach .
+SFX 2277 N 1
+SFX 2277 est tami .
+SFX 2278 Y 1
+SFX 2278 o ejsie .
+PFX 2278 Y 1
+PFX 2278 ci c .
+SFX 2279 Y 1
+SFX 2279 o ejsie .
+PFX 2279 Y 1
+PFX 2279 ci najc .
+SFX 2280 Y 1
+SFX 2280 y ejsi .
+PFX 2280 Y 1
+PFX 2280 ci c .
+SFX 2281 Y 1
+SFX 2281 y ejsieho .
+PFX 2281 Y 1
+PFX 2281 ci c .
+SFX 2282 Y 1
+SFX 2282 y ejsiemu .
+PFX 2282 Y 1
+PFX 2282 ci c .
+SFX 2283 Y 1
+SFX 2283 y ejsom .
+PFX 2283 Y 1
+PFX 2283 ci c .
+SFX 2284 Y 1
+SFX 2284 y ejsim .
+PFX 2284 Y 1
+PFX 2284 ci c .
+SFX 2285 Y 1
+SFX 2285 y ejsich .
+PFX 2285 Y 1
+PFX 2285 ci c .
+SFX 2286 Y 1
+SFX 2286 y ejsimi .
+PFX 2286 Y 1
+PFX 2286 ci c .
+SFX 2287 Y 1
+SFX 2287 y ejsie .
+PFX 2287 Y 1
+PFX 2287 ci c .
+SFX 2288 Y 1
+SFX 2288 y ejsia .
+PFX 2288 Y 1
+PFX 2288 ci c .
+SFX 2289 Y 1
+SFX 2289 y ejsej .
+PFX 2289 Y 1
+PFX 2289 ci c .
+SFX 2290 Y 1
+SFX 2290 y ejsiu .
+PFX 2290 Y 1
+PFX 2290 ci c .
+SFX 2291 Y 1
+SFX 2291 y ejsou .
+PFX 2291 Y 1
+PFX 2291 ci c .
+SFX 2292 Y 1
+SFX 2292 y ejsi .
+PFX 2292 Y 1
+PFX 2292 ci najc .
+SFX 2293 Y 1
+SFX 2293 y ejsieho .
+PFX 2293 Y 1
+PFX 2293 ci najc .
+SFX 2294 Y 1
+SFX 2294 y ejsiemu .
+PFX 2294 Y 1
+PFX 2294 ci najc .
+SFX 2295 Y 1
+SFX 2295 y ejsom .
+PFX 2295 Y 1
+PFX 2295 ci najc .
+SFX 2296 Y 1
+SFX 2296 y ejsim .
+PFX 2296 Y 1
+PFX 2296 ci najc .
+SFX 2297 Y 1
+SFX 2297 y ejsich .
+PFX 2297 Y 1
+PFX 2297 ci najc .
+SFX 2298 Y 1
+SFX 2298 y ejsimi .
+PFX 2298 Y 1
+PFX 2298 ci najc .
+SFX 2299 Y 1
+SFX 2299 y ejsie .
+PFX 2299 Y 1
+PFX 2299 ci najc .
+SFX 2300 Y 1
+SFX 2300 y ejsia .
+PFX 2300 Y 1
+PFX 2300 ci najc .
+SFX 2301 Y 1
+SFX 2301 y ejsej .
+PFX 2301 Y 1
+PFX 2301 ci najc .
+SFX 2302 Y 1
+SFX 2302 y ejsiu .
+PFX 2302 Y 1
+PFX 2302 ci najc .
+SFX 2303 Y 1
+SFX 2303 y ejsou .
+PFX 2303 Y 1
+PFX 2303 ci najc .
+SFX 2304 Y 1
+SFX 2304 ovek udia .
+PFX 2304 Y 1
+PFX 2304 c 0 .
+SFX 2305 Y 1
+SFX 2305 ovek udi .
+PFX 2305 Y 1
+PFX 2305 c 0 .
+SFX 2306 Y 1
+SFX 2306 ovek udom .
+PFX 2306 Y 1
+PFX 2306 c 0 .
+SFX 2307 N 1
+SFX 2307 lovek udoch .
+SFX 2308 Y 1
+SFX 2308 ovek udmi .
+PFX 2308 Y 1
+PFX 2308 c 0 .
+PFX 2309 N 1
+PFX 2309 c coh .
+PFX 2310 N 1
+PFX 2310 co comu .
+PFX 2311 N 1
+PFX 2311 co com .
+PFX 2312 N 1
+PFX 2312 co cim .
+SFX 2313 N 1
+SFX 2313 si musi .
+SFX 2314 Y 1
+SFX 2314 a 0 .
+PFX 2314 Y 1
+PFX 2314 cr cri .
+SFX 2315 N 1
+SFX 2315 ry ier .
+PFX 2316 N 1
+PFX 2316 ci cie .
+PFX 2317 N 1
+PFX 2317 ci cich .
+PFX 2318 N 1
+PFX 2318 ci cim .
+PFX 2319 N 1
+PFX 2319 c cim .
+PFX 2320 N 1
+PFX 2320 ci cia .
+PFX 2321 N 1
+PFX 2321 ci cej .
+PFX 2322 N 1
+PFX 2322 ci ciu .
+PFX 2323 N 1
+PFX 2323 ci cou .
+PFX 2324 N 1
+PFX 2324 ci cieho .
+PFX 2325 N 1
+PFX 2325 ci ciemu .
+PFX 2326 N 1
+PFX 2326 ci com .
+SFX 2327 N 1
+SFX 2327 si esi .
+SFX 2328 N 1
+SFX 2328 si asi .
+SFX 2329 N 1
+SFX 2329 si usi .
+SFX 2330 N 1
+SFX 2330 si ehosi .
+SFX 2331 N 1
+SFX 2331 si emusi .
+SFX 2332 N 1
+SFX 2332 ze ehoze .
+SFX 2333 N 1
+SFX 2333 ze emuze .
+SFX 2334 N 1
+SFX 2334 ze eze .
+SFX 2335 N 1
+SFX 2335 ze aze .
+SFX 2336 N 1
+SFX 2336 ze uze .
+SFX 2337 N 1
+SFX 2337 ko j .
+SFX 2338 Y 1
+SFX 2338 ko j .
+PFX 2338 Y 1
+PFX 2338 0 naj .
+SFX 2339 N 1
+SFX 2339 eko iek .
+SFX 2340 N 1
+SFX 2340 via m .
+SFX 2341 N 1
+SFX 2341 via ch .
+SFX 2342 N 1
+SFX 2342 ovia ami .
+SFX 2343 N 1
+SFX 2343 a iev .
+SFX 2344 Y 1
+SFX 2344 y 0 .
+PFX 2344 Y 1
+PFX 2344 s si .
+SFX 2345 Y 1
+SFX 2345 0 ich .
+PFX 2345 Y 1
+PFX 2345 s si .
+SFX 2346 Y 1
+SFX 2346 0 im .
+PFX 2346 Y 1
+PFX 2346 s si .
+SFX 2347 Y 1
+SFX 2347 0 imi .
+PFX 2347 Y 1
+PFX 2347 s si .
+SFX 2348 Y 1
+SFX 2348 0 i .
+PFX 2348 Y 1
+PFX 2348 s si .
+SFX 2349 N 1
+SFX 2349 ev va .
+SFX 2350 N 1
+SFX 2350 ev vu .
+SFX 2351 N 1
+SFX 2351 ev ve .
+SFX 2352 N 1
+SFX 2352 ev vom .
+SFX 2353 N 1
+SFX 2353 ev vy .
+SFX 2354 N 1
+SFX 2354 ev vov .
+SFX 2355 N 1
+SFX 2355 ev voch .
+SFX 2356 N 1
+SFX 2356 vec evca .
+SFX 2357 N 1
+SFX 2357 vec evcovi .
+SFX 2358 N 1
+SFX 2358 vec evcom .
+SFX 2359 N 1
+SFX 2359 vec evci .
+SFX 2360 N 1
+SFX 2360 vec evcov .
+SFX 2361 N 1
+SFX 2361 vec evcoch .
+SFX 2362 N 1
+SFX 2362 vec evcami .
+SFX 2363 Y 1
+SFX 2363 a 0 .
+PFX 2363 Y 1
+PFX 2363 sl sli .
+SFX 2364 N 1
+SFX 2364 apa iap .
+SFX 2365 Y 1
+SFX 2365 a 0 .
+PFX 2365 Y 1
+PFX 2365 z zi .
+SFX 2366 N 1
+SFX 2366 ezo iez .
+SFX 2367 N 1
+SFX 2367 re er .
+SFX 2368 N 1
+SFX 2368 re ier .
+SFX 2369 N 1
+SFX 2369 nec enca .
+SFX 2370 N 1
+SFX 2370 nec encovi .
+SFX 2371 N 1
+SFX 2371 nec encom .
+SFX 2372 N 1
+SFX 2372 nec enci .
+SFX 2373 N 1
+SFX 2373 nec encov .
+SFX 2374 N 1
+SFX 2374 nec encoch .
+SFX 2375 N 1
+SFX 2375 nec encami .
+SFX 2376 N 1
+SFX 2376 aza iaz .

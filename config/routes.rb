@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'static#index'
 
+  get :search, to: 'search#show'
+
   resources :journeys, path: 'zivotne-situacie'
   get '/zivotne-situacie/:id/:step_slug', to: 'journeys#show', as: 'journey_step' # TODO
 
