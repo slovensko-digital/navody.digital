@@ -65,7 +65,8 @@ class Admin::StepsController < Admin::AdminController
         :keywords,
         :is_waiting_step,
         :slug,
-        :description
+        :description,
+        :position
     )
   end
 end
