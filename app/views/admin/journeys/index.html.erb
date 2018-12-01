@@ -3,6 +3,7 @@
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Pos</th>
       <th class="govuk-table__header" scope="col">Title</th>
       <th class="govuk-table__header" scope="col"></th>
       <th class="govuk-table__header" scope="col" colspan="2"></th>
@@ -11,8 +12,9 @@
   <tbody class="govuk-table__body">
     <% @journeys.each do |journey| %>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= link_to journey.title, [:admin, journey] %><%=  %></td>
-        <td class="govuk-table__cell"><%= link_to 'Steps', admin_journey_steps_path(journey) %></td>
+        <td class="govuk-table__cell"><%= journey.position %></td>
+        <td class="govuk-table__cell"><%= link_to journey.title, [:admin, journey] %></td>
+        <td class="govuk-table__cell"><%= link_to "Steps (#{journey.steps.count})", admin_journey_steps_path(journey) %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
         <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -22,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Journey', new_admin_journey_path %>
+<%= link_to 'New Journey', new_admin_journey_path, class: 'govuk-button' %>
