@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     root to: 'dashboard#show'
 
     resources :journeys
+    resources :steps
   end
 
   get '/static/:slug', to: 'static#show', as: 'static_page', defaults: {is_faq: false}
