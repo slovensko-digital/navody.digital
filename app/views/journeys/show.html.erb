@@ -41,7 +41,7 @@
       </ul>
     <% end %>
 
-    <%= link_to 'Začať', create_user_journey_path(journey_id: @journey.id, step_id: @starting_step.id), method: :post %>
+    <%= link_to 'Začať', create_user_journey_path(journey_id: @journey.id, step_id: @starting_step.id), class: 'govuk-button', method: :post %>
   </div>
 </div>
 

@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get '/zivotne-situacie/:slug', to: 'journeys#show', as: 'journey'
   get '/zivotne-situacie/:slug/:step_slug', to: 'journeys#show', as: 'journey_step'
 
-  post '/user_journeys', to: 'user_journeys#create', as: 'create_user_journey'
-  get '/user_journeys/:id', to: 'user_journeys#show', as: 'user_journey'
+  post '/moje-zivotne-situacie', to: 'user_journeys#create', as: 'create_user_journey'
+  get '/moje-zivotne-situacie/:id', to: 'user_journeys#show', as: 'user_journey'
 
   get '/log_in', to: 'sessions#new', as: 'log_in'
   post '/log_in', to: 'sessions#create', as: 'log_me_in'
