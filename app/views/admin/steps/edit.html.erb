@@ -6,6 +6,3 @@
   ], current: 'Edit' %>
 
 <%= render 'form', journey: @step.journey, step: @step %>
-
-<%= link_to 'Show', [:admin, @step.journey, @step] %> |
-<%= link_to 'Back', admin_journey_steps_path(@step.journey) %>
