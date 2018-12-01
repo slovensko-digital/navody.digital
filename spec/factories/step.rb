@@ -9,5 +9,6 @@ FactoryBot.define do
     is_waiting_step { false }
     slug { title.parameterize }
     description { Faker::Lorem.paragraph(5) }
+    sequence(:position) { |n| n }
   end
 end

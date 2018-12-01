@@ -5,7 +5,8 @@ FactoryBot.define do
     sequence(:title) do |n|
       '%s %d' % [Faker::Commerce.product_name, n]
     end
-    type { 'GenericTask' }
+    type { 'SimpleTask' }
     url { Faker::Internet.url }
+    sequence(:position) { |n| n }
   end
 end

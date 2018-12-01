@@ -56,7 +56,7 @@
 
             -
 
-            <%= render "user_journeys/tasks/#{task.class.name.underscore}", task: task %>
+            <%= render "user_journeys/tasks/#{task.type.underscore}", task: task %>
           </li>
         <% end %>
       </ul>

@@ -36,7 +36,7 @@
       <h2>Zoznam podúloh</h2>
       <ul>
         <% @step.tasks.each do |task| %>
-          <li><%= render "journeys/tasks/#{task.class.name.underscore}", task: task %></li>
+          <li><%= render "journeys/tasks/#{task.type.underscore}", task: task %></li>
         <% end %>
       </ul>
     <% end %>
