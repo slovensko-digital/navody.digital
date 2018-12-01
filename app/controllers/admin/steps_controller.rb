@@ -1,9 +1,10 @@
 class Admin::StepsController < Admin::AdminController
+  before_action :set_journey
   before_action :set_step, only: [:show, :edit, :update, :destroy]
 
   # GET /steps
   def index
-    @steps = Step.all
+    @steps = @journey.steps.all
   end
 
   # GET /steps/1
@@ -12,7 +13,7 @@ class Admin::StepsController < Admin::AdminController
 
   # GET /steps/new
   def new
-    @step = Step.new
+    @step = @journey.steps.new
   end
 
   # GET /steps/1/edit
@@ -21,7 +22,7 @@ class Admin::StepsController < Admin::AdminController
 
   # POST /steps
   def create
-    @step = Step.new(step_params)
+    @step = @journey.steps.new(step_params)
 
     if @step.save
       redirect_to [:admin, @step], notice: 'Step was successfully created.'
@@ -48,8 +49,12 @@ class Admin::StepsController < Admin::AdminController
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  def set_journey
+    @journey = Journey.find(params[:journey_id])
+  end
+
   def set_step
-    @step = Step.find(params[:id])
+    @step = @journey.steps.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -5,7 +5,6 @@
 <table>
   <thead>
     <tr>
-      <th>Journey</th>
       <th>Title</th>
       <th>Keywords</th>
       <th>Is waiting step</th>
@@ -18,15 +17,14 @@
   <tbody>
     <% @steps.each do |step| %>
       <tr>
-        <td><%= step.journey %></td>
         <td><%= step.title %></td>
         <td><%= step.keywords %></td>
         <td><%= step.is_waiting_step %></td>
         <td><%= step.slug %></td>
         <td><%= step.description %></td>
-        <td><%= link_to 'Show', [:admin, step] %></td>
-        <td><%= link_to 'Edit', edit_admin_step_path(step) %></td>
-        <td><%= link_to 'Destroy', [:admin, step], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [:admin, step.journey, step] %></td>
+        <td><%= link_to 'Edit', edit_admin_journey_step_path(step.journey, step) %></td>
+        <td><%= link_to 'Destroy', [:admin, step.journey, step], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Step', new_admin_step_path %>
+<%= link_to 'New Step', new_admin_journey_step_path(@journey) %>

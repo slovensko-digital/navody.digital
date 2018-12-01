@@ -1,6 +1,6 @@
 <h1>Editing Step</h1>
 
-<%= render 'form', step: @step %>
+<%= render 'form', journey: @step.journey, step: @step %>
 
-<%= link_to 'Show', [:admin, @step] %> |
-<%= link_to 'Back', admin_steps_path %>
+<%= link_to 'Show', [:admin, @step.journey, @step] %> |
+<%= link_to 'Back', admin_journey_steps_path(@step.journey) %>

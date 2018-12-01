@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboard#show'
 
-    resources :journeys
-    resources :steps
+    resources :journeys do
+      resources :steps
+    end
     resources :tasks
   end
 
