@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   get :health, to: 'health#index'
 
   get '/static/:slug', to: 'static#show', as: 'static_page'
+
+  namespace :admin do
+    resources :journeys
+  end
 end
