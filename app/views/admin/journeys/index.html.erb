@@ -1,1 +1,26 @@
-<%= debug @journeys %>
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Journeys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @journeys.each do |journey| %>
+      <tr>
+        <td><%= journey.title %></td>
+        <td><%= link_to 'Show', [:admin, journey] %></td>
+        <td><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
+        <td><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Journey', new_admin_journey_path %>

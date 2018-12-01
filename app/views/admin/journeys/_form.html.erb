@@ -1,0 +1,17 @@
+<%= form_with(model: [:admin, journey], local: true) do |form| %>
+  <% if journey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(journey.errors.count, "error") %> prohibited this journey from being saved:</h2>
+
+      <ul>
+      <% journey.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
