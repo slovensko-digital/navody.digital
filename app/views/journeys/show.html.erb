@@ -1,12 +1,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
-    <div class="app-step-nav app-step-nav--active">
-      <ol class="app-step-nav__steps">
-        <li class="app-step-nav__step js-step"><%= link_to 'Úvod', journey_path(slug: @journey.slug) %></li>
-
+    <div class="sdn-timeline">
+      <ol start=0 class="sdn-timeline__list">
         <% @journey.steps.each do |step| %>
-          <li class="app-step-nav__step js-step"><%= link_to step.title, journey_step_path(slug: @journey.slug, step_slug: step.slug) %></li>
-        <% end %>
+        <li class="sdn-timeline__step sdn-timeline__step--done">
+          <div class="sdn-timeline__bullet"></div>
+          <%= link_to step.title, journey_step_path(id: @journey.slug, step_slug: step.slug), class: 'sdn-timeline__link' %>
+        </li>
+      <% end %>
       </ol>
     </div>
   </div>

@@ -6,4 +6,8 @@ class Step < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
   validates :is_waiting_step, inclusion: { in: [true, false] }
+
+  default_scope do
+    order(position: :asc)
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_01_131820) do
+ActiveRecord::Schema.define(version: 2018_12_01_145710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_12_01_131820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", null: false
+    t.integer "position", default: 0, null: false
   end
 
   create_table "pages", force: :cascade do |t|
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(version: 2018_12_01_131820) do
     t.boolean "is_faq", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position", default: 0, null: false
   end
 
   create_table "steps", force: :cascade do |t|
@@ -43,6 +45,7 @@ ActiveRecord::Schema.define(version: 2018_12_01_131820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", null: false
+    t.integer "position", default: 0, null: false
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 
@@ -53,6 +56,7 @@ ActiveRecord::Schema.define(version: 2018_12_01_131820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "url"
+    t.integer "position", default: 0, null: false
     t.index ["step_id"], name: "index_tasks_on_step_id"
   end
 

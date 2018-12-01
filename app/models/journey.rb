@@ -8,4 +8,8 @@ class Journey < ApplicationRecord
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
+
+  default_scope do
+    order(position: :asc)
+  end
 end

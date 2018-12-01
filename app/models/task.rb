@@ -5,4 +5,8 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :type, presence: true
+
+  default_scope do
+    order(position: :asc)
+  end
 end
