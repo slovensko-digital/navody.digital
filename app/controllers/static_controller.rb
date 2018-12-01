@@ -5,6 +5,6 @@ class StaticController < ApplicationController
   end
 
   def show
-    @page = Page.where(is_faq: false).find_by_slug(params[:slug])
+    @page = Page.where(is_faq: false).find_by_slug!(params[:slug])
   end
 end
