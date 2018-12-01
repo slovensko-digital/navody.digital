@@ -1,0 +1,29 @@
+<%= render 'search_box' %>
+
+<h1>Vysledky vyhladavania pre <%= @q %></h1>
+
+<% if @journeys.any? %>
+  <h2>Zivotne situacie</h2>
+  <% @journeys.each do |journey| %>
+    <p>
+      <%= link_to journey.title, journey_path(journey.slug) %>
+    </p>
+  <% end %>
+<% else %>
+  <p>
+    Nenasli sme ziadne zivotne situacie
+  </p>
+<% end %>
+
+<% if @steps.any? %>
+  <h2>Kroky zivotnych situacii</h2>
+  <% @steps.each do |step| %>
+    <p>
+      <%= link_to step.title, journey_step_path(step.journey.slug, step.slug) %>
+    </p>
+  <% end %>
+<% else %>
+  <p>
+    Nenasli sme ziadne kroky zivotnych situacii
+  </p>
+<% end %>

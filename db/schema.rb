@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2018_12_01_145710) do
     t.datetime "updated_at", null: false
     t.text "description", null: false
     t.integer "position", default: 0, null: false
+    t.string "search_terms", null: false
+    t.index "to_tsvector('simple'::regconfig, (search_terms)::text)", name: "journeys_fulltext_idx", using: :gin
   end
 
   create_table "pages", force: :cascade do |t|
@@ -46,6 +48,8 @@ ActiveRecord::Schema.define(version: 2018_12_01_145710) do
     t.datetime "updated_at", null: false
     t.text "description", null: false
     t.integer "position", default: 0, null: false
+    t.string "search_terms", null: false
+    t.index "to_tsvector('simple'::regconfig, (search_terms)::text)", name: "steps_fulltext_idx", using: :gin
     t.index ["journey_id"], name: "index_steps_on_journey_id"
   end
 
