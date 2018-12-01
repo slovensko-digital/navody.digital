@@ -17,19 +17,19 @@ class StepStatus
 
   # TODO make this nice!
   def done
-    'HOTOVO'
+    'done'
   end
 
   def started
-    'ROZPRACOVANÁ'
+    'in-progress'
   end
 
   def waiting
-    'ČAKÁME'
+    'waiting'
   end
 
   def nothing
-    'NIČ'
+    'not-done'
   end
 
   # TODO export to better place
