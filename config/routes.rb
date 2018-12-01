@@ -10,9 +10,6 @@ Rails.application.routes.draw do
     resources :tasks
   end
 
-  get '/static/:slug', to: 'static#show', as: 'static_page', defaults: {is_faq: false}
-  get '/faq/:slug', to: 'static#show', as: 'faq_page', defaults: {is_faq: true}
-
   root to: 'static#index'
 
   resources :journeys, path: 'zivotne-situacie'
