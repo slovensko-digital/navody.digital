@@ -22,4 +22,7 @@ Rails.application.routes.draw do
   post '/user_task/mark_as_complete', to: 'user_tasks#mark_as_complete', as: 'mark_user_task_as_complete'
   post '/user_task/mark_as_incomplete', to: 'user_tasks#mark_as_incomplete', as: 'mark_user_task_as_incomplete'
 
+
+  get '/exit/:task_id', to: 'exits#redirect_to_external_task', as: 'exit_to_task'
+  post '/upload_data', to: 'api#upload_data'
 end

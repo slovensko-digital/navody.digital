@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_01_145710) do
+ActiveRecord::Schema.define(version: 2018_12_01_175158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "data_receipts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.string "token", null: false
+    t.text "received_payload"
+    t.text "received_data"
+    t.datetime "generated_at", null: false
+    t.datetime "response_received_at"
+    t.index ["task_id"], name: "index_data_receipts_on_task_id"
+    t.index ["user_id"], name: "index_data_receipts_on_user_id"
+  end
 
   create_table "journeys", force: :cascade do |t|
     t.text "title", null: false
