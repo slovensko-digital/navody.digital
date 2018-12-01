@@ -1,0 +1,6 @@
+<h1>Návody.digital!</h1>
+
+
+<% @pages.each do |page| %>
+  <p><%= link_to page.title, static_page_path(slug: page.slug) %></p>
+<% end %>
