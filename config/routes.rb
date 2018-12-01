@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   get '/zivotne-situacie', to: redirect('/')
   get '/zivotne-situacie/:slug', to: 'journeys#show', as: 'journey'
+  get '/zivotne-situacie/:slug/:step_slug', to: 'journeys#show', as: 'journey_step'
 end

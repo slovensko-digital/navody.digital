@@ -1,1 +1,26 @@
-<h1><%= @journey.title %></h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class="app-step-nav app-step-nav--active">
+      <ol class="app-step-nav__steps">
+        <li class="app-step-nav__step js-step"><%= link_to 'Úvod', journey_path(slug: @journey.slug) %></li>
+
+        <% @journey.steps.each do |step| %>
+          <li class="app-step-nav__step js-step"><%= link_to step.title, journey_step_path(slug: @journey.slug, step_slug: step.slug) %></li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= raw @text %>
+
+    <% if @step %>
+      <h2>Zoznam podúloh</h2>
+      <ul>
+        <% @step.tasks.each do |task| %>
+        <li><%= render "journeys/tasks/#{task.class.name.underscore}", task: task %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
