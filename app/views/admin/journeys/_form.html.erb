@@ -10,6 +10,7 @@
   <%= form.text_field :keywords %>
   <%= form.select :published_status, Journey.defined_enums['published_status'] %>
   <%= form.number_field :position %>
+  <%= form.number_field :featured_position %>
   <%= form.text_area :description, size: "60x12" %>
 
   <div class="actions">
