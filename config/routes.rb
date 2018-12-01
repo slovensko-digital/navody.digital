@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get :health, to: 'health#index'
 
   namespace :admin do
-    root to: 'dashboard#show'
+    root to: redirect('admin/journeys#index')
 
     resources :journeys do
       resources :steps
