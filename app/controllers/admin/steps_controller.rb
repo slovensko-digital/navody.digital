@@ -25,7 +25,7 @@ class Admin::StepsController < Admin::AdminController
     @step = @journey.steps.new(step_params)
 
     if @step.save
-      redirect_to [:admin, @step], notice: 'Step was successfully created.'
+      redirect_to admin_journey_step_url(@step.journey, @step), notice: 'Step was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Admin::StepsController < Admin::AdminController
   # PATCH/PUT /steps/1
   def update
     if @step.update(step_params)
-      redirect_to [:admin, @step], notice: 'Step was successfully updated.'
+      redirect_to admin_journey_step_url(@step.journey, @step), notice: 'Step was successfully updated.'
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class Admin::StepsController < Admin::AdminController
   # DELETE /steps/1
   def destroy
     @step.destroy
-    redirect_to admin_steps_url, notice: 'Step was successfully destroyed.'
+    redirect_to admin_journey_steps_url(@step.journey), notice: 'Step was successfully destroyed.'
   end
 
   private
