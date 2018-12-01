@@ -9,16 +9,16 @@ var ready = function() {
 
     {
         $('#autoform-form-2').show();
-        
+
     });
 
     $('#autoform-3-show').on('click',function(event)
 
     {
         $('#autoform-form-3').show();
-        
+
     });
-    
+
     $('#autoform-form-1').submit(function() {
 
         if ($('#autoform-email').val() == '' || $('#autoform-domain').val() == '') {
@@ -121,5 +121,5 @@ $('#autoform-form-3').submit(function() {
     }
 });
 }
-$(document).ready(ready);
-    //$(document).on('turbolinks:load',ready);
+//$(document).ready(ready);
+    $(document).on('turbolinks:load',ready);
