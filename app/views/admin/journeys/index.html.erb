@@ -1,22 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Admin Journeys</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="4"></th>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
     </tr>
   </thead>
-
-  <tbody>
+  <tbody class="govuk-table__body">
     <% @journeys.each do |journey| %>
-      <tr>
-        <td><%= journey.title %></td>
-        <td><%= link_to 'Show', [:admin, journey] %></td>
-        <td><%= link_to 'Steps', admin_journey_steps_path(journey) %></td>
-        <td><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
-        <td><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= link_to journey.title, [:admin, journey] %><%=  %></td>
+        <td class="govuk-table__cell"><%= link_to 'Steps', admin_journey_steps_path(journey) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
