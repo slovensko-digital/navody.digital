@@ -1,0 +1,65 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class="sdn-timeline">
+      <ol start=0 class="sdn-timeline__list">
+        <li class="sdn-timeline__step sdn-timeline__step--done">
+          <div class="sdn-timeline__bullet"></div>
+          <% if @step == nil %>
+            <strong>
+              <%= link_to 'Úvod', user_journey_path(id: @user_journey.id), class: 'sdn-timeline__link' %>
+            </strong>
+          <% else %>
+            <%= link_to 'Úvod', user_journey_path(id: @user_journey.id), class: 'sdn-timeline__link' %>
+          <% end %>
+        </li>
+        <% @steps.each do |step| %>
+          <li class="sdn-timeline__step sdn-timeline__step--<%= @step_status.status_for(step) %>">
+            <div class="sdn-timeline__bullet"></div>
+            <% if @step == step %>
+              <strong>
+                <%= link_to step.title, user_journey_path(id: @user_journey.id, step_id: step.id), class: 'sdn-timeline__link' %>
+              </strong>
+            <% else %>
+              <%= link_to step.title, user_journey_path(id: @user_journey.id, step_id: step.id), class: 'sdn-timeline__link' %>
+            <% end %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= raw @text %>
+
+    <% if @step %>
+      <h2>Zoznam podúloh</h2>
+      <ul>
+        <% @step.tasks.each do |task| %>
+          <li>
+            <% if @step_status.complete?(step: @step, task: task) %>
+              <strong>HOTOVÉ</strong>
+              <%= link_to '(zruž označenie)',
+                  mark_user_task_as_incomplete_path(
+                      user_journey_id: @user_journey.id,
+                      step_id: @step.id,
+                      task_id: task.id
+                  ),
+                  method: :post %>
+            <% else %>
+              <%= link_to 'Označ ako HOTOVÉ',
+                  mark_user_task_as_complete_path(
+                      user_journey_id: @user_journey.id,
+                      step_id: @step.id,
+                      task_id: task.id
+                  ),
+                  method: :post %>
+            <% end %>
+
+            -
+
+            <%= render "user_journeys/tasks/#{task.class.name.underscore}", task: task %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

@@ -36,6 +36,14 @@
           </ul>
         </nav>
       </div>
+      <div>
+        <% if current_user %>
+          <%= current_user.email %>
+          <%= link_to 'Odhlásiť', log_out_path, method: :delete %>
+        <% else %>
+          <%= link_to 'Prihlásiť', log_in_path %>
+        <% end %>
+      </div>
     </div>
   </header>
 
@@ -51,6 +59,15 @@
   <% if current_page?(controller: :static, action: :index) %>
     <%= render 'search/search_box' %>
   <% end %>
+
+  <div class="govuk-width-container">
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:alert] %>
+      <p><%= flash[:alert] %></p>
+    <% end %>
+  </div>
 
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper " id="main-content" role="main">
