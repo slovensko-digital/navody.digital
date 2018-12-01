@@ -54,14 +54,6 @@ RSpec.describe Admin::JourneysController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
-      journey = Journey.create! valid_attributes
-      get :show, params: { id: journey.to_param }, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}, session: valid_session
@@ -85,9 +77,9 @@ RSpec.describe Admin::JourneysController, type: :controller do
         }.to change(Journey, :count).by(1)
       end
 
-      it "redirects to the created journey" do
+      it "redirects to the journeys" do
         post :create, params: { journey: valid_attributes }, session: valid_session
-        expect(response).to redirect_to([:admin, Journey.last])
+        expect(response).to redirect_to([:admin, :journeys])
       end
     end
 
@@ -117,7 +109,7 @@ RSpec.describe Admin::JourneysController, type: :controller do
       it "redirects to the journey" do
         journey = Journey.create! valid_attributes
         put :update, params: { id: journey.to_param, journey: valid_attributes }, session: valid_session
-        expect(response).to redirect_to([:admin, journey])
+        expect(response).to redirect_to([:admin, :journeys])
       end
     end
 

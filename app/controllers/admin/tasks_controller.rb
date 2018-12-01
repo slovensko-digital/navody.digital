@@ -8,10 +8,6 @@ class Admin::TasksController < Admin::AdminController
     @tasks = @step.tasks.all
   end
 
-  # GET /tasks/1
-  def show
-  end
-
   # GET /tasks/new
   def new
     @task = @step.tasks.new
@@ -26,7 +22,7 @@ class Admin::TasksController < Admin::AdminController
     @task = @step.tasks.new(task_params)
 
     if @task.save
-      redirect_to admin_journey_step_task_url(@task.step.journey, @task.step, @task), notice: 'Task was successfully created.'
+      redirect_to admin_journey_step_tasks_url(@task.step.journey, @task.step), notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -35,7 +31,7 @@ class Admin::TasksController < Admin::AdminController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      redirect_to admin_journey_step_task_url(@task.step.journey, @task.step, @task), notice: 'Task was successfully updated.'
+      redirect_to admin_journey_step_tasks_url(@task.step.journey, @task.step), notice: 'Task was successfully updated.'
     else
       render :edit
     end

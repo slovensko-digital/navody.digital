@@ -15,7 +15,7 @@
     <% @journeys.each do |journey| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= journey.position %></td>
-        <td class="govuk-table__cell"><%= link_to journey.title, [:admin, journey] %></td>
+        <td class="govuk-table__cell"><%= link_to journey.title, journey_url(id: journey.slug) %></td>
         <td class="govuk-table__cell"><%= link_to "Steps (#{journey.steps.count})", admin_journey_steps_path(journey) %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
         <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>

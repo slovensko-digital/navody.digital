@@ -6,10 +6,6 @@ class Admin::JourneysController < Admin::AdminController
     @journeys = Journey.all
   end
 
-  # GET /admin/journeys/1
-  def show
-  end
-
   # GET /admin/journeys/new
   def new
     @journey = Journey.new
@@ -24,7 +20,7 @@ class Admin::JourneysController < Admin::AdminController
     @journey = Journey.new(journey_params)
 
     if @journey.save
-      redirect_to [:admin, @journey], notice: 'Journey was successfully created.'
+      redirect_to admin_journeys_url, notice: 'Journey was successfully created.'
     else
       render :new
     end
@@ -33,7 +29,7 @@ class Admin::JourneysController < Admin::AdminController
   # PATCH/PUT /admin/journeys/1
   def update
     if @journey.update(journey_params)
-      redirect_to [:admin, @journey], notice: 'Journey was successfully updated.'
+      redirect_to admin_journeys_url, notice: 'Journey was successfully updated.'
     else
       render :edit
     end

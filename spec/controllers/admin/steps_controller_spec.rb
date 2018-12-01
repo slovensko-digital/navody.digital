@@ -54,14 +54,6 @@ RSpec.describe Admin::StepsController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
-      step = Step.create! valid_attributes
-      get :show, params: {journey_id: step.journey.id, id: step.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET #new" do
     it "returns a success response" do
       journey = create(:journey)
@@ -91,7 +83,7 @@ RSpec.describe Admin::StepsController, type: :controller do
         journey = create(:journey)
         post :create, params: {journey_id: journey.id, step: valid_attributes}, session: valid_session
         step = Step.last
-        expect(response).to redirect_to(admin_journey_step_path(step.journey, step))
+        expect(response).to redirect_to(admin_journey_steps_url(journey))
       end
     end
 
@@ -122,7 +114,7 @@ RSpec.describe Admin::StepsController, type: :controller do
       it "redirects to the step" do
         step = Step.create! valid_attributes
         put :update, params: {journey_id: step.journey.id, id: step.to_param, step: valid_attributes}, session: valid_session
-        expect(response).to redirect_to([:admin, step.journey, step])
+        expect(response).to redirect_to(admin_journey_steps_path(step.journey))
       end
     end
 

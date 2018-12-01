@@ -54,14 +54,6 @@ RSpec.describe Admin::TasksController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
-      task = Task.create! valid_attributes
-      get :show, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET #new" do
     it "returns a success response" do
       step = create(:step)
@@ -92,7 +84,7 @@ RSpec.describe Admin::TasksController, type: :controller do
         post :create, params: {journey_id: step.journey.id, step_id: step.id, task: valid_attributes}, session: valid_session
 
         task = Task.last
-        expect(response).to redirect_to(admin_journey_step_task_url(task.step.journey, task.step, task))
+        expect(response).to redirect_to(admin_journey_step_tasks_url(step.journey, step))
       end
     end
 
@@ -123,7 +115,7 @@ RSpec.describe Admin::TasksController, type: :controller do
       it "redirects to the task" do
         task = Task.create! valid_attributes
         put :update, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param, task: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(admin_journey_step_task_url(task.step.journey, task.step, task))
+        expect(response).to redirect_to(admin_journey_step_tasks_url(task.step.journey, task.step))
       end
     end
 

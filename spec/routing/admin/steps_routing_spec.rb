@@ -10,10 +10,6 @@ RSpec.describe Admin::StepsController, type: :routing do
       expect(:get => "/admin/journeys/1/steps/new").to route_to("admin/steps#new", journey_id: "1")
     end
 
-    it "routes to #show" do
-      expect(:get => "/admin/journeys/1/steps/1").to route_to("admin/steps#show", journey_id: "1", id: "1")
-    end
-
     it "routes to #edit" do
       expect(:get => "/admin/journeys/1/steps/1/edit").to route_to("admin/steps#edit", journey_id: "1", id: "1")
     end

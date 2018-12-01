@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: redirect('admin/journeys#index')
 
-    resources :journeys do
-      resources :steps do
-        resources :tasks
+    resources :journeys, except: [:show] do
+      resources :steps, except: [:show] do
+        resources :tasks, except: [:show]
       end
     end
   end

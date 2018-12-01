@@ -1,8 +1,8 @@
 <%= render 'breadcrumbs', crumbs: [
     ['Journeys', admin_journeys_url],
-    [@journey.title, admin_journey_url(@journey)],
+    [@journey.title, '#'],
     ['Steps', admin_journey_steps_url(@journey)],
-    [@step.title, admin_journey_step_url(@journey, @step)],
+    [@step.title, '#'],
     ['Tasks', admin_journey_step_tasks_path(@journey, @step)],
   ], current: 'New' %>
 

@@ -21,7 +21,7 @@
     <% @tasks.each do |task| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= task.position %></td>
-        <td class="govuk-table__cell"><%= link_to task.title, [:admin, task.step.journey, task.step, task] %></td>
+        <td class="govuk-table__cell"><%= task.title %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_step_task_path(task.step.journey, task.step, task) %></td>
         <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, task.step.journey, task.step, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
