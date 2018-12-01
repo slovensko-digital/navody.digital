@@ -5,7 +5,7 @@
         <li class="app-step-nav__step js-step"><%= link_to 'Úvod', journey_path(slug: @journey.slug) %></li>
 
         <% @journey.steps.each do |step| %>
-          <li class="app-step-nav__step js-step"><%= link_to step.title, journey_step_path(slug: @journey.slug, step_slug: step.slug) %></li>
+          <li class="app-step-nav__step js-step"><%= link_to step.title, journey_step_path(id: @journey.slug, step_slug: step.slug) %></li>
         <% end %>
       </ol>
     </div>

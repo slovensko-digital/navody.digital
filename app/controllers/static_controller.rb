@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
   def index
-    @pages = Page.all # TODO: fetch top FAQs here
+    @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.all
   end
 

@@ -1,9 +1,4 @@
-<h1>Návody.digital!</h1>
-
-
-<% @pages.each do |page| %>
-  <p><%= link_to page.title, page.is_faq? ? faq_path(page.slug) : static_page_path(slug: page.slug) %></p>
-<% end %>
+<% content_for :title, 'Návody.Digital' %>
 
 <h2>Životné situácie</h2>
 
@@ -12,3 +7,8 @@
     <li><%= link_to journey.title, journey_path(journey.slug) %></li>
   <% end %>
 </ul>
+
+<h2>Často kladené otázky</h2>
+<% @faqs.each do |faq| %>
+  <p><%= link_to faq.title, faq_path(faq) %></p>
+<% end %>
