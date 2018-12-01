@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NavodySlovenskoDigital</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>NavodySlovenskoDigital</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script>window.GOVUKFrontend.initAll()</script>
-  </head>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+  <script>window.GOVUKFrontend.initAll()</script>
+</head>
 
-  <body class="govuk-template__body ">
+<body class="govuk-template__body ">
   <script>
-      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
 
   </script>
 
@@ -41,26 +41,133 @@
     <main class="govuk-main-wrapper " id="main-content" role="main">
       <%= yield %>
     </main>
-  </div>
+    <div class="gem-c-feedback gem-c-feedback--top-margin" data-module="feedback">
+      <div class="gem-c-feedback__prompt gem-c-feedback__js-show js-prompt" tabindex="-1">
+        <div class="gem-c-feedback__js-prompt-questions js-prompt-questions">
+          <h2 class="gem-c-feedback__prompt-question">Je táto stránka užitočná?</h2>
+          <iframe name="form-result" style="display: none;"></iframe>
 
-  <footer class="govuk-footer " role="contentinfo">
-    <div class="govuk-width-container ">
-      <div class="govuk-footer__meta">
-        <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+          <form target="form-result" id="autoform-form-1" action="https://docs.google.com/forms/d/e/1FAIpQLSdfq5fGDCcePNTS7D__Kwz4v_L5th2w0HuJbkO1-Vqmk7Ul4Q/formResponse" method="post">
+            <input type="hidden" id="autoform-email" name="entry.123831275" value="áno" />
+            <a onclick="$(this).closest('form').submit()" class="gem-c-feedback__prompt-link gem-c-feedback__prompt-link--useful js-page-is-useful" data-track-category="yesNoFeedbackForm" data-track-action="ffYesClick" aria-expanded="false" role="button" href="#" id="submit_to_autoform">
+              Áno <span class="visually-hidden">Táto stránka je užitočná</span>
+            </a>
+            
+          </form>
 
-          <svg role="presentation" focusable="false" class="govuk-footer__licence-logo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 483.2 195.7" height="17" width="41">
-            <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"/>
-          </svg>
-          <span class="govuk-footer__licence-description">
-            All content is available under the
-            <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
-          </span>
+          
+          <a id="autoform-2-show"  class="gem-c-feedback__prompt-link js-toggle-form js-page-is-not-useful" data-track-category="yesNoFeedbackForm" data-track-action="ffNoClick" aria-controls="page-is-not-useful" aria-expanded="false" role="button" href="#">
+            Nie <span class="visually-hidden">Táto stránka nie je užitočná</span>
+          </a>
+          <a id="autoform-3-show" class="gem-c-feedback__prompt-link gem-c-feedback__prompt-link--wrong js-toggle-form js-something-is-wrong" data-track-category="Onsite Feedback" data-track-action="GOV.UK Open Form" aria-controls="something-is-wrong" aria-expanded="false" role="button" href="#">
+            Je na stránke chyba?
+          </a>
         </div>
-        <div class="govuk-footer__meta-item">
-          <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+
+        <div class="gem-c-feedback__prompt-success js-prompt-success js-hidden" tabindex="-1">
+          Ďakujeme za váš názor
+        </div>
+
+      </div>   
+
+      <form target="form-result" id="autoform-form-2" action="https://docs.google.com/forms/d/e/1FAIpQLSfRnC8rYB_w4GRwX7Ho7qHEBHs-A116874yzCf3Ri2YtcxEiw/formResponse" id="something-is-wrong" class="gem-c-feedback__form js-feedback-form js-hidden" data-track-category="Onsite Feedback"  method="post">
+        <a href="#" class="gem-c-feedback__close gem-c-feedback__js-show js-close-form" data-track-category="Onsite Feedback"  aria-controls="something-is-wrong" aria-expanded="true" role="button">Zavri</a>
+
+        <div class="gem-c-feedback__grid-row">
+          <div class="gem-c-feedback__column-two-thirds">
+            <div class="gem-c-feedback__error-summary gem-c-feedback__js-show js-hidden js-errors" tabindex="-1">
+            </div>
+            <h3 class="gem-c-feedback__form-heading">Pomôžte nám vylepšiť slovensko.digital</h3>
+            <p id="feedback_explanation" class="gem-c-feedback__form-paragraph">Nevpisujete vaše osobné informácie ako napríklad číslo OP</p>
+            <div class="govuk-form-group">
+              <label for="input-f2f8d9f4" class="gem-c-label govuk-label ">
+                Akú životnú situáciu riešite?
+              </label>
+              <input name="entry.967558425" class="gem-c-input govuk-input" id="input-f2f8d9f4" type="text" aria-describedby="feedback_explanation">
+            </div>
+
+            <div class="govuk-form-group">
+              <label for="input-7ce3144b" class="gem-c-label govuk-label ">
+                Nastala niekde chyba?
+              </label>
+              <input name="entry.2083767391" class="gem-c-input govuk-input" id="autoform-email" type="text">
+            </div>
+            <button name="button" type="submit" id="submit_to_autoform" class="btn btn-default btn-lg">
+              Odoslať
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <form target="form-result" id="autoform-form-3" action="https://docs.google.com/forms/d/e/1FAIpQLScxf6xNh_aKU5w5TVnQXgNF4qczogVsxvCcQEGzQgYfLp-zcg/formResponse" class="gem-c-feedback__form gem-c-feedback__form--email gem-c-feedback__js-show js-feedback-form js-hidden" data-track-category="yesNoFeedbackForm" data-track-action="Send Form" method="post">
+        <a href="#" class="gem-c-feedback__close js-close-form" data-track-category="yesNoFeedbackForm" data-track-action="ffFormClose" aria-controls="page-is-not-useful" aria-expanded="true" role="button">Zavri</a>
+
+        <div class="gem-c-feedback__grid-row">
+          <div class="gem-c-feedback__column-two-thirds">
+            <div class="gem-c-feedback__error-summary js-hidden js-errors" tabindex="-1"></div>
+
+          
+
+            <h3 class="gem-c-feedback__form-heading">Pomôžte nám vylepšiť slovensko.digital</h3>
+            <p id="survey_explanation" class="gem-c-feedback__form-paragraph">
+              Ak nám chcete pomôcť zlepšiť slovensko.digital, popíšte nám, prosím, dôvod vašej návštevy.
+              <%# To help us improve GOV.UK, we’d like to know more about your visit today. We’ll send you a link to a feedback form. It will take only 2 minutes to fill in. Don’t worry we won’t send you spam or share your email address with anyone.</p> %>
+
+              <div class="govuk-form-group">
+
+               <label for="input-97be0eee" class="gem-c-label govuk-label ">
+                Emailová adresa
+              </label>
+              <input name="entry.1867715514" class="gem-c-input govuk-input" id="input-97be0eee" type="email" aria-describedby="survey_explanation">
+            </div>
+            <button name="button" type="submit" id="submit_to_autoform" class="btn btn-default btn-lg">
+              Pošlite mi dotazník
+            </button>
+
+            <a href="https://www.smartsurvey.co.uk/s/gov-uk-banner/?c=/browse/education&amp;gcl=1627485790.1515403243" class="gem-c-feedback__email-link govuk-link" id="take-survey" target="_blank" rel="noopener noreferrer">Nemáš email?</a>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+    <footer class="govuk-footer " role="contentinfo">
+      <div class="govuk-width-container ">
+        <div class="govuk-footer__meta">
+          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+            <svg role="presentation" focusable="false" class="govuk-footer__licence-logo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 483.2 195.7" height="17" width="41">
+              <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"/>
+            </svg>
+            <span class="govuk-footer__licence-description">
+              All content is available under the
+              <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+            </span>
+          </div>
+          <div class="govuk-footer__meta-item">
+            <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
   </body>
-</html>
+  </html>
+
+
+
+  <script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  //  ga('create', 'sem treba pridat env ga tracking ID', 'auto');
+  ga('set', 'anonymizeIp', true);
+  ga('send', 'pageview');
+  </script>
