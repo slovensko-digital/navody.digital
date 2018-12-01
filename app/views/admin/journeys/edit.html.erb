@@ -1,4 +1,4 @@
-<h1>Editing Admin Journey</h1>
+<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_url], [@journey.title, admin_journey_url(@journey)]], current: 'Edit' %>
 
 <%= render 'form', journey: @journey %>
 

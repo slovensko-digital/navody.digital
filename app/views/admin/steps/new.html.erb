@@ -1,4 +1,8 @@
-<h1>New Step</h1>
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, admin_journey_url(@journey)],
+    ['Steps', admin_journey_steps_url(@journey)],
+  ], current: 'New' %>
 
 <%= render 'form', step: @step %>
 

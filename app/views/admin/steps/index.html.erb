@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Steps</h1>
+<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_url], [@journey.title, admin_journey_url(@journey)]], current: 'Steps' %>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Step', new_admin_journey_step_path(@journey) %>
+<%= link_to 'New Step', new_admin_journey_step_path(@journey), {class: 'govuk-button'} %>
