@@ -2,5 +2,13 @@
 
 
 <% @pages.each do |page| %>
-  <p><%= link_to page.title, static_page_path(slug: page.slug) %></p>
+  <p><%= link_to page.title, page.is_faq? ? faq_page_path(slug: page.slug) : static_page_path(slug: page.slug) %></p>
 <% end %>
+
+<h2>Životné situácie</h2>
+
+<ul>
+  <% @journeys.each do |journey| %>
+    <li><%= link_to journey.title, journey_path(journey.slug) %></li>
+  <% end %>
+</ul>
