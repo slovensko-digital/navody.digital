@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
     resources :journeys
     resources :steps
+    resources :tasks
   end
 
   get '/static/:slug', to: 'static#show', as: 'static_page', defaults: {is_faq: false}
