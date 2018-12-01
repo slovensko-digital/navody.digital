@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :journey do
-    title { Faker::Commerce.product_name }
+    title { '%s %d' % [Faker::Commerce.product_name, rand(1..1000)] }
     keywords { Faker::Commerce.department(5).gsub(/,/, '') }
     published_status { 'PUBLISHED' }
     slug { title.parameterize }
