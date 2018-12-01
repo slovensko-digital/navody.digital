@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def require_user
+    unless current_user
+      redirect_to log_in_path
+    end
+  end
 end

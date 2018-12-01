@@ -1,0 +1,33 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class="app-step-nav app-step-nav--active">
+      <ol class="app-step-nav__steps">
+        <li class="app-step-nav__step js-step"><%= @step_status.done %> - <%= link_to 'Úvod', user_journey_path(id: @user_journey.id) %></li>
+
+        <% @steps.each do |step| %>
+          <li class="app-step-nav__step js-step">
+            <%= @step_status.status_for(step) %>
+            <%= link_to step.title, user_journey_path(id: @user_journey.id, step_id: step.id) %>
+            <% if step.id.to_s == params[:step_id] %>
+              <%= '<--' %>
+            <% end %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <%= raw @text %>
+
+    <% if @step %>
+      <h2>Zoznam podúloh</h2>
+      <ul>
+        <% @step.tasks.each do |task| %>
+          <li>
+            <%= render "user_journeys/tasks/#{task.class.name.underscore}", task: task %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
