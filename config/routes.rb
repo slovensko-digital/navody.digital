@@ -26,7 +26,10 @@ Rails.application.routes.draw do
   post '/log_in', to: 'sessions#create', as: 'log_me_in'
   delete '/log_out', to: 'sessions#destroy', as: 'log_out'
 
-  resources :faqs, path: 'casto-kladene-otazky'
+  resources :faqs, path: 'casto-kladene-otazky' do
+    root to: 'static#show', defaults: { slug: 'contact-info' }
+  end
+
   get '/:slug', to: 'static#show', as: :static_page
 
   post '/user_task/mark_as_complete', to: 'user_tasks#mark_as_complete', as: 'mark_user_task_as_complete'

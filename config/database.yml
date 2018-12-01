@@ -58,10 +58,6 @@ development:
 test:
   <<: *default
   database: navody_slovensko_digital_test
-  host: localhost
-  port: 5432
-  username: navody.digital
-  password: mysecretpassword
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
