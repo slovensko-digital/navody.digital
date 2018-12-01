@@ -1,15 +1,16 @@
-<%= form_with(model: [:admin, journey], local: true) do |form| %>
+<%= form_with(model: [:admin, journey], local: true, builder: AdminFormBuilder) do |form| %>
   <% if journey.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(journey.errors.count, "error") %> prohibited this journey from being saved:</h2>
-
-      <ul>
-      <% journey.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <h2><%= pluralize(journey.errors.count, "error") %> prohibited this journey from being saved</h2>
     </div>
   <% end %>
+
+  <%= form.text_field :title %>
+  <%= form.text_field :slug %>
+  <%= form.text_field :keywords %>
+  <%= form.select :published_status, Journey.defined_enums['published_status'] %>
+  <%= form.number_field :position %>
+  <%= form.text_area :description, size: "60x12" %>
 
   <div class="actions">
     <%= form.submit %>
