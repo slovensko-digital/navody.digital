@@ -14,3 +14,12 @@
 <% @faqs.each do |faq| %>
   <p><%= link_to faq.title, faq_path(faq) %></p>
 <% end %>
+
+<% if @user_journeys %>
+  <h2>Rozpracované todo listy</h2>
+  <ul>
+    <% @user_journeys.each do |user_journey| %>
+      <li><%= link_to "#{user_journey.journey.title} - #{l(user_journey.created_at, format: :short)}", user_journey_path(user_journey.id) %></li>
+    <% end %>
+  </ul>
+<% end %>
