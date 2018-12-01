@@ -1,0 +1,2 @@
+class ExternalLinkTask < Task
+end
