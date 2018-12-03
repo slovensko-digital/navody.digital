@@ -12,5 +12,8 @@ test:
     username: admin
     password: admin
 
+staging:
+  <<: *default
+
 production:
   <<: *default
