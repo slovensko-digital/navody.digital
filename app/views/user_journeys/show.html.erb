@@ -1,3 +1,5 @@
+<%= content_for(:headerline, @journey.title) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
     <div class="sdn-timeline">
@@ -28,38 +30,31 @@
     </div>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <%= raw @text %>
+    <h1 class="govuk-heading-xl"><%= @title %></h1>
+
+    <div class="govuk-body">
+      <%= raw @text %>
+    </div>
 
     <% if @step %>
-      <h2>Zoznam podúloh</h2>
-      <ul>
-        <% @step.tasks.each do |task| %>
-          <li>
-            <% if @step_status.complete?(step: @step, task: task) %>
-              <strong>HOTOVÉ</strong>
-              <%= link_to '(zruž označenie)',
-                  mark_user_task_as_incomplete_path(
-                      user_journey_id: @user_journey.id,
-                      step_id: @step.id,
-                      task_id: task.id
-                  ),
-                  method: :post %>
-            <% else %>
-              <%= link_to 'Označ ako HOTOVÉ',
-                  mark_user_task_as_complete_path(
-                      user_journey_id: @user_journey.id,
-                      step_id: @step.id,
-                      task_id: task.id
-                  ),
-                  method: :post %>
-            <% end %>
-
-            -
-
-            <%= render "user_journeys/tasks/#{task.type.underscore}", task: task %>
-          </li>
-        <% end %>
-      </ul>
+      <div class="govuk-body">
+        <h2>Zoznam podúloh</h2>
+        <div class="govuk-checkboxes">
+          <% @step.tasks.each do |task| %>
+            <div class="govuk-checkboxes__item">
+              <% if @step_status.complete?(step: @step, task: task) %>
+                <%= check_box_with_action mark_user_task_as_incomplete_path(user_journey_id: @user_journey.id, step_id: @step.id, task_id: task.id), true do |form| %>
+                  <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
+                <% end %>
+              <% else %>
+                <%= check_box_with_action mark_user_task_as_complete_path(user_journey_id: @user_journey.id, step_id: @step.id, task_id: task.id), false do |form| %>
+                  <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

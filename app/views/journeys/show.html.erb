@@ -30,15 +30,21 @@
     </div>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <%= raw @text %>
+    <h1 class="govuk-heading-xl"><%= @title %></h1>
+
+    <div class="govuk-body">
+      <%= raw @text %>
+    </div>
 
     <% if @step %>
-      <h2>Zoznam podúloh</h2>
-      <ul>
-        <% @step.tasks.each do |task| %>
-          <li><%= render "journeys/tasks/#{task.type.underscore}", task: task %></li>
-        <% end %>
-      </ul>
+      <div class="govuk-body">
+        <h2>Zoznam podúloh</h2>
+        <ul>
+          <% @step.tasks.each do |task| %>
+            <li><%= render "journeys/tasks/#{task.type.underscore}", task: task %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
 
     <%= link_to 'Začať', create_user_journey_path(journey_id: @journey.id, step_id: @starting_step.id), class: 'govuk-button', method: :post %>

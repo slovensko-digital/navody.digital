@@ -18,13 +18,16 @@ class UserJourneysController < ApplicationController
   # TODO way too many variables for view
   def show
     @user_journey = current_user.user_journeys.find(params[:id])
-    @steps = @user_journey.journey.steps
+    @journey = @user_journey.journey
+    @steps = @journey.steps
     @step_status = StepStatus.new(@user_journey)
 
     if params[:step_id]
       @step = @user_journey.journey.steps.find(params[:step_id])
+      @title = @step.title
       @text = @step.description
     else
+      @title = @user_journey.journey.title
       @text = @user_journey.journey.description
     end
   end
