@@ -1,0 +1,15 @@
+<%= form_with(model: [:admin, task.step.journey, task.step, task], local: true, builder: AdminFormBuilder) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    </div>
+  <% end %>
+
+  <%= form.text_field :title %>
+  <%= form.text_field :type %>
+  <%= form.text_field :url %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

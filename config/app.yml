@@ -1,0 +1,16 @@
+default: &default
+  admin:
+    username: <%= ENV.fetch('ADMIN_USERNAME', 'admin') %>
+    password: <%= ENV.fetch('ADMIN_PASSWORD', 'admin') %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  admin:
+    username: admin
+    password: admin
+
+production:
+  <<: *default

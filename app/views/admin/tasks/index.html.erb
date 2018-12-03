@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, '#'],
+    ['Steps', admin_journey_steps_url(@journey)],
+    [@step.title, '#'],
+  ], current: 'Tasks' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Pos</th>
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @tasks.each do |task| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= task.position %></td>
+        <td class="govuk-table__cell"><%= task.title %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_step_task_path(task.step.journey, task.step, task) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, task.step.journey, task.step, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_admin_journey_step_task_path(@journey, @step), {class: 'govuk-button'} %>

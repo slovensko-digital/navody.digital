@@ -1,0 +1,9 @@
+<%= render 'breadcrumbs', crumbs: [
+    ['Journeys', admin_journeys_url],
+    [@journey.title, '#'],
+    ['Steps', admin_journey_steps_url(@journey)],
+  ], current: 'New' %>
+
+<%= render 'form', step: @step %>
+
+<%= link_to 'Back', admin_journey_steps_path(@step.journey) %>

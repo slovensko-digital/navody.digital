@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_url], [@journey.title, '#']], current: 'Steps' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Pos</th>
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @steps.each do |step| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= step.position %></td>
+        <td class="govuk-table__cell"><%= link_to step.title, journey_step_url(slug: step.journey.slug, step_slug: step.slug) %></td>
+        <td class="govuk-table__cell"><%= link_to "Tasks (#{step.tasks.count})", admin_journey_step_tasks_path(step.journey, step) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_step_path(step.journey, step) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, step.journey, step], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Step', new_admin_journey_step_path(@journey), {class: 'govuk-button'} %>

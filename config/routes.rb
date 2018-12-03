@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   get :health, to: 'health#index'
 
+  namespace :admin do
+    root to: redirect('admin/journeys#index')
+
+    resources :journeys, except: [:show] do
+      resources :steps, except: [:show] do
+        resources :tasks, except: [:show]
+      end
+    end
+  end
+
   root to: 'static#index'
 
   get :search, to: 'search#show'
