@@ -1,23 +1,46 @@
 <% content_for :title, 'Návody.Digital' %>
 
-<h2>Životné situácie</h2>
-
-<ul>
-  <% @journeys.each do |journey| %>
-    <li><%= link_to journey.title, journey_path(journey.slug) %></li>
+<div class="govuk-grid-row">
+  <% if @user_journeys %>
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-m">Rozpracované životné situácie</h1>
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+        <% @user_journeys.each do |user_journey| %>
+          <tr class="govuk-table__row continue-user-journey">
+            <td class="govuk-table__cell" scope="row">
+              <strong><%= user_journey.journey.title %></strong><br/>
+              <%= l(user_journey.created_at, format: :short) %>
+            </td>
+            <td class="govuk-table__cell"><%= link_to "Pokračovať", user_journey_path(user_journey.id), class: 'govuk-button govuk-button--start continue-button' %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
-</ul>
 
-<h2>Často kladené otázky</h2>
-<% @faqs.each do |faq| %>
-  <p><%= link_to faq.title, faq_path(faq) %></p>
-<% end %>
-
-<% if @user_journeys %>
-  <h2>Rozpracované todo listy</h2>
-  <ul>
-    <% @user_journeys.each do |user_journey| %>
-      <li><%= link_to "#{user_journey.journey.title} - #{l(user_journey.created_at, format: :short)}", user_journey_path(user_journey.id) %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <div class="govuk-grid-column-one-half">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h1 class="govuk-heading-m">Životné situácie</h1>
+        <p class="govuk-body">
+        <ul class="govuk-list">
+          <% @journeys.each do |journey| %>
+            <li><%= link_to journey.title, journey_path(journey.slug) %></li>
+          <% end %>
+        </ul>
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <h1 class="govuk-heading-m">Často kladené otázky</h1>
+        <p class="govuk-body">
+        <ul class="govuk-list">
+          <% @faqs.each do |faq| %>
+            <li><%= link_to faq.title, faq_path(faq) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
