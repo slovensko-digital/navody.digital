@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'Pages' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Pos</th>
+      <th class="govuk-table__header" scope="col">Title</th>
+      <th class="govuk-table__header" scope="col">Is faq</th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @pages.each do |page| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= page.position %></td>
+      <td class="govuk-table__cell"><%= page.title %></td>
+      <td class="govuk-table__cell"><%= page.is_faq %></td>
+      <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_page_path(page) %></td>
+      <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, page], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Page', new_admin_page_path, class: 'govuk-button' %>
