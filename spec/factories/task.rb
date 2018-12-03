@@ -13,8 +13,8 @@ FactoryBot.define do
       url { nil }
     end
 
-    trait :external_url do
-      type { 'ExternalUrlTask' }
+    trait :external_link do
+      type { 'ExternalLinkTask' }
       url { Faker::Internet.url }
     end
   end
