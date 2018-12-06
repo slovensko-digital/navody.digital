@@ -38,5 +38,5 @@ Rails.application.routes.draw do
     root to: 'static#show', defaults: { slug: 'contact-info' }
   end
 
-  get '/:slug', to: 'static#show', as: :static_page
+  get '/:id', to: 'static#show', as: :static_page
 end
