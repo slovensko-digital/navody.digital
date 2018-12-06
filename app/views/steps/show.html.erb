@@ -1,3 +1,4 @@
+<%= content_for(:title, @journey.title) %>
 <%= content_for(:headerline, @journey.title) %>
 
 <div class="govuk-grid-row">
@@ -6,18 +7,12 @@
       <ol start=0 class="sdn-timeline__list">
         <li class="sdn-timeline__step">
           <div class="sdn-timeline__bullet"></div>
-          <% if @step == nil %>
-            <strong>
-              <%= link_to 'Úvod', @journey, class: 'sdn-timeline__link' %>
-            </strong>
-          <% else %>
             <%= link_to 'Úvod', @journey, class: 'sdn-timeline__link' %>
-          <% end %>
         </li>
         <% @journey.steps.each do |step| %>
           <li class="sdn-timeline__step">
             <div class="sdn-timeline__bullet"></div>
-            <% if @step == step %>
+            <% if @current_step == step %>
               <strong>
                 <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
               </strong>
@@ -33,14 +28,14 @@
     <h1 class="govuk-heading-xl"><%= @title %></h1>
 
     <div class="govuk-body">
-      <%= raw @journey.description %>
+      <%= raw @current_step.description %>
     </div>
 
-    <% if @step %>
+    <% if @current_step.tasks.any? %>
       <div class="govuk-body">
         <h2>Zoznam podúloh</h2>
         <ul>
-          <% @step.tasks.each do |task| %>
+          <% @current_step.tasks.each do |task| %>
             <li><%= render "journeys/tasks/#{task.type.underscore}", task: task %></li>
           <% end %>
         </ul>

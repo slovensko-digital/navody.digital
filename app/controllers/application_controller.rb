@@ -7,11 +7,12 @@ class ApplicationController < ActionController::Base
       @__current_user ||= User.find_by(id: session[:user_id])
     end
   end
+
   helper_method :current_user
 
   def require_user
     unless current_user
-      redirect_to log_in_path
+      redirect_to new_session_path
     end
   end
 end

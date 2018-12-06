@@ -6,12 +6,16 @@
       <ol start=0 class="sdn-timeline__list">
         <li class="sdn-timeline__step sdn-timeline__step--done">
           <div class="sdn-timeline__bullet"></div>
+          <% if @current_step == nil %>
             <strong>
               <%= link_to 'Úvod', @user_journey, class: 'sdn-timeline__link' %>
             </strong>
+          <% else %>
+            <%= link_to 'Úvod', @user_journey, class: 'sdn-timeline__link' %>
+          <% end %>
         </li>
-        <% @user_journey.journey.steps.each do |step| %>
-          <% user_step = @user_step_by_steps[step] %>
+        <% @journey.steps.each do |step| %>
+          <% user_step = @user_step_by_steps[step]  %>
           <li class="sdn-timeline__step sdn-timeline__step--<%= user_step_timeline_status_class(user_step) %>">
             <div class="sdn-timeline__bullet"></div>
             <% if @current_step == step %>
@@ -30,21 +34,22 @@
     <h1 class="govuk-heading-xl"><%= @title %></h1>
 
     <div class="govuk-body">
-      <%= raw @user_journey.journey.description %>
+      <%= raw @current_step.description %>
     </div>
 
-    <% if @step %>
+    <% if @current_step.tasks.any? %>
       <div class="govuk-body">
         <h2>Zoznam podúloh</h2>
         <div class="govuk-checkboxes">
-          <% @step.tasks.each do |task| %>
+          <% @current_step.tasks.each do |task| %>
             <div class="govuk-checkboxes__item">
-              <% if @step_status.complete?(step: @step, task: task) %>
-                <%= check_box_with_action undo_user_journey_user_task_path(@user_journey, task), true do |form| %>
+              <% user_task = @user_task_by_tasks[task] || UserTask.new %>
+              <% if user_task.completed? %>
+                <%= check_box_with_action undo_user_journey_task_path(@user_journey, task), true do |form| %>
                   <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
                 <% end %>
               <% else %>
-                <%= check_box_with_action complete_user_journey_user_task_path(@user_journey, task), false do |form| %>
+                <%= check_box_with_action complete_user_journey_task_path(@user_journey, task), false do |form| %>
                   <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
                 <% end %>
               <% end %>

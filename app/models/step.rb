@@ -9,11 +9,17 @@ class Step < ApplicationRecord
 
   # FIXME: fill in position from id!
 
-  default_scope do
-    order(position: :asc)
-  end
+  default_scope { order(position: :asc) }
 
   before_save :generate_search_terms
+
+  def to_param
+    slug
+  end
+
+  def next_step
+    journey.steps.where('position > ?', position).order(position: :asc).first
+  end
 
   private
 

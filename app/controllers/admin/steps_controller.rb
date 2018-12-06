@@ -46,11 +46,11 @@ class Admin::StepsController < Admin::AdminController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_journey
-    @journey = Journey.find(params[:journey_id])
+    @journey = Journey.find_by!(slug: params[:journey_id])
   end
 
   def set_step
-    @step = @journey.steps.find(params[:id])
+    @step = @journey.steps.find_by!(slug: params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

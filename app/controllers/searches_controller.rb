@@ -1,4 +1,4 @@
-class SearchController < ApplicationController
+class SearchesController < ApplicationController
   def show
     @q = params[:q]
     analyzed_q = Transliterator.transliterate(@q)

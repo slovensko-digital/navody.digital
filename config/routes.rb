@@ -14,26 +14,29 @@ Rails.application.routes.draw do
 
   root to: 'static#index'
 
-  get :search, to: 'search#show'
+  resource :search, only: [:show]
 
-  get '/zivotne-situacie', to: redirect('/')
-  get '/zivotne-situacie/:slug', to: 'journeys#show', as: 'journey'
-  get '/zivotne-situacie/:slug/:step_slug', to: 'journeys#show', as: 'journey_step'
+  resources :journeys, path: 'zivotne-situacie', only: [:show] do
+    resources :steps, path: 'krok', only: [:show]
+  end
 
-  post '/moje-zivotne-situacie', to: 'user_journeys#create', as: 'create_user_journey'
-  get '/moje-zivotne-situacie/:id', to: 'user_journeys#show', as: 'user_journey'
+  resources :user_journeys, path: 'moje-zivotne-situacie' do
+    post :start, on: :member, path: 'zacat'
 
-  get '/log_in', to: 'sessions#new', as: 'log_in'
-  post '/log_in', to: 'sessions#create', as: 'log_me_in'
-  delete '/log_out', to: 'sessions#destroy', as: 'log_out'
+    resources :steps, controller: :user_steps, path: 'krok', only: [:show]
+    resources :tasks, controller: :user_tasks, path: 'ulohy' do
+      member do
+        post :complete
+        post :undo
+      end
+    end
+  end
+
+  resource :session
 
   resources :faqs, path: 'casto-kladene-otazky' do
     root to: 'static#show', defaults: { slug: 'contact-info' }
   end
 
-  get '/:slug', to: 'static#show', as: :static_page
-
-  post '/user_task/mark_as_complete', to: 'user_tasks#mark_as_complete', as: 'mark_user_task_as_complete'
-  post '/user_task/mark_as_incomplete', to: 'user_tasks#mark_as_incomplete', as: 'mark_user_task_as_incomplete'
-
+  get '/:id', to: 'static#show', as: :static_page
 end

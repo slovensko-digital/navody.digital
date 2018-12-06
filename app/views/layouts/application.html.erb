@@ -31,7 +31,7 @@
         <nav>
           <ul id="navigation" class="sdn-header__navigation " aria-label="Top Level Navigation">
             <li>
-              <%= link_to 'Časté otázky', static_page_path(slug: 'casto-kladene-otazky'), class: 'sdn-header__link' %>
+              <%= link_to 'Časté otázky', static_page_path('casto-kladene-otazky'), class: 'sdn-header__link' %>
             </li>
           </ul>
         </nav>
@@ -39,9 +39,9 @@
       <div>
         <% if current_user %>
           <%= current_user.email %>
-          <%= link_to 'Odhlásiť', log_out_path, method: :delete %>
+          <%= link_to 'Odhlásiť', session_path, method: :delete %>
         <% else %>
-          <%= link_to 'Prihlásiť', log_in_path %>
+          <%= link_to 'Prihlásiť', new_session_path %>
         <% end %>
       </div>
     </div>
@@ -57,7 +57,7 @@
   <% end %>
 
   <% if current_page?(controller: :static, action: :index) %>
-    <%= render 'search/search_box' %>
+    <%= render 'searches/search_box' %>
   <% end %>
 
   <div class="govuk-width-container">
