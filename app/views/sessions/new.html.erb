@@ -1,5 +1,5 @@
 <h1>Registrácia</h1>
-<%= form_tag(log_me_in_path, method: :post) do %>
+<%= form_tag(session_path, method: :post) do %>
   <%= text_field_tag :email %>
   <%= submit_tag 'Odoslať prihlasovacie údaje na email' %>
 <% end %>

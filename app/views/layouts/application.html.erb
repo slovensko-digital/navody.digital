@@ -39,9 +39,9 @@
       <div>
         <% if current_user %>
           <%= current_user.email %>
-          <%= link_to 'Odhlásiť', log_out_path, method: :delete %>
+          <%= link_to 'Odhlásiť', session_path, method: :delete %>
         <% else %>
-          <%= link_to 'Prihlásiť', log_in_path %>
+          <%= link_to 'Prihlásiť', new_session_path %>
         <% end %>
       </div>
     </div>
@@ -57,7 +57,7 @@
   <% end %>
 
   <% if current_page?(controller: :static, action: :index) %>
-    <%= render 'search/search_box' %>
+    <%= render 'searches/search_box' %>
   <% end %>
 
   <div class="govuk-width-container">
