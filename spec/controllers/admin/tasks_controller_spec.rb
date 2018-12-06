@@ -49,7 +49,7 @@ RSpec.describe Admin::TasksController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       task = Task.create!(valid_attributes)
-      get :index, params: {journey_id: task.step.journey.id, step_id: task.step.id}, session: valid_session
+      get :index, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe Admin::TasksController, type: :controller do
   describe "GET #new" do
     it "returns a success response" do
       step = create(:step)
-      get :new, params: {journey_id: step.journey.id, step_id: step.id}, session: valid_session
+      get :new, params: {journey_id: step.journey.to_param, step_id: step.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe Admin::TasksController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       task = Task.create! valid_attributes
-      get :edit, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param}, session: valid_session
+      get :edit, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -75,13 +75,13 @@ RSpec.describe Admin::TasksController, type: :controller do
       it "creates a new Task" do
         step = create(:step)
         expect {
-          post :create, params: {journey_id: step.journey.id, step_id: step.id, task: valid_attributes}, session: valid_session
+          post :create, params: {journey_id: step.journey.to_param, step_id: step.to_param, task: valid_attributes}, session: valid_session
         }.to change(Task, :count).by(1)
       end
 
       it "redirects to the created task" do
         step = create(:step)
-        post :create, params: {journey_id: step.journey.id, step_id: step.id, task: valid_attributes}, session: valid_session
+        post :create, params: {journey_id: step.journey.to_param, step_id: step.to_param, task: valid_attributes}, session: valid_session
 
         task = Task.last
         expect(response).to redirect_to(admin_journey_step_tasks_url(step.journey, step))
@@ -91,7 +91,7 @@ RSpec.describe Admin::TasksController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         step = create(:step)
-        post :create, params: {journey_id: step.journey.id, step_id: step.id, task: invalid_attributes}, session: valid_session
+        post :create, params: {journey_id: step.journey.to_param, step_id: step.to_param, task: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -107,14 +107,14 @@ RSpec.describe Admin::TasksController, type: :controller do
 
       it "updates the requested task" do
         task = Task.create! valid_attributes
-        put :update, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param, task: new_attributes}, session: valid_session
+        put :update, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param, task: new_attributes}, session: valid_session
         task.reload
         expect(task.title).to eq 'Foo bar'
       end
 
       it "redirects to the task" do
         task = Task.create! valid_attributes
-        put :update, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param, task: valid_attributes}, session: valid_session
+        put :update, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param, task: valid_attributes}, session: valid_session
         expect(response).to redirect_to(admin_journey_step_tasks_url(task.step.journey, task.step))
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe Admin::TasksController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         task = Task.create! valid_attributes
-        put :update, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param, task: invalid_attributes}, session: valid_session
+        put :update, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param, task: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -132,13 +132,13 @@ RSpec.describe Admin::TasksController, type: :controller do
     it "destroys the requested task" do
       task = Task.create! valid_attributes
       expect {
-        delete :destroy, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param}, session: valid_session
+        delete :destroy, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param}, session: valid_session
       }.to change(Task, :count).by(-1)
     end
 
     it "redirects to the tasks list" do
       task = Task.create! valid_attributes
-      delete :destroy, params: {journey_id: task.step.journey.id, step_id: task.step.id, id: task.to_param}, session: valid_session
+      delete :destroy, params: {journey_id: task.step.journey.to_param, step_id: task.step.to_param, id: task.to_param}, session: valid_session
       expect(response).to redirect_to(admin_journey_step_tasks_url(task.step.journey, task.step))
     end
   end
