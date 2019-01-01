@@ -32,7 +32,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :session
+  resource :session, only: [:new, :create, :destroy]
+  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/:provider', to: lambda{ |_| [404, {}, ["Not Found"]] }, as: :auth
 
   resources :faqs, path: 'casto-kladene-otazky' do
     root to: 'static#show', defaults: { slug: 'contact-info' }

@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:email].present?
-      user = User.find_or_create_by!(email: params[:email])
+    if auth_email.present?
+      user = User.find_or_create_by!(email: auth_email)
       session[:user_id] = user.id
       redirect_to root_path, notice: 'Vitajte!'
     else
@@ -16,5 +16,15 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
 
     redirect_to root_path, notice: 'Boli ste úspešne odhlásený.'
+  end
+
+  protected
+
+  def auth_email
+    auth_hash.dig('info', 'email')
+  end
+
+  def auth_hash
+    request.env['omniauth.auth']
   end
 end
