@@ -12,6 +12,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def magic_link_info
+    @email = params[:email]
+  end
+
   def destroy
     session[:user_id] = nil
 
