@@ -18,31 +18,46 @@
 
   <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
-  <header class="sdn-header " role="banner" data-module="header">
+  <header class="sdn-header " role="banner" data-module="sdn-header">
     <div class="sdn-header__container govuk-width-container">
 
-      <%= link_to root_path, class: 'sdn-header__link' do %>
+      <a href="/" class="sdn-header__link">
       <span class="sdn-header__product-name">
-        Návody.Digital
+        Životné situácie
       </span>
-      <% end %>
+      </a>
 
       <div class="sdn-header__content">
         <nav>
           <ul id="navigation" class="sdn-header__navigation " aria-label="Top Level Navigation">
+            <li class="sdn-header__form">
+              <form>
+                <input class="govuk-input" type="text" placeholder="Hľadať">
+                <button type="submit">Hľadať</button>
+              </form>
+            </li>
             <li>
               <%= link_to 'Časté otázky', static_page_path('casto-kladene-otazky'), class: 'sdn-header__link' %>
             </li>
+            <li>
+              <% if current_user %>
+                <div class="sdn-header__subnavigation">
+                  <a href="#" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown"><span class="sdn-header__fixed-width-text"><%= current_user.email %></span></a>
+                  <ul class="sdn-header__dropdown" id="subnav-dropdown">
+                    <li>
+                      <a href="#21">Nastavenia</a>
+                    </li>
+                    <li>
+                      <%= link_to 'Odhlásiť', session_path, method: :delete %>
+                    </li>
+                  </ul>
+                </div>
+              <% else %>
+                <%= link_to 'Prihlásiť', new_session_path, class: 'sdn-header__link' %>
+              <% end %>
+            </li>
           </ul>
         </nav>
-      </div>
-      <div>
-        <% if current_user %>
-          <%= current_user.email %>
-          <%= link_to 'Odhlásiť', session_path, method: :delete %>
-        <% else %>
-          <%= link_to 'Prihlásiť', new_session_path %>
-        <% end %>
       </div>
     </div>
   </header>
