@@ -36,7 +36,7 @@
           </ul>
         </nav>
       </div>
-      <div>
+      <div class="user-info">
         <% if current_user %>
           <%= current_user.email %>
           <%= link_to 'Odhlásiť', session_path, method: :delete %>

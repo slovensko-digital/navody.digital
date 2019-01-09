@@ -13,7 +13,7 @@ module OmniAuth
 
       def request_phase
         email = request[:email]
-        token = generate_magic_code(email)
+        token = generate_magic_code(email, session.id)
 
         options[:on_send_link]&.call(email, token)
 
@@ -38,16 +38,18 @@ module OmniAuth
       def raw_info
         @raw_info ||= begin
           token = request[:token]
-          verifier.verify(token, purpose: :magic_link).symbolize_keys
+          payload = verifier.verify(token, purpose: :magic_link).symbolize_keys
+          fail!(:invalid_credentials) if payload[:session_id] != session.id
+          payload
         end
       end
 
       protected
 
-      def generate_magic_code(email)
+      def generate_magic_code(email, session_id)
         verifier
           .generate(
-            verifier_payload(email),
+            verifier_payload(email, session_id),
             expires_in: options[:code_lifetime],
             purpose: :magic_link
           )
@@ -65,8 +67,8 @@ module OmniAuth
         Rails.application.config.secret_key_base || 'secret'
       end
 
-      def verifier_payload(email)
-        { email: email }
+      def verifier_payload(email, session_id)
+        { email: email, session_id: session_id }
       end
 
       def verifier
