@@ -1,5 +1,6 @@
 require 'omniauth/strategies/magic_link'
 OmniAuth.config.logger = Rails.logger
+OmniAuth.config.failure_raise_out_environments = []
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   google_client_id = Rails.application.config_for(:auth).dig('google', 'client_id')

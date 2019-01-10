@@ -16,6 +16,11 @@ class SessionsController < ApplicationController
     @email = params[:email]
   end
 
+  def failure
+    @message = params[:message]
+    @strategy = params[:strategy]
+  end
+
   def destroy
     session[:user_id] = nil
 

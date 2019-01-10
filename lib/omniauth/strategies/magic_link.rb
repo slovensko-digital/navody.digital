@@ -5,6 +5,8 @@ module OmniAuth
     class MagicLink
       include OmniAuth::Strategy
 
+      attr_reader :payload
+
       option :fields, [:email]
       option :uid_field, :email
       option :on_send_link, nil
@@ -21,10 +23,12 @@ module OmniAuth
       end
 
       def callback_phase
-        raw_info
+        token = request[:token]
+        @payload = parse_payload(token)
+
+        return fail!(:invalid_credentials) unless payload
+
         super
-      rescue ActiveSupport::MessageVerifier::InvalidSignature
-        fail!(:invalid_credentials)
       end
 
       uid do
@@ -36,15 +40,19 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= begin
-          token = request[:token]
-          payload = verifier.verify(token, purpose: :magic_link).symbolize_keys
-          fail!(:invalid_credentials) if payload[:session_id] != session.id
-          payload
-        end
+        payload
       end
 
       protected
+
+      def parse_payload(token)
+        payload = verifier.verify(token, purpose: :magic_link).symbolize_keys
+        return false if payload[:session_id] != session.id
+
+        payload
+      rescue ActiveSupport::MessageVerifier::InvalidSignature
+        false
+      end
 
       def generate_magic_code(email, session_id)
         verifier

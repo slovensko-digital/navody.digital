@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature "Sessions", type: :feature do
+  before(:each) do
+    # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
+    default_url_options[:host] = "localhost:3000"
+    Capybara.default_host = "http://localhost:3000"
+  end
+
   scenario 'As a visitor I want to see login options' do
     visit root_path
     click_link 'Prihlásiť'
@@ -12,7 +18,39 @@ RSpec.feature "Sessions", type: :feature do
   scenario 'As a visitor I want to be able to login using magic link' do
     OmniAuth.config.test_mode = false
 
-    default_url_options[:host] = "localhost:3000"
+    visit root_path
+    click_link 'Prihlásiť'
+
+    within 'form' do
+      fill_in :email, with: 'foo@bar.com'
+    end
+
+    expect(ActionMailer::Base.deliveries).to be_empty
+
+    click_on 'Odoslať prihlasovacie údaje na email'
+
+    expect(ActionMailer::Base.deliveries.size).to eq 1
+
+    mailer_email = ActionMailer::Base.deliveries.first
+    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
+    magic_link = email.find('a')[:href]
+
+    ActionMailer::Base.deliveries = []
+
+    expect(magic_link).to match(auth_callback_url(:magiclink))
+
+    expect(page).not_to have_link('Odhlásiť')
+
+    visit magic_link
+
+    within '.user-info' do
+      expect(page).to have_text('foo@bar.com')
+      expect(page).to have_link('Odhlásiť')
+    end
+  end
+
+  scenario 'As a visitor I dont want to be able to login using magic link from different session' do
+    OmniAuth.config.test_mode = false
 
     visit root_path
     click_link 'Prihlásiť'
@@ -35,11 +73,14 @@ RSpec.feature "Sessions", type: :feature do
 
     expect(page).not_to have_link('Odhlásiť')
 
+    expire_cookies
+
     visit magic_link
 
     within '.user-info' do
-      expect(page).to have_text('foo@bar.com')
-      expect(page).to have_link('Odhlásiť')
+      expect(page).not_to have_text('foo@bar.com')
+      expect(page).not_to have_link('Odhlásiť')
+      expect(page).to have_link('Prihlásiť')
     end
   end
 
