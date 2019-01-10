@@ -21,7 +21,7 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
-    within 'form' do
+    within '.login-form' do
       fill_in :email, with: 'foo@bar.com'
     end
 
@@ -55,7 +55,7 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
-    within 'form' do
+    within '.login-form' do
       fill_in :email, with: 'foo@bar.com'
     end
 
