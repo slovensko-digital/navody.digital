@@ -86,7 +86,17 @@
     <% end %>
   </div>
 
-  <%= yield %>
+  <main id="main-content" role="main">
+    <% if content_for?(:main) %>
+      <%= yield(:main) %>
+    <% else %>
+      <div class="govuk-width-container">
+        <div class="govuk-main-wrapper govuk-main-wrapper--l">
+          <%= yield %>
+        </div>
+      </div>
+    <% end %>
+  </main>
 
   <footer class="sdn-footer" role="contentinfo">
     <div class="govuk-width-container">
