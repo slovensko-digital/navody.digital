@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+.featured-journeys {
+    background-color: #FAFAFA;
+}
+
+#show-more-container {
+    text-align: center;
+}
