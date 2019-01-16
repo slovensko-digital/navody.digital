@@ -28,6 +28,7 @@ RSpec.describe Admin::StepsController, type: :controller do
 
   before(:each) do
     admin_http_login
+    @request.host = 'localhost:3000'
   end
 
   # This should return the minimal set of attributes required to create a valid

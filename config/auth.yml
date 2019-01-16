@@ -1,0 +1,16 @@
+default: &default
+  google:
+    client_id: <%= ENV.fetch('GOOGLE_CLIENT_ID', nil) %>
+    client_secret: <%= ENV.fetch('GOOGLE_CLIENT_SECRET', nil) %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

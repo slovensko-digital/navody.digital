@@ -1,5 +1,7 @@
 <h1>Registrácia</h1>
-<%= form_tag(session_path, method: :post) do %>
+<%= form_tag(auth_path(:magiclink), method: :post, class: 'login-form') do %>
   <%= text_field_tag :email %>
   <%= submit_tag 'Odoslať prihlasovacie údaje na email' %>
 <% end %>
+
+<%= link_to 'Prihlásiť sa pomocou Google', auth_path(:google_oauth2) %>

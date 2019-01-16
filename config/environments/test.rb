@@ -25,8 +25,7 @@ Rails.application.configure do
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
-  # Disable request forgery protection in test environment.
-  config.action_controller.allow_forgery_protection = false
+  config.action_controller.allow_forgery_protection = true # https://stackoverflow.com/a/29662013/467141
 
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
@@ -43,4 +42,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
+  config.action_controller.default_url_options = { host: 'http://localhost:3000' }
 end

@@ -41,7 +41,7 @@
             <li>
               <%= link_to 'Časté otázky', static_page_path('casto-kladene-otazky'), class: 'sdn-header__link' %>
             </li>
-            <li>
+            <li class="user-info">
               <% if current_user %>
                 <div class="sdn-header__subnavigation">
                   <a href="#" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown"><span class="sdn-header__fixed-width-text"><%= current_user.email %></span></a>
