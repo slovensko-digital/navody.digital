@@ -30,12 +30,14 @@
       <div class="sdn-header__content">
         <nav>
           <ul id="navigation" class="sdn-header__navigation " aria-label="Top Level Navigation">
-            <li class="sdn-header__form">
-              <form>
-                <input class="govuk-input" type="text" placeholder="Hľadať">
-                <button type="submit">Hľadať</button>
-              </form>
-            </li>
+            <% unless current_page?(root_path) %>
+              <li class="sdn-header__form">
+                <form>
+                  <input class="govuk-input" type="text" placeholder="Hľadať">
+                  <button type="submit">Hľadať</button>
+                </form>
+              </li>
+            <% end %>
             <li>
               <%= link_to 'Časté otázky', static_page_path('casto-kladene-otazky'), class: 'sdn-header__link' %>
             </li>
@@ -84,11 +86,17 @@
     <% end %>
   </div>
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper " id="main-content" role="main">
-      <%= yield %>
-    </main>
-  </div>
+  <main id="main-content" role="main">
+    <% if content_for?(:main) %>
+      <%= yield(:main) %>
+    <% else %>
+      <div class="govuk-width-container">
+        <div class="govuk-main-wrapper govuk-main-wrapper--l">
+          <%= yield %>
+        </div>
+      </div>
+    <% end %>
+  </main>
 
   <footer class="sdn-footer" role="contentinfo">
     <div class="govuk-width-container">

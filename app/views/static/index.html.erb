@@ -1,46 +1,47 @@
 <% content_for :title, 'Návody.Digital' %>
 
-<div class="govuk-grid-row">
-  <% if @user_journeys %>
-    <div class="govuk-grid-column-one-half">
-      <h1 class="govuk-heading-m">Rozpracované životné situácie</h1>
-      <table class="govuk-table">
-        <tbody class="govuk-table__body">
-        <% @user_journeys.each do |user_journey| %>
-          <tr class="govuk-table__row continue-user-journey">
-            <td class="govuk-table__cell" scope="row">
-              <strong><%= user_journey.journey.title %></strong><br/>
-              <%= l(user_journey.created_at, format: :short) %>
-            </td>
-            <td class="govuk-table__cell"><%= link_to "Pokračovať", user_journey_path(user_journey.id), class: 'govuk-button govuk-button--start continue-button' %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-
-  <div class="govuk-grid-column-one-half">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
-        <h1 class="govuk-heading-m">Životné situácie</h1>
-        <p class="govuk-body">
-        <ul class="govuk-list">
-          <% @journeys.each do |journey| %>
-            <li><%= link_to journey.title, journey_path(journey.slug) %></li>
-          <% end %>
-        </ul>
-        </p>
-      </div>
-      <div class="govuk-grid-column-one-half">
-        <h1 class="govuk-heading-m">Často kladené otázky</h1>
-        <p class="govuk-body">
-        <ul class="govuk-list">
-          <% @faqs.each do |faq| %>
-            <li><%= link_to faq.title, faq_path(faq) %></li>
-          <% end %>
-        </ul>
+<% content_for(:main) do %>
+<main id="main-content" role="main">
+  <div class="featured-journeys">
+    <div class="govuk-width-container">
+      <div class="govuk-main-wrapper govuk-main-wrapper--l">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">Najčastejšie situácie</h2>
+            <div class="sdn-tiles">
+              <% @journeys.each do |journey| %>
+                <div class="sdn-tiles__item sdn-tile">
+                  <img class="sdn-tile__image" src="https://placekitten.com/200/234" alt="">
+                  <span class="sdn-tile__content sdn-tile-content-text-block">
+                  <span class="sdn-tile-content-text-block__item"><%= link_to journey.title, journey_path(journey.slug) %></span>
+                </span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">
+            <%= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="govuk-width-container">
+    <div class="govuk-main-wrapper govuk-main-wrapper--l">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h3 class="govuk-heading-m">Často kladené otázky</h3>
+          <ul class="govuk-list">
+            <% @faqs.each do |faq| %>
+              <li><%= link_to faq.title, faq_path(faq) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<% end %>
