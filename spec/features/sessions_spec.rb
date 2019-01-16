@@ -25,7 +25,7 @@ RSpec.feature "Sessions", type: :feature do
       fill_in :email, with: 'foo@bar.com'
     end
 
-    expect(ActionMailer::Base.deliveries).to be_empty
+    ActionMailer::Base.deliveries = []
 
     click_on 'Odoslať prihlasovacie údaje na email'
 
@@ -49,6 +49,68 @@ RSpec.feature "Sessions", type: :feature do
     end
   end
 
+  scenario 'As a returning user I want to be able to login using magic link to my same account' do
+    OmniAuth.config.test_mode = false
+
+    create(:user, email: 'foo@bar.com')
+    expect(User.count).to eq 1
+
+    visit new_session_path
+
+    within '.login-form' do
+      fill_in :email, with: 'foo@bar.com'
+    end
+
+    ActionMailer::Base.deliveries = []
+
+    click_on 'Odoslať prihlasovacie údaje na email'
+
+    expect(ActionMailer::Base.deliveries.size).to eq 1
+
+    mailer_email = ActionMailer::Base.deliveries.first
+    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
+    magic_link = email.find('a')[:href]
+
+    visit magic_link
+
+    within '.user-info' do
+      expect(page).to have_text('foo@bar.com')
+    end
+
+    expect(User.count).to eq 1
+  end
+
+  scenario 'As a returning user I want to be able to login using magic link to my same account using email that has different character case' do
+    OmniAuth.config.test_mode = false
+
+    create(:user, email: 'foo@bar.com')
+    expect(User.count).to eq 1
+
+    visit new_session_path
+
+    within '.login-form' do
+      fill_in :email, with: 'FoO@bAr.cOm'
+    end
+
+    ActionMailer::Base.deliveries = []
+
+    click_on 'Odoslať prihlasovacie údaje na email'
+
+    expect(ActionMailer::Base.deliveries.size).to eq 1
+
+    mailer_email = ActionMailer::Base.deliveries.first
+    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
+    magic_link = email.find('a')[:href]
+
+    visit magic_link
+
+    within '.user-info' do
+      expect(page).to have_text('foo@bar.com')
+    end
+
+    expect(User.count).to eq 1
+  end
+
   scenario 'As a visitor I dont want to be able to login using magic link from different session' do
     OmniAuth.config.test_mode = false
 
@@ -59,7 +121,7 @@ RSpec.feature "Sessions", type: :feature do
       fill_in :email, with: 'foo@bar.com'
     end
 
-    expect(ActionMailer::Base.deliveries).to be_empty
+    ActionMailer::Base.deliveries = []
 
     click_on 'Odoslať prihlasovacie údaje na email'
 

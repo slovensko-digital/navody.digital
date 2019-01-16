@@ -3,13 +3,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if auth_email.present?
-      user = User.find_or_create_by!(email: auth_email)
-      session[:user_id] = user.id
-      redirect_to root_path, notice: 'Vitajte!'
-    else
-      redirect_to new_session_path, alert: 'Prosím zadajte email'
-    end
+    redirect_to new_session_path, alert: 'Prosím zadajte email' and return unless auth_email.present?
+
+    user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
+
+    session[:user_id] = user.id
+    redirect_to root_path, notice: 'Vitajte!'
   end
 
   def magic_link_info
