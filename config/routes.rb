@@ -38,9 +38,5 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   get '/auth/:provider', to: lambda{ |_| [404, {}, ["Not Found"]] }, as: :auth
 
-  resources :faqs, path: 'casto-kladene-otazky' do
-    root to: 'static#show', defaults: { slug: 'contact-info' }
-  end
-
-  get '/:id', to: 'static#show', as: :static_page
+  resources :faqs, path: 'casto-kladene-otazky'
 end

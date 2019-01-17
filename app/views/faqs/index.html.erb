@@ -1,0 +1,17 @@
+<% content_for :title, build_page_title('Často kladené otázky') %>
+
+<div class="govuk-grid-row govuk-!-padding-top-9">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Často kladené otázky</h1>
+    <p class="govuk-body">Tu nájdete vysvetlenie základných pojmov a odpovede na najčastejšie otázky.</p>
+
+    <ul class="govuk-list govuk-!-margin-top-9">
+      <% @pages.each do |page| %>
+        <li>
+          <%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
