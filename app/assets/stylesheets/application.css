@@ -21,3 +21,26 @@
 #show-more-container {
     text-align: center;
 }
+
+
+.govuk-panel--contact {
+    color: white;
+    background: #2A61D4;
+    text-align: left;
+    padding: 15px;
+}
+
+.govuk-panel--contact > .govuk-panel__heading {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.govuk-panel--contact > .govuk-panel__body p {
+    color: white;
+    margin: 0;
+}
+
+.govuk-panel--contact > .govuk-panel__body a {
+    color: white;
+}

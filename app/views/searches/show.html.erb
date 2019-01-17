@@ -1,28 +1,46 @@
+<% content_for :title, 'Výsledky vyhľadávania' %>
 
-<h1>Vysledky vyhladavania pre <%= @q %></h1>
+<% content_for(:before_main_wrapper) do %>
+  <%= render 'searches/search_box' %>
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-top-7">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-9">Výsledky vyhľadávania pre &bdquo;<%= @q %>&ldquo;</h2>
 
-<% if @journeys.any? %>
-  <h2>Zivotne situacie</h2>
-  <% @journeys.each do |journey| %>
-    <p>
-      <%= link_to journey.title, journey_path(journey.slug) %>
-    </p>
-  <% end %>
-<% else %>
-  <p>
-    Nenasli sme ziadne zivotne situacie
-  </p>
-<% end %>
+          <% if @count == 0 %>
+            <p class="govuk-body">Pre tento výraz sme nenašli žiadne výsledky.</p>
+          <% else %>
+            <p class="govuk-body-s govuk-!-margin-bottom-2"><%= "#{@count} #{t(:results_genitive, count: @count)}" %></p>
+          <% end %>
 
-<% if @steps.any? %>
-  <h2>Kroky zivotnych situacii</h2>
-  <% @steps.each do |step| %>
-    <p>
-      <%= link_to step.title, journey_step_path(step.journey.slug, step.slug) %>
-    </p>
-  <% end %>
-<% else %>
-  <p>
-    Nenasli sme ziadne kroky zivotnych situacii
-  </p>
+          <% @journeys.each do |journey| %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %></h3>
+            <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
+          <% end %>
+          <% @steps.each do |step| %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+              <%= link_to step.journey.title, journey_path(step.journey.slug), class: 'govuk-link' %>:&nbsp;<%= link_to step.title, journey_path(step.slug), class: 'govuk-link' %>
+            </h3>
+
+            <p class="govuk-body-s"><%= truncate(strip_tags(step.description)) %></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="govuk-grid-row govuk-!-padding-top-6">
+        <div class="govuk-grid-column-two-thirds">
+          <div class="govuk-panel govuk-panel--contact">
+            <h2 class="govuk-panel__heading">
+              Nenašli ste to, čo ste hľadali?
+            </h2>
+            <div class="govuk-panel__body">
+              <p class="govuk-body">
+                Ak Vám tu chýba nejaký návod, alebo máte otázku, napíšte nám <br>na <%= mail_to 'navody@slovensko.digital', 'navody@slovensko.digital', class: 'govuk-link' %>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 <% end %>
