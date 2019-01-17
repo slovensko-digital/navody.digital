@@ -39,7 +39,7 @@
               </li>
             <% end %>
             <li>
-              <%= link_to 'Často kladené otázky', static_page_path('casto-kladene-otazky'), class: 'sdn-header__link' %>
+              <%= link_to 'Často kladené otázky', faqs_path, class: 'sdn-header__link' %>
             </li>
             <li class="user-info">
               <% if current_user %>
@@ -73,30 +73,29 @@
     </div>
   <% end %>
 
-  <% if current_page?(controller: :static, action: :index) %>
-    <%= render 'searches/search_box' %>
-  <% end %>
-
   <div class="govuk-width-container">
-    <% if flash[:notice] %>
-      <p><%= flash[:notice] %></p>
-    <% end %>
-    <% if flash[:alert] %>
-      <p><%= flash[:alert] %></p>
-    <% end %>
+
   </div>
 
-  <main id="main-content" role="main">
-    <% if content_for?(:main) %>
-      <%= yield(:main) %>
-    <% else %>
-      <div class="govuk-width-container">
-        <div class="govuk-main-wrapper govuk-main-wrapper--l">
-          <%= yield %>
-        </div>
-      </div>
-    <% end %>
-  </main>
+  <% if content_for?(:before_main_wrapper) %>
+    <%= yield(:before_main_wrapper) %>
+  <% else %>
+    <div class="govuk-width-container">
+      <% if flash[:notice] %>
+        <p><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:alert] %>
+        <p><%= flash[:alert] %></p>
+      <% end %>
+
+      <%= yield(:before_content) %>
+
+      <main class="govuk-main-wrapper">
+        <%= yield %>
+      </main>
+    </div>
+  <% end %>
+
 
   <footer class="sdn-footer" role="contentinfo">
     <div class="govuk-width-container">

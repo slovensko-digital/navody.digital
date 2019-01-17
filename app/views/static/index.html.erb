@@ -1,10 +1,10 @@
 <% content_for :title, 'Návody.Digital' %>
 
-<% content_for(:main) do %>
-<main id="main-content" role="main">
-  <div class="featured-journeys">
-    <div class="govuk-width-container">
-      <div class="govuk-main-wrapper govuk-main-wrapper--l">
+<% content_for(:before_main_wrapper) do %>
+  <%= render 'searches/search_box' %>
+  <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-0" role="main">
+    <div class="featured-journeys govuk-!-padding-top-9">
+      <div class="govuk-width-container">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
             <h2 class="govuk-heading-l">Najčastejšie situácie</h2>
@@ -27,21 +27,20 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="govuk-width-container">
-    <div class="govuk-main-wrapper govuk-main-wrapper--l">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <h3 class="govuk-heading-m">Často kladené otázky</h3>
-          <ul class="govuk-list">
-            <% @faqs.each do |faq| %>
-              <li><%= link_to faq.title, faq_path(faq) %></li>
-            <% end %>
-          </ul>
+    <div class="govuk-width-container">
+      <div class="govuk-main-wrapper govuk-main-wrapper--l">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h3 class="govuk-heading-m">Často kladené otázky</h3>
+            <ul class="govuk-list">
+              <% @faqs.each do |faq| %>
+                <li><%= link_to faq.title, faq_path(faq) %></li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 <% end %>
