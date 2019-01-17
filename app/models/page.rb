@@ -9,7 +9,19 @@ class Page < ApplicationRecord
 
   # FIXME: fill in position from id!
 
+  before_save :generate_search_terms
+
   def to_param
     slug
+  end
+
+  private
+
+  def generate_search_terms
+    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(content_stripped&.downcase)}".strip
+  end
+
+  def content_stripped
+    ActionController::Base.helpers.strip_tags(content)
   end
 end

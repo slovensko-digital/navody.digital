@@ -14,6 +14,10 @@
             <p class="govuk-body-s govuk-!-margin-bottom-2"><%= "#{@count} #{t(:results_genitive, count: @count)}" %></p>
           <% end %>
 
+          <% @pages.each do |page| %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %></h3>
+            <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
+          <% end %>
           <% @journeys.each do |journey| %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %></h3>
             <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
@@ -23,7 +27,7 @@
               <%= link_to step.journey.title, journey_path(step.journey.slug), class: 'govuk-link' %>:&nbsp;<%= link_to step.title, journey_path(step.slug), class: 'govuk-link' %>
             </h3>
 
-            <p class="govuk-body-s"><%= truncate(strip_tags(step.description)) %></p>
+            <p class="govuk-body-s"><%= truncate(strip_tags(step.description), legnth: 200) %></p>
           <% end %>
         </div>
       </div>
