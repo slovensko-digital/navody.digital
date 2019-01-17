@@ -30,12 +30,12 @@
       <div class="sdn-header__content">
         <nav>
           <ul id="navigation" class="sdn-header__navigation " aria-label="Top Level Navigation">
-            <% unless current_page?(root_path) %>
+            <% unless current_page?(root_path) ||  current_page?(search_path) %>
               <li class="sdn-header__form">
-                <form>
-                  <input class="govuk-input" type="text" placeholder="Hľadať">
+                <%= form_tag(search_path, method: :get) do %>
+                  <%= text_field_tag(:q, @q, class: 'govuk-input', placeholder: 'Hľadať') %>
                   <button type="submit">Hľadať</button>
-                </form>
+                <% end %>
               </li>
             <% end %>
             <li>
