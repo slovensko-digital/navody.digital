@@ -15,19 +15,29 @@
           <% end %>
 
           <% @pages.each do |page| %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %></h3>
-            <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
+            <div class="govuk-!-margin-top-5">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                <%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %>
+              </h3>
+              <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
+            </div>
           <% end %>
           <% @journeys.each do |journey| %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-1"><%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %></h3>
-            <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
+            <div class="govuk-!-margin-top-5">
+
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                <%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %>
+              </h3>
+              <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
+            </div>
           <% end %>
           <% @steps.each do |step| %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-              <%= link_to step.journey.title, journey_path(step.journey.slug), class: 'govuk-link' %>:&nbsp;<%= link_to step.title, journey_path(step.slug), class: 'govuk-link' %>
-            </h3>
-
-            <p class="govuk-body-s"><%= truncate(strip_tags(step.description), legnth: 200) %></p>
+            <div class="govuk-!-margin-top-5">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                <%= link_to step.journey.title, journey_path(step.journey.slug), class: 'govuk-link' %>:&nbsp;<%= link_to step.title, journey_path(step.slug), class: 'govuk-link' %>
+              </h3>
+              <p class="govuk-body-s"><%= truncate(strip_tags(step.description), legnth: 200) %></p>
+            </div>
           <% end %>
         </div>
       </div>
