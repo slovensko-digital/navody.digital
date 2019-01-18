@@ -77,9 +77,9 @@ RSpec.describe Admin::PagesController, type: :controller do
         }.to change(Page, :count).by(1)
       end
 
-      it "redirects to the created page" do
+      it "redirects to pages list" do
         post :create, params: {page: valid_attributes}, session: valid_session
-        expect(response).to redirect_to([:admin, Page.last])
+        expect(response).to redirect_to(admin_pages_url)
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe Admin::PagesController, type: :controller do
       it "redirects to the page" do
         page = Page.create! valid_attributes
         put :update, params: {id: page.to_param, page: valid_attributes}, session: valid_session
-        expect(response).to redirect_to([:admin, page])
+        expect(response).to redirect_to(admin_pages_url)
       end
     end
 

@@ -24,7 +24,7 @@ class Admin::PagesController < Admin::AdminController
     @page = Page.new(page_params)
 
     if @page.save
-      redirect_to [:admin, @page], notice: 'Page was successfully created.'
+      redirect_to admin_pages_url, notice: 'Page was successfully created.'
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Admin::PagesController < Admin::AdminController
   # PATCH/PUT /pages/1
   def update
     if @page.update(page_params)
-      redirect_to [:admin, @page], notice: 'Page was successfully updated.'
+      redirect_to admin_pages_url, notice: 'Page was successfully updated.'
     else
       render :edit
     end
