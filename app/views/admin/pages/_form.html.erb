@@ -5,9 +5,10 @@
     </div>
   <% end %>
 
-  <%= form.text_area :title %>
-  <%= form.text_area :slug %>
+  <%= form.text_field :title %>
+  <%= form.text_field :slug %>
   <%= form.check_box :is_faq %>
+  <%= form.text_field :keywords %>
   <%= form.number_field :position %>
   <%= form.text_area :content, size: '60x20' %>
 

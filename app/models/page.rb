@@ -18,10 +18,6 @@ class Page < ApplicationRecord
   private
 
   def generate_search_terms
-    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(content_stripped&.downcase)}".strip
-  end
-
-  def content_stripped
-    ActionController::Base.helpers.strip_tags(content)
+    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip
   end
 end
