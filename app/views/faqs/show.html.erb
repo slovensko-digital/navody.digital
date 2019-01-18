@@ -1,4 +1,5 @@
-<% content_for :title, build_page_title(@page.title, 'Často kladené otázky') %>
+<%= content_for :title, build_page_title(@page.title, 'Často kladené otázky') %>
+<%= content_for :description, truncate(strip_tags(@page.content), length: 500) %>
 <% content_for :before_content do %>
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">

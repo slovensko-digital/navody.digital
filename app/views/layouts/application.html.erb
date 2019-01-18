@@ -4,7 +4,9 @@
     <title><%= yield(:title) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <% if content_for?(:description) %>
+      <meta name="description" content="<%= content_for(:description) %>">
+    <% end %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script>window.navodyDigitalFrontend.initAll()</script>
@@ -13,7 +15,6 @@
   <body class="govuk-template__body ">
   <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-
   </script>
 
   <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
