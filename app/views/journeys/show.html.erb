@@ -1,54 +1,21 @@
+<% content_for :title, build_page_title(@journey.title) %>
 <%= content_for(:headerline, @journey.title) %>
 <%= content_for :description, truncate(strip_tags(@journey.description), length: 500) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
-    <div class="sdn-timeline">
-      <ol start=0 class="sdn-timeline__list">
-        <li class="sdn-timeline__step">
-          <div class="sdn-timeline__bullet"></div>
-          <% if @step == nil %>
-            <strong>
-              <%= link_to 'Úvod', @journey, class: 'sdn-timeline__link' %>
-            </strong>
-          <% else %>
-            <%= link_to 'Úvod', @journey, class: 'sdn-timeline__link' %>
-          <% end %>
-        </li>
-        <% @journey.steps.each do |step| %>
-          <li class="sdn-timeline__step">
-            <div class="sdn-timeline__bullet"></div>
-            <% if @step == step %>
-              <strong>
-                <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
-              </strong>
-            <% else %>
-              <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
-            <% end %>
-          </li>
-        <% end %>
-      </ol>
-    </div>
+    <%= render 'shared/timeline' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= @title %></h1>
-
-    <div class="govuk-body">
+    <div class="govuk-body sdn-content">
       <%= raw @journey.description %>
     </div>
 
-    <% if @step %>
-      <div class="govuk-body">
-        <h2>Zoznam podúloh</h2>
-        <ul>
-          <% @step.tasks.each do |task| %>
-            <li><%= render "journeys/tasks/#{task.type.underscore}", task: task %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render 'journeys/todo_list', step: @step %>
 
-    <%= link_to 'Začať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %>
+    <p>
+      <%= link_to 'Začať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %>
+    </p>
   </div>
 </div>
 

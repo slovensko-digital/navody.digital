@@ -1,3 +1,6 @@
-<%= form.label :checkbox, class: 'govuk-label govuk-checkboxes__label' do %>
-  <%= link_to task.title, task.url %>
-<% end %>
+<div class="govuk-checkboxes__item">
+  <%= check_box_tag dom_id(task), 1, done, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
+  <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
+    <%= link_to task.title, task.url, target: "_blank" %>
+  <% end %>
+</div>

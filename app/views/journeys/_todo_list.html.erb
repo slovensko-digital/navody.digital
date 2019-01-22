@@ -1,0 +1,13 @@
+<% if step && step.tasks.any? %>
+  <div class="sdn-todo-list-box">
+    <div class="sdn-todo-list__title">Zoznam podúloh</div>
+    <ul class="sdn-todo-list__items">
+      <% step.tasks.each do |task| %>
+        <li class="sdn-todo-list__item">
+          <%= render "journeys/tasks/#{task.type.underscore}", task: task %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
