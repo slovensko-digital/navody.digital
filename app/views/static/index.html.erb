@@ -20,11 +20,11 @@
             </div>
           </div>
         </div>
-        <div class="govuk-grid-row">
-          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">
-            <%= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>
-          </div>
-        </div>
+<!--        <div class="govuk-grid-row">-->
+<!--          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">-->
+            <%#= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
 
@@ -32,7 +32,7 @@
       <div class="govuk-main-wrapper govuk-main-wrapper--l">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds">
-            <h3 class="govuk-heading-m">Často kladené otázky</h3>
+            <h3 class="govuk-heading-l">Často kladené otázky</h3>
             <ul class="govuk-list">
               <% @faqs.each do |faq| %>
                 <li><%= link_to faq.title, faq_path(faq) %></li>

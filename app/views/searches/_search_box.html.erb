@@ -4,10 +4,10 @@
       <div class="sdn-searchbar">
         <div class="sdn-searchbar__item sdn-searchbar-block">
           <div class="sdn-searchbar-block__item">
-            <%= search_field_tag(:q, @q, class: 'govuk-input', placeholder: 'Vyhľadať životnú situáciu') %>
+            <%= search_field_tag(:q, @q, class: 'govuk-input', placeholder: 'Vyhľadať životnú situáciu', autocomplete: :off) %>
           </div>
           <div class="sdn-searchbar-block__item sdn-searchbar-block__item--stretched">
-            <%= submit_tag("Hľadať", class: 'govuk-button govuk-button--large') %>
+            <%= submit_tag("Hľadať", class: 'govuk-button govuk-button--large', name: nil) %>
           </div>
         </div>
       </div>
