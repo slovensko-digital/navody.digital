@@ -1,1 +1,4 @@
-<%= task.title %>
+<div class="govuk-checkboxes__item">
+  <%= check_box_tag dom_id(task), 1, false, class: 'govuk-checkboxes__input', disabled: true %>
+  <%= label_tag dom_id(task), task.title, class: 'govuk-label govuk-checkboxes__label' %>
+</div>
