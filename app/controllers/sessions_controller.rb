@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
 
-    redirect_to root_path, notice: 'Boli ste úspešne odhlásený.'
+    redirect_to root_path, notice: 'Boli ste úspešne odhlásený/á.'
   end
 
   protected

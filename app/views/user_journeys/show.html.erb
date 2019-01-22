@@ -2,56 +2,11 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
-    <div class="sdn-timeline">
-      <ol start=0 class="sdn-timeline__list">
-        <li class="sdn-timeline__step sdn-timeline__step--done">
-          <div class="sdn-timeline__bullet"></div>
-            <strong>
-              <%= link_to 'Úvod', @user_journey, class: 'sdn-timeline__link' %>
-            </strong>
-        </li>
-        <% @user_journey.journey.steps.each do |step| %>
-          <% user_step = @user_step_by_steps[step] %>
-          <li class="sdn-timeline__step sdn-timeline__step--<%= user_step_timeline_status_class(user_step) %>">
-            <div class="sdn-timeline__bullet"></div>
-            <% if @current_step == step %>
-              <strong>
-                <%= link_to step.title, [@user_journey, step], class: 'sdn-timeline__link' %>
-              </strong>
-            <% else %>
-              <%= link_to step.title, [@user_journey, step], class: 'sdn-timeline__link' %>
-            <% end %>
-          </li>
-        <% end %>
-      </ol>
-    </div>
+    <%= render 'shared/user_timeline' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= @title %></h1>
-
-    <div class="govuk-body">
+    <div class="govuk-body sdn-content">
       <%= raw @user_journey.journey.description %>
     </div>
-
-    <% if @step %>
-      <div class="govuk-body">
-        <h2>Zoznam podúloh</h2>
-        <div class="govuk-checkboxes">
-          <% @step.tasks.each do |task| %>
-            <div class="govuk-checkboxes__item">
-              <% if @step_status.complete?(step: @step, task: task) %>
-                <%= check_box_with_action undo_user_journey_user_task_path(@user_journey, task), true do |form| %>
-                  <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
-                <% end %>
-              <% else %>
-                <%= check_box_with_action complete_user_journey_user_task_path(@user_journey, task), false do |form| %>
-                  <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>

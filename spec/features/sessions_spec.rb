@@ -11,8 +11,8 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
-    expect(page).to have_selector(:link_or_button, 'Odoslať prihlasovacie údaje na email')
-    expect(page).to have_text('Prihlásiť sa pomocou Google')
+    expect(page).to have_selector(:link_or_button, 'Prihlásiť sa e-mailom')
+    expect(page).to have_text('prihláste cez Google')
   end
 
   scenario 'As a visitor I want to be able to login using magic link' do
@@ -21,13 +21,13 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
-    within '.login-form' do
+    within 'form#login-email' do
       fill_in :email, with: 'foo@bar.com'
     end
 
     ActionMailer::Base.deliveries = []
 
-    click_on 'Odoslať prihlasovacie údaje na email'
+    click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -57,13 +57,13 @@ RSpec.feature "Sessions", type: :feature do
 
     visit new_session_path
 
-    within '.login-form' do
+    within 'form#login-email' do
       fill_in :email, with: 'foo@bar.com'
     end
 
     ActionMailer::Base.deliveries = []
 
-    click_on 'Odoslať prihlasovacie údaje na email'
+    click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -88,13 +88,13 @@ RSpec.feature "Sessions", type: :feature do
 
     visit new_session_path
 
-    within '.login-form' do
+    within 'form#login-email' do
       fill_in :email, with: 'FoO@bAr.cOm'
     end
 
     ActionMailer::Base.deliveries = []
 
-    click_on 'Odoslať prihlasovacie údaje na email'
+    click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -117,13 +117,13 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
-    within '.login-form' do
+    within 'form#login-email' do
       fill_in :email, with: 'foo@bar.com'
     end
 
     ActionMailer::Base.deliveries = []
 
-    click_on 'Odoslať prihlasovacie údaje na email'
+    click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -157,7 +157,7 @@ RSpec.feature "Sessions", type: :feature do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'Prihlásiť sa pomocou Google'
+    click_link 'prihláste cez Google'
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')

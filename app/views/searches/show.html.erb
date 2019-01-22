@@ -34,9 +34,9 @@
           <% @steps.each do |step| %>
             <div class="govuk-!-margin-top-5">
               <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                <%= link_to step.journey.title, journey_path(step.journey.slug), class: 'govuk-link' %>:&nbsp;<%= link_to step.title, journey_path(step.slug), class: 'govuk-link' %>
+                <%= link_to step.journey.title, [step.journey], class: 'govuk-link' %>:&nbsp;<%= link_to step.title, [step.journey, step], class: 'govuk-link' %>
               </h3>
-              <p class="govuk-body-s"><%= truncate(strip_tags(step.description), legnth: 200) %></p>
+              <p class="govuk-body-s"><%= truncate(strip_tags(step.description), length: 200) %></p>
             </div>
           <% end %>
         </div>
