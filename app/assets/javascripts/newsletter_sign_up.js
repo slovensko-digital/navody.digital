@@ -1,4 +1,4 @@
-$(document).on('ready turbolinks:load', function () {
+$(document).on('turbolinks:load', function () {
   $('#newsletter-form').submit(function (evt) {
     evt.preventDefault();
 
