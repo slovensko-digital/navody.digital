@@ -1,6 +1,7 @@
 <% if step && step.tasks.any? %>
   <div class="sdn-todo-list-box">
     <div class="sdn-todo-list__title">Zoznam podúloh</div>
+    <p class="govuk-hint">Ak si chcete odškrtávať jednotlivé podúlohy, musíte <%= link_to 'sa prihlásiť', new_session_path, class: 'govuk-link' %>.</p>
     <ul class="sdn-todo-list__items">
       <% step.tasks.each do |task| %>
         <li class="sdn-todo-list__item">
