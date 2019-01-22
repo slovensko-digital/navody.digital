@@ -11,7 +11,7 @@
             <div class="sdn-tiles">
               <% @journeys.each do |journey| %>
                 <div class="sdn-tiles__item sdn-tile">
-                  <img class="sdn-tile__image" src="https://placekitten.com/200/234" alt="">
+                  <%= image_tag "journeys/#{journey.image_name.presence || "placeholder.png"}", class: 'sdn-tile__image' %>
                   <span class="sdn-tile__content sdn-tile-content-text-block">
                   <span class="sdn-tile-content-text-block__item"><%= link_to journey.title, journey_path(journey.slug) %></span>
                 </span>
