@@ -39,4 +39,8 @@ Rails.application.routes.draw do
   get '/auth/:provider', to: lambda{ |_| [404, {}, ["Not Found"]] }, as: :auth
 
   resources :faqs, path: 'casto-kladene-otazky'
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end
