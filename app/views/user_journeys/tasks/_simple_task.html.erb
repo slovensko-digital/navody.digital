@@ -1,6 +1,15 @@
 <div class="govuk-checkboxes__item">
-  <%= check_box_tag dom_id(task), 1, done, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
-  <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
-    <%= task.title %>
+  <%
+    path = if user_task.completed?
+             undo_user_journey_task_path(@user_journey, task)
+           else
+             complete_user_journey_task_path(@user_journey, task)
+           end
+  %>
+  <%= form_tag path do |form| %>
+    <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
+    <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
+      <%= task.title %>
+    <% end %>
   <% end %>
 </div>

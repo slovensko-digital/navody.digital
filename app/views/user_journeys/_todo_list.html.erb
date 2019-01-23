@@ -5,16 +5,7 @@
       <% step.tasks.each do |task| %>
         <li class="sdn-todo-list__item">
           <% user_task = @user_task_by_tasks[task] || UserTask.new %>
-          <%
-            path = if user_task.completed?
-                     undo_user_journey_task_path(@user_journey, task)
-                   else
-                     complete_user_journey_task_path(@user_journey, task)
-                   end
-          %>
-          <%= form_tag path do |form| %>
-            <%= render "user_journeys/tasks/#{task.type.underscore}", form: form, task: task, done: user_task.completed? %>
-          <% end %>
+          <%= render "user_journeys/tasks/#{task.type.underscore}", task: task, user_task: user_task %>
         </li>
       <% end %>
     </ul>

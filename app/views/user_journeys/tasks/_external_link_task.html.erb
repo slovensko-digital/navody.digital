@@ -1,6 +1,18 @@
-<div class="govuk-checkboxes__item">
-  <%= check_box_tag dom_id(task), 1, done, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
-  <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
-    <%= link_to task.title, task.url, target: "_blank" %>
-  <% end %>
+<div>
+  <div class="govuk-checkboxes__item">
+    <%
+      path = if user_task.completed?
+               undo_user_journey_task_path(@user_journey, task)
+             else
+               complete_user_journey_task_path(@user_journey, task)
+             end
+    %>
+    <%= form_tag path do |form| %>
+      <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
+      <%= label_tag dom_id(task), task.title, class: 'govuk-label govuk-checkboxes__label' %>
+    <% end %>
+  </div>
+</div>
+<div>
+  <%= link_to 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "govuk-button govuk-button--start" %>
 </div>

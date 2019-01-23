@@ -1,6 +1,9 @@
-<div class="govuk-checkboxes__item">
-  <%= check_box_tag dom_id(task), 1, false, class: 'govuk-checkboxes__input', disabled: true %>
-  <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
-    <%= link_to task.title, task.url, target: "_blank" %>
-  <% end %>
+<div>
+  <div class="govuk-checkboxes__item">
+    <%= check_box_tag dom_id(task), 1, false, class: 'govuk-checkboxes__input', disabled: true %>
+    <%= label_tag dom_id(task), task.title, class: 'govuk-label govuk-checkboxes__label' %>
+  </div>
+</div>
+<div>
+  <%= link_to 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "govuk-button govuk-button--start govuk-button--disabled"%>
 </div>

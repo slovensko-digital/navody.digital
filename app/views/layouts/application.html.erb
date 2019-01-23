@@ -66,7 +66,13 @@
     <div class="sdn-headline">
       <div class="sdn-headline__container govuk-width-container">
         <div>
-          <span class="sdn-headline__headline"><%= yield :headerline %></span></div>
+          <span class="sdn-headline__headline"><%= yield :headerline %></span>
+          <!-- TODO fix this in component -->
+          <% if @journey %>
+            <div style="float: right"> <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %></div>
+          <% end %>
+        </div>
+
       </div>
     </div>
   <% end %>
