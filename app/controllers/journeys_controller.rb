@@ -4,7 +4,7 @@ class JourneysController < ApplicationController
 
     if current_user
       @user_journey = UserJourney.find_by(user: current_user, journey: @journey)
-      redirect_to @user_journey, notice: 'Vitajte späť!' if @user_journey.present?
+      redirect_to @user_journey if @user_journey.present?
     end
   end
 end
