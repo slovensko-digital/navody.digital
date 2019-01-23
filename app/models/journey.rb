@@ -1,6 +1,8 @@
 class Journey < ApplicationRecord
   include Enums
 
+  default_scope { where(published_status: 'PUBLISHED').order(position: :asc) }
+
   has_many :steps
   has_many :tasks, through: :steps
 
@@ -10,8 +12,6 @@ class Journey < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
   # FIXME: fill in position from id!
-
-  default_scope { order(position: :asc) }
 
   before_save :generate_search_terms
 
