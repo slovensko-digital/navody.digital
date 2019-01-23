@@ -1,6 +1,6 @@
 class Step < ApplicationRecord
   belongs_to :journey
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true

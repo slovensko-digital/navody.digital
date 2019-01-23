@@ -3,8 +3,9 @@ class Journey < ApplicationRecord
 
   default_scope { where(published_status: 'PUBLISHED').order(position: :asc) }
 
-  has_many :steps
+  has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
+  has_many :user_journeys
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED}
 

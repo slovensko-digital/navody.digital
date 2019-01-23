@@ -37,6 +37,9 @@ class Admin::JourneysController < Admin::AdminController
 
   # DELETE /admin/journeys/1
   def destroy
+    return redirect_to admin_journeys_url, notice: 'You cannot destroy a published Journey' if @journey.published_status == 'PUBLISHED'
+    return redirect_to admin_journeys_url, notice: 'This Journey has User Journeys, so it cannot be destroyed' if @journey.user_journeys.any?
+
     @journey.destroy
     redirect_to admin_journeys_url, notice: 'Journey was successfully destroyed.'
   end
