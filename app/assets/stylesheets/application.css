@@ -51,6 +51,13 @@
     color: white;
 }
 
+.govuk-panel--success {
+    background: #2a61d4;
+    padding: 15px;
+    color: white;
+    text-align: left;
+}
+
 .sdn-todo-list__success_notice {
     border: 0 solid #4cae18;
     border-left-width: 5px;

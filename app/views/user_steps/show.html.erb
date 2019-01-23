@@ -1,11 +1,20 @@
 <%= content_for(:headerline, @user_journey.journey.title) %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
     <%= render 'shared/user_timeline' %>
   </div>
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
+      <% if @user_journey.all_steps_completed? %>
+        <div class="govuk-panel govuk-panel--success">
+          <div class="govuk-panel__title govuk-!-font-size-24 govuk-!-margin-bottom-2">
+            Hotovo!
+          </div>
+          <div class="govuk-panel__body govuk-!-font-size-19">
+            Dokončili ste tento návod. Gratulujeme!
+          </div>
+        </div>
+      <% end %>
       <%= raw @current_step.description %>
     </div>
 
