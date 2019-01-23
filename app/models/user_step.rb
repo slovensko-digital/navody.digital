@@ -4,8 +4,10 @@ class UserStep < ApplicationRecord
 
   has_many :user_tasks
 
+  scope :completed, -> { where(status: 'done') }
+
   def refresh_status
-    if step.tasks.count == user_tasks.completed.count
+    if all_tasks_completed?
       update_attributes(status: 'done')
     elsif user_tasks.completed.count == 0
       update_attributes(status: 'nothing')

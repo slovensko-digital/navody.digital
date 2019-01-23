@@ -28,10 +28,10 @@
         <% end %>
         <div class="sdn-timeline-dropdown">
           <div class="sdn-timeline-dropdown__list">
-            <a class="sdn-timeline-dropdown__option">
+            <%= link_to complete_user_journey_step_path(@user_journey, step), method: :post, class: "sdn-timeline-dropdown__option" do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--done"></div>
               Ukončená
-            </a>
+            <% end %>
             <a class="sdn-timeline-dropdown__option">
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--waiting"></div>
               Prebieha vybavovanie

@@ -24,4 +24,8 @@ class UserJourney < ApplicationRecord
     user_step.refresh_status
     user_task
   end
+
+  def all_steps_completed?
+    journey.steps.count == user_steps.completed.count
+  end
 end

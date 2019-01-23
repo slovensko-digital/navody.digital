@@ -9,4 +9,13 @@ class UserStepsController < ApplicationController
     @current_step = @steps.find_by!(slug: params[:id])
     @user_task_by_tasks = @user_journey.user_tasks.index_by { |user_task| user_task.task }
   end
+
+  def complete
+    @user_journey = current_user.user_journeys.find(params[:user_journey_id])
+    step = @user_journey.journey.steps.find_by(slug: params[:id])
+    @user_step = @user_journey.user_steps.find_or_initialize_by(step: step)
+    @user_step.update(status: 'done')
+
+    redirect_to [@user_journey, step]
+  end
 end

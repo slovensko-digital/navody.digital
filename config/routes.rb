@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :start, on: :member, path: 'zacat'
 
-    resources :steps, controller: :user_steps, path: 'krok', only: [:show]
+    resources :steps, controller: :user_steps, path: 'krok' do
+      member do
+        post :complete
+      end
+    end
     resources :tasks, controller: :user_tasks, path: 'ulohy' do
       member do
         post :complete
