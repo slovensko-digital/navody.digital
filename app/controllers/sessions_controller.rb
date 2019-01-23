@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
     session[:user_id] = user.id
-    redirect_to root_path, notice: 'Vitajte!'
+    redirect_to root_path, notice: 'Prihlásenie úspešné. Vitajte!'
   end
 
   def magic_link_info
