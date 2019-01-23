@@ -1,0 +1,7 @@
+<%= content_for :title, build_page_title(@page.title) %>
+<%= content_for :description, truncate(strip_tags(@page.content), length: 500) %>
+<div class="govuk-grid-row govuk-!-padding-top-9">
+  <div class="govuk-grid-column-two-thirds">
+    <%= raw @page.content %>
+  </div>
+</div>
