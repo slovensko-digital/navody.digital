@@ -10,12 +10,12 @@
             <h2 class="govuk-heading-l">Najčastejšie situácie</h2>
             <div class="sdn-tiles">
               <% @journeys.each do |journey| %>
-                <div class="sdn-tiles__item sdn-tile">
+                <%= link_to journey_path(journey.slug), class: 'sdn-tiles__item sdn-tile' do %>
                   <%= image_tag "journeys/#{journey.image_name.presence || "placeholder.png"}", class: 'sdn-tile__image' %>
                   <span class="sdn-tile__content sdn-tile-content-text-block">
-                  <span class="sdn-tile-content-text-block__item"><%= link_to journey.title, journey_path(journey.slug) %></span>
-                </span>
-                </div>
+                    <span class="sdn-tile-content-text-block__item"><%= journey.title %></span>
+                  </span>
+                <% end %>
               <% end %>
             </div>
           </div>
