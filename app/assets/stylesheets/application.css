@@ -50,3 +50,17 @@
     padding: 15px;
     color: white;
 }
+
+.sdn-todo-list__success_notice {
+    border: 0 solid #4cae18;
+    border-left-width: 5px;
+    padding: 0 0 0 15px;
+}
+
+.sdn-todo-list__success_notice > h3.govuk-heading-s {
+    color: #4cae18;
+}
+
+.sdn-todo-list-box--completed {
+    border-left-color: #4cae18
+}

@@ -7,12 +7,7 @@ class UserTasksController < ApplicationController
 
     user_task = user_journey.complete_task!(task)
 
-    if user_task.user_step.all_tasks_completed?
-      redirect_to [user_journey, user_task.task.step.next_step]
-    else
-      redirect_to [user_journey, user_task.task.step]
-    end
-
+    redirect_to [user_journey, user_task.task.step]
   end
 
   def undo
