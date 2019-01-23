@@ -25,7 +25,7 @@
 
 .govuk-panel--contact {
     color: white;
-    background: #2A61D4;
+    background: #2a61d4;
     text-align: left;
     padding: 15px;
 }
@@ -42,5 +42,11 @@
 }
 
 .govuk-panel--contact > .govuk-panel__body a {
+    color: white;
+}
+
+.govuk-panel--notice {
+    background: #2a61d4;
+    padding: 15px;
     color: white;
 }

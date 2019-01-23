@@ -1,0 +1,18 @@
+<% if flash[:notice] %>
+  <div class="govuk-!-padding-top-6 govuk-!-padding-bottom-6">
+    <div class="govuk-panel govuk-panel--notice">
+      <div class="govuk-panel__body govuk-!-font-size-19 govuk-!-font-weight-bold">
+        <%= flash[:notice] %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="govuk-!-padding-top-6 govuk-!-padding-bottom-6">
+    <div class="govuk-panel govuk-panel--notice">
+      <div class="govuk-panel__body govuk-!-font-size-19 govuk-!-font-weight-bold">
+        <%= flash[:alert] %>
+      </div>
+    </div>
+  </div>
+<% end %>

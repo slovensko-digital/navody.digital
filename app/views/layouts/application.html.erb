@@ -85,14 +85,9 @@
         <%= yield(:before_main_wrapper) %>
       <% else %>
         <div class="govuk-width-container">
-          <% if flash[:notice] %>
-            <p><%= flash[:notice] %></p>
-          <% end %>
-          <% if flash[:alert] %>
-            <p><%= flash[:alert] %></p>
-          <% end %>
-
           <%= yield(:before_content) %>
+
+          <%= render 'shared/flash_messages' %>
 
           <main class="govuk-main-wrapper">
             <%= yield %>
