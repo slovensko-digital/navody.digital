@@ -15,3 +15,7 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+$(document).on('turbolinks:load', function () {
+  window.navodyDigitalFrontend.initAll();
+});
