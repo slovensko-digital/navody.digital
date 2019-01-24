@@ -1,5 +1,5 @@
 <% if step && step.tasks.any? %>
-  <% user_step = @user_step_by_steps&.fetch(step) %>
+  <% user_step = @user_step_by_steps[step] %>
   <% all_tasks_completed = user_step&.all_tasks_completed? %>
 
   <div class="sdn-todo-list-box <%= "#{"sdn-todo-list-box--completed" if all_tasks_completed }" %>">
