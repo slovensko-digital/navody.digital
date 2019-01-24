@@ -2,7 +2,7 @@ class UserJourney < ApplicationRecord
   belongs_to :journey
   belongs_to :user
 
-  has_many :user_steps
+  has_many :user_steps, dependent: :destroy
   has_many :user_tasks, through: :user_steps
 
   before_create { self.started_at = DateTime.current }

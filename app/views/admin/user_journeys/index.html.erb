@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Journey</th>
+      <th class="govuk-table__header" scope="col">User</th>
+      <th class="govuk-table__header" scope="col"></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @user_journeys.each do |user_journey| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= link_to user_journey.journey.title, admin_journey_path(user_journey.journey) %></td>
+        <td class="govuk-table__cell"><%= user_journey.user.email %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, user_journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Journey', new_admin_journey_path, class: 'govuk-button' %>

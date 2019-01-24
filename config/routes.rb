@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         resources :tasks, except: [:show]
       end
     end
+    resources :user_journeys
   end
 
   root to: 'static#index'
