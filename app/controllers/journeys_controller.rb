@@ -1,6 +1,6 @@
 class JourneysController < ApplicationController
   def show
-    @journey = Journey.find_by!(slug: params[:id])
+    @journey = Journey.published.find_by!(slug: params[:id])
 
     if current_user
       @user_journey = UserJourney.find_by(user: current_user, journey: @journey)

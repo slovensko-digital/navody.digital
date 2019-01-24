@@ -1,7 +1,9 @@
 class Journey < ApplicationRecord
   include Enums
 
-  default_scope { where(published_status: 'PUBLISHED').order(position: :asc) }
+  default_scope { order(position: :asc) }
+
+  scope :published, -> { where(published_status: 'PUBLISHED')}
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps

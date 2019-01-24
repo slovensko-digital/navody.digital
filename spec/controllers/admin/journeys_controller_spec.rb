@@ -127,7 +127,7 @@ RSpec.describe Admin::JourneysController, type: :controller do
       journey = create(:journey, published_status: 'PUBLISHED')
       expect {
         delete :destroy, params: { id: journey.to_param }, session: valid_session
-      }.not_to change(Journey.unscoped, :count)
+      }.not_to change(Journey, :count)
     end
 
     it "does not destroy journeys with associated UserJourneys" do
@@ -136,14 +136,14 @@ RSpec.describe Admin::JourneysController, type: :controller do
 
       expect {
         delete :destroy, params: { id: journey.to_param }, session: valid_session
-      }.not_to change(Journey.unscoped, :count)
+      }.not_to change(Journey, :count)
     end
 
     it "destroys unpublished journey" do
       journey = create(:journey, published_status: 'DRAFT')
       expect {
         delete :destroy, params: { id: journey.to_param }, session: valid_session
-      }.to change(Journey.unscoped, :count).by(-1)
+      }.to change(Journey, :count).by(-1)
     end
 
     it "redirects to the journeys list" do
