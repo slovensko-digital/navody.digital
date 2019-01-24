@@ -19,6 +19,8 @@
       <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Splnili ste všetky podúlohy!</h3>
     </div>
 
-    <p class="govuk-body govuk-!-margin-top-3">Môžete <%= link_to 'prejsť na ďalší krok', [user_step.user_journey, step.next_step] %>.</p>
+    <% if step.next_step %>
+      <p class="govuk-body govuk-!-margin-top-3">Môžete <%= link_to 'prejsť na ďalší krok', [user_step.user_journey, step.next_step] %>.</p>
+    <% end %>
   <% end %>
 <% end %>
