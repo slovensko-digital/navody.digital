@@ -18,14 +18,6 @@ class UserStepsController < ApplicationController
     redirect_to [@user_journey, step]
   end
 
-  def submit_confirmation
-    @step = @user_journey.journey.steps.find_by(slug: params[:id])
-    @user_step = @user_journey.user_steps.find_or_initialize_by(step: @step)
-
-    new_status = @step.is_waiting_step ? 'waiting' : 'done'
-    @user_step.update!(status: new_status)
-  end
-
   def submit
     @step = @user_journey.journey.steps.find_by(slug: params[:id])
     @user_step = @user_journey.user_steps.find_or_initialize_by(step: @step)
@@ -33,9 +25,7 @@ class UserStepsController < ApplicationController
     new_status = @step.is_waiting_step ? 'waiting' : 'done'
     @user_step.update!(status: new_status)
 
-    respond_to do |format|
-      format.js
-    end
+    redirect_to @step.submission_url
   end
 
   private
