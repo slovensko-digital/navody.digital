@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
       @unfinished_user_journey = UserJourney.order(id: :desc).find_by(user: user, journey: journey)
     end
   end
+
+  def disable_feedback
+    @disable_feedback = true
+  end
 end

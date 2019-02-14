@@ -101,6 +101,10 @@
       <% end %>
     </div>
 
+    <% unless @disable_feedback %>
+      <%= render 'shared/feedback' %>
+    <% end %>
+
     <div class="navody-template__footer">
       <footer class="sdn-footer" role="contentinfo">
         <div class="govuk-width-container">
@@ -136,5 +140,6 @@
         </div>
       </footer>
     </div>
+    <%= render 'shared/google_analytics' %>
   </body>
 </html>
