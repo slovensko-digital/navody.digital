@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path
     end
   end
+
+  def disable_feedback
+    @disable_feedback = true
+  end
 end
