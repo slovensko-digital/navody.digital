@@ -1,0 +1,3 @@
+<p>Chystáte sa navštíviť adresu <em><%= @step.submission_url %></em>:</p>
+
+<%= link_to "Potvrdiť", submit_user_journey_step_path(@user_step.user_journey, @step), remote: true, method: :post, class: 'govuk-button' %>

@@ -27,6 +27,6 @@
 
 <% if step.submission_url.present? %>
   <div class="mt-2">
-    <%= link_to "Podať žiadosť", submit_user_journey_step_path(user_step.user_journey, step), remote: true, method: :post, class: 'govuk-button' %>
+    <%= link_to "Podať žiadosť", submit_confirmation_user_journey_step_path(user_step.user_journey, step), class: 'govuk-button' %>
   </div>
 <% end %>

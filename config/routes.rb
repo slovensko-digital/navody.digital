@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       member do
         post :complete
         post :submit
+        get :submit_confirmation
       end
     end
     resources :tasks, controller: :user_tasks, path: 'ulohy' do
