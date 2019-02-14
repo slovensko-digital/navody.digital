@@ -20,13 +20,18 @@ module NavodySlovenskoDigital
 
     app_config = Rails.application.config_for(:app)
     app_host = app_config.fetch('host', 'localhost')
-    app_port = app_config.fetch('port', 80).to_i
+    app_port = app_config.fetch('port', '')
     app_protocol = app_config.fetch('protocol', 'http')
 
-    config.action_mailer.default_url_options = {
+    options = {
       host: app_host,
-      port: app_port,
       protocol: app_protocol
     }
+
+    if app_port.present?
+      options[:port] = app_port.to_i
+    end
+
+    config.action_mailer.default_url_options = options
   end
 end
