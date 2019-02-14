@@ -12,6 +12,13 @@ Page.create!(
   is_faq: true
 )
 
+Page.create!(
+  title: 'O projekte Slovensko.Digital',
+  content: 'Načo je dobrý projekt Slovensko.Digital?',
+  slug: 'o-projekte',
+  is_faq: false
+)
+
 journey = Journey.create!(
   position: 1,
   title: "Založenie živnosti",
