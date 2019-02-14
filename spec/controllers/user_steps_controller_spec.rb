@@ -15,9 +15,9 @@ RSpec.describe UserStepsController, type: :controller do
     end
   end
 
-  describe 'POST #set_status' do
+  describe 'PATCH #update' do
     subject do
-      post :set_status,
+      patch :update,
       params: { "user_journey_id"=>"#{user_step.user_journey.id}", "id"=>"#{user_step.step.slug}", "status"=>"waiting" },
       session: { user_id: user_step.user_journey.user.id }
     end
@@ -29,13 +29,12 @@ RSpec.describe UserStepsController, type: :controller do
       expect(user_step.reload.status).to eq 'waiting'
     end
 
-    # it 'Redirects to user step detail' do
-    #   subject
-    #
-    #   expect(response).to redirect_to(
-    #     user_journey_step_path(user_journey_id: user_journey.id, id: user_step.step.slug)
-    #   )
-    # end
-  end
+    it 'Redirects to user step detail' do
+      subject
 
+      expect(response).to redirect_to(
+        user_journey_step_url(user_journey_id: user_journey.id, id: user_step.step.slug)
+      )
+    end
+  end
 end
