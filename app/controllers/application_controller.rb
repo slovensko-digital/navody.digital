@@ -18,7 +18,10 @@ class ApplicationController < ActionController::Base
 
   def load_last_unfinished_journey(user, journey)
     if user
-      @unfinished_user_journey = UserJourney.order(id: :desc).find_by(user: user, journey: journey)
+      user_journey = UserJourney.order(id: :desc).find_by(user: user, journey: journey)
+      if user_journey && !user_journey.all_steps_completed?
+        @unfinished_user_journey = user_journey
+      end
     end
   end
 
