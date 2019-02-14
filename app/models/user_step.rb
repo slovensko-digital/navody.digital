@@ -6,6 +6,8 @@ class UserStep < ApplicationRecord
 
   scope :completed, -> { where(status: 'done') }
 
+  validates :status, inclusion: { in: %w(not_started started waiting done) }
+
   def refresh_status
     if all_tasks_completed?
       update_attributes(status: 'done')
