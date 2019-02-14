@@ -15,7 +15,6 @@
       <% user_step = @user_step_by_steps[step] %>
       <%
         modifier = user_step_timeline_status_modifier(user_step)
-        modifier = 'nothing' if @current_step == step
       %>
       <li class="sdn-timeline__step sdn-timeline__step--<%= modifier %>">
         <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--<%= modifier %> %>" onClick="this.parentNode.classList.toggle('sdn-timeline__step--dropdown-active');"></div>
