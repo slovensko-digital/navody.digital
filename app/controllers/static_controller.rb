@@ -1,5 +1,4 @@
 class StaticController < ApplicationController
-  before_action :disable_feedback, only: :index
 
   def index
     @faqs = Page.faq.all # TODO: fetch top FAQs here
