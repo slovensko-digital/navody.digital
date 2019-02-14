@@ -62,7 +62,8 @@ class Admin::StepsController < Admin::AdminController
         :is_waiting_step,
         :slug,
         :description,
-        :position
+        :position,
+        :submission_url
     )
   end
 end
