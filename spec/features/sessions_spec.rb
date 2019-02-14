@@ -11,8 +11,8 @@ RSpec.feature "Sessions", type: :feature do
     visit root_path
     click_link 'Prihlásiť'
 
+    expect(page).to have_selector(:link_or_button, 'Prihlásiť sa cez Google')
     expect(page).to have_selector(:link_or_button, 'Prihlásiť sa e-mailom')
-    expect(page).to have_text('prihláste cez Google')
   end
 
   scenario 'As a visitor I want to be able to login using magic link' do
@@ -157,7 +157,7 @@ RSpec.feature "Sessions", type: :feature do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'prihláste cez Google'
+    click_link 'Prihlásiť sa cez Google'
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')
