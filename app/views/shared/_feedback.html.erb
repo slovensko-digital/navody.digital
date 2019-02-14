@@ -1,0 +1,25 @@
+<div class="sdn-feedbackbar " role="contentinfo">
+  <div class="govuk-width-container ">
+    <div class="sdn-feedbackbar__container">
+      <div class="sdn-feedbackbar__useful" id="feedback-question">
+        <span class="sdn-feedbackbar__useful-question">Boli tieto informácie užitočné pre vás?</span>
+        <span>
+          <span class="sdn-feedbackbar__yes"><a href="#" class="sdn-feedbackbar__link" id="feedback-yes">Áno</a></span>
+          <span class="sdn-feedbackbar__no"><a href="#" class="sdn-feedbackbar__link" id="feedback-no">Nie</a></span>
+        </span>
+      </div>
+      <div id="feedback-answered" style="display: none;">
+        Ďakujeme za odozvu.
+      </div>
+      <div class="sdn-feedbackbar__foundbug">
+        <span>Našli ste na stránke chybu?&nbsp;</span>
+        <span>
+          <%= mail_to ENV.fetch('DEFAULT_EMAIL_FROM', 'missing@set.in.env'),
+                      'Napíšte nám',
+                      class: 'sdn-feedbackbar__link',
+                      subject: "Chyba na #{request.original_url}" %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :disable_feedback
+
   def new
   end
 
