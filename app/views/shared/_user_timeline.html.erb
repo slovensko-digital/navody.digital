@@ -27,23 +27,23 @@
         <% end %>
         <div class="sdn-timeline-dropdown">
           <div class="sdn-timeline-dropdown__list">
-            <%= link_to complete_user_journey_step_path(@user_journey, step), method: :post, class: "sdn-timeline-dropdown__option" do %>
+            <%= link_to set_status_user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'done'), method: :post, class: user_step_switch_class(user_step, 'done') do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--done"></div>
               Ukončená
             <% end %>
-            <a class="sdn-timeline-dropdown__option">
+            <%= link_to set_status_user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'waiting'), method: :post, class: user_step_switch_class(user_step, 'waiting') do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--waiting"></div>
               Prebieha vybavovanie
               <div class="sdn-timeline-dropdown__additional-info">Čakám na úrad (lehota 25 dní)</div>
-            </a>
-            <a class="sdn-timeline-dropdown__option sdn-timeline-dropdown__option--selected">
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--in-progress"></div>
-              Nezačatá
-            </a>
-            <a class="sdn-timeline-dropdown__option">
+            <% end %>
+            <%= link_to set_status_user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'not_started'), method: :post, class: user_step_switch_class(user_step, 'not_started') do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--not-done"></div>
+              Nezačatá
+            <% end %>
+            <%= link_to set_status_user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'started'), method: :post, class: user_step_switch_class(user_step, 'started') do %>
+              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--in-progress"></div>
               Rozpracovaná
-            </a>
+            <% end %>
           </div>
         </div>
       </li>

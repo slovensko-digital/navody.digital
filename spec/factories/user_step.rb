@@ -3,6 +3,6 @@ FactoryBot.define do
     association :user_journey
     association :step
 
-    status { 'nothing' }
+    status { 'not_started' }
   end
 end

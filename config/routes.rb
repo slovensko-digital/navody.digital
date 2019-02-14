@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
     resources :steps, controller: :user_steps, path: 'krok' do
       member do
-        post :complete
+        post 'set_status/:status', to: 'user_steps#set_status', as: :set_status
       end
     end
     resources :tasks, controller: :user_tasks, path: 'ulohy' do
