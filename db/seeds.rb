@@ -13,6 +13,7 @@ Page.create!(
 )
 
 journey = Journey.create!(
+  position: 1,
   title: "Založenie živnosti",
   slug: "zalozenie-zivnosti",
   description: "<h1>Založenie živnosti: krok po kroku</h1>
@@ -22,6 +23,7 @@ journey = Journey.create!(
 )
 
 step = journey.steps.create!(
+  position: 1,
   title: "Založte si bankový účet",
   slug: "zalozte-si-bankovy-ucet",
   description: "<h1>Založte si bankový účet</h1>
@@ -41,6 +43,7 @@ step.tasks.create!(
 )
 
 step = journey.steps.create!(
+  position: 2,
   title: "Ohláste svoju živnosť",
   slug: "ohlaste-svoju-zivnost",
   description: "<h1>Ohláste svoju živnosť</h1>
@@ -68,6 +71,7 @@ step.tasks.create!(
 )
 
 step = journey.steps.create!(
+  position: 3,
   title: "Zaregistrujte sa na DPH",
   slug: "zaregistrojte-sa-na-dph",
   description: "<h1>Zaregistrujte sa na DPH</h1>
