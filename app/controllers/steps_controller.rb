@@ -4,5 +4,7 @@ class StepsController < ApplicationController
     @steps = @journey.steps
     @current_step = @steps.find_by!(slug: params[:id])
     @user_step_from_step_map = {}
+
+    load_last_unfinished_journey(current_user, @journey)
   end
 end
