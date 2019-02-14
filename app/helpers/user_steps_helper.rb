@@ -10,4 +10,10 @@ module UserStepsHelper
       'not-done'
     end
   end
+
+  def user_step_switch_class(user_step, target_status)
+    result = 'sdn-timeline-dropdown__option'
+    result += ' sdn-timeline-dropdown__option--selected' if user_step && user_step.status == target_status
+    result
+  end
 end

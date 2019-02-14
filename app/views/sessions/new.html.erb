@@ -7,13 +7,20 @@
     <p class="govuk-body">Vďaka prihláseniu sa budete môcť vrátiť k rozpracovaným návodom.</p>
   </div>
 </div>
-<div class="govuk-grid-row govuk-!-padding-top-8">
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Prihlásiť sa cez Google</h2>
+    <p class="govuk-body govuk-!-margin-bottom-8">
+      <%= link_to auth_path(:google_oauth2), class: 'govuk-link', title: 'Prihlásiť sa cez Google' do  %>
+        <%= image_tag 'google/btn_google_signin_dark_normal_web.png', alt: 'Prihlásiť sa cez Google' %>
+      <% end %>
+    </p>
+
     <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
       <fieldset class="govuk-fieldset">
         <div class="govuk-form-group">
           <span class="govuk-label-wrapper">
-            <label class="govuk-label govuk-label--m">Prihlásiť sa e-mailom</label>
+            <label class="govuk-label govuk-label--m">alebo e-mailom</label>
           </span>
           <span class="govuk-hint">
             Pošleme Vám jednoduchý odkaz na prihlásenie sa.
@@ -23,8 +30,6 @@
         <%= submit_tag 'Prihlásiť sa e-mailom', class: 'govuk-button' %>
       </fieldset>
     <% end %>
-
-    <p class="govuk-body govuk-!-margin-top-6">alebo sa <%= link_to 'prihláste cez Google', auth_path(:google_oauth2), class: 'govuk-link' %>.</p>
   </div>
 </div>
 

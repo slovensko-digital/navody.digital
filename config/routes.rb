@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :start, on: :member, path: 'zacat'
+<<<<<<< HEAD
 
     resources :steps, controller: :user_steps, path: 'krok' do
       member do
@@ -35,6 +36,9 @@ Rails.application.routes.draw do
         get :submit_confirmation
       end
     end
+=======
+    resources :steps, controller: :user_steps, path: 'krok'
+>>>>>>> master
     resources :tasks, controller: :user_tasks, path: 'ulohy' do
       member do
         post :complete

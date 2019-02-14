@@ -73,7 +73,12 @@
               <span class="sdn-headline__headline"><%= yield :headerline %></span>
               <!-- TODO fix this in component -->
               <% if @journey && !@user_journey %>
-                <div style="float: right"> <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %></div>
+                <div style="float: right">
+                  <% if @unfinished_user_journey %>
+                    <%= link_to 'Pokračovať v rozpracovanej', user_journey_path(@unfinished_user_journey), class: 'govuk-button' %>
+                  <% end %>
+                  <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %>
+                </div>
               <% end %>
             </div>
 
@@ -95,6 +100,10 @@
         </div>
       <% end %>
     </div>
+
+    <% unless @disable_feedback %>
+      <%= render 'shared/feedback' %>
+    <% end %>
 
     <div class="navody-template__footer">
       <footer class="sdn-footer" role="contentinfo">
@@ -131,5 +140,6 @@
         </div>
       </footer>
     </div>
+    <%= render 'shared/google_analytics' %>
   </body>
 </html>
