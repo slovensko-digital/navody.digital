@@ -17,6 +17,10 @@
         </div>
       <% end %>
       <%= raw @user_journey.journey.description %>
+
+      <% if @next_step %>
+        <p><%= link_to 'Prejsť na ďalší krok', [@user_journey, @next_step], title: @next_step.title, class: 'govuk-button' %></p>
+      <% end %>
     </div>
   </div>
 </div>

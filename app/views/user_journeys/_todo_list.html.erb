@@ -17,10 +17,10 @@
   <% if all_tasks_completed %>
     <div class="sdn-todo-list__success_notice govuk-!-margin-top-0 govuk-!-padding-top-2">
       <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Splnili ste všetky podúlohy!</h3>
-    </div>
 
-    <% if step.next_step %>
-      <p class="govuk-body govuk-!-margin-top-3">Môžete <%= link_to 'prejsť na ďalší krok', [user_step.user_journey, step.next_step] %>.</p>
-    <% end %>
+      <% if step.next_step %>
+        <p><%= link_to 'Prejsť na ďalší krok', [user_step.user_journey, step.next_step], title: step.next_step.title, class: 'govuk-button' %></p>
+      <% end %>
+    </div>
   <% end %>
 <% end %>
