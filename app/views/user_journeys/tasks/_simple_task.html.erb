@@ -1,15 +1,9 @@
 <div class="govuk-checkboxes__item">
-  <%
-    path = if user_task.completed?
-             undo_user_journey_task_path(@user_journey, task)
-           else
-             complete_user_journey_task_path(@user_journey, task)
-           end
-  %>
-  <%= form_tag path do |form| %>
-    <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'this.form.submit();' %>
+  <%= form_tag toggle_complete_user_journey_task_path(@user_journey, task), remote: true, authenticity_token: true do |form| %>
+    <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'Rails.fire(this.form, "submit");' %>
     <%= label_tag dom_id(task), class: 'govuk-label govuk-checkboxes__label' do %>
       <%= task.title %>
     <% end %>
+    <%= hidden_field_tag :current_step, @current_step.id %>
   <% end %>
 </div>
