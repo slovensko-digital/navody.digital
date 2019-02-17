@@ -1,4 +1,5 @@
 class Page < ApplicationRecord
+  include Searchable
   default_scope { order(position: :asc) }
   scope :faq, -> { where(is_faq: true) }
 
@@ -9,15 +10,9 @@ class Page < ApplicationRecord
 
   # FIXME: fill in position from id!
 
-  before_save :generate_search_terms
+  searchable :search_terms, [:title, :content, :keywords]
 
   def to_param
     slug
-  end
-
-  private
-
-  def generate_search_terms
-    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip
   end
 end

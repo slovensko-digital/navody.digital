@@ -3,12 +3,10 @@ class SearchesController < ApplicationController
 
   def show
     @q = params[:q]
-    analyzed_q = Transliterator.transliterate(@q)
+    @journeys = Journey.published.search(@q).limit(5)
+    @steps = Step.published.search(@q).limit(5)
+    @pages = Page.faq.search(@q).limit(5)
 
-    @journeys = Journey.published.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-    @steps = Step.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-    @pages = Page.faq.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-
-    @count = @journeys.count + @steps.count + @pages.count
+    @count = @journeys.length + @steps.length + @pages.length
   end
 end

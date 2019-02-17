@@ -1,5 +1,6 @@
 class Journey < ApplicationRecord
   include Enums
+  include Searchable
 
   default_scope { order(position: :asc) }
 
@@ -16,15 +17,9 @@ class Journey < ApplicationRecord
   validates :description, presence: true
   # FIXME: fill in position from id!
 
-  before_save :generate_search_terms
+  searchable :search_terms, [:title, :keywords, :description]
 
   def to_param
     slug
-  end
-
-  private
-
-  def generate_search_terms
-    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip
   end
 end
