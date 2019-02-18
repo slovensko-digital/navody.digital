@@ -30,7 +30,8 @@ Rails.application.routes.draw do
     resources :steps, controller: :user_steps, path: 'krok'
     resources :tasks, controller: :user_tasks, path: 'ulohy' do
       member do
-        post :toggle_complete
+        post :complete
+        post :undo
       end
     end
   end
