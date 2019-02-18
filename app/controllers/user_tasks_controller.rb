@@ -31,7 +31,7 @@ class UserTasksController < ApplicationController
       end
       format.js do
         @steps = user_journey.journey.steps
-        @current_step = @steps.find(params[:current_step])
+        @current_step = user_task.task.step
         @user_journey = user_journey
         @user_step_by_steps = user_journey.user_steps.index_by { |user_step| user_step.step }
         @user_task_by_tasks = user_journey.user_tasks.index_by { |user_task| user_task.task }

@@ -11,7 +11,6 @@
     <%= form_tag path, remote: true, authenticity_token: true do |form| %>
       <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'Rails.fire(this.form, "submit");' %>
       <%= label_tag dom_id(task), task.title, class: 'govuk-label govuk-checkboxes__label' %>
-      <%= hidden_field_tag :current_step, @current_step.id %>
     <% end %>
   </div>
 </div>
