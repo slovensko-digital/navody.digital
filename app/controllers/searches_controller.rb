@@ -3,10 +3,7 @@ class SearchesController < ApplicationController
 
   def show
     @q = params[:q]
-    @journeys = Journey.published.search(@q).limit(5)
-    @steps = Step.published.search(@q).limit(5)
-    @pages = Page.faq.search(@q).limit(5)
-
-    @count = @journeys.length + @steps.length + @pages.length
+    analyzed_q = Transliterator.transliterate(@q)
+    @searches = PgSearch.multisearch(analyzed_q).page(params[:page]).per(2)
   end
 end

@@ -46,6 +46,9 @@ gem 'aws-sdk-rails'
 gem 'rollbar'
 gem 'oj' # needed by rollbar
 
+gem 'pg_search'
+gem 'kaminari'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -73,7 +76,6 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'simplecov'
-  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,6 +1,8 @@
 class Journey < ApplicationRecord
   include Enums
-  include Searchable
+  include PgSearch
+
+  after_save :update_steps
 
   default_scope { order(position: :asc) }
 
@@ -17,9 +19,33 @@ class Journey < ApplicationRecord
   validates :description, presence: true
   # FIXME: fill in position from id!
 
-  searchable :search_terms, [:title, :keywords, :description]
+  multisearchable against: %i(title_search keywords_search description_search),
+                  if: :published?
+
+  def published?
+    published_status == 'PUBLISHED'
+  end
 
   def to_param
     slug
+  end
+
+  private
+
+  def update_steps
+    steps.each { |s| s.save! }
+  end
+
+  def title_search
+    Transliterator.transliterate(title&.downcase)
+  end
+
+  def description_search
+    desc = ActionView::Base.full_sanitizer.sanitize(description).gsub("\n", ' ')
+    Transliterator.transliterate(desc&.downcase)
+  end
+
+  def keywords_search
+    Transliterator.transliterate(keywords&.downcase)
   end
 end

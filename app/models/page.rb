@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  include Searchable
+  include PgSearch
   default_scope { order(position: :asc) }
   scope :faq, -> { where(is_faq: true) }
 
@@ -10,9 +10,24 @@ class Page < ApplicationRecord
 
   # FIXME: fill in position from id!
 
-  searchable :search_terms, [:title, :content, :keywords]
+  multisearchable against: %i(title_search keywords_search content_search),
+                  if: :is_faq?
 
   def to_param
     slug
+  end
+
+  private
+
+  def title_search
+    Transliterator.transliterate(title&.downcase)
+  end
+
+  def content_search
+    Transliterator.transliterate(content&.downcase)
+  end
+
+  def keywords_search
+    Transliterator.transliterate(keywords&.downcase)
   end
 end
