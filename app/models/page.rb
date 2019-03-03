@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  include PgSearch
+  include Searchable
   default_scope { order(position: :asc) }
   scope :faq, -> { where(is_faq: true) }
 
@@ -20,14 +20,14 @@ class Page < ApplicationRecord
   private
 
   def title_search
-    Transliterator.transliterate(title&.downcase)
+    to_search_str title
   end
 
   def content_search
-    Transliterator.transliterate(content&.downcase)
+    to_search_str content
   end
 
   def keywords_search
-    Transliterator.transliterate(keywords&.downcase)
+    to_search_str keywords
   end
 end

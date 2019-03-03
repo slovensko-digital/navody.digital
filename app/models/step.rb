@@ -1,5 +1,5 @@
 class Step < ApplicationRecord
-  include PgSearch
+  include Searchable
 
   belongs_to :journey
   has_many :tasks, dependent: :destroy
@@ -35,15 +35,14 @@ class Step < ApplicationRecord
   private
 
   def title_search
-    Transliterator.transliterate(title&.downcase)
+    to_search_str title
   end
 
   def description_search
-    desc = ActionView::Base.full_sanitizer.sanitize(description).gsub("\n", ' ')
-    Transliterator.transliterate(desc&.downcase)
+    html_to_search_str description
   end
 
   def keywords_search
-    Transliterator.transliterate(keywords&.downcase)
+    to_search_str keywords
   end
 end

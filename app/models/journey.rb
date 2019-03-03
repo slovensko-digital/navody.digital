@@ -1,8 +1,8 @@
 class Journey < ApplicationRecord
   include Enums
-  include PgSearch
+  include Searchable
 
-  after_save :update_steps
+  after_save :update_steps_search
 
   default_scope { order(position: :asc) }
 
@@ -32,20 +32,21 @@ class Journey < ApplicationRecord
 
   private
 
-  def update_steps
-    steps.each { |s| s.save! }
+  def update_steps_search
+    if saved_change_to_published_status?
+      steps.each { |s| s.update_pg_search_document }
+    end
   end
 
   def title_search
-    Transliterator.transliterate(title&.downcase)
+    to_search_str title
   end
 
   def description_search
-    desc = ActionView::Base.full_sanitizer.sanitize(description).gsub("\n", ' ')
-    Transliterator.transliterate(desc&.downcase)
+    html_to_search_str description
   end
 
   def keywords_search
-    Transliterator.transliterate(keywords&.downcase)
+    to_search_str keywords
   end
 end

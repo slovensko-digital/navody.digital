@@ -4,6 +4,6 @@ class SearchesController < ApplicationController
   def show
     @q = params[:q]
     analyzed_q = Transliterator.transliterate(@q)
-    @searches = PgSearch.multisearch(analyzed_q).page(params[:page]).per(2)
+    @searches = PgSearch.multisearch(analyzed_q).page(params[:page]).per(10)
   end
 end

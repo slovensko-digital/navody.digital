@@ -49,9 +49,14 @@ RSpec.describe Journey, type: :model do
 
       context 'has step' do
         let(:step) { create(:step, journey: journey, title: 'title', keywords: 'keywords', description: 'description') }
-        it 'updates step after save' do
+        it 'updates step after status change' do
           journey.save!
+          journey.update!(published_status: 'DRAFT')
+          expect(PgSearch::Document.where(searchable: step).first).to be_nil
+          journey.reload.update!(published_status: 'PUBLISHED')
           expect(PgSearch::Document.where(searchable: step).first.content).to eq 'title keywords description'
+          journey.reload.update!(title: 'new title')
+          expect_any_instance_of(Step).not_to receive(:update_pg_search_document)
         end
       end
     end
