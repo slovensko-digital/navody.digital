@@ -12,7 +12,7 @@ class UserStep < ApplicationRecord
     if all_tasks_completed?
       update_attributes(status: 'done')
     elsif user_tasks.completed.count == 0
-      update_attributes(status: 'nothing')
+      update_attributes(status: 'not_started')
     else
       update_attributes(status: 'started')
     end
