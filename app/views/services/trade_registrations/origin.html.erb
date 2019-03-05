@@ -1,0 +1,27 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-top-6">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-fieldset__heading">Odkiaľ pochádzate?</h1>
+      </legend>
+      <p class="govuk-hint govuk-!-margin-bottom-6">Tieto údaje sú potrebné, aby mohli úradníci nájsť Váš register trestov.</p>
+
+      <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
+        <%= render 'errors', errors: f.object.errors %>
+
+        <%= f.govuk_text_field :place_of_birth, hint: 'Napríklad <q>Bratislava</q>'.html_safe, class: 'govuk-!-width-two-thirds' %>
+
+        <h3 class="govuk-heading-l govuk-!-margin-top-9">Údaje o Vašej matke</h3>
+        <%= f.govuk_text_field :mother_first_name, class: 'govuk-!-width-one-third' %>
+        <%= f.govuk_text_field :mother_last_name, class: 'govuk-!-width-two-thirds' %>
+        <%= f.govuk_text_field :mother_maiden_name, class: 'govuk-!-width-two-thirds' %>
+
+        <h3 class="govuk-heading-l govuk-!-margin-top-9">Údaje o Vašom otcovi</h3>
+        <%= f.govuk_text_field :father_first_name, class: 'govuk-!-width-one-third' %>
+        <%= f.govuk_text_field :father_last_name, class: 'govuk-!-width-two-thirds' %>
+
+        <%= f.submit "Pokračovať", class: 'govuk-button govuk-!-margin-top-9' %>
+      <% end %>
+    </fieldset>
+  </div>
+</div>

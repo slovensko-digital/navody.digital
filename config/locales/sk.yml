@@ -7,6 +7,7 @@ sk:
   wicked:
     personal_details: osobne-udaje
     address: trvaly-pobyt
+    origin: register-trestov
     done: hotovo
 
   activerecord:
@@ -15,4 +16,15 @@ sk:
         first_name: Krstné meno
         last_name: Priezvisko
         birth_code: Rodné číslo
+
         street_name: Ulica
+        street_number: Číslo
+        city: Obec
+        postcode: PSČ
+
+        place_of_birth: Miesto narodenia
+        father_first_name: Krstné meno otca
+        father_last_name: Priezvisko otca
+        mother_first_name: Krstné meno matky
+        mother_last_name: Priezvisko matky
+        mother_maiden_name: Priezvisko matky za slobodna

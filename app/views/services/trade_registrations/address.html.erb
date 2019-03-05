@@ -1,25 +1,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds govuk-!-padding-top-6">
     <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl govuk-!-margin-bottom-6">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h1 class="govuk-fieldset__heading">
           Kde je váš trvalý pobyt?
         </h1>
       </legend>
+      <p class="govuk-hint govuk-!-margin-bottom-6">Vaša živnosť bude zaregistrovaná na túto adresu.</p>
 
       <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
-        <% if @registration.errors.any? %>
-          <% @registration.errors.each do |error| %>
-            <% puts error.inspect %>
-            <li><%= error %></li>
-          <% end %>
-        <% end %>
-
+        <%= render 'errors', errors: f.object.errors %>
 
         <%= f.govuk_text_field :street_name, class: 'govuk-!-width-two-thirds' %>
-        <%= f.govuk_text_field :street_number, 'Číslo', class: 'govuk-input--width-5' %>
-        <%= f.govuk_text_field :city, 'Obec' %>
-        <%= f.govuk_text_field :postcode, 'PSČ', class: 'govuk-input--width-5' %>
+        <%= f.govuk_text_field :street_number, class: 'govuk-input--width-5' %>
+        <%= f.govuk_text_field :city,  class: 'govuk-!-width-two-thirds' %>
+        <%= f.govuk_text_field :postcode, class: 'govuk-input--width-5' %>
 
         <%= f.submit "Pokračovať", class: 'govuk-button' %>
       <% end %>

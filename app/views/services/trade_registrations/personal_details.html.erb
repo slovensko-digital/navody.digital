@@ -12,7 +12,7 @@
 
         <%= f.govuk_text_field :first_name, class: 'govuk-!-width-one-third' %>
         <%= f.govuk_text_field :last_name, class: 'govuk-!-width-two-thirds' %>
-        <%= f.govuk_text_field :birth_code, hint: 'Napríklad 8909231234', class: 'govuk-!-width-one-third' %>
+        <%= f.govuk_text_field :birth_code, hint: 'Napríklad <q>8909231234</q>'.html_safe, class: 'govuk-!-width-one-third' %>
 
         <%= f.submit "Pokračovať", class: 'govuk-button' %>
       <% end %>
