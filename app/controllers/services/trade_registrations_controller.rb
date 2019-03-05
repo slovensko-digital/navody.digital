@@ -3,7 +3,7 @@ class Services::TradeRegistrationsController < ApplicationController
 
   before_action :load_registration
 
-  steps :personal_details, :address, :origin, :done
+  steps :personal_details, :address, :origin, :health_insurance, :trade_name, :trade_subjects, :done
 
   def show
     @registration = Services::TradeRegistration.new
@@ -48,6 +48,12 @@ class Services::TradeRegistrationsController < ApplicationController
       :mother_first_name,
       :mother_last_name,
       :mother_maiden_name,
+
+      :health_insurance_company,
+
+      :trade_name,
+
+      :trade_subjects,
     )
   end
 end

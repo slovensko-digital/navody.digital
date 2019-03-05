@@ -8,6 +8,9 @@ sk:
     personal_details: osobne-udaje
     address: trvaly-pobyt
     origin: register-trestov
+    health_insurance: zdravotna-poistovna
+    trade_name: nazov
+    trade_subjects: predmety-podnikania
     done: hotovo
 
   activerecord:
@@ -28,3 +31,5 @@ sk:
         mother_first_name: Krstné meno matky
         mother_last_name: Priezvisko matky
         mother_maiden_name: Priezvisko matky za slobodna
+
+        health_insurance_company: Zdravotná poisťovňa

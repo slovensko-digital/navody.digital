@@ -1,0 +1,29 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-top-6">
+    <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
+      <%= content_tag(:div, class: ['govuk-form-group', f.object.errors.any? ? 'govuk-form-group--error' : nil ]) do %>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Zdravotná poisťovňa
+            </h1>
+          </legend>
+          <p class="govuk-hint govuk-!-margin-bottom-6">Vyberte poisťovňu, v ktorej máte uzatvorené zdravotné poistenie.</p>
+
+          <% if f.object.errors.any? %>
+            <span class="govuk-error-message"><%= f.object.errors.full_messages.first %></span>
+          <% end %>
+          <div class="govuk-radios">
+            <%= f.collection_radio_buttons(:health_insurance_company, Services::TradeRegistration::INSURANCE_COMPANIES, :id, :human_name) do |b| %>
+              <div class="govuk-radios__item">
+                <%= b.radio_button(class: "govuk-radios__input") %>
+                <%= b.label(class: "govuk-label govuk-radios__label") %>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
+      <% end %>
+      <%= f.submit "Pokračovať", class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>

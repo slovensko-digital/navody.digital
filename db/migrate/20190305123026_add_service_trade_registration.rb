@@ -21,6 +21,12 @@ class AddServiceTradeRegistration < ActiveRecord::Migration[5.2]
       t.text :mother_last_name
       t.text :mother_maiden_name
 
+      t.text :health_insurance_company
+
+      t.text :trade_name
+
+      t.text :trade_subjects, array: true
+
       t.timestamps
     end
   end
