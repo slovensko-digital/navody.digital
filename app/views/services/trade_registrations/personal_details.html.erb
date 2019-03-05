@@ -8,23 +8,7 @@
       </legend>
 
       <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
-
-        <% if f.object.errors.any? %>
-          <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              Niekde sa stala chyba
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                <% f.object.errors.keys.each do |field_name| %>
-                  <li>
-                    <%= content_tag(:a, f.object.errors.full_message(field_name, f.object.errors[field_name].first), href: "#form_group_#{field_name}") %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
+        <%= render 'errors', errors: f.object.errors %>
 
         <%= f.govuk_text_field :first_name, class: 'govuk-!-width-one-third' %>
         <%= f.govuk_text_field :last_name, class: 'govuk-!-width-two-thirds' %>
