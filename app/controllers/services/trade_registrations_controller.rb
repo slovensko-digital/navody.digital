@@ -52,7 +52,7 @@ class Services::TradeRegistrationsController < ApplicationController
 
       :trade_name,
 
-      :trade_subjects,
+      trade_subjects: []
     )
   end
 end

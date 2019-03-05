@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-top-6">
+    <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
+      <%= content_tag(:div, class: ['govuk-form-group', f.object.errors.any? ? 'govuk-form-group--error' : nil ]) do %>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Čím sa budete zaoberať?
+            </h1>
+          </legend>
+          <p class="govuk-hint govuk-!-margin-bottom-6">
+            Vymenujte predmety Vášho podnikania. Treba zadať aspoň jeden.
+          </p>
+          <details class="govuk-details" role="group">
+            <summary class="govuk-details__summary" role="button" aria-controls="details-content-baa6a1d4-2d09-4e78-8bf7-b7dca9e1446f" aria-expanded="true">
+              <span class="govuk-details__summary-text">
+                Ako správne pomenovať predmety podnikania
+              </span>
+            </summary>
+            <div class="govuk-details__text" id="details-content-baa6a1d4-2d09-4e78-8bf7-b7dca9e1446f" aria-hidden="false">
+              <p class="govuk-body">
+                Ak neviete, ako pomenovať predmety Vášho podnikania, odporúčame Vám pozrieť si predmety podnikania
+                podobného živnostníka, alebo firmy. Môžete tak urobiť napríklad na stránke <a href="https://finstat.sk/">finstat.sk</a>.
+              </p>
+              <p>
+                Prípadne môžete využiť aj tento
+                <a href="http://www.minv.sk/?zivnostenske-podnikanie&amp;subor=40259">zoznam odporúčaných pomenovaní</a> (PDF).
+              </p>
+              <h3 class="govuk-heading-m">Príklady</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>Počítačové služby a služby súvisiace s počítačovým spracovaním údajov</li>
+                <li>Reklamné a marketingové služby, prieskum trhu a verejnej mienky</li>
+                <li>Dizajnérske činnosti</li>
+              </ul>
+
+            </div>
+          </details>
+
+          <% if f.object.errors.any? %>
+            <span class="govuk-error-message"><%= f.object.errors.full_messages.first %></span>
+          <% end %>
+          <%= f.fields_for :trade_subjects do |ts| %>
+            <%= ts.text_field nil, class: ['govuk-input', f.object.errors.any? ? 'govuk-input--error' : nil].compact %>
+          <% end %>
+        </fieldset>
+      <% end %>
+      <%= f.submit "Pokračovať", class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>
