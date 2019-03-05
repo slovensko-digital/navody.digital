@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     resources :steps, path: 'krok', only: [:show]
   end
 
+  namespace :services, path: 'sluzby' do
+    resources :trade_registrations, path: 'ohlasenie-zivnosti'
+  end
+
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :start, on: :member, path: 'zacat'
     resources :steps, controller: :user_steps, path: 'krok'

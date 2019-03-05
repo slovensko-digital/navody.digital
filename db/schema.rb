@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_22_112950) do
+ActiveRecord::Schema.define(version: 2019_03_05_123026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 2019_01_22_112950) do
     t.text "url"
     t.integer "position", default: 0, null: false
     t.index ["step_id"], name: "index_tasks_on_step_id"
+  end
+
+  create_table "trade_registrations", force: :cascade do |t|
+    t.text "progress_step"
+    t.text "first_name"
+    t.text "last_name"
+    t.text "birth_code"
+    t.text "street_name"
+    t.text "street_number"
+    t.text "city"
+    t.integer "postcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_journeys", force: :cascade do |t|

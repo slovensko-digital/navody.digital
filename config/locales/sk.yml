@@ -3,3 +3,16 @@ sk:
     one: výsledok
     few: výsledky
     other: výsledkov
+
+  wicked:
+    personal_details: osobne-udaje
+    address: trvaly-pobyt
+    done: hotovo
+
+  activerecord:
+    attributes:
+      services/trade_registration:
+        first_name: Krstné meno
+        last_name: Priezvisko
+        birth_code: Rodné číslo
+        street_name: Ulica
