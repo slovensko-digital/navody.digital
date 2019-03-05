@@ -33,3 +33,6 @@ sk:
         mother_maiden_name: Priezvisko matky za slobodna
 
         health_insurance_company: Zdravotná poisťovňa
+
+        trade_name: Názov živnosti
+        trade_subjects: Predmety živnosti

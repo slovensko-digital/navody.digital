@@ -6,7 +6,6 @@ class Services::TradeRegistrationsController < ApplicationController
   steps :personal_details, :address, :origin, :health_insurance, :trade_name, :trade_subjects, :done
 
   def show
-    @registration = Services::TradeRegistration.new
     render_wizard
   end
 

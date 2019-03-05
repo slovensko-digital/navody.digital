@@ -1,0 +1,29 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-!-padding-top-6">
+    <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
+      <%= content_tag(:div, class: ['govuk-form-group', f.object.errors.any? ? 'govuk-form-group--error' : nil ]) do %>
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Názov živnosti
+            </h1>
+          </legend>
+          <p class="govuk-hint govuk-!-margin-bottom-6">
+            Napríklad <q><%= "#{f.object.first_name} #{f.object.last_name}" %></q>
+            alebo <q><%= "#{f.object.first_name} #{f.object.last_name}" %> &ndash; programovanie</q>.
+          </p>
+
+          <% if f.object.errors.any? %>
+            <span class="govuk-error-message"><%= f.object.errors.full_messages.first %></span>
+          <% end %>
+
+          <%= f.text_field :trade_name,
+                           class: ['govuk-input', f.object.errors.any? ? 'govuk-input--error' : nil],
+                           value: "#{f.object.first_name} #{f.object.last_name}" %>
+
+        </fieldset>
+      <% end %>
+      <%= f.submit "Pokračovať", class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>
