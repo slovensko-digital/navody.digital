@@ -11,11 +11,11 @@ a.sdn-timeline-dropdown__option {
   background-image: url(<%= asset_path 'govuk/icon-dots.svg' %>);
 }
 
-.sdn-timeline__bullet--done{
+.sdn-timeline__bullet--done {
   background-image: url(<%= asset_path 'govuk/icon-check.svg' %>);
 }
 
-.sdn-timeline__bullet--in-progress{
+.sdn-timeline__bullet--in-progress {
   background-image: url(<%= asset_path 'govuk/icon-pencil.svg' %>)
 }
 
@@ -23,15 +23,28 @@ a.sdn-timeline-dropdown__option {
   background-image: url(<%= asset_path 'govuk/icon-hourglass.svg' %>);
 }
 
-.sdn-timeline-dropdown__option--selected:after{
+.sdn-timeline-dropdown__option--selected:after {
   background-image: url(<%= asset_path 'govuk/icon-check-black.svg' %>);
 }
-.govuk-button--start{
-  background-image:url(<%= asset_path 'govuk/icon-pointer.png' %>);
+
+.govuk-button--start {
+  background-image: url(<%= asset_path 'govuk/icon-pointer.png' %>);
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min--moz-device-pixel-ratio:2),only screen and (min-device-pixel-ratio:2),only screen and (min-resolution:2dppx),only screen and (min-resolution:192dpi){
-  .govuk-button--start{
-    background-image:url(<%= asset_path 'govuk/icon-pointer-2x.png' %>/assets/images/icon-pointer-2x.png);
+.footer-icon__facebook span {
+  background-image: url(<%= asset_path 'govuk/icon-facebook.svg' %>);
+}
+
+.footer-icon__github span {
+  background-image: url(<%= asset_path 'govuk/icon-github.svg' %>);
+}
+
+.footer-icon__youtube span {
+  background-image: url(<%= asset_path 'govuk/icon-youtube.svg' %>);
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx), only screen and (min-resolution: 192dpi) {
+  .govuk-button--start {
+    background-image: url(<%= asset_path 'govuk/icon-pointer-2x.png' %>/assets/images/icon-pointer-2x.png);
   }
 }

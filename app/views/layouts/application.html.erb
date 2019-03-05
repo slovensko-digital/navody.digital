@@ -69,19 +69,18 @@
       <% if content_for?(:headerline) %>
         <div class="sdn-headline">
           <div class="sdn-headline__container govuk-width-container">
-            <div>
+            <div class="sdn-headline__part">
               <span class="sdn-headline__headline"><%= yield :headerline %></span>
-              <!-- TODO fix this in component -->
-              <% if @journey && !@user_journey %>
-                <div style="float: right">
-                  <% if @unfinished_user_journey %>
-                    <%= link_to 'Pokračovať v rozpracovanej', user_journey_path(@unfinished_user_journey), class: 'govuk-button' %>
-                  <% end %>
-                  <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'govuk-button', method: :post %>
-                </div>
-              <% end %>
             </div>
-
+            <!-- TODO fix this in component -->
+            <% if @journey && !@user_journey %>
+              <div class="sdn-headline__part sdn-headline__part--right">
+                <% if @unfinished_user_journey %>
+                  <%= link_to 'Pokračovať v rozpracovanej', user_journey_path(@unfinished_user_journey), class: 'sdn-headline__button govuk-button' %>
+                <% end %>
+                <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'sdn-headline__button govuk-button', method: :post %>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>
@@ -136,6 +135,29 @@
               </form>
               <span class="sdn-footer__newsletter-disclaimer">
                 Prihlásením dávam dobrovoľný súhlas OZ Slovensko.Digital na zasielanie bezplatného newslettera na mnou zadaný e-mail. Tento súhlas môžem kdykoľvek odvolať na <%= mail_to ENV['DEFAULT_EMAIL_FROM'], ENV['DEFAULT_EMAIL_FROM'], class: 'sdn-footer__link' %>. Oboznámil(a) som sa s informáciami v sekcii <a href="#" class="sdn-footer__link">Ochrana osobných údajov</a>.</span>
+            </div>
+          </div>
+        </div>
+        <div class="sdn-footer__bottom-container">
+          <div class="govuk-width-container">
+            <div class="sdn-footer__bottom-columns">
+              <div class="sdn-footer__links">
+                <ul>
+                  <li><%= link_to 'Pre médiá', page_path('pre-media') %></li>
+                  <li><%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov') %></li>
+                </ul>
+              </div>
+              <div class="sdn-footer__contact">
+                <strong>Slovensko.Digital</strong><br>
+                Staré grunty 12, 841 04 Bratislava<br>
+                IČO: 50158635<br>
+                <a href="mailto:navody@slovensko.digital">navody@slovensko.digital</a>
+              </div>
+              <div class="sdn-footer__social">
+                <a href="https://www.facebook.com/slovensko.digital/" class="footer-icon footer-icon__facebook"><span>facebook</span></a>
+                <a href="https://github.com/slovensko-digital/navody.digital" class="footer-icon footer-icon__github"><span>github</span></a>
+                <a href="https://www.youtube.com/channel/UCbpnKa1XOIpQLYUQ2dz7Sng" class="footer-icon footer-icon__youtube"><span>github</span></a>
+              </div>
             </div>
           </div>
         </div>
