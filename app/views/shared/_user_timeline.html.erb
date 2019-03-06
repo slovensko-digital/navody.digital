@@ -1,4 +1,4 @@
-<div class="sdn-timeline">
+<div class="sdn-timeline" data-module="sdn-timeline">
   <ol start=0 class="sdn-timeline__list">
     <li class="sdn-timeline__step sdn-timeline__step--done">
       <% if @current_step == nil %>
@@ -17,7 +17,7 @@
         modifier = user_step_timeline_status_modifier(user_step)
       %>
       <li class="sdn-timeline__step sdn-timeline__step--<%= modifier %>">
-        <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--<%= modifier %> %>" onClick="this.parentNode.classList.toggle('sdn-timeline__step--dropdown-active');"></div>
+        <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--<%= modifier %> js-sdn-timeline__bullet"></div>
         <% if @current_step == step %>
           <strong>
             <%= link_to step.title, [@user_journey, step], class: 'sdn-timeline__link' %>
