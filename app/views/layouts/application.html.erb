@@ -22,7 +22,19 @@
 
       <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
-      <header class="sdn-header " role="banner" data-module="sdn-header">
+      <div class="govuk-phase-banner" role="banner">
+        <div class="govuk-width-container">
+          <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
+            beta verzia
+          </strong>
+            <span class="govuk-phase-banner__text">
+                Toto je nová služba občianskeho združenia <strong>Slovensko.Digital</strong>. <%= link_to 'Pomôžte nám ju zlepšiť.', page_path('ako-sa-zapojit') %>
+              </span>
+          </p>
+        </div>
+      </div>
+
+      <header class="sdn-header" role="banner" data-module="sdn-header">
         <div class="sdn-header__container govuk-width-container">
           <a href="/" class="sdn-header__link">
           <span class="sdn-header__product-name">
