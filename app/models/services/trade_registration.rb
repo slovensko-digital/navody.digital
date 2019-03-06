@@ -1,5 +1,7 @@
 class Services::TradeRegistration < ActiveRecord::Base
   # belongs_to :user_step
+  has_many :trade_subjects
+  accepts_nested_attributes_for :trade_subjects, reject_if: :all_blank, allow_destroy: true
 
   INSURANCE_COMPANIES = [
     OpenStruct.new(id: 'dovera', human_name: 'Dôvera'),
@@ -12,11 +14,5 @@ class Services::TradeRegistration < ActiveRecord::Base
   validates :place_of_birth, :father_first_name, :father_last_name, :mother_first_name, :mother_last_name, :mother_maiden_name, presence: true, if: Proc.new { |tr| tr.progress_step == 'origin' }
   validates :health_insurance_company, presence: true, if: Proc.new { |tr| tr.progress_step == 'health_insurance' }
   validates :trade_name, presence: true, if: Proc.new { |tr| tr.progress_step == 'trade_name' }
-  validate :trade_subjects_are_present, if: Proc.new { |tr| tr.progress_step == 'trade_subjects' }
-
-  def trade_subjects_are_present
-    if !trade_subjects.is_a?(Array) || !trade_subjects.reject(&:blank?).any?
-      errors.add(:trade_subjects, 'potrebujú aspoň jednu položku.')
-    end
-  end
+  validates :trade_subjects, presence: true, if: Proc.new { |tr| tr.progress_step == 'trade_subjects' }
 end

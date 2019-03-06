@@ -25,8 +25,12 @@ class AddServiceTradeRegistration < ActiveRecord::Migration[5.2]
 
       t.text :trade_name
 
-      t.text :trade_subjects, array: true
+      t.timestamps
+    end
 
+    create_table :trade_subjects do |t|
+      t.belongs_to :trade_registration, null: false
+      t.text :name
       t.timestamps
     end
   end

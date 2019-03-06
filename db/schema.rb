@@ -86,9 +86,16 @@ ActiveRecord::Schema.define(version: 2019_03_05_123026) do
     t.text "mother_maiden_name"
     t.text "health_insurance_company"
     t.text "trade_name"
-    t.text "trade_subjects", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "trade_subjects", force: :cascade do |t|
+    t.bigint "trade_registration_id", null: false
+    t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trade_registration_id"], name: "index_trade_subjects_on_trade_registration_id"
   end
 
   create_table "user_journeys", force: :cascade do |t|

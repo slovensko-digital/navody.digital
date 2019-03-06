@@ -39,9 +39,14 @@
           <% if f.object.errors.any? %>
             <span class="govuk-error-message"><%= f.object.errors.full_messages.first %></span>
           <% end %>
-          <%= f.fields_for :trade_subjects do |ts| %>
-            <%= ts.text_field nil, class: ['govuk-input', f.object.errors.any? ? 'govuk-input--error' : nil].compact %>
-          <% end %>
+          <div id="trade-subjects">
+            <%= f.fields_for :trade_subjects, f.object.trade_subjects || f.object.trade_subjects.build do |trade_subject| %>
+              <%= render 'trade_subject_fields', f: trade_subject %>
+            <% end %>
+            <p class="govuk-body govuk-!-margin-top-6">
+              <%= link_to_add_association 'Pridať ďalší predmet', f, :trade_subjects, class: 'govuk-link' %>
+            </p>
+          </div>
         </fieldset>
       <% end %>
       <%= f.submit "Pokračovať", class: 'govuk-button' %>
