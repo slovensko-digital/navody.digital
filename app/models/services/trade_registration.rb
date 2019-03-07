@@ -1,5 +1,5 @@
 class Services::TradeRegistration < ActiveRecord::Base
-  # belongs_to :user_step
+  # belongs_to :user_task
   has_many :trade_subjects
   accepts_nested_attributes_for :trade_subjects, reject_if: :all_blank, allow_destroy: true
 
