@@ -5,13 +5,19 @@
         Vaša žiadosť je pripravená.
       </div>
       <div class="govuk-panel__body govuk-!-font-size-19">
-        Vaša žiadosť na ohlásenie živnosti je úspešne vyplnená a pripravená na podanie.
+        <p>
+          Vaša žiadosť na ohlásenie živnosti je úspešne vyplnená a pripravená na podanie.
+        </p>
+
+        <p>
+          Môžete ju podať hneď teraz, alebo sa vrátiť k ostatným úlohám Vášho návodu
+        </p>
       </div>
     </div>
 
     <p class="govuk-body govuk-!-margin-top-6">
-      Teraz sa môžete vrátiť k ostatným úlohám Vášho návodu.
+      <%= button_tag "Podať žiadosť", class: 'govuk-button' %><br/>
+      alebo sa <%= link_to 'vrátiť na návod' %>.
     </p>
-    <%= submit_tag "Pokračovať v návode", class: 'govuk-button' %>
   </div>
 </div>
