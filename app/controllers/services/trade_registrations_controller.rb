@@ -6,6 +6,10 @@ class Services::TradeRegistrationsController < ApplicationController
   steps :personal_details, :address, :origin, :health_insurance, :trade_name, :trade_subjects, :done, :form
 
   def show
+    if @registration.new_record?
+      redirect_to wizard_path(steps.first) and return unless step == steps.first
+    end
+
     render_wizard
   end
 
@@ -18,12 +22,7 @@ class Services::TradeRegistrationsController < ApplicationController
   private
 
   def load_registration
-    if current_step == :personal_details
-      @registration = Services::TradeRegistration.new
-      return
-    end
-
-    @registration = Services::TradeRegistration.last
+    @registration = Services::TradeRegistration.last || Services::TradeRegistration.new
   end
 
   def current_step

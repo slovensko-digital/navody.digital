@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ZROHLASFO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Ziadatel>
+    <Titul />
+    <Priezvisko><%= @registration.last_name %></Priezvisko>
+    <Meno><%= @registration.first_name %></Meno>
+    <Nazov_org />
+    <ICO />
+    <Ulica_cislo><%= @registration.street_number %></Ulica_cislo>
+    <Obec><%= @registration.city %></Obec>
+    <Psc><%= @registration.postcode %></Psc>
+    <Stat>Slovenská republika</Stat>
+    <Telefon />
+    <Email><%= @registration.email %></Email>
+  </Ziadatel>
+  <Podnikatel>
+    <Titul_pred />
+    <Priezvisko><%= @registration.last_name %></Priezvisko>
+    <Meno><%= @registration.first_name %></Meno>
+    <Titul_za />
+    <Rod_Cislo><%= @registration.birth_code %></Rod_Cislo>
+    <Datum_narodenia><%= @registration.date_of_birth.strftime('%d.%m.%Y') %></Datum_narodenia>
+    <Miesto_narodenia />
+    <Pohlavie><%= @registration.gender %></Pohlavie>
+    <Rod_priezvisko />
+    <Stat_prislusnost>Slovensko/Slovakia</Stat_prislusnost>
+    <Kod_stat_prislusnost>703</Kod_stat_prislusnost>
+    <Pobyt_do />
+    <ZP_text><%= @registration.health_insurance_company.official_name %></ZP_text>
+    <ZP_kod><%= @registration.health_insurance_company.code %></ZP_kod>
+  </Podnikatel>
+  <PodnikatelBydlisko>
+    <Bydlisko_stat>Slovensko/Slovakia</Bydlisko_stat>
+    <Bydlisko_kod_stat>703</Bydlisko_kod_stat>
+    <Bydlisko_ulica />
+    <Bydlisko_cislo />
+    <Bydlisko_obec><%= @registration.city_name %></Bydlisko_obec>
+    <Bydlisko_kod_obec><%= @registration.city_code %></Bydlisko_kod_obec>
+    <Bydlisko_psc><%= @registration.postcode %></Bydlisko_psc>
+    <Bydlisko_okres><%= @registration.county.name %></Bydlisko_okres>
+    <Firma><%= @registration.trade_name %></Firma>
+    <Ico />
+  </PodnikatelBydlisko>
+  <MiestoPodnikania>
+    <Miesto_stat>Slovensko/Slovakia</Miesto_stat>
+    <Miesto_kod_stat>703</Miesto_kod_stat>
+    <Miesto_ulica><%= @registration.street_name %></Miesto_ulica>
+    <Miesto_cislo><%= @registration.street_number %></Miesto_cislo>
+    <Miesto_obec><%= @registration.city_name %></Miesto_obec>
+    <Miesto_kod_obec><%= @registration.city_code %></Miesto_kod_obec>
+    <Miesto_psc />
+    <Miesto_okres />
+    <Miesto_telefon />
+    <Miesto_fax />
+    <Miesto_email />
+  </MiestoPodnikania>
+  <OstatneUdaje>
+    <Odbor_sp />
+    <Uzivat_nehnutelnost />
+    <OR>false</OR>
+    <Kod_jkm_prav_forma>102</Kod_jkm_prav_forma>
+  </OstatneUdaje>
+  <% @registration.trade_subjects.each do |trade_subject| %>
+  <Predmet>
+    <Predmet_text><%= trade_subject.name %></Predmet_text>
+    <Datum_od />
+    <Datum_do />
+    <Druh />
+    <Kod_sknace />
+  </Predmet>
+  <% end %>
+  <Pocty_predmetov>
+    <Pocet_volne><% @registration.trade_subjects.count %></Pocet_volne>
+    <Pocet_RV>0</Pocet_RV>
+  </Pocty_predmetov>
+  <OsobaVypisRegisterTrestov>
+    <Priezvisko><%= @registration.last_name %></Priezvisko>
+    <Meno><%= @registration.first_name %></Meno>
+    <Rod_Cislo><%= @registration.birth_code %></Rod_Cislo>
+    <MiestoNarodenia><%= @registration.place_of_birth %></MiestoNarodenia>
+    <OkresNarodenia />
+    <StatNarodenia>Slovensko/Slovakia</StatNarodenia>
+    <KodStatNarodenia>703</KodStatNarodenia>
+    <PredchadzajuceMeno />
+    <PredchadzajucePriezvisko />
+    <MenoOtca><%= @registration.father_first_name %></MenoOtca>
+    <PriezviskoOtca><%= @registration.father_last_name %></PriezviskoOtca>
+    <MenoMatky><%= @registration.mother_first_name %></MenoMatky>
+    <PriezviskoMatky><%= @registration.mother_last_name %></PriezviskoMatky>
+    <RodnePriezviskoMatky><%= @registration.mother_maiden_name %></RodnePriezviskoMatky>
+  </OsobaVypisRegisterTrestov>
+  <Kde><%= @registration.city_name %></Kde>
+  <Kedy><%= Date.today.strftime('%d.%m.%Y') %></Kedy>
+  <ObU_text><%= @registration.county.office.name %></ObU_text>
+  <ObU_kod><%= @registration.county.office.code %></ObU_kod>
+  <Sposobilost_ZZ>false</Sposobilost_ZZ>
+  <Nehnutelnost>false</Nehnutelnost>
+  <RT>false</RT>
+  <Suhlas_ZZ>false</Suhlas_ZZ>
+  <SplnomZast>false</SplnomZast>
+  <IneDokPocet>0</IneDokPocet>
+  <Postou>1</Postou>
+  <Osobne>false</Osobne>
+  <Verzia>1.0.2</Verzia>
+</ZROHLASFO>

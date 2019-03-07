@@ -16,6 +16,27 @@ class Services::TradeRegistration < ActiveRecord::Base
   validates :trade_name, presence: true, if: Proc.new { |tr| tr.progress_step == 'trade_name' }
   validates :trade_subjects, presence: true, if: Proc.new { |tr| tr.progress_step == 'trade_subjects' }
 
+  def email
+    'TODO'
+  end
+
+  # def city
+  #   OpenStruct.new(id: 'TODO', code: 'TODO', name: 'TODO', county: OpenStruct.new(name: 'TODO', office: OpenStruct.new(name: 'TODO', code: 'TODO')))
+  # end
+  #
+  #
+  def city_name
+      city
+  end
+
+  def city_code
+    'TODO'
+  end
+
+  def county
+    OpenStruct.new(name: 'TODO', office: OpenStruct.new(name: 'TODO', code: 'TODO'))
+  end
+
   def health_insurance_company
     INSURANCE_COMPANIES.detect { |ic| ic.id == health_insurance_company_id }
   end
