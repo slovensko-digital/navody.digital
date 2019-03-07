@@ -19,7 +19,7 @@
 
           <%= f.text_field :trade_name,
                            class: ['govuk-input', f.object.errors.any? ? 'govuk-input--error' : nil],
-                           value: "#{f.object.first_name} #{f.object.last_name}" %>
+                           value: f.object.trade_name || "#{f.object.first_name} #{f.object.last_name}" %>
 
         </fieldset>
       <% end %>

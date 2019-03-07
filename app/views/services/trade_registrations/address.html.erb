@@ -11,9 +11,9 @@
       <%= form_for @registration, as: 'registration', url: wizard_path, builder: GovukFormBuilder, method: :put do |f| %>
         <%= render 'errors', errors: f.object.errors %>
 
-        <%= f.govuk_text_field :street_name, class: 'govuk-!-width-two-thirds' %>
+        <%= f.govuk_text_field :street_name, hint: 'Napríklad <q>Bajkalská</q>'.html_safe, class: 'govuk-!-width-two-thirds' %>
         <%= f.govuk_text_field :street_number, class: 'govuk-input--width-5' %>
-        <%= f.govuk_text_field :city,  class: 'govuk-!-width-two-thirds' %>
+        <%= f.govuk_text_field :city, class: 'govuk-!-width-two-thirds' %>
         <%= f.govuk_text_field :postcode, class: 'govuk-input--width-5' %>
 
         <%= f.submit "Pokračovať", class: 'govuk-button' %>

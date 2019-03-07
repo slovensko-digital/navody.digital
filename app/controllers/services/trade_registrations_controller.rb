@@ -3,7 +3,7 @@ class Services::TradeRegistrationsController < ApplicationController
 
   before_action :load_registration
 
-  steps :personal_details, :address, :origin, :health_insurance, :trade_name, :trade_subjects, :done
+  steps :personal_details, :address, :origin, :health_insurance, :trade_name, :trade_subjects, :done, :form
 
   def show
     render_wizard
@@ -48,7 +48,7 @@ class Services::TradeRegistrationsController < ApplicationController
       :mother_last_name,
       :mother_maiden_name,
 
-      :health_insurance_company,
+      :health_insurance_company_id,
 
       :trade_name,
 

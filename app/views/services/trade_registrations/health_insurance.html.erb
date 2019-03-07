@@ -14,7 +14,7 @@
             <span class="govuk-error-message"><%= f.object.errors.full_messages.first %></span>
           <% end %>
           <div class="govuk-radios">
-            <%= f.collection_radio_buttons(:health_insurance_company, Services::TradeRegistration::INSURANCE_COMPANIES, :id, :human_name) do |b| %>
+            <%= f.collection_radio_buttons(:health_insurance_company_id, Services::TradeRegistration::INSURANCE_COMPANIES, :id, :human_name) do |b| %>
               <div class="govuk-radios__item">
                 <%= b.radio_button(class: "govuk-radios__input") %>
                 <%= b.label(class: "govuk-label govuk-radios__label") %>

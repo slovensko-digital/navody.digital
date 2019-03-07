@@ -12,6 +12,7 @@ sk:
     trade_name: nazov
     trade_subjects: predmety-podnikania
     done: hotovo
+    form: formular
 
   activerecord:
     attributes:
@@ -32,7 +33,7 @@ sk:
         mother_last_name: Priezvisko matky
         mother_maiden_name: Priezvisko matky za slobodna
 
-        health_insurance_company: Zdravotná poisťovňa
+        health_insurance_company_id: Zdravotná poisťovňa
 
         trade_name: Názov živnosti
         trade_subjects: Predmety podnikania

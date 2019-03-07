@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_123026) do
     t.text "mother_first_name"
     t.text "mother_last_name"
     t.text "mother_maiden_name"
-    t.text "health_insurance_company"
+    t.text "health_insurance_company_id"
     t.text "trade_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

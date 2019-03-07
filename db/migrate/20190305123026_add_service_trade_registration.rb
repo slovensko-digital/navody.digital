@@ -21,7 +21,7 @@ class AddServiceTradeRegistration < ActiveRecord::Migration[5.2]
       t.text :mother_last_name
       t.text :mother_maiden_name
 
-      t.text :health_insurance_company
+      t.text :health_insurance_company_id
 
       t.text :trade_name
 
