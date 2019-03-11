@@ -1,4 +1,6 @@
 class Step < ApplicationRecord
+  include Searchable
+
   belongs_to :journey
   has_many :tasks, dependent: :destroy
 
@@ -10,8 +12,17 @@ class Step < ApplicationRecord
   # FIXME: fill in position from id!
 
   default_scope { order(position: :asc) }
+  scope :published, -> do
+    joins(:journey)
+      .where(journeys: { published_status: 'PUBLISHED' })
+  end
 
-  before_save :generate_search_terms
+  multisearchable against: %i(title_search keywords_search description_search),
+                  if: :published?
+
+  def published?
+    journey.published_status == 'PUBLISHED'
+  end
 
   def to_param
     slug
@@ -23,7 +34,15 @@ class Step < ApplicationRecord
 
   private
 
-  def generate_search_terms
-    self.search_terms = "#{Transliterator.transliterate(title&.downcase)} #{Transliterator.transliterate(keywords&.downcase)}".strip
+  def title_search
+    to_search_str title
+  end
+
+  def description_search
+    html_to_search_str description
+  end
+
+  def keywords_search
+    to_search_str keywords
   end
 end

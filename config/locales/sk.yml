@@ -3,3 +3,10 @@ sk:
     one: výsledok
     few: výsledky
     other: výsledkov
+  views:
+    pagination:
+      first: "&laquo; Prvá"
+      last: "Posledná &raquo;"
+      previous: "&lsaquo; Predchádzajúca"
+      next: "Ďalšia &rsaquo;"
+      truncate: "&hellip;"

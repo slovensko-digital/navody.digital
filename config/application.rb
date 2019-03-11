@@ -33,5 +33,7 @@ module NavodySlovenskoDigital
     end
 
     config.action_mailer.default_url_options = options
+
+    config.active_record.schema_format = :sql
   end
 end

@@ -4,11 +4,6 @@ class SearchesController < ApplicationController
   def show
     @q = params[:q]
     analyzed_q = Transliterator.transliterate(@q)
-
-    @journeys = Journey.published.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-    @steps = Step.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-    @pages = Page.faq.where("search_terms @@ plainto_tsquery(?)", analyzed_q)
-
-    @count = @journeys.count + @steps.count + @pages.count
+    @searches = PgSearch.multisearch(analyzed_q).page(params[:page]).per(10)
   end
 end

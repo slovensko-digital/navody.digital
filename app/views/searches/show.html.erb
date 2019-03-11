@@ -8,36 +8,43 @@
         <div class="govuk-grid-column-two-thirds govuk-!-padding-top-7">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-9">Výsledky vyhľadávania pre &bdquo;<%= @q %>&ldquo;</h2>
 
-          <% if @count == 0 %>
+          <% if @searches.empty? %>
             <p class="govuk-body">Pre tento výraz sme nenašli žiadne výsledky.</p>
           <% else %>
-            <p class="govuk-body-s govuk-!-margin-bottom-2"><%= "#{@count} #{t(:results_genitive, count: @count)}" %></p>
+            <%= paginate @searches %>
           <% end %>
 
-          <% @pages.each do |page| %>
-            <div class="govuk-!-margin-top-5">
-              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                <%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %>
-              </h3>
-              <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
-            </div>
-          <% end %>
-          <% @journeys.each do |journey| %>
-            <div class="govuk-!-margin-top-5">
+          <% @searches.each do |search| %>
+            <% if search.searchable_type == 'Page' %>
+              <% page = search.searchable %>
+              <div class="govuk-!-margin-top-5">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %>
+                </h3>
+                <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
+              </div>
+            <% elsif search.searchable_type == 'Journey' %>
+              <% journey = search.searchable %>
+              <div class="govuk-!-margin-top-5">
 
-              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                <%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %>
-              </h3>
-              <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
-            </div>
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %>
+                </h3>
+                <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
+              </div>
+            <% else search.searchable_type == 'Step' %>
+              <% step = search.searchable %>
+              <div class="govuk-!-margin-top-5">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to step.journey.title, [step.journey], class: 'govuk-link' %>:&nbsp;<%= link_to step.title, [step.journey, step], class: 'govuk-link' %>
+                </h3>
+                <p class="govuk-body-s"><%= truncate(strip_tags(step.description), length: 200) %></p>
+              </div>
+            <% end %>
           <% end %>
-          <% @steps.each do |step| %>
-            <div class="govuk-!-margin-top-5">
-              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                <%= link_to step.journey.title, [step.journey], class: 'govuk-link' %>:&nbsp;<%= link_to step.title, [step.journey, step], class: 'govuk-link' %>
-              </h3>
-              <p class="govuk-body-s"><%= truncate(strip_tags(step.description), length: 200) %></p>
-            </div>
+
+          <% unless @searches.empty? %>
+            <%= paginate @searches %>
           <% end %>
         </div>
       </div>
