@@ -11,9 +11,8 @@
       <%= raw @current_step.description %>
     </div>
 
-    <div id="todo_list">
-      <%= render 'user_journeys/todo_list', step: @current_step, user_task_by_tasks: @user_task_by_tasks %>
-    </div>
+    <%= render 'user_journeys/todo_list', step: @current_step, user_task_by_tasks: @user_task_by_tasks %>
 
+    <%= render partial: 'shared/next_step', object: @current_step.next_step, locals: {journey: @user_journey} %>
   </div>
 </div>

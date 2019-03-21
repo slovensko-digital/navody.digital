@@ -1,6 +1,6 @@
 <div class="sdn-timeline">
   <ol start=0 class="sdn-timeline__list">
-    <li class="sdn-timeline__step sdn-timeline__step">
+    <li class="sdn-timeline__step sdn-timeline__step<% if @current_step.nil? %> sdn-timeline__step--selected<% end %>">
       <% if @current_step == nil %>
         <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet"></div>
         <strong>
@@ -12,7 +12,7 @@
       <% end %>
     </li>
     <% @journey.steps.each do |step| %>
-      <li class="sdn-timeline__step sdn-timeline__step--not-done">
+      <li class="sdn-timeline__step sdn-timeline__step--not-done<% if @current_step == step %> sdn-timeline__step--selected<% end %>">
         <% if @current_step == step %>
           <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet"></div>
           <strong>
@@ -22,27 +22,6 @@
           <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--not-done"></div>
           <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
         <% end %>
-        <div class="sdn-timeline-dropdown">
-          <div class="sdn-timeline-dropdown__list">
-            <a class="sdn-timeline-dropdown__option">
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--done"></div>
-              Ukončená
-            </a>
-            <a class="sdn-timeline-dropdown__option">
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--waiting"></div>
-              Prebieha vybavovanie
-              <div class="sdn-timeline-dropdown__additional-info">Čakám na úrad (lehota 25 dní)</div>
-            </a>
-            <a class="sdn-timeline-dropdown__option sdn-timeline-dropdown__option--selected">
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--in-progress"></div>
-              Nazačatá
-            </a>
-            <a class="sdn-timeline-dropdown__option">
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--not-done"></div>
-              Rozpracovaná
-            </a>
-          </div>
-        </div>
       </li>
     <% end %>
   </ol>

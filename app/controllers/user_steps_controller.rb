@@ -16,6 +16,18 @@ class UserStepsController < ApplicationController
     @user_step = @user_journey.user_steps.find_or_initialize_by(step: step)
     @user_step.update(status: params['status'])
 
-    redirect_to [@user_journey, step]
+
+    respond_to do |format|
+      format.html do
+        redirect_to [@user_journey, step]
+      end
+      format.js do
+        @steps = @user_journey.journey.steps
+        @current_step = step
+        @user_step_by_steps = @user_journey.user_steps.index_by { |user_step| user_step.step }
+        @user_task_by_tasks = @user_journey.user_tasks.index_by { |user_task| user_task.task }
+        render 'user_tasks/complete_or_undo'
+      end
+    end
   end
 end

@@ -1,0 +1,8 @@
+<% if next_step %>
+  <div class="sdn-next-link" style="margin-top: 50px; margin-bottom: 50px;">
+    <%= link_to [journey, next_step], class: 'sdn-next-link__link' do %>
+      Ďalšia úloha
+      <small><%= next_step.title %></small>
+    <% end %>
+  </div>
+<% end %>

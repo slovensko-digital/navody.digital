@@ -1,3 +1,2 @@
 $('#user_timeline').html('<%= j render "shared/user_timeline" %>');
 $('#todo_list').html('<%= j render "user_journeys/todo_list", step: @current_step, user_task_by_tasks: @user_task_by_tasks %>');
-$('#all_steps_completed').html('<%= j render "user_journeys/all_steps_completed", user_journey: @user_journey %>');
