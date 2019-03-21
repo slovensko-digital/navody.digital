@@ -28,9 +28,4 @@ class UserJourney < ApplicationRecord
   def all_steps_completed?
     journey.steps.count == user_steps.completed.count
   end
-
-  def current_step
-    journey.steps.left_joins(:user_steps)
-        .where('user_steps.status != ? or user_steps.status is null', 'done').first
-  end
 end
