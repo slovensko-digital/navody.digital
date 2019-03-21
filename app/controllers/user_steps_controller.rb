@@ -1,9 +1,13 @@
 class UserStepsController < ApplicationController
-  before_action :require_user
+  before_action :require_user, except: [:show]
 
   def show
-    @user_journey = current_user.user_journeys.find(params[:user_journey_id])
+    @user_journey = UserJourney.find_by(id: params[:user_journey_id])
+    redirect_to(root_path) and return if @user_journey.blank?
+
     @journey = @user_journey.journey
+    redirect_to journey_path(@journey) and return if @user_journey.user_id != current_user&.id
+
     @user_step_by_steps = @user_journey.user_steps.index_by { |user_step| user_step.step }
     @steps = @journey.steps
     @current_step = @steps.find_by!(slug: params[:id])
