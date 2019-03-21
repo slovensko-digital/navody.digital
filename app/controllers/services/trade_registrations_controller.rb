@@ -1,4 +1,5 @@
 class Services::TradeRegistrationsController < ApplicationController
+  layout 'trade_registration'
   include Wicked::Wizard::Translated
 
   before_action :load_registration

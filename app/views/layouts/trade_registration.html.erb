@@ -1,0 +1,17 @@
+<%= content_for(:before_main_wrapper) do %>
+  <div class="sdn-headline">
+    <div class="sdn-headline__container govuk-width-container govuk-!-padding-top-1">
+      <div>
+        <%= link_to 'Späť na návod', '#TODO', class: 'govuk-back-link' %>
+        <h3 class="sdn-headline__headline govuk-!-margin-bottom-0 govuk-!-margin-top-0">Ohlásenie živnosti</h3>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-width-container">
+    <%= yield(:before_content) %>
+    <main class="govuk-main-wrapper">
+      <%= yield %>
+    </main>
+  </div>
+<% end %>
+<%= render template: "layouts/application" %>
