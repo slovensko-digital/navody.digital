@@ -6,7 +6,7 @@ class UserStepsController < ApplicationController
     redirect_to(root_path) and return if @user_journey.blank?
 
     @journey = @user_journey.journey
-    redirect_to journey_path(@journey) and return if @user_journey.user_id != current_user&.id
+    redirect_to(@journey) and return if @user_journey.user != current_user
 
     @user_step_by_steps = @user_journey.user_steps.index_by { |user_step| user_step.step }
     @steps = @journey.steps
