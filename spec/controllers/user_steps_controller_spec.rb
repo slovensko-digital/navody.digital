@@ -36,7 +36,7 @@ RSpec.describe UserStepsController, type: :controller do
           end
 
           it 'Redirects to related journey' do
-            expect(subject).to redirect_to journey_path(journey)
+            expect(subject).to redirect_to journey_url(journey)
           end
         end
       end
@@ -47,7 +47,7 @@ RSpec.describe UserStepsController, type: :controller do
         end
 
         it 'Redirects to related journey' do
-          expect(subject).to redirect_to journey_path(journey)
+          expect(subject).to redirect_to journey_url(journey)
         end
       end
     end
