@@ -32,14 +32,14 @@ RSpec.feature "Journeys", type: :feature do
   scenario 'A Journey clicked by an unknown user' do
     visit journey_path(journey)
 
-    expect(page).to have_link('Začať vybavovať')
+    expect(page).not_to have_link('Prejsť na ďalší krok')
   end
 
   scenario 'A journey clicked by user who has not started the journey yet' do
     sign_in(user)
     visit journey_path(journey)
 
-    expect(page).to have_link('Začať vybavovať')
+    expect(page).not_to have_link('Prejsť na ďalší krok')
   end
 
   scenario 'A journey clicked by user who has started the journey already' do
@@ -49,6 +49,6 @@ RSpec.feature "Journeys", type: :feature do
     sign_in(user)
     visit journey_path(journey)
 
-    expect(page).not_to have_link('Začať vybavovať')
+    expect(page).to have_link('Prejsť na ďalší krok')
   end
 end
