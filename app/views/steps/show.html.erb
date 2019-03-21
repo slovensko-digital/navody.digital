@@ -8,6 +8,7 @@
   </div>
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
+      <h1><%= @current_step.title %></h1>
       <%= raw @current_step.description %>
     </div>
 
@@ -16,4 +17,3 @@
     <%= render partial: 'shared/next_step', object: @current_step.next_step, locals: {journey: @journey} %>
   </div>
 </div>
-
