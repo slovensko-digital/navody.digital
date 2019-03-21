@@ -3,7 +3,7 @@ class UserStepsController < ApplicationController
 
   def show
     @user_journey = UserJourney.find_by(id: params[:user_journey_id])
-    redirect_to(root_path) and return if @user_journey.blank?
+    redirect_to(root_path) and return unless @user_journey
 
     @journey = @user_journey.journey
     redirect_to(@journey) and return if @user_journey.user != current_user
