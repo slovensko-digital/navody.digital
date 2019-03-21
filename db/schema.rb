@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_123026) do
   end
 
   create_table "trade_registrations", force: :cascade do |t|
+    t.bigint "user_step_id", null: false
     t.text "progress_step"
     t.text "first_name"
     t.text "last_name"
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_123026) do
     t.text "trade_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_step_id"], name: "index_trade_registrations_on_user_step_id"
   end
 
   create_table "trade_subjects", force: :cascade do |t|

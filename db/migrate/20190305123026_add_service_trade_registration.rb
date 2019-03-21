@@ -1,7 +1,7 @@
 class AddServiceTradeRegistration < ActiveRecord::Migration[5.2]
   def change
     create_table :trade_registrations do |t|
-      # t.belongs_to :user_task, null: false
+      t.belongs_to :user_step, null: false
 
       t.text :progress_step
 

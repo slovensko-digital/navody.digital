@@ -2,7 +2,7 @@
   <div class="sdn-headline">
     <div class="sdn-headline__container govuk-width-container govuk-!-padding-top-1">
       <div>
-        <%= link_to 'Späť na návod', '#TODO', class: 'govuk-back-link' %>
+        <%= link_to 'Späť na návod', user_journey_step_path(@registration.user_step.user_journey, @registration.user_step), class: 'govuk-back-link' %>
         <h3 class="sdn-headline__headline govuk-!-margin-bottom-0 govuk-!-margin-top-0">Ohlásenie živnosti</h3>
       </div>
     </div>

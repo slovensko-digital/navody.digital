@@ -8,6 +8,10 @@ class UserStep < ApplicationRecord
 
   validates :status, inclusion: { in: %w(not_started started waiting done) }
 
+  def to_param
+    step.slug
+  end
+
   def refresh_status
     if all_tasks_completed?
       update_attributes(status: 'done')

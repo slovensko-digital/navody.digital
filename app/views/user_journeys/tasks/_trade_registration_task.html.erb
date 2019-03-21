@@ -15,5 +15,5 @@
   </div>
 </div>
 <div>
-  <%= link_to 'Prejsť na službu', services_trade_registration_path(id: ''), target: "_blank", draggable: false, class: "govuk-button govuk-button--start" %>
+  <%= link_to 'Prejsť na službu', services_trade_registrations_path(user_step_id: user_task.user_step.id), method: :post, target: "_blank", draggable: false, class: "govuk-button govuk-button--start" %>
 </div>
