@@ -1,6 +1,8 @@
 <div class="sdn-timeline" data-module="sdn-timeline">
   <ol start=0 class="sdn-timeline__list">
-    <li class="sdn-timeline__step sdn-timeline__step--done">
+    <li class="sdn-timeline__step sdn-timeline__step--done
+      <% if @current_step.nil? %> sdn-timeline__step--selected
+      <% end %>">
       <% if @current_step == nil %>
         <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--done"></div>
         <strong>
@@ -16,7 +18,9 @@
       <%
         modifier = user_step_timeline_status_modifier(user_step)
       %>
-      <li class="sdn-timeline__step sdn-timeline__step--<%= modifier %>">
+      <li class="sdn-timeline__step sdn-timeline__step--<%= modifier %>
+        <% if @current_step == step %> sdn-timeline__step--selected
+        <% end %>">
         <div class="sdn-timeline__bullet sdn-timeline__bullet--positioned sdn-timeline__bullet--<%= modifier %> js-sdn-timeline__bullet"></div>
         <% if @current_step == step %>
           <strong>
@@ -29,12 +33,14 @@
           <div class="sdn-timeline-dropdown__list">
             <%= link_to user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'done'), method: :patch, class: user_step_switch_class(user_step, 'done') do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--done"></div>
-              Ukončená
+              Vybavená
             <% end %>
-            <%= link_to user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'waiting'), method: :patch, class: user_step_switch_class(user_step, 'waiting') do %>
-              <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--waiting"></div>
-              Prebieha vybavovanie
-              <div class="sdn-timeline-dropdown__additional-info">Čakám na úrad (lehota 25 dní)</div>
+            <% if step.is_waiting_step? %>
+              <%= link_to user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'waiting'), method: :patch, class: user_step_switch_class(user_step, 'waiting') do %>
+                <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--waiting"></div>
+                Prebieha vybavovanie
+                <div class="sdn-timeline-dropdown__additional-info">Čakám na úrad (lehota 25 dní)</div>
+              <% end %>
             <% end %>
             <%= link_to user_journey_step_path(user_journey_id: @user_journey.id, id: step, status: 'not_started'), method: :patch, class: user_step_switch_class(user_step, 'not_started') do %>
               <div class="sdn-timeline-dropdown__bullet sdn-timeline__bullet sdn-timeline__bullet--not-done"></div>
@@ -49,4 +55,12 @@
       </li>
     <% end %>
   </ol>
+  <div style="border-top: 1px solid rgba(0,0,0,0.08); padding-top: 30px; margin-top: 30px;">
+    <%= link_to 'Začať celý návod odznovu', start_user_journey_path(@user_journey.journey), class: 'govuk-button govuk-button__secondary', style: 'border-width: 1px; padding: 8px; opacity: 0.8; margin-bottom: 10px; font-weight: normal;', data: {confirm: 'Ste si istý, že chcete tento návod začať odznova?'}, method: :post %>
+
+    <p style="font-size: 15px; margin-bottom: 0; opacity: 0.5">
+      Pozor: Stlačením tlačidla "Začať celý návod odznovu" sa všetky úlohy nastavia ako nevybavené a všetky ich
+      povinnosti sa odškrtnú.
+    </p>
+  </div>
 </div>

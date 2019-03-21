@@ -12,6 +12,8 @@
     </div>
 
     <%= render 'journeys/todo_list', step: @current_step %>
+
+    <%= render partial: 'shared/next_step', object: @current_step.next_step, locals: {journey: @journey} %>
   </div>
 </div>
 

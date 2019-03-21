@@ -1,14 +1,21 @@
 <% if step && step.tasks.any? %>
-  <div class="sdn-todo-list-box">
-    <div class="sdn-todo-list__title">Zoznam podúloh</div>
-    <p class="govuk-hint">Ak si chcete evidovať stav jednotlivých podúloh, musíte túto životnú situáciu <%= link_to 'začať vybavovať',  start_user_journey_path(@journey), class: 'govuk-link', method: :post %>.</p>
-    <ul class="sdn-todo-list__items">
-      <% step.tasks.each do |task| %>
-        <li class="sdn-todo-list__item">
-          <%= render "journeys/tasks/#{task.type.underscore}", task: task %>
-        </li>
+  <div class="sdn-todo-list">
+    <div style="background-color: #fffbe4; padding: 30px; margin-bottom: 30px;">
+      <% if current_user %>
+        <p style="font-size: 15px; opacity: 0.6">Aby ste nestratili prehľad v tom, čo ste už spravili a čo
+          ešte musíte spraviť, môžete si jednotlivé úholy a povinnosti evidovať ako vybavené. Na využívanie tejto funkcionality sa však musíte prihlásiť.</p>
+        <%= link_to 'Chcem sa prihlásiť', new_session_path(callback: journey_step_path(@journey, @current_step)), class: 'govuk-button govuk-button__secondary', style: 'margin-bottom: 0' %>
       <% end %>
-    </ul>
+    </div>
+    <div class="sdn-todo-list-box">
+      <div class="sdn-todo-list__title">Zoznam podúloh</div>
+      <ul class="sdn-todo-list__items">
+        <% step.tasks.each do |task| %>
+          <li class="sdn-todo-list__item">
+            <%= render "journeys/tasks/#{task.type.underscore}", task: task %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>
-

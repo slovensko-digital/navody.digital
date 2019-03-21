@@ -18,6 +18,10 @@ class UserStep < ApplicationRecord
     end
   end
 
+  def done?
+    status == 'done'
+  end
+
   def all_tasks_completed?
     step.tasks.count == user_tasks.completed.count
   end

@@ -18,9 +18,7 @@
       <% end %>
       <%= raw @user_journey.journey.description %>
 
-      <% if @next_step %>
-        <p><%= link_to 'Prejsť na ďalší krok', [@user_journey, @next_step], title: @next_step.title, class: 'govuk-button' %></p>
-      <% end %>
+      <%= render partial: 'shared/next_step', object: @next_step, locals: {journey: @user_journey} %>
     </div>
   </div>
 </div>
