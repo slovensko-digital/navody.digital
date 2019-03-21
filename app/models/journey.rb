@@ -2,7 +2,7 @@ class Journey < ApplicationRecord
   include Enums
   include Searchable
 
-  after_save :update_steps_search
+  before_save :update_steps_search
 
   default_scope { order(position: :asc) }
 
@@ -19,8 +19,12 @@ class Journey < ApplicationRecord
   validates :description, presence: true
   # FIXME: fill in position from id!
 
-  multisearchable against: %i(title_search keywords_search description_search),
-                  if: :published?
+  multisearchable against: %i(description_search),
+                  if: :published?,
+                  additional_attributes: -> (journey) {
+                    { title: journey.title_search,
+                      keywords: journey.keywords_search }
+                  }
 
   def published?
     published_status == 'PUBLISHED'
@@ -28,6 +32,18 @@ class Journey < ApplicationRecord
 
   def to_param
     slug
+  end
+
+  def description_search
+    join_search([html_to_search_str(description), steps_search(:content)])
+  end
+
+  def title_search
+    join_search([to_search_str(title), steps_search(:title)])
+  end
+
+  def keywords_search
+    join_search([to_search_str(keywords), steps_search(:keywords)])
   end
 
   private
@@ -38,15 +54,11 @@ class Journey < ApplicationRecord
     end
   end
 
-  def title_search
-    to_search_str title
+  def join_search(arr)
+    arr.delete_if{ |i| i.blank? }.join(' ')
   end
 
-  def description_search
-    html_to_search_str description
-  end
-
-  def keywords_search
-    to_search_str keywords
+  def steps_search(column)
+    PgSearch::Document.where(searchable: steps).pluck(column).join(' ')
   end
 end

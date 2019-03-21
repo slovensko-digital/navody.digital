@@ -9,43 +9,18 @@
           <h2 class="govuk-heading-m govuk-!-margin-bottom-9">Výsledky vyhľadávania pre &bdquo;<%= @q %>&ldquo;</h2>
 
           <% if @searches.empty? %>
-            <p class="govuk-body">Pre tento výraz sme nenašli žiadne výsledky.</p>
-          <% else %>
-            <%= paginate @searches %>
+            <p class="govuk-body">
+              Pre tento výraz sme nenašli žiadne výsledky.
+            </p>
           <% end %>
-
           <% @searches.each do |search| %>
-            <% if search.searchable_type == 'Page' %>
-              <% page = search.searchable %>
-              <div class="govuk-!-margin-top-5">
-                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                  <%= link_to page.title, faq_path(page.slug), class: 'govuk-link' %>
-                </h3>
-                <p class="govuk-body-s"><%= truncate(strip_tags(page.content), length: 200) %></p>
-              </div>
-            <% elsif search.searchable_type == 'Journey' %>
-              <% journey = search.searchable %>
-              <div class="govuk-!-margin-top-5">
-
-                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                  <%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %>
-                </h3>
-                <p class="govuk-body-s"><%= truncate(strip_tags(journey.description), length: 200) %></p>
-              </div>
-            <% else search.searchable_type == 'Step' %>
-              <% step = search.searchable %>
-              <div class="govuk-!-margin-top-5">
-                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                  <%= link_to step.journey.title, [step.journey], class: 'govuk-link' %>:&nbsp;<%= link_to step.title, [step.journey, step], class: 'govuk-link' %>
-                </h3>
-                <p class="govuk-body-s"><%= truncate(strip_tags(step.description), length: 200) %></p>
-              </div>
+            <% if search.searchable_type == 'Journey' %>
+              <%= render partial: 'journey', locals: { journey: search.searchable, query: @q, analyzed_query: @analyzed_q } %>
+            <% elsif search.searchable_type == 'Page' %>
+              <%= render partial: 'page', locals: { page: search.searchable, query: @q } %>
             <% end %>
           <% end %>
-
-          <% unless @searches.empty? %>
-            <%= paginate @searches %>
-          <% end %>
+          <%= render partial: 'pagination', locals: { searches: @searches } %>
         </div>
       </div>
       <div class="govuk-grid-row govuk-!-padding-top-6">

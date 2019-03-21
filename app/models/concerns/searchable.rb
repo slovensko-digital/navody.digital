@@ -7,6 +7,6 @@ module Searchable
   end
 
   def html_to_search_str(str)
-    to_search_str ActionView::Base.full_sanitizer.sanitize(str)&.gsub("\n", ' ')
+    to_search_str ActionView::Base.full_sanitizer.sanitize(str)&.gsub(/\R+/, ' ')&.gsub(/\s+/, ' ')&.strip
   end
 end

@@ -1,0 +1,8 @@
+<div class="govuk-!-margin-top-5 govuk-!-margin-left-6">
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <%= link_to step.title, [step.journey, step], class: 'govuk-link' %>
+  </h3>
+  <p class="govuk-body-xs">
+    <%= searched_text(step.description, query) %>
+  </p>
+</div>
