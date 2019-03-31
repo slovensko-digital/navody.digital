@@ -7,6 +7,7 @@ jobs:
       - image: circleci/ruby:2.5.3-node-browsers
         environment:
           RAILS_ENV: test
+          CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
 
       - image: circleci/postgres:10-alpine-ram
         environment:
@@ -25,7 +26,20 @@ jobs:
       - run: dockerize -wait tcp://localhost:5432 -timeout 60s
       - run: mv .circleci/database.yml config/database.yml
       - run: bundle exec rake db:create db:structure:load --trace
-      - run: bundle exec rspec
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Run tests
+          command: |
+            ./cc-test-reporter before-build
+            bundle exec rspec --format progress --format RspecJunitFormatter --out test_results/rspec.xml
+            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+      - store_test_results:
+          path: test_results
 
   deploy:
     working_directory: ~/slovensko-digital/navody.slovensko.digital
