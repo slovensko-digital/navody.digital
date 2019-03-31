@@ -10,14 +10,16 @@ class Page < ApplicationRecord
 
   # FIXME: fill in position from id!
 
-  multisearchable against: %i(title_search keywords_search content_search),
-                  if: :is_faq?
+  multisearchable against: %i(content_search),
+                  if: :is_faq?,
+                  additional_attributes: -> (page) {
+                    { title: page.title_search,
+                      keywords: page.keywords_search }
+                  }
 
   def to_param
     slug
   end
-
-  private
 
   def title_search
     to_search_str title

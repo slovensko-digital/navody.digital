@@ -4,6 +4,9 @@ class Step < ApplicationRecord
   belongs_to :journey
   has_many :tasks, dependent: :destroy
 
+
+  after_commit :update_journey_search
+
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
@@ -17,8 +20,12 @@ class Step < ApplicationRecord
       .where(journeys: { published_status: 'PUBLISHED' })
   end
 
-  multisearchable against: %i(title_search keywords_search description_search),
-                  if: :published?
+  multisearchable against: %i(description_search),
+                  if: :published?,
+                  additional_attributes: -> (step) {
+                    { title: step.title_search,
+                      keywords: step.keywords_search }
+                  }
 
   def published?
     journey.published_status == 'PUBLISHED'
@@ -32,8 +39,6 @@ class Step < ApplicationRecord
     journey.steps.where('position > ?', position).order(position: :asc).first
   end
 
-  private
-
   def title_search
     to_search_str title
   end
@@ -44,5 +49,11 @@ class Step < ApplicationRecord
 
   def keywords_search
     to_search_str keywords
+  end
+
+  private
+
+  def update_journey_search
+    journey.update_pg_search_document
   end
 end

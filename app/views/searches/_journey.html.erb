@@ -1,0 +1,24 @@
+<div class="govuk-!-margin-top-5">
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+    <%= link_to journey.title, journey_path(journey.slug), class: 'govuk-link' %>
+  </h3>
+  <p class="govuk-body-s">
+    <%= searched_text(journey.description, query) %>
+  </p>
+  <% steps = PgSearch::Document.where(searchable: journey.steps).search(analyzed_query).page(1).per(4) %>
+  <% if steps.count == 1 %>
+    <div class="govuk-grid-row">
+      <%= render partial: 'step', locals: { step: steps.first.searchable, query: query } %>
+    </div>
+  <% else %>
+    <% steps.each_slice(2) do |sub_search_slice| %>
+      <div class="govuk-grid-row">
+        <% sub_search_slice.each do |sub_search| %>
+          <div class="govuk-grid-column-one-half">
+            <%= render partial: 'step', locals: { step: sub_search.searchable, query: query } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
