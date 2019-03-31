@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :user_journeys
   end
 
-  root to: 'static#index'
+  root to: 'pages#index'
 
   resource :search, only: [:show]
 
