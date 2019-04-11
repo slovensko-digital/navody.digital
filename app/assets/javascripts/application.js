@@ -17,5 +17,5 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
-  window.navodyDigitalFrontend.initAll();
+    //window.navodyDigitalFrontend.initAll();
 });

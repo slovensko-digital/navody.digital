@@ -3,9 +3,6 @@
 <%= content_for :description, truncate(strip_tags(@current_step.description), length: 500) %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-third">
-    <%= render 'shared/timeline' %>
-  </div>
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
       <%= raw @current_step.description %>
@@ -13,7 +10,10 @@
 
     <%= render 'journeys/todo_list', step: @current_step %>
 
-    <%= render partial: 'shared/next_step', object: @current_step.next_step, locals: {journey: @journey} %>
+    <%= render partial: 'components/next_step', object: @current_step.next_step, locals: {journey: @journey} %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render 'components/timeline' %>
   </div>
 </div>
 

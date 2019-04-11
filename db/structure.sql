@@ -109,7 +109,11 @@ CREATE TABLE public.pg_search_documents (
     searchable_type character varying,
     searchable_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    keywords character varying,
+    title character varying,
+    tsv_keywords tsvector,
+    tsv_title tsvector
 );
 
 
@@ -155,7 +159,9 @@ CREATE TABLE public.steps (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     description text NOT NULL,
-    "position" integer DEFAULT 0 NOT NULL
+    "position" integer DEFAULT 0 NOT NULL,
+    app_url character varying,
+    type character varying DEFAULT 'BasicStep'::character varying NOT NULL
 );
 
 
@@ -190,7 +196,9 @@ CREATE TABLE public.tasks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     url text,
-    "position" integer DEFAULT 0 NOT NULL
+    "position" integer DEFAULT 0 NOT NULL,
+    hidden boolean DEFAULT false,
+    url_title character varying
 );
 
 
@@ -509,6 +517,34 @@ CREATE INDEX index_pg_search_documents_on_tsv_content ON public.pg_search_docume
 
 
 --
+-- Name: index_pg_search_documents_on_tsv_keywords; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pg_search_documents_on_tsv_keywords ON public.pg_search_documents USING gin (tsv_keywords);
+
+
+--
+-- Name: index_pg_search_documents_on_tsv_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pg_search_documents_on_tsv_title ON public.pg_search_documents USING gin (tsv_title);
+
+
+--
+-- Name: index_questionaire_results_on_user_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_questionaire_results_on_user_step_id ON public.questionaire_results USING btree (user_step_id);
+
+
+--
+-- Name: index_questionaire_results_on_user_step_id_and_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_questionaire_results_on_user_step_id_and_slug ON public.questionaire_results USING btree (user_step_id, slug);
+
+
+--
 -- Name: index_steps_on_journey_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -576,6 +612,20 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_email_lower_unique ON public.users USING btree (lower(email));
+
+
+--
+-- Name: pg_search_documents tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
+
+
+--
+-- Name: pg_search_documents tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
 
 
 --
@@ -672,6 +722,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190117171028'),
 ('20190118111308'),
 ('20190122112950'),
-('20190301173059');
+('20190301173059'),
+('20190305123026'),
+('20190306141903'),
+('20190306143716'),
+('20190321100731'),
+('20190411095826'),
+('20190411104731');
 
 

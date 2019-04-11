@@ -1,0 +1,2 @@
+$('#timeline').replaceWith('<%= j render "components/timeline" %>');
+$('#<%= dom_id(@current_step, :todo_list) %>').replaceWith('<%= j render "journeys/todo_list", step: @current_step, user_task_by_tasks: @user_task_by_tasks %>');

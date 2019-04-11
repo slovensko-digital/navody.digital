@@ -2,18 +2,18 @@
   <div class="govuk-checkboxes__item">
     <%
       path = if user_task.completed?
-               undo_user_journey_task_path(@user_journey, task)
+               undo_journey_step_task_path(@journey, @current_step, task)
              else
-               complete_user_journey_task_path(@user_journey, task)
+               complete_journey_step_task_path(@journey, @current_step, task)
              end
     %>
 
-    <%= form_tag path, remote: true, authenticity_token: true do |form| %>
+    <%= form_tag path, remote: true, authenticity_token: true do %>
       <%= check_box_tag dom_id(task), 1, user_task.completed?, class: 'govuk-checkboxes__input', onChange: 'Rails.fire(this.form, "submit");' %>
       <%= label_tag dom_id(task), task.title, class: 'govuk-label govuk-checkboxes__label' %>
     <% end %>
   </div>
 </div>
 <div>
-  <%= link_to 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "snd-todo-list__link" %>
+  <%= link_to task.url_title || 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "snd-todo-list__link" %>
 </div>

@@ -1,4 +1,6 @@
 class Step < ApplicationRecord
+  self.inheritance_column = 'type2' # TODO: remove this when all STI types are defined
+
   include Searchable
 
   belongs_to :journey
@@ -22,6 +24,10 @@ class Step < ApplicationRecord
 
   def published?
     journey.published_status == 'PUBLISHED'
+  end
+
+  def has_app?
+    type == 'ExternalAppStep'
   end
 
   def to_param

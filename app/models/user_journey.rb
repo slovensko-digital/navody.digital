@@ -5,7 +5,7 @@ class UserJourney < ApplicationRecord
   has_many :user_steps, dependent: :destroy
   has_many :user_tasks, through: :user_steps
 
-  before_create { self.started_at = DateTime.current }
+  before_create {self.started_at = DateTime.current}
 
   def complete_task!(task)
     user_step = user_steps.create_with(status: 'started').find_or_initialize_by(step: task.step)
@@ -27,5 +27,9 @@ class UserJourney < ApplicationRecord
 
   def all_steps_completed?
     journey.steps.count == user_steps.completed.count
+  end
+
+  def restart!
+    destroy!
   end
 end

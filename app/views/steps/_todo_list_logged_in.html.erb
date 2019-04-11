@@ -1,0 +1,66 @@
+<% current_user_step = @user_step_by_steps[@current_step] || UserStep.new %>
+<% if @current_step %>
+  <div class="sdn-todo-list sdn-todo-list--<%= current_user_step.status %>">
+    <% if @current_step && @current_step.tasks.any? %>
+      <div style="background-color: #fffbe4; padding: 30px; margin-bottom: 30px;">
+        <p style="font-size: 15px; opacity: 0.6; margin-bottom: 0">
+          Tento krok návodu má ďalšie povinnosti, môžete ich postupne odškrtávať ako vybavené v zozname nižšie.
+        </p>
+      </div>
+
+      <div class="sdn-todo-list-box">
+        <div class="sdn-todo-list__title">Povinnosti</div>
+        <ul class="sdn-todo-list__items">
+          <% @current_step.tasks.each do |task| %>
+            <li class="sdn-todo-list__item">
+              <% user_task = @user_task_by_tasks[task] || UserTask.new %>
+              <%= render "user_journeys/tasks/#{task.type.underscore}", task: task, user_task: user_task %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @current_step %>
+      <div class="sdn-todo-list-main-action">
+        <% if current_user_step.done? %>
+          <div class="govuk-body-s sdn-todo-list-main-action__info">
+            <h2 class="govuk-heading-s">Vybavené!</h2>
+            Ak sa chcete vrátiť späť, môžete tento krok návodu <%= link_to 'označiť ako nevybavený', journey_step_path(@journey, @current_step, status: 'not_started'), method: :patch, remote: true %>.
+          </div>
+        <% elsif current_user_step.waiting? %>
+          <div class="govuk-body-s sdn-todo-list-main-action__info">
+            <h2 class="govuk-heading-s">Podanie bolo zaslané</h2>
+            Po úspešnom vybavení podania, keď dostanete pozitívnu odpoveď, označte
+            úlohu za vybavenú.
+          </div>
+
+          <div class="sdn-todo-list-main-action-buttons-wrapper">
+            <div class="sdn-todo-list-main-action-buttons">
+              <%= link_to 'Označiť ako vybavené', journey_step_path(@journey, @current_step, status: 'done'), class: 'govuk-button', method: :patch, remote: true %>
+            </div>
+          </div>
+        <% else %>
+          <% if @current_step.tasks.any? && @current_step.has_app? %>
+            <div class="govuk-body-s sdn-todo-list-main-action__info">
+              Po splnení všetkých povinností môžete podať elektronickú žiadosť a potom označiť tento krok ako podaný.
+            </div>
+          <% end %>
+          <div class="sdn-todo-list-main-action-buttons-wrapper">
+            <div class="sdn-todo-list-main-action-buttons">
+              <% if @current_step.has_app? %>
+                <%= link_to 'Požiadať elektronicky', start_journey_step_path(@journey, @current_step), target: '_blank', class: 'govuk-button govuk-button--start', draggable: false %>
+              <% end %>
+              <% if @current_step.is_waiting_step? %>
+                <%= link_to 'Označiť ako podané', journey_step_path(@journey, @current_step, status: 'waiting'), class: 'govuk-button', method: :patch, remote: true %>
+              <% else %>
+                <%= link_to 'Označiť ako vybavené', journey_step_path(@journey, @current_step, status: 'done'), class: 'govuk-button', method: :patch, remote: true %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+    <% end %>
+    </div>
+  </div>
+<% end %>

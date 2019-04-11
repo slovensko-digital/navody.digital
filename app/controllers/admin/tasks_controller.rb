@@ -60,6 +60,6 @@ class Admin::TasksController < Admin::AdminController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def task_params
-    params.require(:task).permit(:step_id, :title, :type, :url, :position)
+    params.require(:task).permit(:step_id, :title, :type, :url, :url_title, :position)
   end
 end

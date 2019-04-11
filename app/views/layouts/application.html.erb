@@ -1,184 +1,56 @@
 <!DOCTYPE html>
 <html lang="sk" class="has-sticky-footer">
-  <head>
-    <title><%= yield(:title) %></title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b0c0c" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <% if content_for?(:description) %>
-      <meta name="description" content="<%= content_for(:description) %>">
-    <% end %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title><%= yield(:title) %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c0c"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <% if content_for?(:description) %>
+    <meta name="description" content="<%= content_for(:description) %>">
+  <% end %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body class="govuk-template__body">
-    <div class="navody-template__content">
-      <script>
-          document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-      </script>
+<body class="govuk-template__body">
+<div class="navody-template__content">
+  <script>
+    document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+  </script>
 
-      <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+  <a href="#hlavny-obsah" class="govuk-skip-link">Preskočiť na hlavný obsah</a>
 
-      <div class="govuk-phase-banner" role="banner">
-        <div class="govuk-width-container">
-          <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
-            beta verzia
-          </strong>
-            <span class="govuk-phase-banner__text">
-                Toto je nová služba občianskeho združenia <strong>Slovensko.Digital</strong>. <%= link_to 'Pomôžte nám ju zlepšiť.', page_path('ako-sa-zapojit') %>
-              </span>
-          </p>
-        </div>
-      </div>
+  <%= render 'components/phase_banner' %>
+  <%= render 'components/header' %>
 
-      <header class="sdn-header" role="banner" data-module="sdn-header">
-        <div class="sdn-header__container govuk-width-container">
-          <a href="/" class="sdn-header__link">
-          <span class="sdn-header__product-name">
-            Návody.Digital
-          </span>
-          </a>
-          <div class="sdn-header__content">
-            <nav>
-              <ul id="navigation" class="sdn-header__navigation" aria-label="Top Level Navigation">
-                <% unless current_page?(root_path) ||  current_page?(search_path) %>
-                  <li class="sdn-header__form">
-                    <%= form_tag(search_path, method: :get) do %>
-                      <%= search_field_tag(:q, @q, class: 'govuk-input', placeholder: 'Hľadať', autocomplete: :off) %>
-                      <button type="submit">Hľadať</button>
-                    <% end %>
-                  </li>
-                <% end %>
-                <li>
-                  <%= link_to 'O Projekte', page_path('o-projekte'), class: 'sdn-header__link' %>
-                </li>
-                <li>
-                  <%= link_to 'Často kladené otázky', faqs_path, class: 'sdn-header__link' %>
-                </li>
-                <li class="user-info">
-                  <% if current_user %>
-                    <div class="sdn-header__subnavigation">
-                      <a href="#" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown"><span class="sdn-header__fixed-width-text"><%= current_user.email %></span></a>
-                      <ul class="sdn-header__dropdown" id="subnav-dropdown">
-                        <li>
-                          <%= link_to 'Odhlásiť', session_path, method: :delete %>
-                        </li>
-                      </ul>
-                    </div>
-                  <% else %>
-                    <%= link_to 'Prihlásiť', new_session_path, class: 'sdn-header__link' %>
-                  <% end %>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+  <% if content_for?(:headerline) %>
+    <%= render 'components/headerline' %>
+  <% end %>
 
-      <% if content_for?(:headerline) %>
-        <div class="sdn-headline">
-          <div class="sdn-headline__container govuk-width-container">
-            <div class="sdn-headline__part">
-              <span class="sdn-headline__headline"><%= yield :headerline %></span>
-            </div>
-            <!-- TODO fix this in component -->
-            <% if @journey && !@user_journey %>
-              <div class="sdn-headline__part sdn-headline__part--right">
-                <% if @unfinished_user_journey %>
-                  <%= link_to 'Pokračovať v rozpracovanej', user_journey_path(@unfinished_user_journey), class: 'sdn-headline__button govuk-button' %>
-                <% end %>
-                <%= link_to 'Začať vybavovať', start_user_journey_path(@journey), class: 'sdn-headline__button govuk-button', method: :post %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
+  <% if content_for?(:before_main_wrapper) %>
+    <%= yield(:before_main_wrapper) %>
+  <% else %>
+    <div class="govuk-width-container">
+      <%= yield(:before_content) %>
 
-      <% if content_for?(:before_main_wrapper) %>
-        <%= yield(:before_main_wrapper) %>
-      <% else %>
-        <div class="govuk-width-container">
-          <%= yield(:before_content) %>
+      <%= render 'shared/flash_messages' %>
 
-          <%= render 'shared/flash_messages' %>
-
-          <main class="govuk-main-wrapper">
-            <%= yield %>
-          </main>
-        </div>
-      <% end %>
+      <main class="govuk-main-wrapper" id="hlavny-obsah">
+        <%= yield %>
+      </main>
     </div>
+  <% end %>
+</div>
 
-    <% unless @disable_feedback %>
-      <%= render 'shared/feedback' %>
-    <% end %>
+<% unless @disable_feedback %>
+  <%= render 'components/feedbackbar' %>
+<% end %>
 
-    <div class="navody-template__footer">
-      <footer class="sdn-footer" role="contentinfo">
-        <div class="govuk-width-container">
-          <div class="sdn-footer__container">
-            <div class="sdn-footer__donate">
-            <span class="sdn-footer__heart-wrapper">
-              <span class="sdn-footer__heart"></span>
-            </span>
-              <span class="sdn-footer__donate-text">Páči sa Vám,<br> čo pre vás robíme?<br><a href="https://slovensko.digital/podpora" class="sdn-footer__link sdn-footer__donate-link" target="_blank">Podporte nás</a></span>
-            </div>
-            <div class="sdn-footer__newsletter">
-              <span class="sdn-footer__newsletter-heading"><label for="email-input">Novinky emailom</label> <small class="sdn-footer__newsletter-heading-tooltip">(raz mesačne)</small></span>
-              <div id="newsletter-success" style="display: none">
-                <p>
-                  <strong>Na Váš e-mail sme poslali potvrdzovaciu správu.</strong>
-                  <br>
-                  Ďakujeme za Váš záujem.
-                </p>
-              </div>
-              <form id="newsletter-form" role="form" action="https://my.sendinblue.com/users/subscribe/js_id/29wti/id/4" data-action="https://my.sendinblue.com/users/subscribeembed/js_id/29wti/id/4" method="post">
-                <div class="govuk-form-group sdn-footer__newsletter-form-group">
-                  <input type="hidden" name="js_id" id="js_id" value="29wti">
-                  <input type="hidden" name="listid" id="listid" value="4">
-                  <input type="hidden" name="from_url" id="from_url" value="yes">
-                  <input type="hidden" name="hdn_email_txt" id="hdn_email_txt" value="">
-                  <input id="email-input" required class="govuk-input sdn-footer__newsletter-input" name="email" placeholder="Zadajte emailovú adresu" />
-                  <button type="submit" class="govuk-button sdn-footer__newsletter-button">Prihlásiť</button>
-                </div>
-              </form>
-              <span class="sdn-footer__newsletter-disclaimer">
-                Prihlásením dávam dobrovoľný súhlas OZ Slovensko.Digital na zasielanie bezplatného newslettera na mnou zadaný e-mail. Tento súhlas môžem kdykoľvek odvolať na <%= mail_to ENV['DEFAULT_EMAIL_FROM'], ENV['DEFAULT_EMAIL_FROM'], class: 'sdn-footer__link' %>. Oboznámil(a) som sa s informáciami v sekcii <%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov'), class: 'sdn-footer__link' %>.</span>
-            </div>
-          </div>
-        </div>
-        <div class="sdn-footer__bottom-container">
-          <div class="govuk-width-container">
-            <div class="sdn-footer__bottom-columns">
-              <div class="sdn-footer__links">
-                <ul>
-                  <li><%= link_to 'Ako sa zapojiť', page_path('ako-sa-zapojit') %></li>
-                  <li><%= link_to 'Kontakt', page_path('contact-info') %></li>
-                  <li><%= link_to 'Podmienky používania', page_path('disclaimer') %></li>
-                  <li><%= link_to 'Kto sme', page_path('kto-sme') %></li>
-                  <li><%= link_to 'Autori projektu', page_path('autori-projektu') %></li>
-                  <li><%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov') %></li>
-                </ul>
-              </div>
-              <div class="sdn-footer__contact">
-                <strong>Slovensko.Digital</strong><br>
-                Staré grunty 12, 841 04 Bratislava<br>
-                IČO: 50158635<br>
-                <a href="mailto:navody@slovensko.digital">navody@slovensko.digital</a>
-              </div>
-              <div class="sdn-footer__social">
-                <a href="https://www.facebook.com/slovensko.digital/" target="_blank" class="footer-icon footer-icon__facebook"><span>facebook</span></a>
-                <a href="https://github.com/slovensko-digital/navody.digital" target="_blank" class="footer-icon footer-icon__github"><span>github</span></a>
-                <a href="https://www.youtube.com/channel/UCbpnKa1XOIpQLYUQ2dz7Sng" target="_blank" class="footer-icon footer-icon__youtube"><span>github</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <%= render 'shared/google_analytics' %>
-  </body>
+<div class="navody-template__footer">
+  <%= render 'components/footer' %>
+</div>
+<%= render 'shared/google_analytics' %>
+</body>
 </html>

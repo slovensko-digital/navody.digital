@@ -7,10 +7,9 @@ class UserJourneysController < ApplicationController
     @next_step = @user_journey.journey.steps.order(:position).first
   end
 
-  def start
-    journey = Journey.find_by!(slug: params[:id])
-    user_journey = current_user.user_journeys.start!(journey)
+  def restart
+    user_journey = current_user.user_journeys.find(params[:id])
 
-    redirect_to user_journey
+    redirect_to user_journey.restart!.journey
   end
 end
