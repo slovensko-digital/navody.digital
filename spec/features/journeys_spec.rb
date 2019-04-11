@@ -29,13 +29,13 @@ RSpec.feature "Journeys", type: :feature do
     Capybara.default_host = "http://localhost:3000"
   end
 
-  scenario 'A Journey clicked by an unknown user' do
+  xscenario 'A Journey clicked by an unknown user' do
     visit journey_path(journey)
 
-    expect(page).to have_link('Začať vybavovať')
+    expect(page).to contain('Začať vybavovať')
   end
 
-  scenario 'A journey clicked by user who has not started the journey yet' do
+  xscenario 'A journey clicked by user who has not started the journey yet' do
     sign_in(user)
     visit journey_path(journey)
 
