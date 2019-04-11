@@ -164,4 +164,24 @@ RSpec.feature "Sessions", type: :feature do
       expect(page).to have_link('Odhlásiť')
     end
   end
+
+  scenario 'As a user I can logout' do
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.add_mock(:google_oauth2, {
+      provider: 'google_oauth2',
+      info: {email: 'foo@bar.com'}
+    })
+
+    visit root_path
+    click_link 'Prihlásiť'
+    click_link 'Prihlásiť sa cez Google'
+
+    expect(page).to have_link('Odhlásiť')
+
+    click_link 'Odhlásiť'
+
+    within '.user-info' do
+      expect(page).to have_link('Prihlásiť')
+    end
+  end
 end

@@ -1,0 +1,47 @@
+<% content_for :title, 'Návody.Digital' %>
+
+<% content_for(:before_main_wrapper) do %>
+  <%= render 'searches/search_box' %>
+  <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-0" role="main">
+    <div class="featured-journeys govuk-!-padding-top-9 govuk-!-padding-bottom-9">
+      <div class="govuk-width-container">
+        <%= render 'shared/flash_messages' %>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">Najčastejšie situácie</h2>
+            <div class="sdn-tiles">
+              <% @journeys.each do |journey| %>
+                <%= link_to journey_path(journey.slug), class: 'sdn-tiles__item sdn-tile' do %>
+                  <%= image_tag "journeys/#{journey.image_name.presence || "placeholder.png"}", class: 'sdn-tile__image' %>
+                  <span class="sdn-tile__content sdn-tile-content-text-block">
+                    <span class="sdn-tile-content-text-block__item"><%= journey.title %></span>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <!--        <div class="govuk-grid-row">-->
+        <!--          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">-->
+        <%#= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </div>
+
+    <div class="govuk-width-container">
+      <div class="govuk-main-wrapper govuk-main-wrapper--l">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h3 class="govuk-heading-l">Často kladené otázky</h3>
+            <ul class="govuk-list">
+              <% @faqs.each do |faq| %>
+                <li><%= link_to faq.title, faq_path(faq) %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<% end %>

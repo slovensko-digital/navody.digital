@@ -1,0 +1,22 @@
+<% if searches.any? %>
+  <% if searches.current_page != 1 %>
+    <div class="sdn-next-link" style="margin-top: 50px; margin-bottom: 50px;">
+      <%= link_to path_to_prev_page(searches), class: 'sdn-next-link__link' do %>
+        < Predošlá stránka
+        <small>
+          <%= searches.prev_page %> z <%= searches.total_pages %>
+        </small>
+      <% end %>
+    </div>
+  <% end %>
+  <% if searches.current_page != searches.total_pages %>
+    <div class="sdn-next-link" style="margin-top: 50px; margin-bottom: 50px;">
+      <%= link_to path_to_next_page(searches), class: 'sdn-next-link__link' do %>
+        Ďalšia stránka >
+        <small>
+          <%= searches.next_page %> z <%= searches.total_pages %>
+        </small>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

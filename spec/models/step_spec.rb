@@ -18,12 +18,18 @@ RSpec.describe Step, type: :model do
         step.journey.published_status = 'PUBLISHED'
       end
 
-      it 'creates Search with terms from title, content and keywords' do
+      it 'creates Search with terms from title, content and keywords, stores for journey' do
         expect {
           step.save!
         }.to change(PgSearch::Document, :count).by(1)
         search = PgSearch::Document.where(searchable: step).first
-        expect(search.content).to eq 'title keyword1 keyword2 content in html'
+        expect(search.content).to eq 'content in html'
+        expect(search.keywords).to eq 'keyword1 keyword2'
+        expect(search.title).to eq 'title'
+        search = PgSearch::Document.where(searchable: journey).first
+        expect(search.content).to eq 'journey content in html'
+        expect(search.keywords).to eq 'journey keyword1 keyword2'
+        expect(search.title).to eq 'journey title'
       end
 
       context 'updating' do
@@ -33,7 +39,9 @@ RSpec.describe Step, type: :model do
         it 'updates terms' do
           step.update!(title: 'New title')
           search = PgSearch::Document.where(searchable: step).first
-          expect(search.content).to eq 'new title keyword1 keyword2 content in html'
+          expect(search.title).to eq 'new title'
+          search = PgSearch::Document.where(searchable: journey).first
+          expect(search.title).to eq 'journey new title'
         end
       end
     end
@@ -59,7 +67,7 @@ RSpec.describe Step, type: :model do
         step2 = create(:step, title: 'Batman Batman', description: 'bla', keywords: '', journey: journey)
         create(:step, title: 'Superman', description: 'bla', keywords: '', journey: journey)
 
-        expect(PgSearch.multisearch('Batman').map(&:searchable)).to eq [step2, step]
+        expect(PgSearch::Document.search('Batman').where(searchable_type: 'Step').map(&:searchable)).to eq [step2, step]
       end
     end
   end

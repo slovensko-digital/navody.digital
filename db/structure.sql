@@ -197,7 +197,6 @@ CREATE TABLE public.tasks (
     updated_at timestamp without time zone NOT NULL,
     url text,
     "position" integer DEFAULT 0 NOT NULL,
-    hidden boolean DEFAULT false,
     url_title character varying
 );
 
@@ -708,6 +707,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190117171028'),
 ('20190118111308'),
 ('20190122112950'),
+('20190301173059'),
+('20190321100731'),
 ('20190301173059'),
 ('20190305123026'),
 ('20190306141903'),

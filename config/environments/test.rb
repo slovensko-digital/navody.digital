@@ -25,7 +25,7 @@ Rails.application.configure do
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
-  config.action_controller.allow_forgery_protection = true # https://stackoverflow.com/a/29662013/467141
+  config.action_controller.allow_forgery_protection = false
 
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
