@@ -531,20 +531,6 @@ CREATE INDEX index_pg_search_documents_on_tsv_title ON public.pg_search_document
 
 
 --
--- Name: index_questionaire_results_on_user_step_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_questionaire_results_on_user_step_id ON public.questionaire_results USING btree (user_step_id);
-
-
---
--- Name: index_questionaire_results_on_user_step_id_and_slug; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_questionaire_results_on_user_step_id_and_slug ON public.questionaire_results USING btree (user_step_id, slug);
-
-
---
 -- Name: index_steps_on_journey_id; Type: INDEX; Schema: public; Owner: -
 --
 
