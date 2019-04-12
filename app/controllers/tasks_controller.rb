@@ -14,7 +14,6 @@ class TasksController < ApplicationController
 
   def load_or_create_user_journey
     @journey = Journey.find_by_slug(params[:journey_id])
-    # TODO remove completed
     @user_journey = UserJourney.order(id: :desc).find_by(user: current_user, journey: @journey) || current_user.user_journeys.create!(journey: @journey)
   end
 
