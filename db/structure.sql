@@ -159,7 +159,9 @@ CREATE TABLE public.steps (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     description text NOT NULL,
-    "position" integer DEFAULT 0 NOT NULL
+    "position" integer DEFAULT 0 NOT NULL,
+    app_url character varying,
+    type character varying DEFAULT 'BasicStep'::character varying NOT NULL
 );
 
 
@@ -194,7 +196,8 @@ CREATE TABLE public.tasks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     url text,
-    "position" integer DEFAULT 0 NOT NULL
+    "position" integer DEFAULT 0 NOT NULL,
+    url_title character varying
 );
 
 
@@ -705,6 +708,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190118111308'),
 ('20190122112950'),
 ('20190301173059'),
-('20190321100731');
+('20190321100731'),
+('20190411095826'),
+('20190411104731');
 
 

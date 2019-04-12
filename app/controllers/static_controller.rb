@@ -1,10 +1,11 @@
-class PagesController < ApplicationController
+class StaticController < ApplicationController
+
   def index
     @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.published
   end
 
   def show
-    @page = Page.find_by_slug!(params[:id])
+    @page = Page.where(is_faq: false).find_by!(slug: params[:id])
   end
 end

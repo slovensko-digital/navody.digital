@@ -10,6 +10,8 @@
   <%= form.text_field :keywords %>
   <%= form.check_box :is_waiting_step %>
   <%= form.text_field :slug %>
+  <%= form.text_field :app_url %>
+  <%= form.select :type, options_for_select(['BasicStep', 'ExternalAppStep']) %>
   <%= form.text_area :description, size: "60x12" %>
 
   <div class="actions">

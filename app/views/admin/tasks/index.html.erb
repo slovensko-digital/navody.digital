@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <%= render 'breadcrumbs', crumbs: [
-    ['Journeys', admin_journeys_url],
+    ['Journeys', admin_journeys_path],
     [@journey.title, '#'],
-    ['Steps', admin_journey_steps_url(@journey)],
+    ['Steps', admin_journey_steps_path(@journey)],
     [@step.title, '#'],
   ], current: 'Tasks' %>
 

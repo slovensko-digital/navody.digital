@@ -22,18 +22,19 @@ Rails.application.routes.draw do
   resource :search, only: [:show]
 
   resources :journeys, path: 'zivotne-situacie', only: [:show] do
-    resources :steps, path: 'krok', only: [:show]
+    resources :steps, path: 'krok' do
+      get :start, on: :member, path: 'spustit'
+      resources :tasks do
+        member do
+          post :complete
+          post :undo
+        end
+      end
+    end
   end
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
-    post :start, on: :member, path: 'zacat'
-    resources :steps, controller: :user_steps, path: 'krok'
-    resources :tasks, controller: :user_tasks, path: 'ulohy' do
-      member do
-        post :complete
-        post :undo
-      end
-    end
+    post :restart, on: :member, path: 'zacat-odznova'
   end
 
   resource :session, only: [:new, :create, :destroy]
