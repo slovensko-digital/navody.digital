@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to [@user_journey, user_task.task.step]
+        redirect_to [@journey, user_step.step]
       end
       format.js do
         @steps = @user_journey.journey.steps

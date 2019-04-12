@@ -22,8 +22,6 @@ Rails.application.routes.draw do
   resource :search, only: [:show]
 
   resources :journeys, path: 'zivotne-situacie', only: [:show] do
-    post :start, on: :member, path: 'zacat'
-
     resources :steps, path: 'krok' do
       get :start, on: :member, path: 'spustit'
       resources :tasks do
