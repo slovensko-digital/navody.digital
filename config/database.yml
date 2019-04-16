@@ -79,7 +79,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: navody_slovensko_digital_production
-  username: navody_slovensko_digital
-  password: <%= ENV['NAVODY_SLOVENSKO_DIGITAL_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
