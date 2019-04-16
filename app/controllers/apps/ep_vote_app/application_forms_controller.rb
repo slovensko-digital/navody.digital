@@ -18,7 +18,9 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
       :sk_citizen,
       :delivery,
       :full_name, :pin, :nationality,
-      :street, :pobox, :municipality
+      :street, :pobox, :municipality,
+      :same_delivery_address,
+      :delivery_street, :delivery_pobox, :delivery_municipality,
     )
   end
 end

@@ -4,24 +4,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form do |f| %>
       <h1 class="govuk-heading-xl">Vaše osobné údaje</h1>
-      <% if @application_form.errors.any? %>
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">
-          Vyskytol sa problém
-        </h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <% @application_form.errors.each do |field, message| %>
-              <li>
-                <a href="#passport-issued-error"><%= message %></a>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-      <% end %>
-
       <%= f.hidden_field :step %>
+      <%= f.hidden_field :sk_citizen %>
 
       <div class="govuk-form-group<% if @application_form.errors[:full_name].any? %> govuk-form-group--error<% end %>">
         <%= f.label :full_name, 'Meno, priezvisko, titul', class: 'govuk-label' %>
@@ -42,7 +26,7 @@
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:nationality].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :pin, 'Štátna príslušnosť', class: 'govuk-label', required: true %>
+        <%= f.label :nationality, 'Štátna príslušnosť', class: 'govuk-label', required: true %>
         <% @application_form.errors[:nationality].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>

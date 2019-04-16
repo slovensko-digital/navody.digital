@@ -6,6 +6,7 @@
     <p class="govuk-body-lead">Aby ste mohli hlasovať aj mimo trvalého bydliska, potrebujete hlasovací preukaz.</p>
     <%= form_for @application_form do |f| %>
       <%= f.hidden_field :step %>
+      <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
         <fieldset class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
