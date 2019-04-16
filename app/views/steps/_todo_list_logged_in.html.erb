@@ -10,7 +10,7 @@
 
       <div class="sdn-todo-list-box">
         <div class="sdn-todo-list__title">Povinnosti</div>
-        <ul class="sdn-todo-list__items">
+        <ul class="sdn-todo-list__items govuk-checkboxes govuk-checkboxes--small">
           <% @current_step.tasks.each do |task| %>
             <li class="sdn-todo-list__item">
               <% user_task = @user_task_by_tasks[task] || UserTask.new %>

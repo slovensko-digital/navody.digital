@@ -1,0 +1,61 @@
+<%= content_for(:headerline, 'Žiadosť o hlasovací preukaz do volieb do Európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form do |f| %>
+      <% if @application_form.errors.any? %>
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          Vyskytol sa problém
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <% @application_form.errors.each do |field, message| %>
+              <li>
+                <a href="#passport-issued-error"><%= message %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <% end %>
+
+      <%= f.hidden_field :step %>
+      <%= f.hidden_field :full_name %>
+      <%= f.hidden_field :pin %>
+      <%= f.hidden_field :nationality %>
+
+      <h1 class="govuk-heading-l">Adresa trvalého pobytu</h1>
+
+      <div class="govuk-form-group<% if @application_form.errors[:street].any? %> govuk-form-group--error<% end %>">
+        <%= f.label :street, 'Ulica a číslo', class: 'govuk-label' %>
+        <span class="govuk-hint">Napríklad: Kaštieľska 2</span>
+        <% @application_form.errors[:street].each do |error| %>
+          <span class="govuk-error-message"><%= error %></span>
+        <% end %>
+        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', required: true %>
+      </div>
+
+      <div class="govuk-form-group<% if @application_form.errors[:pobox].any? %> govuk-form-group--error<% end %>">
+        <%= f.label :pobox, 'PSČ', class: 'govuk-label' %>
+        <span class="govuk-hint">Napríklad: 841 01</span>
+        <% @application_form.errors[:pobox].each do |error| %>
+          <span class="govuk-error-message"><%= error %></span>
+        <% end %>
+        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5' %>
+      </div>
+
+      <div class="govuk-form-group<% if @application_form.errors[:municipality].any? %> govuk-form-group--error<% end %>">
+        <%= f.label :municipality, 'Obec', class: 'govuk-label', required: true %>
+        <% @application_form.errors[:municipality].each do |error| %>
+          <span class="govuk-error-message"><%= error %></span>
+        <% end %>
+        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-10' %>
+      </div>
+
+
+      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+
+    <% end %>
+  </div>
+</div>

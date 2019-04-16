@@ -33,6 +33,19 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :apps, path: 'aplikacie' do
+    namespace :ep_vote_app, path: 'volby-do-europskeho-parlamentu' do
+      resource :application_forms, path: '' do
+        # TODO consent
+        member do
+          # TODO notify (odpoved)
+          # TODO notify (volby)
+          # TODO newslettere
+        end
+      end
+    end
+  end
+
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
   end
