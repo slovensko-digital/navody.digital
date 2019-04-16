@@ -14,7 +14,7 @@
   <% if @current_step && @current_step.tasks.any? %>
     <div class="sdn-todo-list-box">
       <div class="sdn-todo-list__title">Povinnosti</div>
-      <ul class="sdn-todo-list__items">
+      <ul class="sdn-todo-list__items govuk-checkboxes govuk-checkboxes--small">
         <% @current_step.tasks.each do |task| %>
           <li class="sdn-todo-list__item">
             <%= render "journeys/tasks/#{task.type.underscore}", task: task %>
