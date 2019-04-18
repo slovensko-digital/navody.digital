@@ -1,5 +1,5 @@
 class Admin::JourneysController < Admin::AdminController
-  before_action :set_journey, only: [:show, :edit, :update, :destroy]
+  before_action :set_journey, only: [:show, :edit, :update, :destroy, :reposition]
 
   # GET /admin/journeys
   def index
@@ -42,6 +42,15 @@ class Admin::JourneysController < Admin::AdminController
 
     @journey.destroy
     redirect_to admin_journeys_url, notice: 'Journey was successfully destroyed.'
+  end
+
+  # POST /admin/journeys
+  def reposition
+    if @journey.reposition
+      redirect_to admin_journey_steps_url(@journey), notice: 'Journeys steps were successfully repositioned.'
+    else
+      redirect_to admin_journey_steps_url(@journey)
+    end
   end
 
   private

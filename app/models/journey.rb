@@ -46,6 +46,15 @@ class Journey < ApplicationRecord
     join_search([to_search_str(keywords), steps_search(:keywords)])
   end
 
+  def reposition
+    steps.each_with_index do |step, index|
+      position_by_index = (index + 1) * 2
+      if step.position != position_by_index
+        return false unless step.update(position: position_by_index)
+      end
+    end
+  end
+
   private
 
   def update_steps_search
