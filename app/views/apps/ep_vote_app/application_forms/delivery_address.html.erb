@@ -11,7 +11,7 @@
       <%= f.hidden_field :street %>
       <%= f.hidden_field :pobox %>
       <%= f.hidden_field :municipality %>
-
+      <%= f.hidden_field :municipality_email %>
 
       <h1 class="govuk-heading-l">Kam chcete zaslať hlasovací preukaz?</h1>
 
@@ -34,7 +34,7 @@
               <% @application_form.errors[:delivery_street].each do |error| %>
                 <span class="govuk-error-message"><%= error %></span>
               <% end %>
-              <%= f.text_field :delivery_street, class: 'govuk-input govuk-input--width-20', required: true %>
+              <%= f.text_field :delivery_street, class: 'govuk-input govuk-input--width-20' %>
             </div>
 
             <div class="govuk-form-group<% if @application_form.errors[:delivery_pobox].any? %> govuk-form-group--error<% end %>">
@@ -52,6 +52,14 @@
                 <span class="govuk-error-message"><%= error %></span>
               <% end %>
               <%= f.text_field :delivery_municipality, class: 'govuk-input govuk-input--width-10' %>
+            </div>
+
+            <div class="govuk-form-group<% if @application_form.errors[:delivery_country].any? %> govuk-form-group--error<% end %>">
+              <%= f.label :delivery_country, 'Štát', class: 'govuk-label', required: true %>
+              <% @application_form.errors[:delivery_country].each do |error| %>
+                <span class="govuk-error-message"><%= error %></span>
+              <% end %>
+              <%= f.text_field :delivery_country, class: 'govuk-input govuk-input--width-10' %>
             </div>
           </div>
         </div>

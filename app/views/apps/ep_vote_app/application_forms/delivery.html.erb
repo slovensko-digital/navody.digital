@@ -8,12 +8,9 @@
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
-        <fieldset class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h3 class="govuk-fieldset__heading">
-              Ako si chcete prevziať hlasovací preukaz?
+            <h3 class="govuk-heading-l">
+              Ako prevezmete hlasovací preukaz?
             </h3>
-          </legend>
           <% @application_form.errors[:delivery].each do |error| %>
             <span class="govuk-error-message"><span class="govuk-visually-hidden">Chyba: </span><%= error %></span>
           <% end %>
@@ -21,7 +18,7 @@
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= f.radio_button :delivery, 'post', class: "govuk-radios__input" %>
-              <%= f.label :delivery_post, "Poštou", class: "govuk-label govuk-radios__label" %>
+              <%= f.label :delivery_post, "Chcem ho dostať poštou", class: "govuk-label govuk-radios__label" %>
             </div>
 
             <div class="govuk-radios__item">
@@ -29,7 +26,6 @@
               <%= f.label :delivery_person, "Osobne si ho vyzdvihnem na úrade", class: "govuk-label govuk-radios__label" %>
             </div>
           </div>
-        </fieldset>
       </div>
 
       <%= submit_tag 'Pokračovať', class: 'govuk-button' %>

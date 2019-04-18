@@ -11,7 +11,8 @@ module Apps
       attr_writer :nationality
       attr_accessor :street, :pobox, :municipality
       attr_accessor :same_delivery_address
-      attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality
+      attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
+      attr_accessor :municipality_email
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
 
@@ -28,21 +29,57 @@ module Apps
       validates_presence_of :municipality, message: 'Vyberte obec', on: :address
 
       validates_presence_of :same_delivery_address, on: :delivery_address
-      validates_presence_of :delivery_street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :delivery_address, if: ->(f) {f.same_delivery_address}
-      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, if: ->(f) {f.same_delivery_address}
-      validates_presence_of :delivery_municipality, message: 'Vyberte obec', on: :delivery_address, if: ->(f) {f.same_delivery_address}
+      validates_presence_of :delivery_street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
+      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
+      validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
+      validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
 
       def nationality
         return @nationality unless @nationality.blank?
         return 'slovenská' if sk_citizen == 'yes'
       end
 
+      def same_delivery_address?
+        same_delivery_address == '1'
+      end
+
+      def consent_agreed?
+        consent_agreed == '1'
+      end
+
       def full_address
-        [street, pobox, municipality].join(', ')
+        "#{street}, #{pobox} #{municipality}"
+      end
+
+      def email_body
+        if same_delivery_address?
+          email_body_delivery = 'Preukaz prosím zaslať na adresu trvalého pobytu.'
+        else
+          email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}"
+        end
+
+        <<-TEXT
+Týmto žiadam o vydanie hlasovacieho preukazu pre voľby do Európskeho parlamentu v roku 2019.
+
+Moje identifikačné údaje sú:
+          
+Meno: #{full_name}
+Rodné číslo: #{pin}
+Trvalý pobyt: #{street}, #{pobox} #{municipality}
+Štátna príslušnosť: #{nationality}
+
+#{email_body_delivery}
+
+Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
+
+Ďakujem.
+        TEXT
       end
 
       def run(listener)
         case step
+        when 'start'
+          start_step(listener)
         when 'place'
           place_step(listener)
         when 'sk_citizen'
@@ -55,10 +92,18 @@ module Apps
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
+        when 'send'
+          send_step(listener)
         end
       end
 
       private
+
+
+      def start_step(listener)
+        self.step = 'place'
+        listener.render :place
+      end
 
       def place_step(listener)
         if valid?(:place)
@@ -132,6 +177,10 @@ module Apps
         else
           listener.render :delivery_address
         end
+      end
+
+      def send_step(listener)
+
       end
     end
   end

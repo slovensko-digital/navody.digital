@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resource :application_forms, path: '' do
         # TODO consent
         member do
+          get :end, path: 'koniec'
           # TODO notify (odpoved)
           # TODO notify (volby)
           # TODO newslettere
