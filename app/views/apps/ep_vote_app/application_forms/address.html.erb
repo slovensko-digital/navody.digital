@@ -33,7 +33,7 @@
         <% @application_form.errors[:street].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', required: true %>
+        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', required: true , autocomplete: 'street-address' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:pobox].any? %> govuk-form-group--error<% end %>">
@@ -42,7 +42,7 @@
         <% @application_form.errors[:pobox].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5' %>
+        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5', autocomplete: 'postal-code' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:municipality].any? %> govuk-form-group--error<% end %>">
@@ -50,7 +50,7 @@
         <% @application_form.errors[:municipality].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-10' %>
+        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-10', autocomplete: 'address-level2'  %>
       </div>
 
       <%= f.hidden_field :municipality_email %>
