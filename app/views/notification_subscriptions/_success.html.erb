@@ -1,0 +1,8 @@
+<div class="govuk-body">
+  <h3 class="govuk-heading-l"></h3>
+  <% if current_user.logged_in? %>
+    <p><strong>Ďakujeme za Váš záujem.</strong> Budeme Vám odteraz zasielať na email zvolené notifikácie.</p>
+  <% else %>
+    <p><strong>Ďakujeme za Váš záujem.</strong> Na Vašu emailovú adresu posielame email, ktorý obsahuje odkaz na potvrdenie odberu zvolených notifikácii.</p>
+  <% end %>
+</div>

@@ -1,0 +1,22 @@
+<%= content_for :title, build_page_title('Potvrdenie zasielania notifikácii') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-xl">Potvrdenie zasielania notifikácii</h2>
+    <p class="govuk-heading-l">Úspešne ste si aktivovali tieto notifikácie</p>
+    <div class="govuk-form-group">
+      <div class="govuk-checkboxes">
+        <% @subscriptions.each do |subscription| %>
+          <% subscription = NotificationSubscription::TYPES.fetch(subscription.type) %>
+          <div class="govuk-checkboxes__item">
+            <%= check_box_tag nil, subscription[:type], true, {class: 'govuk-checkboxes__input', disabled: true} %>
+            <%= label_tag nil, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s' %>
+            <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <p class="govuk-body-lead">Ďakujeme za Váš záujem o <%= link_to 'projekt Návody.Digital', root_path  %>.</p>
+  </div>
+</div>

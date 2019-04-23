@@ -103,19 +103,23 @@
     displayMenu: 'overlay',
     showAllValues: true,
     autoselect: true,
+    confirmOnBlur: false,
+    defaultValue: '<%=j @application_form.municipality %>',
     source: function (query, populateResults) {
-      var results = []
+      var results = [];
 
       if (query === '') {
         results = municipalities
       } else {
-        var term = replaceDiacritics(query).toLowerCase()
+        var term = replaceDiacritics(query).toLowerCase();
 
         for (var i = 0; i < municipalities.length && results.length < 50; i++) {
-          var municipality = SLOVAK_MUNICIPALITIES[i]
-          var index = municipality[3].indexOf(term)
+          var municipality = SLOVAK_MUNICIPALITIES[i];
+          var index = municipality[3].indexOf(term);
 
-          if (index > -1 && (index === 0 || municipality[3][index - 1] === ' ')) {
+          if (municipality[4] === query) {
+            results.push(municipality[4])
+          } else if (index > -1 && (index === 0 || municipality[3][index - 1] === ' ')) {
             results.push(municipality[4])
           }
         }
@@ -123,7 +127,7 @@
 
       results = results.sort(function (a, b) {
         return ((a < b) ? -1 : ((a > b) ? 1 : 0))
-      })
+      });
 
       populateResults(results)
     },
