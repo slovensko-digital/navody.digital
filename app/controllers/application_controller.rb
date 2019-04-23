@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       og: OpenStruct.new(
         title: 'Návody.Digital',
         description: 'Jednoduché návody na slovenské úrady',
-        # image: view_context.image_url('fb_share.png'),
+        image: nil
       )
     )
   end
