@@ -18,5 +18,24 @@
 //= require_directory .
 
 $(document).on('turbolinks:load', function () {
+    // Initialize GovUK Javascript
     window.navodyDigitalFrontend.initAll();
+
+    // Initialize Cookie Bar
+    window.cookieconsent.initialise({
+        "palette": {
+            "popup": {
+                "background": "#1d1e21"
+            },
+            "button": {
+                "background": "#4cae18"
+            }
+        },
+        "theme": "classic",
+        "content": {
+            "message": "Tento web používa súbory cookie na poskytovanie služieb a analýzu webu. Používaním tohto webu vyjadrujete svoj súhlas s používaním súborov cookie.",
+            "dismiss": "OK"
+        },
+        "showLink": false
+    })
 });
