@@ -1,0 +1,26 @@
+<% unless content_for?(:title) %><% content_for :title, "Vyskytla sa chyba" %><%end%>
+<% @disable_feedback = true %>
+<%= content_for(:before_main_wrapper) do %>
+  <div class="govuk-width-container ">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-top-9">
+          <% if content_for?(:custom_error) %>
+            <%= content_for(:custom_error) %>
+          <% else %>
+            <h1 class="govuk-heading-xl">Vyskytla sa chyba</h1>
+            <p class="govuk-body-l govuk-!-margin-bottom-4">
+              Stalo sa niečo, čo sme nečakali.
+              Skúste to znovu, <br>alebo <%= mail_to 'navody@slovensko.digital', 'nám napíšte' %>.
+            </p>
+            <p class="govuk-caption-m govuk-!-muted">
+              Chyba <%= @exception.status %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </main>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>

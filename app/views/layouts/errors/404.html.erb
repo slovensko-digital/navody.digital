@@ -1,0 +1,21 @@
+<% content_for :title, "Stránka sa nenašla" %>
+<% content_for :custom_error do %>
+  <h1 class="govuk-heading-xl">Stránka sa nenašla</h1>
+  <p class="govuk-body-l govuk-!-margin-bottom-2">
+    Zdá sa, že ste na zlej adrese.
+  </p>
+  <p class="govuk-body-l">
+    Skúste <%= link_to 'ísť späť', 'javascript:history.back()', class: 'govuk-link' %>,
+    alebo vyhľadajte, čo vás zaujíma:
+  </p>
+  <%= form_with url: search_path, method: :get, local: true do |f| %>
+    <%= search_field_tag :q, @q,
+      class: 'govuk-input govuk-!-width-two-thirds',
+      style: 'height: 44px',
+      placeholder: 'Vyhľadať návod, otázku, skratku...',
+      autocomplete: :off %>
+    <%= f.submit 'Hľadať', class: 'govuk-button' %>
+  <% end %>
+<% end %>
+
+<%= render template: "layouts/errors/all" %>

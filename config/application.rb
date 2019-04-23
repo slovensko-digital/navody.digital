@@ -35,5 +35,16 @@ module NavodySlovenskoDigital
     config.action_mailer.default_url_options = options
 
     config.active_record.schema_format = :sql
+
+    config.exception_handler = {
+      exceptions: {
+        all: {
+          layout: 'errors/all'
+        },
+        "404": {
+          layout: "errors/404"
+        },
+      }
+    }
   end
 end
