@@ -11,12 +11,9 @@ RSpec.feature "Notification subscriptions", type: :feature do
       fill_in :email, with: user.email
     end
 
-    ActionMailer::Base.deliveries = []
     click_on 'Prihlásiť sa e-mailom'
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
-    visit magic_link
+
+    visit link_in_last_email
   end
 
   before(:each) do
@@ -39,11 +36,7 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     click_button 'Chcem dostávať tieto notifikácie'
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    confirmation_link = email.find('a')[:href]
-
-    visit confirmation_link
+    visit link_in_last_email
 
     expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
     expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
@@ -60,16 +53,10 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     check 'Chcem dostávať upozornenia k voľbám'
 
-    fill_in 'Emailová adresa pre notifikácie', with: 'johno@jsmf.net'
+    clear_mail_deliveries
 
     click_button 'Chcem dostávať tieto notifikácie'
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    expect(mailer_email).to be_nil
-
-    visit confirmation_link
-
-    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
-    expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
+    expect(ActionMailer::Base.deliveries).to be_empty
   end
 end
