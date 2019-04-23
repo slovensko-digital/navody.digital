@@ -25,17 +25,15 @@ RSpec.feature "Sessions" do
       fill_in :email, with: 'foo@bar.com'
     end
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
+    magic_link = link_in_last_email
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
 
     expect(magic_link).to match(auth_callback_url(:magiclink))
 
@@ -59,15 +57,13 @@ RSpec.feature "Sessions" do
       fill_in :email, with: 'foo@bar.com'
     end
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
+    magic_link = link_in_last_email
 
     expect(magic_link).to match(auth_callback_url(:magiclink))
 
@@ -133,16 +129,13 @@ RSpec.feature "Sessions" do
         fill_in :email, with: 'foo@bar.com'
       end
 
-      ActionMailer::Base.deliveries = []
+      clear_mail_deliveries
+
       click_on 'Prihlásiť sa e-mailom'
 
       expect(ActionMailer::Base.deliveries.size).to eq 1
-      mailer_email = ActionMailer::Base.deliveries.first
-      email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-      magic_link = email.find('a')[:href]
-      ActionMailer::Base.deliveries = []
 
-      visit magic_link
+      visit link_in_last_email
 
       expect(current_path).to eq journey_path(journey)
     end
@@ -160,17 +153,13 @@ RSpec.feature "Sessions" do
       fill_in :email, with: 'foo@bar.com'
     end
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
-
-    visit magic_link
+    visit link_in_last_email
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')
@@ -191,17 +180,13 @@ RSpec.feature "Sessions" do
       fill_in :email, with: 'FoO@bAr.cOm'
     end
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
-
-    visit magic_link
+    visit link_in_last_email
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')
