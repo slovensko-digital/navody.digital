@@ -14,6 +14,6 @@ class AnonymousUser
       subscription
     end
 
-    NotificationSubscriptionMailer.with(email: email, token: token, types: params[:types]).confirmation_email
+    NotificationSubscriptionMailer.with(email: email, token: token).confirmation_email
   end
 end
