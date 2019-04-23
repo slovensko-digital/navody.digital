@@ -8,7 +8,7 @@
         <%= render 'shared/flash_messages' %>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Najčastejšie situácie</h2>
+            <h2 class="govuk-heading-l">Najpoužívanejšie návody</h2>
             <div class="sdn-tiles">
               <% @journeys.each do |journey| %>
                 <%= link_to journey_path(journey.slug), class: 'sdn-tiles__item sdn-tile' do %>

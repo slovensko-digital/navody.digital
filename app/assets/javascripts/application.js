@@ -14,8 +14,8 @@
 //= require jquery
 //= require activestorage
 //= require turbolinks
-//= require cookieconsent.min
-//= require_tree .
+//= require apps/ep_vote_app/ep_vote_app
+//= require_directory .
 
 $(document).on('turbolinks:load', function () {
     // Initialize GovUK Javascript
