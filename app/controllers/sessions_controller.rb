@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   before_action :disable_feedback
 
   def new
+    session[:after_login_callback] = params[:callback]
   end
 
   def create
@@ -10,7 +11,7 @@ class SessionsController < ApplicationController
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
     session[:user_id] = user.id
-    redirect_to root_path, notice: 'Prihlásenie úspešné. Vitajte!'
+    redirect_to session[:after_login_callback] || root_path, notice: 'Prihlásenie úspešné. Vitajte!'
   end
 
   def magic_link_info
