@@ -14,6 +14,7 @@
 //= require jquery
 //= require activestorage
 //= require turbolinks
+//= require cookie_bar
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
