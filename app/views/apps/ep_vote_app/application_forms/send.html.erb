@@ -1,0 +1,37 @@
+<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-xl">Zaslanie žiadosti na úrad</h2>
+    <p class="govuk-body-lead">Žiadosť je potrebné teraz zaslať obci</p>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+        Emailové adresy obcí je veľmi problematické získať. Uistite sa preto, či dostanete potvrdenie o&nbsp;prijatí žiadosti. V opačnom prípade kontaktujte obec telefonicky alebo osobne.
+      </strong>
+    </div>
+
+    <% if @application_form.municipality_email.present? %>
+      <%=
+        mail_to @application_form.municipality_email, 'Otvoriť pripravenú žiadosť v emailovom klientovi', target: '_blank', class: 'govuk-button',
+                body: @application_form.email_body,
+                subject: 'Žiadosť o hlasovací preukaz do volieb do Európskeho parlamentu 2019'
+      %>
+      <p class="govuk-body-lead">alebo <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">manuálne skopírovať</a></p>
+    <% end %>
+    <div id="conditional-manual"<% if @application_form.municipality_email.present? %> style="display: none;"<% end %>>
+      <p class="govuk-body">Skopírujte text žiadosti a zašlite ho na emailovú adresu obce<% if @application_form.municipality_email.present? %> <strong><%= @application_form.municipality_email %></strong><% end %>.</p>
+      <div class="govuk-form-group">
+        <textarea onclick="this.focus();this.select();" rows="8" class="govuk-textarea"><%= @application_form.email_body %></textarea>
+      </div>
+    </div>
+
+    <p class="govuk-body-lead"><strong>a potom po odoslaní žiadosti</strong></p>
+    <p>TODO tu asi checkbox ze som to poslal a z potom submit</p>
+    <p>
+      <%= link_to 'Pokračovať', end_apps_ep_vote_app_application_forms_path, class: 'govuk-button' %>
+    </p>
+  </div>
+</div>

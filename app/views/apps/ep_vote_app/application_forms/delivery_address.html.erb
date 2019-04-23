@@ -1,0 +1,72 @@
+<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form do |f| %>
+      <%= f.hidden_field :step %>
+      <%= f.hidden_field :sk_citizen %>
+      <%= f.hidden_field :full_name %>
+      <%= f.hidden_field :pin %>
+      <%= f.hidden_field :nationality %>
+      <%= f.hidden_field :street %>
+      <%= f.hidden_field :pobox %>
+      <%= f.hidden_field :municipality %>
+      <%= f.hidden_field :municipality_email %>
+
+      <h1 class="govuk-heading-l">Kam chcete zaslať hlasovací preukaz?</h1>
+
+      <div class="govuk-form-group">
+        <div class="govuk-radios" data-module="radios">
+          <div class="govuk-radios__item">
+            <%= f.radio_button :same_delivery_address, '1', class: 'govuk-radios__input' %>
+            <%= f.label :same_delivery_address_1, 'Na adresu trvalého bydliska', class: 'govuk-label govuk-radios__label' %>
+            <span class="govuk-hint govuk-radios__hint"><%= @application_form.full_address %></span>
+          </div>
+
+          <div class="govuk-radios__item">
+            <%= f.radio_button :same_delivery_address, '0', class: 'govuk-radios__input', data: {'aria-controls' => 'conditional-delivery-address'} %>
+            <%= f.label :same_delivery_address_0, 'Na inú adresu', class: 'govuk-label govuk-radios__label' %>
+          </div>
+          <div id="conditional-delivery-address" class="govuk-radios__conditional<% if @application_form.same_delivery_address == 'no' %> govuk-radios__conditional--hidden<% end %>">
+            <div class="govuk-form-group<% if @application_form.errors[:delivery_street].any? %> govuk-form-group--error<% end %>">
+              <%= f.label :delivery_street, 'Ulica a číslo', class: 'govuk-label' %>
+              <span class="govuk-hint">Napríklad: Kaštieľska 2</span>
+              <% @application_form.errors[:delivery_street].each do |error| %>
+                <span class="govuk-error-message"><%= error %></span>
+              <% end %>
+              <%= f.text_field :delivery_street, class: 'govuk-input govuk-input--width-20' %>
+            </div>
+
+            <div class="govuk-form-group<% if @application_form.errors[:delivery_pobox].any? %> govuk-form-group--error<% end %>">
+              <%= f.label :delivery_pobox, 'PSČ', class: 'govuk-label' %>
+              <span class="govuk-hint">Napríklad: 841 01</span>
+              <% @application_form.errors[:delivery_pobox].each do |error| %>
+                <span class="govuk-error-message"><%= error %></span>
+              <% end %>
+              <%= f.text_field :delivery_pobox, class: 'govuk-input govuk-input--width-5' %>
+            </div>
+
+            <div class="govuk-form-group<% if @application_form.errors[:delivery_municipality].any? %> govuk-form-group--error<% end %>">
+              <%= f.label :delivery_municipality, 'Obec', class: 'govuk-label', required: true %>
+              <% @application_form.errors[:delivery_municipality].each do |error| %>
+                <span class="govuk-error-message"><%= error %></span>
+              <% end %>
+              <%= f.text_field :delivery_municipality, class: 'govuk-input govuk-input--width-10' %>
+            </div>
+
+            <div class="govuk-form-group<% if @application_form.errors[:delivery_country].any? %> govuk-form-group--error<% end %>">
+              <%= f.label :delivery_country, 'Štát', class: 'govuk-label', required: true %>
+              <% @application_form.errors[:delivery_country].each do |error| %>
+                <span class="govuk-error-message"><%= error %></span>
+              <% end %>
+              <%= f.text_field :delivery_country, class: 'govuk-input govuk-input--width-10' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+
+    <% end %>
+  </div>
+</div>
