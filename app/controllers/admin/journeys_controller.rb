@@ -44,13 +44,10 @@ class Admin::JourneysController < Admin::AdminController
     redirect_to admin_journeys_url, notice: 'Journey was successfully destroyed.'
   end
 
-  # POST /admin/journeys
+  # POST /admin/journeys/1/reposition
   def reposition
-    if @journey.reposition
-      redirect_to admin_journey_steps_url(@journey), notice: 'Journeys steps were successfully repositioned.'
-    else
-      redirect_to admin_journey_steps_url(@journey)
-    end
+    @journey.reposition
+    redirect_to admin_journey_steps_path(@journey), notice: 'Journeys steps were successfully repositioned.'
   end
 
   private
