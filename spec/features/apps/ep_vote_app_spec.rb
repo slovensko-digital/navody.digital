@@ -4,7 +4,7 @@ RSpec.feature "EP vote app", type: :feature do
   scenario 'As a citizen I want to request voting permit' do
     visit apps_ep_vote_app_application_forms_path
 
-    click_button 'Chcem začať'
+    click_button 'Súhlasím a chcem začať'
 
     choose 'Na Slovensku, mimo trvalého bydliska.'
     click_button 'Pokračovať'
@@ -33,7 +33,7 @@ RSpec.feature "EP vote app", type: :feature do
     expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
     expect(page).to have_content('Štátna príslušnosť: ruská')
 
-    click_link 'Pokračovať'
+    click_link 'pokračujte ďalej'
     expect(page).to have_content('Gratulujeme')
   end
 end

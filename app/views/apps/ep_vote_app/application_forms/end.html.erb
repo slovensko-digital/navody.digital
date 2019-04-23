@@ -6,13 +6,13 @@
     <p class="govuk-body-lead">Nezabudnite ísť voliť a voľte zodpovedne.</p>
 
     <%= form_tag '/', remote: true do  %>
-      <h3 class="govuk-heading-m">Aktivujte si ešte notifikácie na email, aby ste na nič nezabudli</h3>
+      <h3 class="govuk-heading-m">Aktivujte si ešte notifikácie na email, aby ste na nič nezabudli.</h3>
       <div class="govuk-form-group">
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
 
             <input class="govuk-checkboxes__input" id="nationality-1" name="nationality" type="checkbox" value="british" aria-describedby="nationality-1-item-hint">
-            <label class="govuk-label govuk-checkboxes__label" for="nationality-1">
+            <label class="govuk-label govuk-checkboxes__label govuk-label--s" for="nationality-1">
               Chcem dostávať notifikácie k hlasovaciemu preukazu a voľbám
             </label>
             <span class="govuk-hint govuk-checkboxes__hint">
@@ -21,7 +21,7 @@ Zašleme Vám notifikáciu chvíľu pred vypršaním lehoty, aby ste sa uistili,
           </div>
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="nationality-2" name="nationality" type="checkbox" value="irish">
-            <label class="govuk-label govuk-checkboxes__label" for="nationality-2">
+            <label class="govuk-label govuk-checkboxes__label govuk-label--s" for="nationality-2">
               Chcem dostávať pravidelné novinky Návody.Digital
             </label>
             <span class="govuk-hint govuk-checkboxes__hint">
@@ -36,7 +36,7 @@ Zašleme Vám notifikáciu chvíľu pred vypršaním lehoty, aby ste sa uistili,
           <label class="govuk-label" for="event-name">
             Emailová adresa pre notifikácie
           </label>
-          <input class="govuk-input govuk-input--width-20" id="event-name" name="event-name" type="email" aria-describedby="event-name-hint">
+          <%= email_field_tag :email, nil, class: 'govuk-input govuk-input--width-20', autocomplete: :email  %>
         </div>
       <% end %>
 
