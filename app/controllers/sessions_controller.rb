@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
     session[:user_id] = user.id
-    redirect_to session[:after_login_callback] || root_path, notice: 'Prihlásenie úspešné. Vitajte!'
+    redirect_to after_login_redirect_path, notice: 'Prihlásenie úspešné. Vitajte!'
   end
 
   def magic_link_info
@@ -37,5 +37,12 @@ class SessionsController < ApplicationController
 
   def auth_hash
     request.env['omniauth.auth']
+  end
+
+  private
+
+  def after_login_redirect_path
+    return session[:after_login_callback] if session[:after_login_callback]&.start_with?("/") # Only allow local redirects
+    root_path
   end
 end
