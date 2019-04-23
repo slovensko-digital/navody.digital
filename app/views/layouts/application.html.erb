@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="sk" class="has-sticky-footer">
 <head>
-  <title><%= yield(:title) %></title>
+  <title>
+    <% if content_for?(:title) %>
+      <%= yield(:title) %>
+    <% else %>
+      Návody.Digital
+    <% end %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +15,12 @@
   <% if content_for?(:description) %>
     <meta name="description" content="<%= content_for(:description) %>">
   <% end %>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Návody.Digital"/>
+  <meta property="og:url" content="<%= request.original_url %>"/>
+  <meta property="og:title" content="<%= yield(:title).presence || @metadata.og.title %>"/>
+  <meta property="og:description" content="<%= yield(:description).presence || @metadata.og.description %>"/>
+  <meta property="og:image" content="<%= @metadata.og.image %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
