@@ -43,10 +43,6 @@ module Apps
         same_delivery_address == '1'
       end
 
-      def consent_agreed?
-        consent_agreed == '1'
-      end
-
       def full_address
         "#{street}, #{pobox} #{municipality}"
       end
@@ -55,7 +51,7 @@ module Apps
         if same_delivery_address?
           email_body_delivery = 'Preukaz prosím zaslať na adresu trvalého pobytu.'
         else
-          email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}"
+          email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}, #{delivery_country}"
         end
 
         <<-TEXT
@@ -92,8 +88,6 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
-        when 'send'
-          send_step(listener)
         end
       end
 
@@ -109,14 +103,14 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
         if valid?(:place)
           case place
           when 'home'
-            listener.render :home
+            listener.redirect_to action: :home
           when 'sk'
             self.step = 'sk_citizen'
             listener.render :sk_citizen
           when 'eu'
-            listener.render :eu
+            listener.redirect_to action: :eu
           when 'world'
-            listener.render :world
+            listener.redirect_to action: :world
           end
         else
           listener.render :place
@@ -130,7 +124,7 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
             self.step = 'delivery'
             listener.render :delivery
           when 'no'
-            listener.render :non_sk_nationality
+            listener.redirect_to action: :non_sk_nationality
           end
         else
           listener.render :sk_citizen
@@ -144,7 +138,7 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
             self.step = 'identity'
             listener.render :identity
           when 'person'
-            listener.render :person
+            listener.redirect_to action: :person
           end
         else
           listener.render :delivery
@@ -177,10 +171,6 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
         else
           listener.render :delivery_address
         end
-      end
-
-      def send_step(listener)
-
       end
     end
   end

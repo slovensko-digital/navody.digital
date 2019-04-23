@@ -3,22 +3,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-xl">Je potrebné byť zapísaný v zozname voličov</h2>
+    <h2 class="govuk-heading-xl">Hlasovanie občanov iného členského štátu EÚ na Slovensku</h2>
     <p class="govuk-body-lead">
-      Občania iného členského štátu EÚ ktorí majú na SR trvalý, alebo povolený pobyt môžu voliť po zápise do zoznamu voličov v obci, kde majú trvalý pobyt.
-      Žiadosť a vyhlásenie je potrebné podať osobne najneskôr do <strong>15. apríla 2019</strong>.<a href="https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/120_ep/ep19_3tav/EP19_ApplicationEU.docx"> Vzor žiadosti a vyhlásenia tu.</a>
+      Občania iného členského štátu EÚ, ktorí majú v SR trvalý, alebo povolený pobyt <strong>môžu voliť po zápise do zoznamu voličov v obci</strong>, kde majú trvalý pobyt.
+      Žiadosť a vyhlásenie bolo potrebné podať osobne najneskôr do <strong>15. apríla 2019</strong>. Ak ste tak neurobili, je nám to ľúto, ale nemôžete voliť na Slovensku.</a>
     </p>
-    <!--
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Upozornenie</span>
-        Občania iného členského štátu EÚ ktorí majú na SR trvalý, alebo povolený pobyt môžu voliť po zápise do zoznamu voličov v obci, kde majú trvalý pobyt.
-        Žiadosť a vyhlásenie je potrebné podať osobne najneskôr do 15. apríla 2019.<a href="https://www.minv.sk/swift_data/source/verejna_sprava/volby_a_referendum/120_ep/ep19_3tav/EP19_ApplicationEU.docx"> Vzor žiadosti a vyhlásenia tu.</a>
-      </strong>
-    </div>
-    -->
 
-    <p>TODO: notifikacia ine volby + newsletter</p>
+    <h3 class="govuk-heading-l">Aktivujte si upozornenia na email, aby ste nabudúce na nič nezabudli.</h3>
+    <%= render_notification_subscription_component ['NextVoteSubscription', 'NewsletterSubscription'] %>
+
+    <h3 class="govuk-heading-l">Čo ďalej?</h3>
+    <p class="govuk-body">Ak sa Vám táto aplikácia páčila, na portáli Návody.Digital nájdete <%= link_to 'množstvo ďalších návodov', root_path %> ako vyriešiť aj iné životné situácie, ktoré si vyžadujú kontakt so štátnou byrokraciou.</p>
   </div>
 </div>

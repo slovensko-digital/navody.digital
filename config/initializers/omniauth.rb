@@ -9,7 +9,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, google_client_id, google_client_secret
   provider :magic_link, {
     on_send_link: -> (email, token) {
-      UserMailer.with(email: email, token: token).magic_link.deliver_now
+      UserMailer.with(email: email, token: token).magic_link.deliver_later
     }
   }
 end
