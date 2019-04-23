@@ -59,4 +59,5 @@ Rails.application.routes.draw do
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
+  resources :feedbacks, path: 'spatna-vazba'
 end
