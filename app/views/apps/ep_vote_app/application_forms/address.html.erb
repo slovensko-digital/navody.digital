@@ -46,29 +46,93 @@
   </div>
 </div>
 
+<style>
+  .autocomplete__hint,
+  .autocomplete__option {
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .autocomplete__hint,
+  .autocomplete__input {
+    padding: 5px 35px 5px 5px;
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    height: 40px;
+  }
+
+  @media (min-width: 40.0625em) {
+    .autocomplete__hint,
+    .autocomplete__input {
+      font-size: 18px;
+      font-size: 1.125rem;
+      line-height: 1.33333;
+    }
+  }
+</style>
+
 <%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
-<%= javascript_include_tag 'apps/ep_vote_app/slovak-municipalities.js', 'data-turbolinks-track': 'reload' %>
 <script>
-  var municipalities = Object.keys(SLOVAK_MUNICIPALITIES);
+  var municipalities = [];
+  var municipalityEmails = {};
+
+  for (var i = 0; i < SLOVAK_MUNICIPALITIES.length; i++)
+  {
+    var municipality = SLOVAK_MUNICIPALITIES[i];
+
+    var searchText = replaceDiacritics(municipality[0]).toLowerCase();
+    var label = municipality[0] + (municipality[2] !== '' ? (' (' + municipality[2] + ')') : '');
+
+    SLOVAK_MUNICIPALITIES[i][3] = searchText.replace(/[ -]+/g, ' ');
+    SLOVAK_MUNICIPALITIES[i][4] = label;
+
+    municipalities.push(label);
+    municipalityEmails[label] = municipality[1];
+  }
 
   accessibleAutocomplete({
     element: document.getElementById('municipality-field'),
     id: 'apps_ep_vote_app_application_form_municipality',
     displayMenu: 'overlay',
+    showAllValues: true,
+    autoselect: true,
+    source: function (query, populateResults) {
+      var results = [];
 
-    source: municipalities,
-    minLength: 2,
-    required: true,
-    name: 'apps_ep_vote_app_application_form[municipality]',
-    defaultValue: '<%=j @application_form.municipality %>',
+      if (query === '') {
+        results = municipalities;
+      } else {
+        var term = replaceDiacritics(query).toLowerCase();
+
+        for (var i = 0; i < municipalities.length; i++) {
+          var municipality = SLOVAK_MUNICIPALITIES[i];
+
+          var index = municipality[3].indexOf(term);
+            if (index > -1) {
+              if (index === 0 || municipality[3][index - 1] === ' ') {
+                results.push(municipality[4]);
+              }
+            }
+          if (results.length > 20) break;
+        }
+      }
+
+      results = results.sort(function (a, b) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      });
+
+      populateResults(results);
+    },
     tNoResults: function () {
-      return 'Obec so zadaným názvom sa nenašla.';
+      return 'Obec sa nenašla.';
     },
     onConfirm: function (value) {
-      var email = SLOVAK_MUNICIPALITIES[value];
-      if (email !== undefined) {
-        document.getElementById('apps_ep_vote_app_application_form_municipality_email').value = email;
-      }
-    }
-  })
+      document.querySelector('#apps_ep_vote_app_application_form_municipality_email').value = municipalityEmails[value] ? municipalityEmails[value] : '';
+    }});
 </script>
