@@ -12,11 +12,8 @@ module OmniAuth
       option :on_send_link, nil
       option :info_path, nil
       option :code_lifetime, 10.minutes
-      option :throttle_delay, 1.second
 
       def request_phase
-        sleep options[:throttle_delay].to_f unless Rails.env.test?
-
         email = request[:email]
         token = generate_magic_code(email, session.id)
 
