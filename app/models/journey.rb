@@ -53,10 +53,8 @@ class Journey < ApplicationRecord
 
   def reposition
     steps.each_with_index do |step, index|
-      position_by_index = index + 1
-      if step.position != position_by_index
-        step.update(position: position_by_index)
-      end
+      step.position = index + 1
+      step.save
     end
   end
 
