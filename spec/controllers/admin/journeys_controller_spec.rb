@@ -122,30 +122,6 @@ RSpec.describe Admin::JourneysController, type: :controller do
     end
   end
 
-  describe "POST #reposition" do
-    it "updates positions" do
-      journey = Journey.create! valid_attributes
-      step1 = create(:step, journey_id: journey.id, position: 0)
-      step2 = create(:step, journey_id: journey.id, position: 1)
-      step3 = create(:step, journey_id: journey.id, position: 1) #same position as step2, but higher id
-      expect {
-        post :reposition, params: {id: journey.to_param, journey: valid_attributes}, session: valid_session
-        step1.reload
-        step2.reload
-        step3.reload
-      }.to change(step1, :position).to(1).and change(step2, :position).to(2).and change(step3, :position).to(3)
-    end
-
-    it "doest not change position when same as expected" do
-      journey = Journey.create! valid_attributes
-      step1 = create(:step, journey_id: journey.id, position: 1)
-      expect {
-        post :reposition, params: {id: journey.to_param, journey: valid_attributes}, session: valid_session
-        step1.reload
-      }.not_to change(step1, :position)
-    end
-  end
-
   describe "DELETE #destroy" do
     it "does not destroy published journeys" do
       journey = create(:journey, published_status: 'PUBLISHED')
