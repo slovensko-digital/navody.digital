@@ -12,11 +12,8 @@ module OmniAuth
       option :on_send_link, nil
       option :info_path, nil
       option :code_lifetime, 10.minutes
-      option :throttle_delay, 1.second
 
       def request_phase
-        sleep options[:throttle_delay].to_f unless Rails.env.test?
-
         email = request[:email]
         token = generate_magic_code(email, session.id)
 
@@ -75,7 +72,7 @@ module OmniAuth
       end
 
       def secret_key
-        Rails.application.config.secret_key_base || 'secret'
+        Rails.application.secrets.secret_key_base
       end
 
       def verifier_payload(email, session_id)

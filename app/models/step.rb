@@ -16,7 +16,7 @@ class Step < ApplicationRecord
 
   # FIXME: fill in position from id!
 
-  default_scope { order(position: :asc) }
+  default_scope { order(position: :asc, id: :asc) }
   scope :published, -> do
     joins(:journey)
       .where(journeys: { published_status: 'PUBLISHED' })

@@ -1,25 +1,9 @@
+<%= content_for :title, build_page_title('Adresa trvalého pobytu', 'Voľby do Európskeho parlamentu') %>
 <%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form do |f| %>
-      <% if @application_form.errors.any? %>
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">
-          Vyskytol sa problém
-        </h2>
-        <div class="govuk-error-summary__body">
-          <ul class="govuk-list govuk-error-summary__list">
-            <% @application_form.errors.each do |field, message| %>
-              <li>
-                <a href="#passport-issued-error"><%= message %></a>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-      <% end %>
-
       <%= f.hidden_field :step %>
       <%= f.hidden_field :full_name %>
       <%= f.hidden_field :pin %>
@@ -33,7 +17,7 @@
         <% @application_form.errors[:street].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', required: true %>
+        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:pobox].any? %> govuk-form-group--error<% end %>">
@@ -46,11 +30,13 @@
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:municipality].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :municipality, 'Obec', class: 'govuk-label', required: true %>
+        <%= f.label :municipality, 'Obec', class: 'govuk-label' %>
         <% @application_form.errors[:municipality].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-10' %>
+        <div id="municipality-field" class="govuk-input--width-20">
+          <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-20 ep-vote-app' %>
+        </div>
       </div>
 
       <%= f.hidden_field :municipality_email %>
@@ -59,3 +45,100 @@
     <% end %>
   </div>
 </div>
+
+<style>
+  .autocomplete__hint,
+  .autocomplete__option {
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .autocomplete__hint,
+  .autocomplete__input {
+    padding: 5px 35px 5px 5px;
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    height: 40px;
+  }
+
+  @media (min-width: 40.0625em) {
+    .autocomplete__hint,
+    .autocomplete__input {
+      font-size: 18px;
+      font-size: 1.125rem;
+      line-height: 1.33333;
+    }
+  }
+</style>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+<script>
+  var municipalities = [];
+  var municipalityEmails = {};
+
+  for (var i = 0; i < SLOVAK_MUNICIPALITIES.length; i++)
+  {
+    var municipality = SLOVAK_MUNICIPALITIES[i];
+
+    var searchText = replaceDiacritics(municipality[0]).toLowerCase();
+    var label = municipality[0] + (municipality[2] !== '' ? (' (' + municipality[2] + ')') : '');
+
+    SLOVAK_MUNICIPALITIES[i][3] = searchText.replace(/[ -]+/g, ' ');
+    SLOVAK_MUNICIPALITIES[i][4] = label;
+
+    municipalities.push(label);
+    municipalityEmails[label] = municipality[1];
+  }
+
+  accessibleAutocomplete({
+    element: document.getElementById('municipality-field'),
+    id: 'apps_ep_vote_app_application_form_municipality',
+    name: 'apps_ep_vote_app_application_form[municipality]',
+    displayMenu: 'overlay',
+    showAllValues: true,
+    autoselect: true,
+    confirmOnBlur: false,
+    defaultValue: '<%=j @application_form.municipality %>',
+    source: function (query, populateResults) {
+      var results = [];
+
+      if (query === '') {
+        results = municipalities
+      } else {
+        var term = replaceDiacritics(query).toLowerCase();
+
+        for (var i = 0; i < municipalities.length && results.length < 50; i++) {
+          var municipality = SLOVAK_MUNICIPALITIES[i];
+          var index = municipality[3].indexOf(term);
+
+          if (municipality[4] === query) {
+            results.push(municipality[4])
+          } else if (index > -1 && (index === 0 || municipality[3][index - 1] === ' ')) {
+            results.push(municipality[4])
+          }
+        }
+      }
+
+      results = results.sort(function (a, b) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0))
+      });
+
+      populateResults(results)
+    },
+    dropdownArrow: function (config) {
+      return '<svg class="' + config.className + '" style="top: 8px;" viewBox="0 0 512 512" ><path d="M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9  c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3  z"/></svg>'
+    },
+    tNoResults: function () {
+      return 'Obec sa nenašla.'
+    },
+    onConfirm: function (value) {
+      document.querySelector('#apps_ep_vote_app_application_form_municipality_email').value = municipalityEmails[value] ? municipalityEmails[value] : '';
+    }
+  });
+</script>

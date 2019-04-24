@@ -1,5 +1,9 @@
 class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
+  before_action :set_metadata
+
   def show
+    @metadata.og.title = 'Voľby do Európskeho parlamentu'
+
     @application_form = Apps::EpVoteApp::ApplicationForm.new(
       step: 'start'
     )
@@ -28,5 +32,10 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
       :municipality_email
     )
+  end
+
+  def set_metadata
+    @metadata.og.image = 'og-ep-vote-app.png'
+    @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
   end
 end

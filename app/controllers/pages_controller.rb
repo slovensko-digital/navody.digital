@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
   def index
+    @metadata.og.title = 'Návody.Digital: Jednoduché návody na slovenské úrady'
+    @metadata.og.description = 'Interaktívne návody, ako vybaviť úradné záležitosti elektronicky.'
+
     @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.published
   end

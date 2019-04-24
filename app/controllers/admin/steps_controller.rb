@@ -9,7 +9,7 @@ class Admin::StepsController < Admin::AdminController
 
   # GET /steps/new
   def new
-    @step = @journey.steps.new
+    @step = @journey.new_step
   end
 
   # GET /steps/1/edit
@@ -64,6 +64,7 @@ class Admin::StepsController < Admin::AdminController
         :description,
         :position,
         :app_url,
+        :app_link_text,
         :type
     )
   end
