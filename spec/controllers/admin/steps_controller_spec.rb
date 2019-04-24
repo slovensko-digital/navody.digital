@@ -49,7 +49,7 @@ RSpec.describe Admin::StepsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      step = Step.create!(valid_attributes)
+      step = create(:step)
       get :index, params: {journey_id: step.journey.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -65,7 +65,7 @@ RSpec.describe Admin::StepsController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      step = Step.create! valid_attributes
+      step = create(:step)
       get :edit, params: {journey_id: step.journey.to_param, id: step.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -106,22 +106,22 @@ RSpec.describe Admin::StepsController, type: :controller do
       }
 
       it "updates the requested step" do
-        step = Step.create! valid_attributes
+        step = create(:step)
         put :update, params: {journey_id: step.journey.to_param, id: step.to_param, step: new_attributes}, session: valid_session
         step.reload
         expect(step.title).to eq new_attributes[:title]
       end
 
       it "redirects to the step" do
-        step = Step.create! valid_attributes
-        put :update, params: {journey_id: step.journey.to_param, id: step.to_param, step: valid_attributes}, session: valid_session
+        step = create(:step)
+        put :update, params: {journey_id: step.journey.to_param, id: step.to_param, step: new_attributes}, session: valid_session
         expect(response).to redirect_to(admin_journey_steps_path(step.journey))
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        step = Step.create! valid_attributes
+        step = create(:step)
         put :update, params: {journey_id: step.journey.to_param, id: step.to_param, step: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
@@ -130,14 +130,14 @@ RSpec.describe Admin::StepsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested step" do
-      step = Step.create! valid_attributes
+      step = create(:step)
       expect {
         delete :destroy, params: {journey_id: step.journey.to_param, id: step.to_param}, session: valid_session
       }.to change(Step, :count).by(-1)
     end
 
     it "redirects to the steps list" do
-      step = Step.create! valid_attributes
+      step = create(:step)
       delete :destroy, params: {journey_id: step.journey.to_param, id: step.to_param}, session: valid_session
       expect(response).to redirect_to(admin_journey_steps_url(step.journey))
     end
