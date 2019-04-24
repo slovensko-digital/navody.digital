@@ -3,7 +3,8 @@ class JourneysController < ApplicationController
     @journey = Journey.published.find_by!(slug: params[:id])
     @next_step = @journey.steps.order(:position).first
 
-    set_journey_page_metadata(@journey)
     load_newest_user_journey(current_user, @journey)
+
+    @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
   end
 end

@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :set_metadata
+  before_action :set_default_metadata
 
   protected
 
@@ -35,18 +35,14 @@ class ApplicationController < ActionController::Base
     @disable_feedback = true
   end
 
-  def set_journey_page_metadata(journey)
-    @metadata.og.image = view_context.image_url("journeys/#{journey.image_name.presence || "placeholder.png" }")
-  end
-
   private
 
-  def set_metadata
+  def set_default_metadata
     @metadata = OpenStruct.new(
       og: OpenStruct.new(
-        title: 'Návody.Digital',
-        description: 'Jednoduché návody na slovenské úrady',
-        image: nil
+        title: nil,
+        description: nil,
+        image: 'og-navody.png'
       )
     )
   end

@@ -18,9 +18,9 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Návody.Digital"/>
   <meta property="og:url" content="<%= request.original_url %>"/>
-  <meta property="og:title" content="<%= yield(:title).presence || @metadata.og.title %>"/>
-  <meta property="og:description" content="<%= yield(:description).presence || @metadata.og.description %>"/>
-  <meta property="og:image" content="<%= @metadata.og.image %>"/>
+  <meta property="og:title" content="<%= @metadata.og.title.presence || yield(:title) %>"/>
+  <meta property="og:description" content="<%= @metadata.og.description.presence || yield(:description) %>"/>
+  <meta property="og:image" content="<%= @metadata.og.image.present? ? image_url(@metadata.og.image) : image_url('og-navody.png') %>"/>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>

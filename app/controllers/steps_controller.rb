@@ -5,7 +5,8 @@ class StepsController < ApplicationController
     @current_step = @steps.find_by!(slug: params[:id])
     @user_step_from_step_map = {}
 
-    set_journey_page_metadata(@journey)
+    @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
+
     load_newest_user_journey(current_user, @journey)
   end
 
