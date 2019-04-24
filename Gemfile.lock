@@ -90,6 +90,10 @@ GEM
       dotenv (= 2.7.2)
       railties (>= 3.2, < 6.1)
     erubi (1.8.0)
+    exception_handler (0.8.0.0)
+      bundler
+      rails (>= 4.2.0)
+      responders
     execjs (2.7.0)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
@@ -189,6 +193,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.3)
     puma (3.12.1)
+    que (0.14.3)
     rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -224,6 +229,9 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     regexp_parser (1.4.0)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     rollbar (2.19.3)
       multi_json
     rspec-core (3.8.0)
@@ -311,6 +319,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   dotenv-rails
+  exception_handler
   factory_bot_rails
   faker
   hirb
@@ -326,6 +335,7 @@ DEPENDENCIES
   pg_search
   pry-rails
   puma (~> 3.11)
+  que
   rails (~> 5.2.1, >= 5.2.1.1)
   rails-i18n
   rollbar
