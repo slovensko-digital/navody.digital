@@ -3,6 +3,6 @@ class NotificationSubscriptionMailer < ApplicationMailer
     @email = params[:email]
     @token = params[:token]
 
-    mail to: @email, subject: 'Návody.Digital: Potvrdenie odberu notifikácií'
+    mail to: @email, subject: 'Návody.Digital: Potvrdenie zasielania notifikácií'
   end
 end
