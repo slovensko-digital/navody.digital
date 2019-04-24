@@ -72,7 +72,7 @@ module OmniAuth
       end
 
       def secret_key
-        Rails.application.config.secret_key_base || 'secret'
+        Rails.application.secrets.secret_key_base
       end
 
       def verifier_payload(email, session_id)
