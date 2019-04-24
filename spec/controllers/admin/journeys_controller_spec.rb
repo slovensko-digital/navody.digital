@@ -48,7 +48,7 @@ RSpec.describe Admin::JourneysController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      Journey.create! valid_attributes
+      create(:journey)
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -63,7 +63,7 @@ RSpec.describe Admin::JourneysController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      journey = Journey.create! valid_attributes
+      journey = create(:journey)
       get :edit, params: { id: journey.to_param }, session: valid_session
       expect(response).to be_successful
     end
@@ -100,22 +100,22 @@ RSpec.describe Admin::JourneysController, type: :controller do
       }
 
       it "updates the requested journey" do
-        journey = Journey.create! valid_attributes
+        journey = create(:journey)
         put :update, params: { id: journey.to_param, journey: new_attributes }, session: valid_session
         journey.reload
         expect(journey.title).to eq new_attributes[:title]
       end
 
       it "redirects to the journey" do
-        journey = Journey.create! valid_attributes
-        put :update, params: { id: journey.to_param, journey: valid_attributes }, session: valid_session
+        journey = create(:journey)
+        put :update, params: { id: journey.to_param, journey: new_attributes }, session: valid_session
         expect(response).to redirect_to([:admin, :journeys])
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        journey = Journey.create! valid_attributes
+        journey = create(:journey)
         put :update, params: { id: journey.to_param, journey: invalid_attributes }, session: valid_session
         expect(response).to be_successful
       end
@@ -147,7 +147,7 @@ RSpec.describe Admin::JourneysController, type: :controller do
     end
 
     it "redirects to the journeys list" do
-      journey = Journey.create! valid_attributes
+      journey = create(:journey)
       delete :destroy, params: { id: journey.to_param }, session: valid_session
       expect(response).to redirect_to(admin_journeys_url)
     end
