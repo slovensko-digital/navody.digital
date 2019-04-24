@@ -130,4 +130,17 @@ RSpec.describe Journey, type: :model do
       end
     end
   end
+
+  it 'creates new step with filled position' do
+    journey.save
+    create(:step, journey_id: journey.id, position: 1)
+    step = journey.new_step
+    expect(step.position).to eq 2
+  end
+
+  it 'creates new step with filled position when empty' do
+    journey.save
+    step = journey.new_step
+    expect(step.position).to eq 1
+  end
 end
