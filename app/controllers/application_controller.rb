@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_default_metadata
 
   protected
 
@@ -32,5 +33,17 @@ class ApplicationController < ActionController::Base
 
   def disable_feedback
     @disable_feedback = true
+  end
+
+  private
+
+  def set_default_metadata
+    @metadata = OpenStruct.new(
+      og: OpenStruct.new(
+        title: nil,
+        description: nil,
+        image: 'og-navody.png'
+      )
+    )
   end
 end
