@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    redirect_to new_session_path, alert: 'Prosím zadajte email' and return unless auth_email.present?
+    redirect_to new_session_path, alert: 'Prosím zadajte e-mail' and return unless auth_email.present?
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
