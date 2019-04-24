@@ -64,6 +64,7 @@ class Admin::StepsController < Admin::AdminController
         :description,
         :position,
         :app_url,
+        :app_link_text,
         :type
     )
   end
