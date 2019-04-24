@@ -34,3 +34,4 @@
 <br>
 
 <%= link_to 'New Task', new_admin_journey_step_task_path(@journey, @step), {class: 'govuk-button'} %>
+<%= link_to 'Reposition Tasks', reposition_admin_journey_step_path(@journey, @step), method: :post, class: 'govuk-button' %>
