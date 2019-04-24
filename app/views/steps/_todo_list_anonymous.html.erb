@@ -34,7 +34,7 @@
 
       <div class="sdn-todo-list-main-action-buttons-wrapper">
         <div class="sdn-todo-list-main-action-buttons">
-          <%= link_to 'Požiadať elektronicky', start_journey_step_path(@journey, @current_step), target: '_blank', class: 'govuk-button govuk-button--start', draggable: false %>
+          <%= link_to  @current_step.app_link_text.presence || 'Požiadať elektronicky', start_journey_step_path(@journey, @current_step), target: '_blank', class: 'govuk-button govuk-button--start', draggable: false %>
         </div>
       </div>
     </div>

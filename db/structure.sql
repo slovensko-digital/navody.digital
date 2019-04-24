@@ -253,7 +253,8 @@ CREATE TABLE public.steps (
     description text NOT NULL,
     "position" integer DEFAULT 0 NOT NULL,
     app_url character varying,
-    type character varying DEFAULT 'BasicStep'::character varying NOT NULL
+    type character varying DEFAULT 'BasicStep'::character varying NOT NULL,
+    app_link_text character varying
 );
 
 
@@ -852,13 +853,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190118111308'),
 ('20190122112950'),
 ('20190301173059'),
-('20190305123026'),
-('20190306141903'),
-('20190306143716'),
 ('20190321100731'),
 ('20190411095826'),
 ('20190411104731'),
 ('20190423124647'),
-('20190423214925');
+('20190423214925'),
+('20190424074855');
 
 
