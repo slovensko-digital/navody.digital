@@ -19,13 +19,13 @@
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= f.radio_button :delivery, 'post', class: "govuk-radios__input" %>
-              <%= f.label :delivery_post, "Chcem ho dostať poštou", class: "govuk-label govuk-radios__label" %>
+              <%= f.label :delivery_post, "Chcem ho dostať poštou", class: "govuk-label govuk-radios__label govuk-label--s" %>
               <span class="govuk-hint govuk-radios__hint">O doručenie poštou možete požiadať do 3.5.</span>
             </div>
 
             <div class="govuk-radios__item">
               <%= f.radio_button :delivery, 'person', class: "govuk-radios__input" %>
-              <%= f.label :delivery_person, "Osobne si ho vyzdvihnem na úrade", class: "govuk-label govuk-radios__label" %>
+              <%= f.label :delivery_person, "Osobne si ho vyzdvihnem na úrade", class: "govuk-label govuk-radios__label govuk-label--s" %>
               <span class="govuk-hint govuk-radios__hint">Vyzdvihnúť preukaz na úrade si môžete najneskôr 24.5.</span>
             </div>
           </div>
