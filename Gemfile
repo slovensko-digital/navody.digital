@@ -70,7 +70,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'letter_opener_web'
-  gem 'wdm', '~> 0.1.0' if Gem.win_platform?
+  gem 'wdm', '~> 0.1.0', platforms: [:mingw, :mswin, :x64_mingw]
 end
 
 group :test do
