@@ -1,3 +1,5 @@
+require 'application_record'
+
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://navody.digital"
 
@@ -9,7 +11,7 @@ SitemapGenerator::Sitemap.create do
   #
   # Usage: add(path, options={})
   #        (default options are used if you don't specify)
-    #
+  #
   # Defaults: :priority => 0.5, :changefreq => 'weekly',
   #           :lastmod => Time.now, :host => default_host
   #
@@ -26,9 +28,12 @@ SitemapGenerator::Sitemap.create do
   #   end
 
   Journey.find_each do |journey|
-     add journey_path(journey.slug), :lastmod => journey.updated_at
+    add journey_path(journey.slug), lastmod: journey.updated_at
+    journey.steps.find_each do |step|
+      add journey_step_path(journey, step), lastmod: step.updated_at
+    end
   end
-  
-  add faqs_path, :priority => 0.5, :changefreq => 'weekly'
 
+  add faqs_path
+  add 'aplikacie/volby-do-europskeho-parlamentu'
 end
