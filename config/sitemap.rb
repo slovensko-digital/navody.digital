@@ -26,7 +26,7 @@ SitemapGenerator::Sitemap.create do
   #   end
 
   Journey.find_each do |journey|
-    add journey_path(journey.slug), :lastmod => journey.updated_at
+     add journey_path(journey.slug), :lastmod => journey.updated_at
   end
   
   add faqs_path, :priority => 0.5, :changefreq => 'weekly'
