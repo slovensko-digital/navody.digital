@@ -36,9 +36,15 @@ SitemapGenerator::Sitemap.create do
   end
 
   Page.find_each do |page|
-    add page_path(page.slug), lastmod: page.updated_at
+    if page.is_faq?
+      add '/casto-kladene-otazky/'+page.slug, lastmod: page.updated_at
+    else
+      add page_path(page.slug), lastmod: page.updated_at
+    end
   end
 
   
+
+  #add faqs_path
   add 'aplikacie/volby-do-europskeho-parlamentu'
 end
