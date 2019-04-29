@@ -52,6 +52,8 @@ gem 'pg_search'
 gem 'kaminari'
 gem 'exception_handler'
 
+
+gem 'clockwork'
 gem 'sitemap_generator'
 
 group :development, :test do

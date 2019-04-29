@@ -27,7 +27,7 @@
 /yarn-error.log
 
 /public/assets
-/public/sitemap.*
+/public/sitemaps
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.

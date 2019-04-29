@@ -80,6 +80,8 @@ GEM
     chromedriver-helper (2.1.1)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
+    clockwork (2.0.3)
+      tzinfo
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -320,6 +322,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   chromedriver-helper
+  clockwork
   dotenv-rails
   exception_handler
   factory_bot_rails
