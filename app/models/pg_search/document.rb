@@ -1,4 +1,4 @@
-class PgSearch::Document < ApplicationRecord
+class PgSearch::Document < ::ActiveRecord::Base
   include Searchable
   self.table_name = 'pg_search_documents'
   belongs_to :searchable, polymorphic: true

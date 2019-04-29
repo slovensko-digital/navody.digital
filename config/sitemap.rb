@@ -1,5 +1,3 @@
-require 'application_record'
-
 SitemapGenerator::Sitemap.default_host = "https://navody.digital"
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
