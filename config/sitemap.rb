@@ -2,6 +2,7 @@ require 'application_record'
 
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://navody.digital"
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
@@ -34,6 +35,10 @@ SitemapGenerator::Sitemap.create do
     end
   end
 
-  add faqs_path
+  Page.find_each do |page|
+    add page_path(page.slug), lastmod: page.updated_at
+  end
+
+  
   add 'aplikacie/volby-do-europskeho-parlamentu'
 end
