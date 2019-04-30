@@ -13,7 +13,7 @@ class NotificationSubscriptionsController < ApplicationController
         format.html { redirect_to root_path }
         format.js
       else
-        render :new
+        format.js { render :new }
       end
     end
   end
