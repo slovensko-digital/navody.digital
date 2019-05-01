@@ -1,4 +1,4 @@
-<%= form_with model: form, id: 'new_subscription_notification_group' do |f| %>
+<%= form_with model: form, id: 'new_subscription_notification_group', html: {novalidate: true} do |f| %>
   <div class="govuk-form-group<% if form.errors[:subscriptions].any? %> govuk-form-group--error<% end %>">
     <% form.errors[:subscriptions].each do |error| %>
       <span class="govuk-error-message"><%= error %></span>
@@ -23,7 +23,11 @@
       <% form.errors[:email].each do |error| %>
         <span class="govuk-error-message"><%= error %></span>
       <% end %>
-      <%= f.email_field :email, class: 'govuk-input govuk-input--width-20', autocomplete: :email %>
+      <% if form.errors[:email].any? %>
+        <%= f.email_field :email, class: 'govuk-input govuk-input--width-20 govuk-input--error', autocomplete: :email %>
+      <% else %>
+        <%= f.email_field :email, class: 'govuk-input govuk-input--width-20', autocomplete: :email %>
+      <% end %>
     </div>
   <% end %>
 
