@@ -37,6 +37,7 @@
         <div class="govuk-grid-column-two-thirds">
           <%= form_with url: feedbacks_path do |form| %>
             <%= hidden_field_tag :feedback_type, 'Not useful' %>
+            <%= hidden_field_tag :current_path, request.fullpath %>
             <div class="govuk-form-group">
               <%= label_tag :not_useful_detail, 'Čo by ste chceli na tejto stránke zmeniť?', class: 'govuk-label' %>
               <%= text_area_tag :not_useful_detail, nil, class: 'govuk-textarea', rows: 3, required: true %>
@@ -65,6 +66,7 @@
         <div class="govuk-grid-column-two-thirds">
           <%= form_with url: feedbacks_path do |form| %>
             <%= hidden_field_tag :feedback_type, 'Bug report' %>
+            <%= hidden_field_tag :current_path, request.fullpath %>
             <div class="govuk-form-group">
               <%= label_tag :bug_what_were_you_doing, 'Čo ste robili?', class: 'govuk-label' %>
               <%= text_field_tag :bug_what_were_you_doing, nil, class: 'govuk-textarea' %>
