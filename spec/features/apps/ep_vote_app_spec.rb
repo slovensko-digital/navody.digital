@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.feature "EP vote app", type: :feature do
   scenario 'As a citizen I want to request voting permit via post' do
+    travel_to Date.new(2019, 5, 3)
+
     visit apps_ep_vote_app_application_forms_path
 
     click_button 'Súhlasím a chcem začať'
@@ -77,6 +79,25 @@ RSpec.feature "EP vote app", type: :feature do
 
     click_link 'pokračujte ďalej'
     expect(page).to have_content('Gratulujeme')
+  end
+
+  scenario 'As a citizen I want to request voting permit by post after the deadline' do
+    travel_to Date.new(2019, 5, 4)
+
+    visit apps_ep_vote_app_application_forms_path
+
+    click_button 'Súhlasím a chcem začať'
+
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
+
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Chcem ho dostať poštou'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
   end
 
   scenario 'As a citizen I want to request voting permit personally' do

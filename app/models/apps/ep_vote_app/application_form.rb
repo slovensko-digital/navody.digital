@@ -1,6 +1,8 @@
 module Apps
   module EpVoteApp
     class ApplicationForm
+      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2019, 5, 3)
+
       include ActiveModel::Model
 
       attr_accessor :step
@@ -19,6 +21,8 @@ module Apps
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
+      validates_exclusion_of :delivery, in: ['post'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
+                             message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka', on: :identity
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: :identity
@@ -36,7 +40,7 @@ module Apps
 
       def nationality
         return @nationality unless @nationality.blank?
-        return 'slovenská' if sk_citizen == 'yes'
+        return 'Slovenská republika' if sk_citizen == 'yes'
       end
 
       def same_delivery_address?
