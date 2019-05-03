@@ -70,7 +70,7 @@ Trvalý pobyt: #{street}, #{pobox} #{municipality}
 
 #{email_body_delivery}
 
-Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť obdržali.
+Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
 
 Ďakujem.
         TEXT
