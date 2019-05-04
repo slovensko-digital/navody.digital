@@ -45,6 +45,11 @@ class Step < ApplicationRecord
     journey.steps.where('position > ?', position).order(position: :asc).first
   end
 
+  def new_task
+    new_position = tasks.empty? ? 1 : tasks.last.position + 1
+    tasks.new(position: new_position)
+  end
+
   def title_search
     to_search_str title
   end
@@ -55,6 +60,13 @@ class Step < ApplicationRecord
 
   def keywords_search
     to_search_str keywords
+  end
+
+  def reposition
+    tasks.each_with_index do |task, index|
+      task.position = index + 1
+      task.save
+    end
   end
 
   private

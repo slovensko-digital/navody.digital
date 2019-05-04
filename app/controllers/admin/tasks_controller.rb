@@ -10,7 +10,7 @@ class Admin::TasksController < Admin::AdminController
 
   # GET /tasks/new
   def new
-    @task = @step.tasks.new
+    @task = @step.new_task
   end
 
   # GET /tasks/1/edit
