@@ -28,4 +28,8 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def submit(value = nil, options = {})
+    super(value, options.merge({class: ['govuk-button', options[:class]]}))
+  end
+
 end
