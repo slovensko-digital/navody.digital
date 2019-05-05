@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <%= f.hidden_field :step %>
       <div class="govuk-form-group<% if @application_form.errors[:place].any? %> govuk-form-group--error<% end %>">
         <fieldset class="govuk-fieldset">
@@ -15,35 +15,18 @@
           <span class="govuk-hint">Voľby do Európskeho parlamentu sa na Slovensku konajú v sobotu 25. mája 2019, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania
           volieb.</span>
 
-          <% @application_form.errors[:place].each do |error| %>
-            <span class="govuk-error-message"><span class="govuk-visually-hidden">Chyba: </span><%= error %></span>
-          <% end %>
+          <%= f.error_message :place %>
 
           <div class="govuk-radios">
-            <div class="govuk-radios__item">
-              <%= f.radio_button :place, 'sk', class: "govuk-radios__input" %>
-              <%= f.label :place_sk, "Na Slovensku, mimo trvalého bydliska", class: "govuk-label govuk-radios__label" %>
-              <span class="govuk-hint govuk-radios__hint">Ak si nie ste istý, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku.</span>
-            </div>
-
-            <div class="govuk-radios__item">
-              <%= f.radio_button :place, 'home', class: "govuk-radios__input" %>
-              <%= f.label :place_home, "Na Slovensku, v mieste trvalého bydliska", class: "govuk-label govuk-radios__label" %>
-            </div>
-
-            <div class="govuk-radios__item">
-              <%= f.radio_button :place, 'eu', class: "govuk-radios__input" %>
-              <%= f.label :place_eu, "V zahraničí, kde mám povolený pobyt", class: "govuk-label govuk-radios__label" %>
-            </div>
-            <div class="govuk-radios__item">
-              <%= f.radio_button :place, 'world', class: "govuk-radios__input" %>
-              <%= f.label :place_world, "V zahraničí", class: "govuk-label govuk-radios__label" %>
-            </div>
+            <%= f.radio_button :place, 'sk', label: "Na Slovensku, mimo trvalého bydliska", hint: "Ak si nie ste istý, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku." %>
+            <%= f.radio_button :place, 'home', label: "Na Slovensku, v mieste trvalého bydliska"%>
+            <%= f.radio_button :place, 'eu', label: "V zahraničí, kde mám povolený pobyt"%>
+            <%= f.radio_button :place, 'world', label: "V zahraničí"%>
           </div>
         </fieldset>
       </div>
 
-      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+      <%= f.submit 'Pokračovať' %>
     <% end %>
   </div>
 </div>
