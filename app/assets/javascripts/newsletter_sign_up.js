@@ -13,9 +13,17 @@ $(document).on('turbolinks:load', function () {
       data: data,
       dataType: 'json',
       success: function (data) {
-        if (data.result !== undefined && data.result.result === 'success') {
-          form.remove();
-          $('#newsletter-success').show();
+        if (data.result !== undefined) {
+          if (data.result.result === 'success') {
+            form.remove();
+            $('#newsletter-success').show();
+          } else if (data.result.result === 'emailExist') {
+            $('#newsletter-warning').show();
+            $('#newsletter-warning strong').text(data.result.exist_err_msg);
+          } else if (data.result.result === 'invalidEmail') {
+            $('#newsletter-warning').show();
+            $('#newsletter-warning strong').text(data.result.invalid_err_msg);
+          }
         }
       },
       complete: function () {
