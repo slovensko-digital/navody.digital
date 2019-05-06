@@ -14,7 +14,7 @@
         <% @application_form.errors[:full_name].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :full_name, class: 'govuk-input govuk-input--width-20' %>
+        <%= f.text_field :full_name, class: 'govuk-input govuk-input--width-20', 'autocomplete': 'name' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:pin].any? %> govuk-form-group--error<% end %>">
