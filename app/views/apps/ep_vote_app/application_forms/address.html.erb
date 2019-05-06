@@ -17,7 +17,7 @@
         <% @application_form.errors[:street].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20' %>
+        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', 'autocomplete': 'address-line1' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:pobox].any? %> govuk-form-group--error<% end %>">
@@ -26,7 +26,7 @@
         <% @application_form.errors[:pobox].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5' %>
+        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5', 'autocomplete': 'postal-code' %>
       </div>
 
       <div class="govuk-form-group<% if @application_form.errors[:municipality].any? %> govuk-form-group--error<% end %>">
