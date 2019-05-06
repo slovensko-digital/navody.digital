@@ -14,7 +14,7 @@ RSpec.feature 'Admin Journeys', type: :feature do
     find(:xpath, "//*[@id=\"main-content\"]/table/tbody/tr[#{step_index}]/td[1]").text
   end
 
-  scenario 'As an admin I want reposition steps' do
+  scenario 'As an admin I want to reposition steps' do
     journey = create(:journey)
     create(:step, journey: journey, position: 0)
     create(:step, journey: journey, position: 0)

@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     resources :journeys, except: [:show] do
       resources :steps, except: [:show] do
         resources :tasks, except: [:show]
+        member do
+          post :reposition
+        end
       end
       member do
         post :reposition
