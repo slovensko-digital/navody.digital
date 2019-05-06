@@ -17,6 +17,9 @@ $(document).on('turbolinks:load', function () {
           if (data.result.result === 'success') {
             form.remove();
             $('#newsletter-success').show();
+            if ($('#newsletter-warning').is(':visible')) {
+              $('#newsletter-warning').hide();
+            }
           } else if (data.result.result === 'emailExist') {
             $('#newsletter-warning').show();
             $('#newsletter-warning strong').text(data.result.exist_err_msg);
