@@ -41,18 +41,13 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   def error_message(method)
     errors = @object.errors[method]
-    if errors.any?
-      #TODO better way to get/create id - it might not work for object from array (with index)
-      error_id = @object_name + '_' + method.to_s + '-error'
-      @template.content_tag :span, id: error_id, class: 'govuk-error-message' do
-        errors.each do |e|
-          @template.concat @template.content_tag(:span, 'Chyba: ', class: 'govuk-visually-hidden')
-          @template.concat e
-        end
-      end
-    else
-      ''
-    end
+    return nil unless errors.any?
 
+    #TODO better way to get/create id - it might not work for object from array (with index)
+    error_id = @object_name + '_' + method.to_s + '-error'
+    @template.content_tag :span, id: error_id, class: 'govuk-error-message' do
+      @template.concat @template.content_tag(:span, 'Chyba: ', class: 'govuk-visually-hidden')
+      @template.concat errors.join('. ')
+    end
   end
 end
