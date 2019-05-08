@@ -27,7 +27,10 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     field_classes = ['govuk-radios__input', options[:class]]
 
     label = options.delete(:label)
-    label = label(method.to_s + "_" + tag_value, label, class: 'govuk-label govuk-radios__label') if label
+    strong_label = options.delete(:strong_label)
+    label_classes = ['govuk-label', 'govuk-radios__label']
+    label_classes << 'govuk-label--s' if strong_label
+    label = label(method.to_s + "_" + tag_value, label, class: label_classes) if label
 
     hint = options.delete(:hint)
     hint = @template.content_tag(:span, hint, class: 'govuk-hint govuk-radios__hint') if hint
