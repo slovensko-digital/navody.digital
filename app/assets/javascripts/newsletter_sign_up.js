@@ -20,12 +20,17 @@ $(document).on('turbolinks:load', function () {
             if ($('#newsletter-warning').is(':visible')) {
               $('#newsletter-warning').hide();
             }
-          } else if (data.result.result === 'emailExist') {
+          } else {
+            let warningText;
+            if (data.result.result === 'emailExist') {
+              warningText = data.result.exist_err_msg;
+            } else if (data.result.result === 'invalidEmail') {
+              warningText = data.result.invalid_err_msg;
+            } else {
+              warningText = 'Prihlásenie do newslettera sa nepodarilo. Prosím skúste znova.'
+            }
             $('#newsletter-warning').show();
-            $('#newsletter-warning strong').text(data.result.exist_err_msg);
-          } else if (data.result.result === 'invalidEmail') {
-            $('#newsletter-warning').show();
-            $('#newsletter-warning strong').text(data.result.invalid_err_msg);
+            $('#newsletter-warning strong').text(warningText);
           }
         }
       },
