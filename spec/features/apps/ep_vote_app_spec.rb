@@ -40,6 +40,7 @@ RSpec.feature "EP vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via post to a different address' do
+    travel_to Date.new(2019, 5, 3)
     visit apps_ep_vote_app_application_forms_path
 
     click_button 'Súhlasím a chcem začať'

@@ -59,7 +59,9 @@ module Apps
         end
 
         <<-TEXT
-Týmto žiadam o vydanie hlasovacieho preukazu pre voľby do Európskeho parlamentu v roku 2019.
+Dobrý deň,
+
+týmto žiadam o vydanie hlasovacieho preukazu pre voľby do Európskeho parlamentu v roku 2019.
 
 Moje identifikačné údaje sú:
           
