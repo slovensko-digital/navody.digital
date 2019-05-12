@@ -34,9 +34,7 @@
         <% @application_form.errors[:municipality].each do |error| %>
           <span class="govuk-error-message"><%= error %></span>
         <% end %>
-        <div id="municipality-field" class="govuk-input--width-20">
-          <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-20 ep-vote-app' %>
-        </div>
+        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-20 input-to-replace' %>
       </div>
 
       <%= f.hidden_field :municipality_email %>
@@ -94,6 +92,16 @@
 
     municipalities.push(label);
     municipalityEmails[label] = municipality[1];
+  }
+
+  var elm = document.querySelector('.input-to-replace');
+  if (elm) {
+    //Replace input field with new <div> which is then used by accessibleAutocomplete
+    var divForAutocomplete = document.createElement('div');
+    divForAutocomplete.id = 'municipality-field';
+    divForAutocomplete.className = 'govuk-input--width-20';
+    elm.parentElement.appendChild(divForAutocomplete);
+    elm.remove();
   }
 
   accessibleAutocomplete({
