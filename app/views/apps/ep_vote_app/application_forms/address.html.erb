@@ -3,7 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :full_name %>
       <%= f.hidden_field :pin %>
@@ -11,34 +11,12 @@
 
       <h1 class="govuk-heading-l">Adresa trvalého pobytu</h1>
 
-      <div class="govuk-form-group<% if @application_form.errors[:street].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :street, 'Ulica a číslo', class: 'govuk-label' %>
-        <span class="govuk-hint">Napríklad: Kaštieľska 2</span>
-        <% @application_form.errors[:street].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :street, class: 'govuk-input govuk-input--width-20', 'autocomplete': 'address-line1' %>
-      </div>
-
-      <div class="govuk-form-group<% if @application_form.errors[:pobox].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :pobox, 'PSČ', class: 'govuk-label' %>
-        <span class="govuk-hint">Napríklad: 841 01</span>
-        <% @application_form.errors[:pobox].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :pobox, class: 'govuk-input govuk-input--width-5', 'autocomplete': 'postal-code' %>
-      </div>
-
-      <div class="govuk-form-group<% if @application_form.errors[:municipality].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :municipality, 'Obec', class: 'govuk-label' %>
-        <% @application_form.errors[:municipality].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :municipality, class: 'govuk-input govuk-input--width-20 input-to-replace' %>
-      </div>
+      <%= f.text_field :street, label: 'Ulica a číslo', hint: 'Napríklad: Kaštieľska 2', class: 'govuk-input--width-20', 'autocomplete': 'address-line1' %>
+      <%= f.text_field :pobox, label: 'PSČ', hint: 'Napríklad: 841 01', class: 'govuk-input--width-5', 'autocomplete': 'postal-code' %>
+      <%= f.text_field :municipality, label: 'Obec', class: 'govuk-input--width-20 input-to-replace' %>
 
       <%= f.hidden_field :municipality_email %>
-      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+      <%= f.submit 'Pokračovať' %>
 
     <% end %>
   </div>
