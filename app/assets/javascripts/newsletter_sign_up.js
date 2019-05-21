@@ -21,7 +21,7 @@ $(document).on('turbolinks:load', function () {
               $('#newsletter-warning').hide();
             }
           } else {
-            let warningText;
+            var warningText = null;
             if (data.result.result === 'emailExist') {
               warningText = data.result.exist_err_msg;
             } else if (data.result.result === 'invalidEmail') {
