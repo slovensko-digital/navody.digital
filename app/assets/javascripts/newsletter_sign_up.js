@@ -13,9 +13,25 @@ $(document).on('turbolinks:load', function () {
       data: data,
       dataType: 'json',
       success: function (data) {
-        if (data.result !== undefined && data.result.result === 'success') {
-          form.remove();
-          $('#newsletter-success').show();
+        if (data.result !== undefined) {
+          if (data.result.result === 'success') {
+            form.remove();
+            $('#newsletter-success').show();
+            if ($('#newsletter-warning').is(':visible')) {
+              $('#newsletter-warning').hide();
+            }
+          } else {
+            let warningText;
+            if (data.result.result === 'emailExist') {
+              warningText = data.result.exist_err_msg;
+            } else if (data.result.result === 'invalidEmail') {
+              warningText = data.result.invalid_err_msg;
+            } else {
+              warningText = 'Prihlásenie do newslettera sa nepodarilo. Prosím skúste znova.'
+            }
+            $('#newsletter-warning').show();
+            $('#newsletter-warning strong').text(warningText);
+          }
         }
       },
       complete: function () {
