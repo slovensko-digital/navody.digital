@@ -7,6 +7,14 @@
 ### Deployment
 Master ide automaticky na https://staging.navody.digital/
 
+### Setup
+
+#### OSX (homebrew)
+ - `brew install postgresql`
+ - `brew services start postgresql`
+ - `bin/setup`
+ - `bin/rails s`
+
 ### Neprogramátorské úlohy
-Wishlist ďalších návodov na spracovanie a editovanie, eventy a ďalší progress nájdete na https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital 
+Wishlist ďalších návodov na spracovanie a editovanie, eventy a ďalší progress nájdete na https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital
 
