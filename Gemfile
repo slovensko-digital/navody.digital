@@ -52,7 +52,7 @@ gem 'pg_search'
 gem 'kaminari'
 gem 'exception_handler'
 
-
+gem 'premailer-rails'
 gem 'clockwork'
 gem 'sitemap_generator'
 
