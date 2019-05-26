@@ -19,9 +19,9 @@ module NavodySlovenskoDigital
     # the framework and any gems in your application.
 
     app_config = Rails.application.config_for(:app)
-    app_host = app_config.fetch('host', 'localhost')
-    app_port = app_config.fetch('port', '')
-    app_protocol = app_config.fetch('protocol', 'http')
+    app_host = app_config["host"]
+    app_port = app_config["port"]
+    app_protocol = app_config["protocol"]
 
     options = {
       host: app_host,
