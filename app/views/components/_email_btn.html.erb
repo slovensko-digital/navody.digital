@@ -1,8 +1,10 @@
 <table border="0" cellpadding="0" cellspacing="0" class="btn">
   <tbody>
     <tr>
-      <td class="btn-td">
-        <%= yield %>
+      <td>
+        <%= link_to url, class: "btn-inner" do %>
+          <%= yield %>
+        <% end %>
       </td>
     </tr>
     <tr>
