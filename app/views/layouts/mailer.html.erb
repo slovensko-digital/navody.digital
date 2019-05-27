@@ -1,13 +1,42 @@
-<!DOCTYPE html>
+<%
+  # modified version of https://github.com/leemunroe/responsive-html-email-template
+%>
+<!doctype html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= stylesheet_link_tag 'mailer', media: 'all' %>
   </head>
+  <body class="body">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body-inner">
+      <tr>
+        <td class="container">
+          <div class="content">
+            <table role="presentation" class="main" border="0" cellpadding="0" cellspacing="0">
 
-  <body>
-    <%= yield %>
+              <tr>
+                <td class="header wrapper">
+                  <a href="https://navody.digital">Návody.Digital</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="yield wrapper">
+                  <%= yield %>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="footer wrapper">
+                  <strong>Slovensko.Digital</strong>, Staré grunty 12, 841 04 Bratislava, IČO: 50158635
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

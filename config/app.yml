@@ -1,7 +1,7 @@
 default: &default
-  host: <%= ENV['APP_HOST'] %>
-  port: <%= ENV['APP_PORT'] %>
-  protocol: <%= ENV['APP_PROTOCOL'] %>
+  host: <%= ENV.fetch('APP_HOST', 'localhost') %>
+  port: <%= ENV.fetch('APP_PORT', '') %>
+  protocol: <%= ENV.fetch('APP_PROTOCOL', 'http') %>
   admin:
     username: <%= ENV.fetch('ADMIN_USERNAME', 'admin') %>
     password: <%= ENV.fetch('ADMIN_PASSWORD', 'admin') %>
