@@ -10,12 +10,11 @@ RSpec.feature "Journeys", type: :feature do
       fill_in :email, with: user.email
     end
 
-    ActionMailer::Base.deliveries = []
+    clear_mail_deliveries
+
     click_on 'Prihlásiť sa e-mailom'
-    mailer_email = ActionMailer::Base.deliveries.first
-    email = Capybara::Node::Simple.new(mailer_email.body.to_s)
-    magic_link = email.find('a')[:href]
-    visit magic_link
+
+    visit link_in_last_email
   end
 
   let!(:user) {create(:user, email: 'someone@example.com')}
