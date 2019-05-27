@@ -1,8 +1,8 @@
 <div class="center">
   <p>Pre potvrdenie zasielania notifikácii na stránke Návody.Digital kliknite na nasledujúci odkaz.</p>
 
-  <%= render "components/email_btn" do %>
-    <%= link_to 'Potvrdzujem zasielanie notifikácii', confirm_notification_subscription_group_url(@token) %>
+  <%= render "components/email_btn", url: confirm_notification_subscription_group_url(@token) do %>
+    Potvrdzujem zasielanie notifikácii
   <% end %>
 
   <p class="small grey">Tento odkaz je platný 24 hodín. Ak ste si tento email nevyžiadali Vy, môžete ho pokojne ignorovať.</p>
