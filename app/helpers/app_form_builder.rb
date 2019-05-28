@@ -1,23 +1,23 @@
 class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   def text_field(method, options = {})
-    has_errors = @object.errors[method].present?
-
     group_classes = ['govuk-form-group']
-    group_classes << 'govuk-form-group--error' if has_errors
-
     field_classes = ['govuk-input', options[:class]]
-    field_classes << 'govuk-input--error' if has_errors
+    described_by = []
 
     label = options.delete(:label)
     label = label(method, label, class: 'govuk-label') if label
 
     hint = options.delete(:hint)
     hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint') if hint
-
-    described_by = []
     described_by << hint_id(method) if hint
-    described_by << error_id(method) if has_errors
+
+    if @object.errors[method].present?
+      group_classes << 'govuk-form-group--error'
+      field_classes << 'govuk-input--error'
+      described_by << error_id(method)
+    end
+
     options = options.merge({'aria-describedby': described_by.join(' ')}) unless described_by.empty?
 
     @template.content_tag(:div, class: group_classes) do
