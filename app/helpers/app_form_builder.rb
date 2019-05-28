@@ -9,8 +9,10 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     label = label(method, label, class: 'govuk-label') if label
 
     hint = options.delete(:hint)
-    hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint') if hint
-    described_by << hint_id(method) if hint
+    if hint
+      hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint')
+      described_by << hint_id(method)
+    end
 
     if @object.errors[method].present?
       group_classes << 'govuk-form-group--error'
