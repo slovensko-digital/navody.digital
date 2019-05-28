@@ -50,7 +50,6 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     errors = @object.errors[method]
     return nil unless errors.any?
 
-    #TODO better way to get/create id - it might not work for object from array (with index)
     error_id = @object_name + '_' + method.to_s + '-error'
     @template.content_tag :span, id: error_id, class: 'govuk-error-message' do
       @template.concat @template.content_tag(:span, 'Chyba: ', class: 'govuk-visually-hidden')
