@@ -6,13 +6,13 @@
     <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <%= f.hidden_field :step %>
       <div class="govuk-form-group<% if @application_form.errors[:place].any? %> govuk-form-group--error<% end %>">
-        <fieldset class="govuk-fieldset">
+        <fieldset class="govuk-fieldset" aria-describedby="<%= f.hint_id :place %> <%= f.error_id :place %>">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h2 class="govuk-fieldset__heading">
               Kde plánujete ísť voliť?
             </h2>
           </legend>
-          <span class="govuk-hint">Voľby do Európskeho parlamentu sa na Slovensku konajú v sobotu 25. mája 2019, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania
+          <span class="govuk-hint" id="<%= f.hint_id :place %>">Voľby do Európskeho parlamentu sa na Slovensku konajú v sobotu 25. mája 2019, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania
           volieb.</span>
 
           <%= f.error_message :place %>

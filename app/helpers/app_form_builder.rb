@@ -13,7 +13,12 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     label = label(method, label, class: 'govuk-label') if label
 
     hint = options.delete(:hint)
-    hint = @template.content_tag(:span, hint, class: 'govuk-hint') if hint
+    hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint') if hint
+
+    described_by = []
+    described_by << hint_id(method) if hint
+    described_by << error_id(method) if has_errors
+    options = options.merge({'aria-describedby': described_by.join(' ')}) unless described_by.empty?
 
     @template.content_tag(:div, class: group_classes) do
       @template.concat label
@@ -25,15 +30,17 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
 
   def radio_button(method, tag_value, options = {})
     field_classes = ['govuk-radios__input', options[:class]]
+    radio_method = method.to_s + "_" + tag_value
 
     label = options.delete(:label)
     strong_label = options.delete(:strong_label)
     label_classes = ['govuk-label', 'govuk-radios__label']
     label_classes << 'govuk-label--s' if strong_label
-    label = label(method.to_s + "_" + tag_value, label, class: label_classes) if label
+    label = label(radio_method, label, class: label_classes) if label
 
     hint = options.delete(:hint)
-    hint = @template.content_tag(:span, hint, class: 'govuk-hint govuk-radios__hint') if hint
+    hint = @template.content_tag(:span, hint, id: hint_id(radio_method), class: 'govuk-hint govuk-radios__hint') if hint
+    options = options.merge({'aria-describedby': hint_id(radio_method)}) if hint
 
     @template.content_tag(:div, class: 'govuk-radios__item') do
       @template.concat super(method, tag_value, objectify_options(options.merge({class: field_classes})))
@@ -50,10 +57,17 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     errors = @object.errors[method]
     return nil unless errors.any?
 
-    error_id = @object_name + '_' + method.to_s + '-error'
-    @template.content_tag :span, id: error_id, class: 'govuk-error-message' do
+    @template.content_tag :span, id: error_id(method), class: 'govuk-error-message' do
       @template.concat @template.content_tag(:span, 'Chyba: ', class: 'govuk-visually-hidden')
       @template.concat errors.join('. ')
     end
+  end
+
+  def error_id(method)
+    @object.errors[method].present? ? @object_name + '_' + method.to_s + '-error' : ''
+  end
+
+  def hint_id(method)
+    @object_name + '_' + method.to_s + '-hint'
   end
 end

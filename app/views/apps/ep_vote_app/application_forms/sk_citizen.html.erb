@@ -8,7 +8,7 @@
       <div class="govuk-form-group
         <% if @application_form.errors[:sk_citizen].any? %> govuk-form-group--error
         <% end %>">
-        <fieldset class="govuk-fieldset">
+        <fieldset class="govuk-fieldset" aria-describedby="<%= f.error_id :sk_citizen %>">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h2 class="govuk-fieldset__heading">
               Ste občan Slovenskej republiky?
