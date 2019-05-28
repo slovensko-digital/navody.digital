@@ -102,6 +102,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
+    ffi (1.10.0-x64-mingw32)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (3.6.0)
@@ -155,11 +156,14 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     msgpack (1.2.10)
+    msgpack (1.2.10-x64-mingw32)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nio4r (2.3.1)
     nokogiri (1.10.3)
+      mini_portile2 (~> 2.4.0)
+    nokogiri (1.10.3-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.1)
       faraday (>= 0.8, < 0.16.0)
@@ -179,6 +183,7 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
     pg (1.1.4)
+    pg (1.1.4-x64-mingw32)
     pg_search (2.1.7)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
@@ -294,8 +299,11 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2019.1)
+      tzinfo (>= 1.0.0)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    wdm (0.1.1)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -313,6 +321,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   aws-sdk-rails
