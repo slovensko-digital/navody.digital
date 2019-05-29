@@ -40,8 +40,7 @@ CREATE TABLE public.journeys (
     description text NOT NULL,
     "position" integer DEFAULT 0 NOT NULL,
     featured_position integer DEFAULT 0 NOT NULL,
-    image_name text,
-    custom_title character varying
+    image_name text
 );
 
 
@@ -242,8 +241,7 @@ CREATE TABLE public.steps (
     "position" integer DEFAULT 0 NOT NULL,
     app_url character varying,
     type character varying DEFAULT 'BasicStep'::character varying NOT NULL,
-    app_link_text character varying,
-    custom_title character varying
+    app_link_text character varying
 );
 
 
@@ -847,8 +845,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190411104731'),
 ('20190423124647'),
 ('20190423214925'),
-('20190424074855'),
-('20190529210530'),
-('20190529210630');
+('20190424074855');
 
 
