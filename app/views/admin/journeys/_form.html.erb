@@ -6,6 +6,7 @@
   <% end %>
 
   <%= form.text_field :title %>
+  <%= form.text_field :custom_title %>
   <%= form.text_field :slug %>
   <%= form.text_field :keywords %>
   <%= form.select :published_status, Journey.defined_enums['published_status'] %>
