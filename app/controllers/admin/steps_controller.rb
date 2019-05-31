@@ -64,6 +64,7 @@ class Admin::StepsController < Admin::AdminController
     params.require(:step).permit(
         :journey_id,
         :title,
+        :custom_title,
         :keywords,
         :is_waiting_step,
         :slug,
