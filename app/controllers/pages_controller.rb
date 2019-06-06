@@ -5,6 +5,9 @@ class PagesController < ApplicationController
 
     @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.published
+
+    @blank_journeys = Journey.blank
+
   end
 
   def show

@@ -21,6 +21,23 @@
             </div>
           </div>
         </div>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">Nedokončené návody</h2>
+            <div class="sdn-tiles">
+              <% @blank_journeys.each do |journey| %>
+                <%= link_to journey_path(journey.slug), class: 'sdn-tiles__item sdn-tile' do %>
+                  <%= image_tag "journeys/#{journey.image_name.presence || "placeholder.png"}", class: 'sdn-tile__image' %>
+                  <span class="sdn-tile__content sdn-tile-content-text-block">
+                    <span class="sdn-tile-content-text-block__item"><%= journey.title %></span>
+                  </span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
         <!--        <div class="govuk-grid-row">-->
         <!--          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">-->
         <%#= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>

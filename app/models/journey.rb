@@ -7,12 +7,13 @@ class Journey < ApplicationRecord
   default_scope { order(position: :asc) }
 
   scope :published, -> { where(published_status: 'PUBLISHED')}
+  scope :blank, -> { where(published_status: 'BLANK')}
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
 
-  enumerates :published_status, with: %w{DRAFT PUBLISHED}
+  enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -28,6 +29,10 @@ class Journey < ApplicationRecord
 
   def published?
     published_status == 'PUBLISHED'
+  end
+
+  def blank?
+    published_status == 'BLANK'
   end
 
   def to_param
