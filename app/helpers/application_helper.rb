@@ -1,9 +1,13 @@
 module ApplicationHelper
-  def build_page_title(params, category = nil)
-    unless params[1].blank?
-      params[1]
-    else
-      [params[0], category, 'Navody.digital'].compact.join(' | ')
-    end
+  def build_page_title(title, category = nil)
+    [title, category, 'Návody.Digital'].compact.join(' | ')
+  end
+
+  def build_step_page_title(step)
+    build_page_title(step.custom_title.presence || step.title, step.journey.custom_title.presence || step.journey.title)
+  end
+
+  def build_journey_page_title(journey)
+    build_page_title(journey.custom_title.presence || journey.title)
   end
 end

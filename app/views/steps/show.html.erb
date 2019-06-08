@@ -1,4 +1,4 @@
-<% content_for :title, build_page_title([@journey.title, @current_step.custom_title],@current_step.title) %>
+<% content_for :title, build_step_page_title(@current_step) %>
 <%= content_for(:headerline, @journey.title) %>
 <%= content_for :description, truncate(strip_tags(@current_step.description), length: 500) %>
 
