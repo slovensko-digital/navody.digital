@@ -1,6 +1,6 @@
 class AddCustomTitleToSteps < ActiveRecord::Migration[5.2]
   def up
-    add_column :steps, :custom_title, :string, {:default => nil}
+    add_column :steps, :custom_title, :string
   end
 
   def down
