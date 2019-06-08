@@ -1,0 +1,17 @@
+<%= form_with(model: [:admin, app], local: true, builder: AdminFormBuilder) do |form| %>
+  <% if app.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(app.errors.count, "error") %> prohibited this app from being saved</h2>
+    </div>
+  <% end %>
+
+  <%= form.text_field :title %>
+  <%= form.text_field :slug %>
+  <%= form.select :published_status, App.defined_enums['published_status'] %>
+  <%= form.select :image_name, Dir.glob("app/assets/images/journeys/*").map { |path| File.basename(path) } %>
+  <%= form.text_area :description, size: "60x12" %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

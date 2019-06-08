@@ -18,6 +18,8 @@
               <%= render partial: 'journey', locals: { journey: search.searchable, query: @q, analyzed_query: @analyzed_q } %>
             <% elsif search.searchable_type == 'Page' %>
               <%= render partial: 'page', locals: { page: search.searchable, query: @q } %>
+            <% elsif search.searchable_type == 'App' %>
+              <%= render partial: 'app', locals: { app: search.searchable, query: @q } %>
             <% end %>
           <% end %>
           <%= render partial: 'pagination', locals: { searches: @searches } %>

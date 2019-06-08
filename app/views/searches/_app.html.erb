@@ -1,0 +1,8 @@
+<div class="govuk-!-margin-top-5">
+  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+    <%= link_to app.title, app_path(app.slug), class: 'govuk-link' %>
+  </h3>
+  <p class="govuk-body-s">
+    <%= searched_text(app.description, query) %>
+  </p>
+</div>
