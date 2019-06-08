@@ -3,39 +3,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <h1 class="govuk-heading-xl">Vaše osobné údaje</h1>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
 
-      <div class="govuk-form-group<% if @application_form.errors[:full_name].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :full_name, 'Meno, priezvisko, titul', class: 'govuk-label' %>
-        <span class="govuk-hint">Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička</span>
-        <% @application_form.errors[:full_name].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :full_name, class: 'govuk-input govuk-input--width-20', 'autocomplete': 'name' %>
-      </div>
+      <%= f.text_field :full_name, class: 'govuk-input--width-20', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
+      <%= f.text_field :pin, class: 'govuk-input--width-10', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
+      <%= f.text_field :nationality, class: 'govuk-input--width-10', label: 'Štátna príslušnosť' %>
 
-      <div class="govuk-form-group<% if @application_form.errors[:pin].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :pin, 'Rodné číslo', class: 'govuk-label' %>
-        <span class="govuk-hint">Napríklad: 123456/1234</span>
-        <% @application_form.errors[:pin].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :pin, class: 'govuk-input govuk-input--width-10' %>
-      </div>
-
-      <div class="govuk-form-group<% if @application_form.errors[:nationality].any? %> govuk-form-group--error<% end %>">
-        <%= f.label :nationality, 'Štátna príslušnosť', class: 'govuk-label' %>
-        <% @application_form.errors[:nationality].each do |error| %>
-          <span class="govuk-error-message"><%= error %></span>
-        <% end %>
-        <%= f.text_field :nationality, class: 'govuk-input govuk-input--width-10' %>
-      </div>
-
-
-      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+      <%= f.submit 'Pokračovať'%>
 
     <% end %>
   </div>

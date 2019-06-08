@@ -14,7 +14,6 @@
 //= require jquery
 //= require activestorage
 //= require turbolinks
-//= require apps/ep_vote_app/ep_vote_app
 //= require cookieconsent.min
 //= require_directory .
 
