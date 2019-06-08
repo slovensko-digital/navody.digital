@@ -1,0 +1,30 @@
+<% if mother_civil_state == :married %>
+  <p>Rodný list vyzdvihne <b>otec</b> dieťaťa (matka podpísala hlásenie o narodení v pôrodnici, osobne prísť nemusí)
+    a predloží  <b>sobášny list</b> (originál) a občianske preukazy oboch rodičov.</p>
+<% elsif mother_civil_state == :single %>
+  <p>Rodný list vyzdvihne <b>matka</b>.</p>
+  <p>Ak chce matka určiť otcovstvo, robí sa tak súhlasným vyhlásením rodičov na matričnom úrade. Je potrebné, aby sa
+    dostavili <b>obaja rodičia</b> s občianskymi preukazmi.</p>
+<% elsif mother_civil_state == :divorced %>
+  <p>Rodný list vyzdvihne <b>matka</b>. Matka na matrike predloží rozsudok o rozvode, sobášny list, občiansky preukaz.</p>
+  <% if born_before_300_days == :yes %>
+    <p>Za otca dieťaťa sa považuje bývalý manžel.</p>
+  <% else %>
+    <p>Ak chce matka určiť otcovstvo, robí sa tak súhlasným vyhlásením rodičov na matričnom úrade. Je potrebné, aby sa
+      dostavili <b>obaja rodičia</b> s občianskymi preukazmi.</p>
+  <% end %>
+<% elsif mother_civil_state == :widow %>
+  <p>Rodný list vyzdvihne <b>matka</b>. Matka predloží na matrike úmrtný list manžela a občiansky preukaz.</p>
+  <% if born_before_300_days == :yes %>
+    <p>Za otca dieťaťa sa považuje zosnulý manžel.</p>
+  <% else %>
+    <p>Ak chce matka určiť otcovstvo, robí sa tak súhlasným vyhlásením rodičov na matričnom úrade. Je potrebné, aby sa
+      dostavili <b>obaja rodičia</b> s občianskymi preukazmi.</p>
+  <% end %>
+<% end %>
+
+<div class="sdn-todo-list-main-action-buttons-wrapper">
+  <div class="sdn-todo-list-main-action-buttons">
+    <%= link_to 'Späť na začiatok', apps_child_birth_app_picking_up_protocol_path, class: 'govuk-button', remote: true %>
+  </div>
+</div>

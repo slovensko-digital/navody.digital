@@ -6,7 +6,7 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
       <h1><%= @current_step.title %></h1>
-      <%= raw @current_step.description %>
+      <%= replace_embedded_app @current_step.description %>
     </div>
 
     <%= render 'journeys/todo_list', step: @current_step %>
