@@ -13,7 +13,7 @@ class Admin::DocumentsController < Admin::AdminController
   # PATCH/PUT /admin/journeys/1
   def update
     if @document.update(document_params)
-      redirect_to admin_documents_url, notice: 'Journey was successfully updated.'
+      redirect_to admin_documents_url, notice: 'Document was successfully updated.'
     else
       render :edit
     end
