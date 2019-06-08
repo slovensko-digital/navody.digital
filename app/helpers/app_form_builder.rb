@@ -50,7 +50,23 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
       @template.concat hint
     end
   end
-7
+
+  def radios(method, text, options = {}, &block)
+    radios_div = @template.content_tag(:div, class: 'govuk_radios') do
+      @template.concat @template.capture(&block)
+    end
+    radios_fs = field_set(method, text, options) do
+      @template.concat radios_div
+    end
+
+    classes = 'govuk-form-group'
+    classes = classes + ' govuk-form-group--error' if @object.errors[method].present?
+    @template.content_tag(:div, class: classes) do
+      @template.concat radios_fs
+    end
+  end
+
+
   def field_set(method, text, options = {}, &block)
     legend = @template.content_tag(:legend, {class: 'govuk-fieldset__legend govuk-fieldset__legend--xl'}) do
       @template.concat @template.content_tag(:h2, text, class: 'govuk-fieldset__heading')
