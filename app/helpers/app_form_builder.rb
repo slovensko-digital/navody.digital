@@ -50,6 +50,34 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
       @template.concat hint
     end
   end
+7
+  def field_set(method, text, options = {}, &block)
+    legend = @template.content_tag(:legend, {class: 'govuk-fieldset__legend govuk-fieldset__legend--xl'}) do
+      @template.concat @template.content_tag(:h2, text, class: 'govuk-fieldset__heading')
+    end
+
+    described_by = []
+    hint = options.delete(:hint)
+    if hint
+      hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint')
+      described_by << hint_id(method)
+    end
+
+    if @object.errors[method].present?
+      described_by << error_id(method)
+    end
+
+    fs_options = {class: 'govuk-fieldset'}
+    fs_options = fs_options.merge({'aria-describedby': described_by.join(' ')}) unless described_by.empty?
+
+    @template.content_tag(:fieldset, fs_options) do
+      @template.concat legend
+      @template.concat hint
+      @template.concat error_message(method)
+      @template.concat @template.capture(&block)
+    end
+
+  end
 
   def submit(value = nil, options = {})
     super(value, objectify_options(options.merge({class: ['govuk-button', options[:class]]})))
