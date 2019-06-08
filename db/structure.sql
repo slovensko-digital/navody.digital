@@ -28,6 +28,41 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: apps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apps (
+    id bigint NOT NULL,
+    title text NOT NULL,
+    slug text NOT NULL,
+    image_name text NOT NULL,
+    published_status text NOT NULL,
+    description text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.apps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.apps_id_seq OWNED BY public.apps.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -52,7 +87,6 @@ CREATE TABLE public.journeys (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     description text NOT NULL,
-    "position" integer DEFAULT 0 NOT NULL,
     featured_position integer DEFAULT 0 NOT NULL,
     image_name text,
     custom_title character varying
@@ -165,7 +199,9 @@ CREATE TABLE public.pg_search_documents (
     keywords character varying,
     title character varying,
     tsv_keywords tsvector,
-    tsv_title tsvector
+    tsv_title tsvector,
+    "position" integer DEFAULT 0,
+    published boolean DEFAULT false
 );
 
 
@@ -484,6 +520,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: apps id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -565,6 +608,14 @@ ALTER TABLE ONLY public.user_tasks ALTER COLUMN id SET DEFAULT nextval('public.u
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apps
+    ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
 
 
 --
@@ -953,6 +1004,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190424074855'),
 ('20190529210530'),
 ('20190529210630'),
-('20190608102251');
+('20190608102251'),
+('20190608130459'),
+('20190608135807');
 
 
