@@ -1,25 +1,13 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET default_tablespace = '';
 
@@ -445,84 +433,84 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys ALTER COLUMN id SET DEFAULT nextval('public.journeys_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: notification_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.notification_subscriptions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pg_search_documents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pg_search_documents ALTER COLUMN id SET DEFAULT nextval('public.pg_search_documents_id_seq'::regclass);
 
 
 --
--- Name: job_id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: que_jobs job_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.que_jobs ALTER COLUMN job_id SET DEFAULT nextval('public.que_jobs_job_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: steps id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.steps ALTER COLUMN id SET DEFAULT nextval('public.steps_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: tasks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: user_journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys ALTER COLUMN id SET DEFAULT nextval('public.user_journeys_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: user_steps id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_steps ALTER COLUMN id SET DEFAULT nextval('public.user_steps_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: user_tasks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_tasks ALTER COLUMN id SET DEFAULT nextval('public.user_tasks_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
@@ -530,7 +518,7 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
--- Name: journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: journeys journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys
@@ -538,7 +526,7 @@ ALTER TABLE ONLY public.journeys
 
 
 --
--- Name: notification_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: notification_subscriptions notification_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_subscriptions
@@ -546,7 +534,7 @@ ALTER TABLE ONLY public.notification_subscriptions
 
 
 --
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pages
@@ -554,7 +542,7 @@ ALTER TABLE ONLY public.pages
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.pg_search_documents
@@ -562,7 +550,7 @@ ALTER TABLE ONLY public.pg_search_documents
 
 
 --
--- Name: que_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: que_jobs que_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.que_jobs
@@ -570,7 +558,7 @@ ALTER TABLE ONLY public.que_jobs
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.schema_migrations
@@ -578,7 +566,7 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: steps steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.steps
@@ -586,7 +574,7 @@ ALTER TABLE ONLY public.steps
 
 
 --
--- Name: tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tasks
@@ -594,7 +582,7 @@ ALTER TABLE ONLY public.tasks
 
 
 --
--- Name: user_journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_journeys user_journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys
@@ -602,7 +590,7 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
--- Name: user_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_steps user_steps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_steps
@@ -610,7 +598,7 @@ ALTER TABLE ONLY public.user_steps
 
 
 --
--- Name: user_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_tasks user_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_tasks
@@ -618,7 +606,7 @@ ALTER TABLE ONLY public.user_tasks
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -738,28 +726,28 @@ CREATE UNIQUE INDEX index_users_on_email_lower_unique ON public.users USING btre
 
 
 --
--- Name: tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: pg_search_documents tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
 
 
 --
--- Name: tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
+-- Name: pg_search_documents tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
 
 
 --
--- Name: tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+-- Name: pg_search_documents tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
 
 
 --
--- Name: fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_steps
@@ -767,7 +755,7 @@ ALTER TABLE ONLY public.user_steps
 
 
 --
--- Name: fk_rails_2bf71acda7; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: notification_subscriptions fk_rails_2bf71acda7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.notification_subscriptions
@@ -775,7 +763,7 @@ ALTER TABLE ONLY public.notification_subscriptions
 
 
 --
--- Name: fk_rails_56d22858e3; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_steps fk_rails_56d22858e3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_steps
@@ -783,7 +771,7 @@ ALTER TABLE ONLY public.user_steps
 
 
 --
--- Name: fk_rails_5a3f03c742; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_tasks fk_rails_5a3f03c742; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_tasks
@@ -791,7 +779,7 @@ ALTER TABLE ONLY public.user_tasks
 
 
 --
--- Name: fk_rails_70185eaf12; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_journeys fk_rails_70185eaf12; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys
@@ -799,7 +787,7 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
--- Name: fk_rails_bed40c4f02; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: tasks fk_rails_bed40c4f02; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.tasks
@@ -807,7 +795,7 @@ ALTER TABLE ONLY public.tasks
 
 
 --
--- Name: fk_rails_eef61d1fdc; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_tasks fk_rails_eef61d1fdc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_tasks
@@ -815,7 +803,7 @@ ALTER TABLE ONLY public.user_tasks
 
 
 --
--- Name: fk_rails_fb72d96772; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user_journeys fk_rails_fb72d96772; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys
@@ -823,7 +811,7 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
--- Name: fk_rails_fc12f91020; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: steps fk_rails_fc12f91020; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.steps
