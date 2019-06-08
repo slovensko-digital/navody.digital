@@ -15,6 +15,7 @@ module Apps
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
+      attr_accessor :callback
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
 
@@ -95,6 +96,10 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
         when 'delivery_address'
           delivery_address_step(listener)
         end
+      end
+
+      def finish_result
+        {status: 'done'}
       end
 
       private

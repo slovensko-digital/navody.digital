@@ -13,4 +13,6 @@
       <%= f.submit 'Pokračovať' %>
     <% end %>
   </div>
+  <% params = @application_form.finish_result %>
+  <%= link_to 'Finish', @application_form.callback + "?#{params.to_query}", method: :patch %>
 </div>

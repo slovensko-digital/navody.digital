@@ -5,7 +5,8 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
     @metadata.og.title = 'Voľby do Európskeho parlamentu'
 
     @application_form = Apps::EpVoteApp::ApplicationForm.new(
-      step: 'start'
+      step: 'start',
+      callback: params['callback']
     )
     render 'start'
   end
@@ -30,7 +31,8 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
       :street, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
-      :municipality_email
+      :municipality_email,
+      :callback
     )
   end
 

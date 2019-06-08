@@ -8,6 +8,7 @@
     <%= form_for @application_form do |f| %>
       <div class="govuk-form-group">
         <%= f.hidden_field :step %>
+        <%= f.hidden_field :callback %>
       </div>
       <%= submit_tag 'Súhlasím a chcem začať', class: 'govuk-button govuk-button--large' %>
     <% end %>

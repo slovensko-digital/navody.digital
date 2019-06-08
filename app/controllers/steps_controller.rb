@@ -35,6 +35,9 @@ class StepsController < ApplicationController
     journey = Journey.find_by!(slug: params[:journey_id])
     step = journey.steps.find_by!(slug: params[:id])
 
-    redirect_to step.app_url
+    params = {
+      :callback => journey_step_path(journey, step, action: 'update')
+    }
+    redirect_to step.app_url + "?#{params.to_query}"
   end
 end
