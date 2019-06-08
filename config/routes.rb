@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: redirect('admin/pages')
 
+    resources :documents, only: [:index, :edit, :update]
+    resources :apps, except: [:show]
     resources :pages, except: [:show]
     resources :journeys, except: [:show] do
       resources :steps, except: [:show] do

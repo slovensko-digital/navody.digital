@@ -4,13 +4,13 @@ class Journey < ApplicationRecord
 
   before_save :update_steps_search
 
-  default_scope { order(position: :asc) }
-
   scope :published, -> { where(published_status: 'PUBLISHED')}
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
+
+  has_many :search_documents, :class_name => 'PgSearch::Document', as: :searchable
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED}
 
@@ -23,7 +23,8 @@ class Journey < ApplicationRecord
                   if: :published?,
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
-                      keywords: journey.keywords_search }
+                      keywords: journey.keywords_search,
+                      published: journey.published?}
                   }
 
   def published?
