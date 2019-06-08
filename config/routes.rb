@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :quick_tips, path: 'caste-otazky', only: :show
+
   namespace :apps, path: 'aplikacie' do
     namespace :ep_vote_app, path: 'volby-do-europskeho-parlamentu' do
       resource :application_forms, path: '' do
@@ -53,6 +55,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :apps, path: 'aplikacie' # faux route
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'

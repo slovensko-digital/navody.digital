@@ -9,6 +9,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -214,6 +228,43 @@ CREATE SEQUENCE public.que_jobs_job_id_seq
 --
 
 ALTER SEQUENCE public.que_jobs_job_id_seq OWNED BY public.que_jobs.job_id;
+
+
+--
+-- Name: quick_tips; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.quick_tips (
+    id bigint NOT NULL,
+    slug character varying NOT NULL,
+    title character varying NOT NULL,
+    body character varying,
+    journey_id bigint,
+    step_id bigint,
+    application_slug character varying,
+    application_title character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: quick_tips_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.quick_tips_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: quick_tips_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.quick_tips_id_seq OWNED BY public.quick_tips.id;
 
 
 --
@@ -468,6 +519,13 @@ ALTER TABLE ONLY public.que_jobs ALTER COLUMN job_id SET DEFAULT nextval('public
 
 
 --
+-- Name: quick_tips id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips ALTER COLUMN id SET DEFAULT nextval('public.quick_tips_id_seq'::regclass);
+
+
+--
 -- Name: steps id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -555,6 +613,14 @@ ALTER TABLE ONLY public.pg_search_documents
 
 ALTER TABLE ONLY public.que_jobs
     ADD CONSTRAINT que_jobs_pkey PRIMARY KEY (queue, priority, run_at, job_id);
+
+
+--
+-- Name: quick_tips quick_tips_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT quick_tips_pkey PRIMARY KEY (id);
 
 
 --
@@ -656,6 +722,27 @@ CREATE INDEX index_pg_search_documents_on_tsv_title ON public.pg_search_document
 
 
 --
+-- Name: index_quick_tips_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_quick_tips_on_journey_id ON public.quick_tips USING btree (journey_id);
+
+
+--
+-- Name: index_quick_tips_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_quick_tips_on_slug ON public.quick_tips USING btree (slug);
+
+
+--
+-- Name: index_quick_tips_on_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_quick_tips_on_step_id ON public.quick_tips USING btree (step_id);
+
+
+--
 -- Name: index_steps_on_journey_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -747,6 +834,14 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_docume
 
 
 --
+-- Name: quick_tips fk_rails_0a21363dd0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT fk_rails_0a21363dd0 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -784,6 +879,14 @@ ALTER TABLE ONLY public.user_tasks
 
 ALTER TABLE ONLY public.user_journeys
     ADD CONSTRAINT fk_rails_70185eaf12 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: quick_tips fk_rails_8c50350cb1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT fk_rails_8c50350cb1 FOREIGN KEY (step_id) REFERENCES public.steps(id);
 
 
 --
@@ -849,6 +952,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190423214925'),
 ('20190424074855'),
 ('20190529210530'),
-('20190529210630');
+('20190529210630'),
+('20190608102251');
 
 
