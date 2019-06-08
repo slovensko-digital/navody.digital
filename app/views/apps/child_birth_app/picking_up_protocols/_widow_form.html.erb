@@ -1,0 +1,25 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_tag apps_child_birth_app_picking_up_protocol_path, method: :get, remote: true do %>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="example-hint">
+          <legend class="govuk-fieldset__legend">
+            Narodilo sa dieťa do 300 dní od úmrtia manžela?
+            <%= hidden_field_tag :mother_civil_state, 'widow' %>
+          </legend>
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :born_before_300_days, 'yes', false, class: 'govuk-radios__input' %>
+              <%= label_tag :born_before_300_days_yes, 'Áno', class: 'govuk-label govuk-radios__label' %>
+            </div>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag :born_before_300_days, 'no', false, class: 'govuk-radios__input' %>
+              <%= label_tag :born_before_300_days_no, 'Nie', class: 'govuk-label govuk-radios__label' %>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <%= submit_tag 'Odoslať', class: 'govuk-button' %>
+    <% end %>
+  </div>
+</div>
