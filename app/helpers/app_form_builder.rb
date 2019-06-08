@@ -60,6 +60,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
 
     classes = 'govuk-form-group'
+    classes = classes + ' govuk-radios--inline' if options[:inline]
     classes = classes + ' govuk-form-group--error' if @object.errors[method].present?
     @template.content_tag(:div, class: classes) do
       @template.concat radios_fs

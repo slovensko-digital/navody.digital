@@ -5,24 +5,10 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <%= f.hidden_field :step %>
-      <div class="govuk-form-group
-        <% if @application_form.errors[:sk_citizen].any? %> govuk-form-group--error
-        <% end %>">
-        <fieldset class="govuk-fieldset" aria-describedby="<%= f.error_id :sk_citizen %>">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h2 class="govuk-fieldset__heading">
-              Ste občan Slovenskej republiky?
-            </h2>
-          </legend>
-
-          <%= f.error_message :sk_citizen %>
-
-          <div class="govuk-radios govuk-radios--inline">
-            <%= f.radio_button :sk_citizen, 'yes', label: "Áno" %>
-            <%= f.radio_button :sk_citizen, 'no', label: "Nie" %>
-          </div>
-        </fieldset>
-      </div>
+      <%= f.radios :sk_citizen, 'Ste občan Slovenskej republiky?', inline: true do %>
+        <%= f.radio_button :sk_citizen, 'yes', label: "Áno" %>
+        <%= f.radio_button :sk_citizen, 'no', label: "Nie" %>
+      <% end %>
 
       <%= f.submit 'Pokračovať' %>
     <% end %>
