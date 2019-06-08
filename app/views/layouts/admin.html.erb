@@ -36,19 +36,24 @@
         <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
         <nav>
           <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
-            <li class="govuk-header__navigation-item govuk-header__navigation-item">
+            <% klass = current_page?(admin_documents_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'Featured on front page', admin_documents_path, class: 'govuk-header__link' %>
             </li>
-            <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
+            <% klass = current_page?(admin_pages_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'Pages', admin_pages_path, class: 'govuk-header__link' %>
             </li>
-            <li class="govuk-header__navigation-item">
+            <% klass = current_page?(admin_journeys_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'Journeys', admin_journeys_path, class: 'govuk-header__link' %>
             </li>
-            <li class="govuk-header__navigation-item">
+            <% klass = current_page?(admin_apps_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'Apps', admin_apps_path, class: 'govuk-header__link' %>
             </li>
-            <li class="govuk-header__navigation-item">
+            <% klass = current_page?(admin_user_journeys_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'UserJourneys', admin_user_journeys_path, class: 'govuk-header__link' %>
             </li>
           </ul>
