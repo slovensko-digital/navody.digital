@@ -6,6 +6,8 @@ class NotificationSubscriptionsController < ApplicationController
     @group.subscription_types = params[:notification_subscription_group][:subscription_types]
     @group.user = current_user
 
+    @group.journey = current_journey
+
     respond_to do |format|
       if @group.valid?
         confirmation_email = current_user.create_notification_subscriptions(params[:notification_subscription_group])
