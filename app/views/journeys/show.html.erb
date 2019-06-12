@@ -7,7 +7,7 @@
     <div class="govuk-body sdn-content">
       <h2 class="govuk-heading-l">Úvodné informácie</h2>
       <%#= raw @journey.description %>
-      <%= @journey.blank? ? (render 'journeys/blank') : (raw @journey.description) %>
+      <%= @journey.blank? ? (render partial: 'journeys/blank', locals: {current_journey: @journey} ) : (raw @journey.description) %>
     </div>
 
     <%= render 'journeys/todo_list', step: @step %>

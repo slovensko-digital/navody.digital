@@ -1,5 +1,5 @@
 module NotificationSubscriptionsHelper
-  def render_notification_subscription_component(subscription_types)
+  def render_notification_subscription_component(subscription_types, current_journey = nil)
     group = NotificationSubscriptionGroup.new(subscription_types: subscription_types)
     group.user = current_user
     group.journey = current_journey

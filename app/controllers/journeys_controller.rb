@@ -8,7 +8,5 @@ class JourneysController < ApplicationController
 
     @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
 
-    session[:journey_id] = params[:id]
-
   end
 end

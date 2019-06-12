@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  def current_journey
-    if session[:journey_id]
-      @__current_journey ||= Journey.find_by!(slug: session[:journey_id])
-    end
-  end
-
-  helper_method :current_journey
-
   def require_user
     unless current_user.logged_in?
       redirect_to new_session_path

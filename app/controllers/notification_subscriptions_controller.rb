@@ -6,7 +6,7 @@ class NotificationSubscriptionsController < ApplicationController
     @group.subscription_types = params[:notification_subscription_group][:subscription_types]
     @group.user = current_user
 
-    @group.journey = current_journey
+    @group.journey = params[:notification_subscription_group][:journey]
 
     respond_to do |format|
       if @group.valid?
