@@ -14,6 +14,41 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: apps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apps (
+    id bigint NOT NULL,
+    title text NOT NULL,
+    slug text NOT NULL,
+    image_name text NOT NULL,
+    published_status text NOT NULL,
+    description text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.apps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.apps_id_seq OWNED BY public.apps.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -38,9 +73,9 @@ CREATE TABLE public.journeys (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     description text NOT NULL,
-    "position" integer DEFAULT 0 NOT NULL,
     featured_position integer DEFAULT 0 NOT NULL,
-    image_name text
+    image_name text,
+    custom_title character varying
 );
 
 
@@ -151,7 +186,9 @@ CREATE TABLE public.pg_search_documents (
     keywords character varying,
     title character varying,
     tsv_keywords tsvector,
-    tsv_title tsvector
+    tsv_title tsvector,
+    "position" integer DEFAULT 0,
+    published boolean DEFAULT false
 );
 
 
@@ -217,6 +254,43 @@ ALTER SEQUENCE public.que_jobs_job_id_seq OWNED BY public.que_jobs.job_id;
 
 
 --
+-- Name: quick_tips; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.quick_tips (
+    id bigint NOT NULL,
+    slug character varying NOT NULL,
+    title character varying NOT NULL,
+    body character varying,
+    journey_id bigint,
+    step_id bigint,
+    application_slug character varying,
+    application_title character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: quick_tips_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.quick_tips_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: quick_tips_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.quick_tips_id_seq OWNED BY public.quick_tips.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -242,7 +316,8 @@ CREATE TABLE public.steps (
     "position" integer DEFAULT 0 NOT NULL,
     app_url character varying,
     type character varying DEFAULT 'BasicStep'::character varying NOT NULL,
-    app_link_text character varying
+    app_link_text character varying,
+    custom_title character varying
 );
 
 
@@ -432,6 +507,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: apps id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -464,6 +546,13 @@ ALTER TABLE ONLY public.pg_search_documents ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.que_jobs ALTER COLUMN job_id SET DEFAULT nextval('public.que_jobs_job_id_seq'::regclass);
+
+
+--
+-- Name: quick_tips id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips ALTER COLUMN id SET DEFAULT nextval('public.quick_tips_id_seq'::regclass);
 
 
 --
@@ -506,6 +595,14 @@ ALTER TABLE ONLY public.user_tasks ALTER COLUMN id SET DEFAULT nextval('public.u
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apps
+    ADD CONSTRAINT apps_pkey PRIMARY KEY (id);
 
 
 --
@@ -554,6 +651,14 @@ ALTER TABLE ONLY public.pg_search_documents
 
 ALTER TABLE ONLY public.que_jobs
     ADD CONSTRAINT que_jobs_pkey PRIMARY KEY (queue, priority, run_at, job_id);
+
+
+--
+-- Name: quick_tips quick_tips_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT quick_tips_pkey PRIMARY KEY (id);
 
 
 --
@@ -662,6 +767,27 @@ CREATE INDEX index_pg_search_documents_on_tsv_title ON public.pg_search_document
 
 
 --
+-- Name: index_quick_tips_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_quick_tips_on_journey_id ON public.quick_tips USING btree (journey_id);
+
+
+--
+-- Name: index_quick_tips_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_quick_tips_on_slug ON public.quick_tips USING btree (slug);
+
+
+--
+-- Name: index_quick_tips_on_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_quick_tips_on_step_id ON public.quick_tips USING btree (step_id);
+
+
+--
 -- Name: index_steps_on_journey_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -753,6 +879,14 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_docume
 
 
 --
+-- Name: quick_tips fk_rails_0a21363dd0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT fk_rails_0a21363dd0 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -798,6 +932,14 @@ ALTER TABLE ONLY public.user_tasks
 
 ALTER TABLE ONLY public.user_journeys
     ADD CONSTRAINT fk_rails_70185eaf12 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: quick_tips fk_rails_8c50350cb1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.quick_tips
+    ADD CONSTRAINT fk_rails_8c50350cb1 FOREIGN KEY (step_id) REFERENCES public.steps(id);
 
 
 --
@@ -862,7 +1004,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190423124647'),
 ('20190423214925'),
 ('20190424074855'),
-('20190608195349'),
+('20190529210530'),
+('20190529210630'),
+('20190608102251'),
+('20190608130459'),
+('20190608135807'),
 ('20190608201245');
 
 

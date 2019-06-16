@@ -61,12 +61,12 @@ class Admin::JourneysController < Admin::AdminController
   def journey_params
     params.require(:journey).permit(
         :title,
+        :custom_title,
         :image_name,
         :keywords,
         :published_status,
         :slug,
         :description,
-        :position
     )
   end
 end

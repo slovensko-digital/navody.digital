@@ -3,8 +3,8 @@
     <% form.errors[:subscriptions].each do |error| %>
       <span class="govuk-error-message"><%= error %></span>
     <% end %>
-    <div class="govuk-checkboxes">
-      <% form.subscription_types.each_with_index do |type, index| %>
+      <div class="govuk-checkboxes">
+        <% form.subscription_types.each_with_index do |type, index| %>
         <% subscription = NotificationSubscription::TYPES.fetch(type) %>
         <div class="govuk-checkboxes__item">
           <%= check_box_tag 'notification_subscription_group[subscriptions][]', type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
@@ -32,6 +32,7 @@
   <% end %>
 
   <div class="govuk-form-group">
+    <%= hidden_field_tag 'notification_subscription_group[journey_id]', form.journey %>
     <%= submit_tag 'Chcem dostávať tieto notifikácie', class: 'govuk-button' %>
   </div>
 <% end %>

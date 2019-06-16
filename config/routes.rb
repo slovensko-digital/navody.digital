@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: redirect('admin/pages')
 
+    resources :documents, only: [:index, :edit, :update]
+    resources :apps, except: [:show]
     resources :pages, except: [:show]
     resources :journeys, except: [:show] do
       resources :steps, except: [:show] do
@@ -39,6 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :quick_tips, path: 'caste-otazky', only: :show
+
   namespace :apps, path: 'aplikacie' do
     namespace :ep_vote_app, path: 'volby-do-europskeho-parlamentu' do
       resource :application_forms, path: '' do
@@ -53,6 +57,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :apps, path: 'aplikacie' # faux route
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'

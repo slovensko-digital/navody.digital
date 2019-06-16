@@ -1,0 +1,21 @@
+<%= content_for :title, build_page_title(@quick_tip.title) %>
+<%= content_for(:headerline, 'Časté otázky') %>
+<%= content_for :description, truncate(strip_tags(@quick_tip.body), length: 500) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body sdn-content">
+      <h1><%= @quick_tip.title %></h1>
+      <% if @quick_tip.journey %>
+        <p class="govuk-body-lead">Podrobnejšie informácie nájdete v návode <%= link_to @quick_tip.journey.title, @quick_tip.journey %>.</p>
+        <%= link_to "Prejsť na návod", @quick_tip.journey, class: 'govuk-button govuk-button--large' %>
+      <% elsif @quick_tip.step %>
+        <p class="govuk-body-lead">Informácie nájdete v návode <%= link_to @quick_tip.step.title, journey_step_path(@quick_tip.step.journey, @quick_tip.step) %>.</p>
+        <%= link_to "Prejsť na návod", journey_step_path(@quick_tip.step.journey, @quick_tip.step), class: 'govuk-button govuk-button--large' %>
+      <% elsif @quick_tip.application_slug.present? %>
+        <p class="govuk-body-lead">Môžete použiť aplikáciu <%= link_to @quick_tip.application_title, app_path(@quick_tip.application_slug) %>.</p>
+        <%= link_to "Prejsť na aplikáciu", app_path(@quick_tip.application_slug), class: 'govuk-button govuk-button--large' %>
+      <% end %>
+    </div>
+  </div>
+</div>

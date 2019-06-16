@@ -4,8 +4,6 @@ class Journey < ApplicationRecord
 
   before_save :update_steps_search
 
-  default_scope { order(position: :asc) }
-
   scope :published, -> { where(published_status: 'PUBLISHED')}
   scope :blank, -> { where(published_status: 'BLANK')}
 
@@ -14,6 +12,8 @@ class Journey < ApplicationRecord
   has_many :user_journeys
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
+
+  has_many :search_documents, :class_name => 'PgSearch::Document', as: :searchable
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -24,7 +24,8 @@ class Journey < ApplicationRecord
                   if: :published?,
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
-                      keywords: journey.keywords_search }
+                      keywords: journey.keywords_search,
+                      published: journey.published?}
                   }
 
   def published?

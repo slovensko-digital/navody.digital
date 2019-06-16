@@ -11,7 +11,9 @@
  * It is generally better to create a new file per style scope.
  *
  *= require cookieconsent.min
- *= require_tree .
+ *= require navody-digital-0.1.4.min
+ *= require static
+ *= require navody-digital-fixes
  *= require_self
  */
 

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Notification subscriptions", type: :feature do
   let!(:user) {create(:user, email: 'someone@example.com')}
+  let!(:blank_journey) {create(:journey, id: 1, published_status: "BLANK")}
 
   def sign_in(user)
     OmniAuth.config.test_mode = false
@@ -59,4 +60,30 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     expect(ActionMailer::Base.deliveries).to be_empty
   end
+
+  scenario 'As an anonymous user I want to subscribe to blank journey notification' do
+    visit journey_path(blank_journey)
+
+    check 'Chcem dostať informáciu o doplnení tohto návodu'
+
+    fill_in 'Emailová adresa pre notifikácie', with: 'example@email.com'
+
+    click_button 'Chcem dostávať tieto notifikácie'
+
+    visit link_in_last_email
+
+    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
+  end
+
+  scenario 'As a logged user I want to subscribe to blank journey notification' do
+    sign_in(user)
+    visit journey_path(blank_journey)
+
+    check 'Chcem dostať informáciu o doplnení tohto návodu'
+
+    click_button 'Chcem dostávať tieto notifikácie'
+
+    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
+  end
+
 end

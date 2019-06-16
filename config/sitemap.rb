@@ -17,6 +17,10 @@ SitemapGenerator::Sitemap.create do
     end
   end
 
+  QuickTip.find_each do |tip|
+    add quick_tip_path(tip), lastmod: tip.updated_at
+  end
+
   add faqs_path
   add 'aplikacie/volby-do-europskeho-parlamentu'
 end
