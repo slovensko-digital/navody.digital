@@ -8,7 +8,6 @@
         <%= render 'shared/flash_messages' %>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-l">Najpoužívanejšie návody a aplikácie</h2>
             <div class="sdn-tiles">
               <% @documents.each do |searchable| %>
                 <%= link_to decide_searchable_path(searchable), class: 'sdn-tiles__item sdn-tile' do %>
