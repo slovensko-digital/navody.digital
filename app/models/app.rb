@@ -15,8 +15,7 @@ class App < ApplicationRecord
     if: :published?,
     additional_attributes: -> (app) {
       { title: app.title_search,
-        published: app.published?
-      }
+        published: app.published?}
     }
 
   def published?

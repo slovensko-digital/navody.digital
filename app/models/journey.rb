@@ -6,6 +6,7 @@ class Journey < ApplicationRecord
 
   scope :published, -> { where(published_status: 'PUBLISHED')}
   scope :blank, -> { where(published_status: 'BLANK')}
+  scope :displayable, -> { published.or(blank) }
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps

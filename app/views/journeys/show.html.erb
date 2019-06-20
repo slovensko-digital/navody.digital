@@ -8,7 +8,7 @@
       <h2 class="govuk-heading-l">Úvodné informácie</h2>
 
       <% if @journey.blank? %>
-        <%= render partial: 'journeys/blank', locals: {journey_id: @journey.id}%>
+        <%= render partial: 'journeys/blank', locals: {journey: @journey}%>
       <% else %>
         <%= raw @journey.description %>
       <% end %>

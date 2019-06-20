@@ -22,7 +22,7 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step1) {create(:step, journey: journey)}
   let!(:step2) {create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep')}
   let!(:task) {create(:task, step: step1)}
-  let!(:blank_journey) {create(:journey, id: 1, published_status: "BLANK")}
+  let!(:blank_journey) {create(:journey, published_status: "BLANK")}
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails

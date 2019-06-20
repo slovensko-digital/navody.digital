@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Notification subscriptions", type: :feature do
   let!(:user) {create(:user, email: 'someone@example.com')}
-  let!(:blank_journey) {create(:journey, id: 1, published_status: "BLANK")}
+  let!(:blank_journey) {create(:journey, published_status: "BLANK")}
 
   def sign_in(user)
     OmniAuth.config.test_mode = false
