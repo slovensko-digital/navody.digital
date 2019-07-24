@@ -7,6 +7,7 @@ jobs:
       - image: circleci/ruby:2.6.2-node-browsers
         environment:
           RAILS_ENV: test
+          CC_TEST_REPORTER_ID: ${CC_TEST_REPORTER_ID}
 
       - image: circleci/postgres:10-alpine-ram
         environment:
