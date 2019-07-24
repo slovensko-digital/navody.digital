@@ -7,6 +7,7 @@ jobs:
       - image: circleci/ruby:2.6.2-node-browsers
         environment:
           RAILS_ENV: test
+          CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
 
       - image: circleci/postgres:10-alpine-ram
         environment:
@@ -36,7 +37,7 @@ jobs:
           command: |
             ./cc-test-reporter before-build
             bundle exec rspec --format progress --format RspecJunitFormatter --out test_results/rspec.xml
-            ./cc-test-reporter after-build --id ${CC_TEST_REPORTER_ID} --coverage-input-type simplecov --exit-code $?
+            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
       - store_test_results:
           path: test_results
 
