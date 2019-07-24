@@ -20,6 +20,7 @@ jobs:
       - run: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client-10
+      - run: yarn
       - restore_cache: { keys: ['{{ checksum "Gemfile.lock" }}'] }
       - run: bundle install --path vendor/bundle
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
