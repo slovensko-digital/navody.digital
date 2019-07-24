@@ -18,9 +18,6 @@
 //= require_directory .
 
 $(document).on('turbolinks:load', function () {
-    // Initialize GovUK Javascript
-    window.navodyDigitalFrontend.initAll();
-
     // Initialize Cookie Bar
     window.cookieconsent.initialise({
         "palette": {
