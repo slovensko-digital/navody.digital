@@ -28,18 +28,10 @@
       </div>
     </div>
 
-    <div class="govuk-width-container">
+    <div class="govuk-width-container govuk-!-padding-top-4">
       <div class="govuk-main-wrapper govuk-main-wrapper--l">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <h3 class="govuk-heading-l">Často kladené otázky</h3>
-            <ul class="govuk-list">
-              <% @faqs.each do |faq| %>
-                <li><%= link_to faq.title, faq_path(faq) %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+        <h3 class="govuk-heading-l">Často kladené otázky</h3>
+        <%= render "components/faq", faqs: @faqs %>
       </div>
     </div>
   </main>
