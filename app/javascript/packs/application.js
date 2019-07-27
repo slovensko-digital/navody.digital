@@ -12,6 +12,7 @@
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
 //
+import '../application.sass'
 
 import { initAll } from 'navody-digital-frontend'
 
