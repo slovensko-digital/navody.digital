@@ -12,8 +12,7 @@
  *
  *= require cookieconsent.min
  *= require static
- *= require navody-digital-frontend/all
- *= require navody-digital-fixes
+ *= require navody-frontend-fixes
  *= require_self
  */
 
