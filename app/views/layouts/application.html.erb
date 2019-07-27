@@ -22,6 +22,7 @@
   <meta property="og:description" content="<%= @metadata.og.description.presence || yield(:description) %>"/>
   <meta property="og:image" content="<%= @metadata.og.image.present? ? image_url(@metadata.og.image) : image_url('og-navody.png') %>"/>
   <%= javascript_pack_tag 'application' %>
+  <%= stylesheet_pack_tag 'application' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
