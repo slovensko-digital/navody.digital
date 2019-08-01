@@ -4281,10 +4281,10 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-navody-digital-frontend@0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/navody-digital-frontend/-/navody-digital-frontend-0.1.6.tgz#e0b875e22e8eafff7111e3c050a65f5a4cdd21f2"
-  integrity sha512-xFlxn2h80ikbiCuRvCPza+aS6DS+kWykHjGqAcHbf+47rGVI0gLvnBClg8X3yjeJxm4zgj4vYKQy+dWf902uQw==
+navody-digital-frontend@0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/navody-digital-frontend/-/navody-digital-frontend-0.1.7.tgz#4007ad36e8cd4654fe5cea6add524c9baa098eb1"
+  integrity sha512-b1kTB/kn3nX1R4heDAeaOzGNEKom4Dt0cUeTBdTMp3BAhLozcldfhlDkinGMcF5odTMGMHmTxKw5SOtTUYLb7A==
 
 needle@^2.2.1:
   version "2.4.0"
