@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     if EmailValidator.new(params[:email]).valid?
       @email = params[:email]
     else
-      @error = true
+      @email_error = true
       render :new
     end
   end
