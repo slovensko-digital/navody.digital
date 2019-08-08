@@ -22,7 +22,7 @@ class Journey < ApplicationRecord
   # FIXME: fill in position from id!
 
   multisearchable against: %i(description_search),
-                  if: :published?,
+                  if: :searchable?,
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
                       keywords: journey.keywords_search,
@@ -35,6 +35,10 @@ class Journey < ApplicationRecord
 
   def blank?
     published_status == 'BLANK'
+  end
+
+  def searchable?
+    published? || blank?
   end
 
   def to_param

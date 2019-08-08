@@ -19,8 +19,8 @@ class NotificationSubscription < ApplicationRecord
       hint: 'Ak chcete vedieť o ďalších zlepšovákoch, ktoré pripravujeme, zvoľte si aj túto možnosť. Neposielame žiadny spam, bude to užitočné a len raz za čas.',
     },
     'BlankJourneySubscription' => {
-      label: 'Chcem dostať informáciu o doplnení tohto návodu',
-      hint: 'Zašleme Vám e-mail, keď doplníme tento návod.',
+      label: 'Chcem odoberať informácie k tomuto návodu',
+      hint: 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.',
     },
   }
 
