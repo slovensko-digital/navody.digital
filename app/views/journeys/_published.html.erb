@@ -1,0 +1,15 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body sdn-content">
+      <h2 class="govuk-heading-l">Úvodné informácie</h2>
+      <%= raw @journey.description %>
+    </div>
+
+      <%= render 'journeys/todo_list', step: @step %>
+
+      <%= render partial: 'components/next_step', object: @next_step, locals: {journey: @journey} %>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <%= render 'components/timeline' %>
+    </div>
+  </div>

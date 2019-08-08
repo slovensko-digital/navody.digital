@@ -125,7 +125,8 @@ CREATE TABLE public.notification_subscriptions (
     confirmation_sent_at timestamp without time zone,
     confirmed_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    journey_id bigint
 );
 
 
@@ -738,6 +739,13 @@ CREATE INDEX index_notification_subscriptions_on_confirmation_token ON public.no
 
 
 --
+-- Name: index_notification_subscriptions_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notification_subscriptions_on_journey_id ON public.notification_subscriptions USING btree (journey_id);
+
+
+--
 -- Name: index_notification_subscriptions_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -909,6 +917,14 @@ ALTER TABLE ONLY public.notification_subscriptions
 
 
 --
+-- Name: notification_subscriptions fk_rails_2fb637afd2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notification_subscriptions
+    ADD CONSTRAINT fk_rails_2fb637afd2 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: user_steps fk_rails_56d22858e3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1006,6 +1022,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190529210630'),
 ('20190608102251'),
 ('20190608130459'),
-('20190608135807');
+('20190608135807'),
+('20190608201245');
 
 

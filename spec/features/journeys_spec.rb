@@ -22,6 +22,7 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step1) {create(:step, journey: journey)}
   let!(:step2) {create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep')}
   let!(:task) {create(:task, step: step1)}
+  let!(:blank_journey) {create(:journey, published_status: "BLANK")}
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
@@ -108,4 +109,20 @@ RSpec.feature "Journeys", type: :feature do
 
     expect(page).not_to have_checked_field(task.title)
   end
+
+  scenario 'As an anonymous user I want to check if blank journey displays correctly' do
+    visit journey_path(blank_journey)
+
+    expect(page).to have_content('Na tomto návode ešte len pracujeme')
+    expect(page).to have_content(blank_journey.title)
+  end
+
+  scenario 'As a logged user I want to check if blank journey displays correctly' do
+    sign_in(user)
+    visit journey_path(blank_journey)
+
+    expect(page).to have_content('Na tomto návode ešte len pracujeme')
+    expect(page).to have_content(blank_journey.title)
+  end
+
 end
