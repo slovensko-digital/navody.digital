@@ -19,8 +19,8 @@ class SubscribeSendinblueJob < ApplicationJob
   def create_contact(email, list_id)
     Sendinblue::Contact.create(
       email: email,
-      list_ids: [list_id],
-      update_enabled: true,
+      listIds: [list_id],
+      updateEnabled: true,
     )
   end
 end
