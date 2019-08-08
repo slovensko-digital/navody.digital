@@ -18,18 +18,9 @@
 
     <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
       <fieldset class="govuk-fieldset">
-        <div class="govuk-form-group">
-          <span class="govuk-label-wrapper">
-            <label class="govuk-label govuk-label--m">alebo e-mailom</label>
-          </span>
-          <span class="govuk-hint">
-            Pošleme Vám jednoduchý odkaz na prihlásenie sa.
-          </span>
-          <%= email_field_tag :email, nil, class: 'govuk-input' %>
-        </div>
+        <%= email_input_tag(content: params[:email], error: @error) %>
         <%= submit_tag 'Prihlásiť sa e-mailom', class: 'govuk-button' %>
       </fieldset>
     <% end %>
   </div>
 </div>
-

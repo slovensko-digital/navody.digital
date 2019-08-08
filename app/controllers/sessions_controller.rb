@@ -15,7 +15,12 @@ class SessionsController < ApplicationController
   end
 
   def magic_link_info
-    @email = params[:email]
+    if EmailValidator.new(params[:email]).valid?
+      @email = params[:email]
+    else
+      @error = true
+      render :new
+    end
   end
 
   def failure
