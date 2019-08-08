@@ -113,7 +113,7 @@ RSpec.feature "Journeys", type: :feature do
   scenario 'As an anonymous user I want to check if blank journey displays correctly' do
     visit journey_path(blank_journey)
 
-    expect(page).to have_content('Tento návod je zatiaľ prázdny')
+    expect(page).to have_content('Na tomto návode ešte len pracujeme')
     expect(page).to have_content(blank_journey.title)
   end
 
@@ -121,7 +121,7 @@ RSpec.feature "Journeys", type: :feature do
     sign_in(user)
     visit journey_path(blank_journey)
 
-    expect(page).to have_content('Tento návod je zatiaľ prázdny')
+    expect(page).to have_content('Na tomto návode ešte len pracujeme')
     expect(page).to have_content(blank_journey.title)
   end
 

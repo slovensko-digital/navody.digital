@@ -33,7 +33,7 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     check 'Chcem dostávať upozornenia k voľbám'
 
-    fill_in 'Emailová adresa pre notifikácie', with: 'johno@jsmf.net'
+    fill_in 'Emailová adresa', with: 'johno@jsmf.net'
 
     click_button 'Chcem dostávať tieto notifikácie'
 
@@ -64,9 +64,9 @@ RSpec.feature "Notification subscriptions", type: :feature do
   scenario 'As an anonymous user I want to subscribe to blank journey notification' do
     visit journey_path(blank_journey)
 
-    check 'Chcem dostať informáciu o doplnení tohto návodu'
+    check 'Chcem odoberať informácie k tomuto návodu'
 
-    fill_in 'Emailová adresa pre notifikácie', with: 'example@email.com'
+    fill_in 'Emailová adresa', with: 'example@email.com'
 
     click_button 'Chcem dostávať tieto notifikácie'
 
@@ -79,11 +79,12 @@ RSpec.feature "Notification subscriptions", type: :feature do
     sign_in(user)
     visit journey_path(blank_journey)
 
-    check 'Chcem dostať informáciu o doplnení tohto návodu'
+    check 'Chcem odoberať informácie k tomuto návodu'
+
+    clear_mail_deliveries
 
     click_button 'Chcem dostávať tieto notifikácie'
 
-    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
+    expect(ActionMailer::Base.deliveries).to be_empty
   end
-
 end
