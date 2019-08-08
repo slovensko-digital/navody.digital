@@ -3,11 +3,16 @@ default: &default
     client_id: <%= ENV.fetch('GOOGLE_CLIENT_ID', nil) %>
     client_secret: <%= ENV.fetch('GOOGLE_CLIENT_SECRET', nil) %>
 
+  sendinblue:
+    api: <%= ENV.fetch('SENDINBLUE_API', nil) %>
+
 development:
   <<: *default
 
 test:
   <<: *default
+  sendinblue:
+    api: ''
 
 staging:
   <<: *default

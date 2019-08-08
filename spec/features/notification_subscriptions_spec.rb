@@ -23,6 +23,8 @@ RSpec.feature "Notification subscriptions", type: :feature do
   end
 
   scenario 'As a visitor I want to subscribe to various notifications' do
+    expect(Sendinblue::AddEmailByType).to receive(:call).with('johno@jsmf.net', 'VoteSubscription')
+
     visit apps_ep_vote_app_application_forms_path
 
     click_button 'Súhlasím a chcem začať'
@@ -43,6 +45,9 @@ RSpec.feature "Notification subscriptions", type: :feature do
   end
 
   scenario 'As a logged in user I want to subscribe to various notifications' do
+    expect(Sendinblue::AddEmailByType).to receive(:call).with('someone@example.com', 'NewsletterSubscription')
+    expect(Sendinblue::AddEmailByType).to receive(:call).with('someone@example.com', 'VoteSubscription')
+
     sign_in user
     visit apps_ep_vote_app_application_forms_path
 

@@ -21,6 +21,7 @@ class NotificationSubscriptionsController < ApplicationController
   def confirm
     @subscriptions = NotificationSubscription.where(confirmation_token: params[:id])
     @subscriptions.each do |subscription|
+      Sendinblue::AddEmailByType.call(subscription.email, subscription.type)
       subscription.confirm
     end
   end
