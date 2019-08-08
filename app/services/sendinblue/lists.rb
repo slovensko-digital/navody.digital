@@ -1,27 +1,22 @@
 module Sendinblue
   class Lists
     def self.find_by_name(name)
-      limit = 50 # maximum limit
-      page = 0
-
-      opts = {
-        limit: limit,
-        offset: page * limit,
+      options = {
+        limit: 50,
+        offset: 0
       }
-      matched = nil
+      result = api_instance.get_lists(options)
+      total_pages = (result.count / limit) + 1
 
-      loop do
-        lists = api_instance.get_lists(opts).lists
-        break if lists.empty?
+      total_pages.times do |n|
+        matched = result.lists.detect{|i| i[:name] == name }
+        return matched if matched
 
-        matched = lists.detect{|i| i[:name] == name }
-        break if matched
-
-        page += 1
-        opts[:offset] = page * limit
+        options[:offset] = (n+1) * options[:limit]
+        result = api_instance.get_lists(options)
       end
 
-      matched
+      nil
     end
 
     private
