@@ -15,8 +15,8 @@ RSpec.describe SubscribeSendinblueJob, type: :job do
       expect(Sendinblue::Lists).to receive(:find_by_name).with('list-name').and_return(id: '34')
       expect(Sendinblue::Contact).to receive(:create).with(
         email: 'email',
-        list_ids: ['34'],
-        update_enabled: true
+        listIds: ['34'],
+        updateEnabled: true
       )
       SubscribeSendinblueJob.perform_now('email', 'list-name')
     end
