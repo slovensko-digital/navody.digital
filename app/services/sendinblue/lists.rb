@@ -6,7 +6,7 @@ module Sendinblue
         offset: 0
       }
       result = api_instance.get_lists(options)
-      total_pages = (result.count / limit) + 1
+      total_pages = (result.count / options[:limit]) + 1
 
       total_pages.times do |n|
         matched = result.lists.detect{|i| i[:name] == name }
