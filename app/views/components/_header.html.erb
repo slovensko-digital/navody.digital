@@ -4,6 +4,7 @@
       <span class="sdn-header__product-name">Návody.Digital</span>
     <% end %>
     <div class="sdn-header__content">
+      <button type="button" role="button" class="sdn-header__menu-button sdn-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="sdn-header__navigation" aria-label="Navigácia">
           <% unless current_page?(root_path) || current_page?(search_path) %>
