@@ -28,7 +28,7 @@
             </span>
             <span class="govuk-error-message">
               <span class="govuk-visually-hidden"></span>Email je neplatný
-            </span>            
+            </span>
             <%= email_field_tag :email, params[:email], class: 'govuk-input govuk-input--error' %>
           </div>
         <% else %>
@@ -39,7 +39,7 @@
             <span class="govuk-hint">
               Pošleme Vám jednoduchý odkaz na prihlásenie sa.
             </span>
-            <%= email_field_tag :email, nil, class: 'govuk-input' %>
+            <%= email_field_tag :email, nil, class: 'govuk-input', required: true %>
           </div>
         <% end %>
         <%= submit_tag 'Prihlásiť sa e-mailom', class: 'govuk-button' %>

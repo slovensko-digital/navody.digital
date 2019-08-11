@@ -15,6 +15,8 @@ module OmniAuth
 
       def request_phase
         email = request[:email]
+        raise InvalidEmailError unless EmailValidator.new(email).valid?
+
         token = generate_magic_code(email, session.id)
 
         options[:on_send_link]&.call(email, token)
@@ -81,6 +83,9 @@ module OmniAuth
 
       def verifier
         ActiveSupport::MessageVerifier.new(secret_key)
+      end
+
+      class InvalidEmailError < StandardError
       end
     end
   end
