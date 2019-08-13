@@ -7,7 +7,7 @@ class JourneysController < ApplicationController
 
     load_newest_user_journey(current_user, @journey)
 
-    @journey.description = @journey.description.gsub(/(?<=<insert_form>).*?(?=<\/insert_form>)/) {|s| render_notification_subscription_component(s)} if @journey.description.include? '<insert_form>'
+    @journey.description = @journey.description.gsub(/(?<=<insert_form>).*?(?=<\/insert_form>)/) {|s| render_notification_subscription_component([s])} if @journey.description.include? '<insert_form>'
 
     @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
   end
