@@ -1,9 +1,13 @@
 class StepsController < ApplicationController
+  include NotificationSubscriptionsHelper
+
   def show
     @journey = Journey.published.find_by!(slug: params[:journey_id])
     @steps = @journey.steps
     @current_step = @steps.find_by!(slug: params[:id])
     @user_step_from_step_map = {}
+
+    @current_step.description = @current_step.description.gsub(/(?<=<insert_form>).*?(?=<\/insert_form>)/) {|s| render_notification_subscription_component(s)} if @current_step.description.include? '<insert_form>'
 
     @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
 
