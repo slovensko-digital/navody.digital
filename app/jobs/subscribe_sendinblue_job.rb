@@ -6,18 +6,18 @@ class SubscribeSendinblueJob < ApplicationJob
     if list && list[:id]
       create_contact(email, list[:id])
     else
-      raise "SubscribeSendinblueJob: Could not find list with name '#{list_name}'"
+      raise "#{self.class.name}: Could not find list with name '#{list_name}'"
     end
   end
 
   private
 
-  def find_list(list_name)
-    Sendinblue::Lists.find_by_name(list_name)
+  def find_list(name)
+    NewsletterService.find_list(name)
   end
 
   def create_contact(email, list_id)
-    Sendinblue::Contact.create(
+    NewsletterService.create_contact(
       email: email,
       listIds: [list_id],
       updateEnabled: true,

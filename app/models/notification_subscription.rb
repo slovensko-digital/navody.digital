@@ -28,6 +28,19 @@ class NotificationSubscription < ApplicationRecord
 
   def confirm
     self.confirmed_at = Time.now.utc unless self.confirmed_at
+    add_email_to_list
     save
   end
+
+  def add_email_to_list
+    list_name = TYPES.dig(type, :sendinblue_list_name)
+    if list_name.present?
+      SubscribeSendinblueJob.perform_later(find_email_for_newsletter, list_name)
+    end
+  end
+
+  def find_email_for_newsletter
+    user ? user.email : email
+  end
 end
+

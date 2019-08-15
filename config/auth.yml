@@ -4,7 +4,7 @@ default: &default
     client_secret: <%= ENV.fetch('GOOGLE_CLIENT_SECRET', nil) %>
 
   sendinblue:
-    api: <%= ENV.fetch('SENDINBLUE_API', nil) %>
+    api_key: <%= ENV.fetch('SENDINBLUE_API_KEY', nil) %>
 
 development:
   <<: *default
@@ -12,7 +12,7 @@ development:
 test:
   <<: *default
   sendinblue:
-    api: ''
+    api_key: ''
 
 staging:
   <<: *default
