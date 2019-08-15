@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
     end
     namespace :child_birth_app, path: 'narodenie-dietata' do
-      resource :picking_up_protocol, only: [:show], path: 'vyzdvihnutie-rodneho-listu'
+      get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
   end
   resources :apps, path: 'aplikacie' # faux route

@@ -1,11 +1,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_tag apps_child_birth_app_picking_up_protocol_path, method: :get, remote: true do %>
+      <%= hidden_field_tag :mother_civil_state, 'widow' %>
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="example-hint">
           <legend class="govuk-fieldset__legend">
             Narodilo sa dieťa do 300 dní od úmrtia manžela?
-            <%= hidden_field_tag :mother_civil_state, 'widow' %>
           </legend>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
