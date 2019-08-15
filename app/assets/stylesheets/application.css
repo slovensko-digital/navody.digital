@@ -73,3 +73,9 @@
 .sdn-todo-list-box--completed {
     border-left-color: #4cae18
 }
+
+.embedded-app {
+    border: 1px solid #bfc1c3;
+    padding: 30px 20px;
+    margin: 20px 0;
+}

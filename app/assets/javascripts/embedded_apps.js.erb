@@ -1,0 +1,7 @@
+$(document).on('turbolinks:load', function () {
+    const rodnyListApp = $('div[data-navody-app="narodenie-rodny-list"]')
+
+    if (rodnyListApp.length) {
+        $.get("<%= Rails.application.routes.url_helpers.apps_child_birth_app_picking_up_protocol_path %>");
+    }
+})
