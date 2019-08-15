@@ -9,5 +9,3 @@ RSpec.feature "Embedded apps", type: :feature, js: true do
     expect(page).to have_content('Slobodná')
   end
 end
-
-
