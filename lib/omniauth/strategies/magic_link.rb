@@ -15,7 +15,8 @@ module OmniAuth
 
       def request_phase
         email = request[:email]
-        raise InvalidEmailError unless EmailValidator.new(email).valid?
+        return fail!(:empty_email) unless email.present?
+        return fail!(:invalid_email) unless email.match? URI::MailTo::EMAIL_REGEXP
 
         token = generate_magic_code(email, session.id)
 
@@ -83,9 +84,6 @@ module OmniAuth
 
       def verifier
         ActiveSupport::MessageVerifier.new(secret_key)
-      end
-
-      class InvalidEmailError < StandardError
       end
     end
   end
