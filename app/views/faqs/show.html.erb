@@ -14,7 +14,8 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= @page.title %></h1>
-
-    <%= raw @page.content %>
+    <div class="govuk-body sdn-content">
+      <%= raw @page.content %>
+    </div>
   </div>
 </div>

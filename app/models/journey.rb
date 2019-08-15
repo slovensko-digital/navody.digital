@@ -4,15 +4,17 @@ class Journey < ApplicationRecord
 
   before_save :update_steps_search
 
-  default_scope { order(position: :asc) }
-
   scope :published, -> { where(published_status: 'PUBLISHED')}
+  scope :blank, -> { where(published_status: 'BLANK')}
+  scope :displayable, -> { published.or(blank) }
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
 
-  enumerates :published_status, with: %w{DRAFT PUBLISHED}
+  enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
+
+  has_many :search_documents, :class_name => 'PgSearch::Document', as: :searchable
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -20,14 +22,23 @@ class Journey < ApplicationRecord
   # FIXME: fill in position from id!
 
   multisearchable against: %i(description_search),
-                  if: :published?,
+                  if: :searchable?,
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
-                      keywords: journey.keywords_search }
+                      keywords: journey.keywords_search,
+                      published: journey.published?}
                   }
 
   def published?
     published_status == 'PUBLISHED'
+  end
+
+  def blank?
+    published_status == 'BLANK'
+  end
+
+  def searchable?
+    published? || blank?
   end
 
   def to_param

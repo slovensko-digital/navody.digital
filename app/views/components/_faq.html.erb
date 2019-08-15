@@ -1,0 +1,18 @@
+<div class="govuk-accordion" data-module="accordion" data-attribute="value">
+  <% faqs.each do |faq| %>
+    <div class="govuk-accordion__section ">
+      <div class="govuk-accordion__section-header">
+        <h3 class="govuk-accordion__section-heading" id="<%= faq.to_param %>">
+          <span class="govuk-accordion__section-button">
+            <%= faq.title %>
+          </span>
+        </h3>
+      </div>
+      <div class="govuk-accordion__section-content" aria-labelledby="<%= faq.to_param %>">
+        <div class="govuk-body sdn-content">
+          <%= raw faq.content %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

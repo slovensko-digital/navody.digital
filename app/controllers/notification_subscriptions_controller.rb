@@ -5,6 +5,7 @@ class NotificationSubscriptionsController < ApplicationController
     @group.subscriptions = params[:notification_subscription_group][:subscriptions]
     @group.subscription_types = params[:notification_subscription_group][:subscription_types]
     @group.user = current_user
+    @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
 
     respond_to do |format|
       if @group.valid?

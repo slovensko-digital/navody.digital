@@ -10,8 +10,8 @@
         <p class="govuk-body-lead">Podrobnejšie informácie nájdete v návode <%= link_to @quick_tip.journey.title, @quick_tip.journey %>.</p>
         <%= link_to "Prejsť na návod", @quick_tip.journey, class: 'govuk-button govuk-button--large' %>
       <% elsif @quick_tip.step %>
-        <p class="govuk-body-lead">Informácie nájdete v návode <%= link_to @quick_tip.step.title, @quick_tip.journey %>.</p>
-        <%= link_to "Prejsť na návod", [@quick_tip.journey, @quick_tip.step], class: 'govuk-button govuk-button--large' %>
+        <p class="govuk-body-lead">Informácie nájdete v návode <%= link_to @quick_tip.step.title, journey_step_path(@quick_tip.step.journey, @quick_tip.step) %>.</p>
+        <%= link_to "Prejsť na návod", journey_step_path(@quick_tip.step.journey, @quick_tip.step), class: 'govuk-button govuk-button--large' %>
       <% elsif @quick_tip.application_slug.present? %>
         <p class="govuk-body-lead">Môžete použiť aplikáciu <%= link_to @quick_tip.application_title, app_path(@quick_tip.application_slug) %>.</p>
         <%= link_to "Prejsť na aplikáciu", app_path(@quick_tip.application_slug), class: 'govuk-button govuk-button--large' %>

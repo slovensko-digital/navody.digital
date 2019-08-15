@@ -18,9 +18,14 @@ class NotificationSubscription < ApplicationRecord
       label: 'Chcem odoberať pravidelné novinky Návody.Digital',
       hint: 'Ak chcete vedieť o ďalších zlepšovákoch, ktoré pripravujeme, zvoľte si aj túto možnosť. Neposielame žiadny spam, bude to užitočné a len raz za čas.',
     },
+    'BlankJourneySubscription' => {
+      label: 'Chcem odoberať informácie k tomuto návodu',
+      hint: 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.',
+    },
   }
 
   belongs_to :user, optional: true
+  belongs_to :journey, optional: true
 
   def confirm
     self.confirmed_at = Time.now.utc unless self.confirmed_at

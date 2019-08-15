@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'Documents' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Position</th>
+      <th class="govuk-table__header" scope="col">Slug</th>
+      <th class="govuk-table__header" scope="col">Type</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @documents.each do |document| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= document.position %></td>
+        <td class="govuk-table__cell"><%= link_to document.searchable.slug, decide_searchable_path(document.searchable) %></td>
+        <td class="govuk-table__cell"><%= document.searchable_type %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_document_path(document) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

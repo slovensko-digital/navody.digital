@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
     @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.published
+    @documents = PgSearch::Document.featured_on_front_page.includes(:searchable).map(&:searchable).compact # we do not have FK constraints here, compact eliminates any possible documents hanging without searchable counterpart, which was deleted
   end
 
   def show

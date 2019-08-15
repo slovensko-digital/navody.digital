@@ -10,6 +10,7 @@ RSpec.feature "FAQ", type: :feature do
 
     expect(page).to have_text('Často kladené otázky')
     expect(page).to have_text(@faq.title)
+    expect(page).to have_text(@faq.content)
   end
 
   scenario 'As a visitor I want to see all FAQs' do
@@ -18,13 +19,6 @@ RSpec.feature "FAQ", type: :feature do
 
     expect(page).to have_title('Často kladené otázky')
     expect(page).to have_text(@faq.title)
-  end
-
-  scenario 'As a visitor I want to see FAQ answered' do
-    visit root_path
-
-    click_link @faq.title
-
     expect(page).to have_text(@faq.content)
   end
 end

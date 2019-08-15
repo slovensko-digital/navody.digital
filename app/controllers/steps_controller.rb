@@ -1,6 +1,6 @@
 class StepsController < ApplicationController
   def show
-    @journey = Journey.find_by!(slug: params[:journey_id])
+    @journey = Journey.published.find_by!(slug: params[:journey_id])
     @steps = @journey.steps
     @current_step = @steps.find_by!(slug: params[:id])
     @user_step_from_step_map = {}
@@ -11,7 +11,7 @@ class StepsController < ApplicationController
   end
 
   def update
-    @journey = Journey.find_by!(slug: params[:journey_id])
+    @journey = Journey.published.find_by!(slug: params[:journey_id])
     @user_journey = UserJourney.order(id: :desc).find_by(user: current_user, journey: @journey) || current_user.user_journeys.create!(journey: @journey)
 
     @current_step = @journey.steps.find_by(slug: params[:id])
@@ -32,7 +32,7 @@ class StepsController < ApplicationController
   end
 
   def start
-    journey = Journey.find_by!(slug: params[:journey_id])
+    journey = Journey.published.find_by!(slug: params[:journey_id])
     step = journey.steps.find_by!(slug: params[:id])
 
     redirect_to step.app_url

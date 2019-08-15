@@ -1,0 +1,42 @@
+.govuk-link:link, a:link {
+  color: black;
+}
+
+.govuk-link:visited, a:visited {
+  color: #555;
+}
+
+.sdn-footer {
+  .govuk-link:link, a:link, .govuk-link:visited, a:visited {
+    color: white;
+  }
+}
+
+.sdn-footer__disclaimer {
+  color: #d0d0d0;
+}
+
+@media (max-width: 48.0525em) {
+  .sdn-footer__disclaimer {
+    text-align: center;
+  }
+}
+
+a.sdn-timeline-dropdown__option {
+  color: #06070b;
+  text-decoration: none;
+}
+
+/* TODO move to frontend code */
+.sdn-timeline__bullet {
+  cursor: default;
+}
+
+.sdn-timeline__bullet.js-sdn-timeline__bullet {
+  cursor: pointer;
+}
+
+.sdn-todo-list--done .sdn-todo-list-main-action {
+  padding: 25px 30px 10px 30px;
+  background-color: #e5f2e4;
+}

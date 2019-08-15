@@ -189,7 +189,7 @@ a {
   width: auto;
 }
 
-.btn .btn-td {
+.btn .btn-inner {
   background-color: $green;
   border: 2px solid rgba(0,0,0,0);
   border-radius: 3px;
@@ -199,22 +199,19 @@ a {
   font-size: $font_size;
   font-weight: 700;
   margin: 0;
-  padding: 12px 15px;
+  padding: 0;
   text-decoration: none;
+  border: 12px solid $green;
+  border-left-width: 20px;
+  border-right-width: 20px;
+  display: inline-block;
 
   &:hover,
   &:active,
   &:focus {
+    border-color: darken($green, 10%) !important;
     background-color: darken($green, 10%) !important;
-  }
-
-  * {
-    color: white;
-    text-decoration: none;
-
-    &:hover {
-      color: white !important;
-    }
+    color: white !important;
   }
 }
 
@@ -285,10 +282,6 @@ a {
 
   .body-inner .btn {
     width: 100% !important;
-  }
-
-  .btn td {
-    font-size: $font-size - 1px !important;
   }
 
   p,

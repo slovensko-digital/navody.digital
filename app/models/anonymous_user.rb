@@ -10,6 +10,7 @@ class AnonymousUser
       subscription = NotificationSubscription.find_or_initialize_by(type: type, email: email)
       subscription.confirmation_token = token
       subscription.confirmation_sent_at = Time.now.utc
+      subscription.journey = Journey.find(params[:journey_id]) if params[:journey_id].present?
       subscription.save!
       subscription
     end

@@ -2,19 +2,13 @@
 <%= content_for(:headerline, @journey.title) %>
 <%= content_for :description, truncate(strip_tags(@journey.description), length: 500) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-body sdn-content">
-      <h2 class="govuk-heading-l">Úvodné informácie</h2>
-      <%= raw @journey.description %>
-    </div>
+<% if @journey.blank? %>
+  <%= render partial: 'journeys/blank', locals: {journey: @journey}%>
+<% else %>
+  <%= render partial: 'journeys/published', locals: {journey: @journey}%>
+<% end %>
 
-    <%= render 'journeys/todo_list', step: @step %>
 
-    <%= render partial: 'components/next_step', object: @next_step, locals: {journey: @journey} %>
-  </div>
-  <div class="govuk-grid-column-one-third">
-    <%= render 'components/timeline' %>
-  </div>
-</div>
+
+
 
