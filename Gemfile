@@ -48,6 +48,7 @@ gem 'aws-sdk-rails'
 
 gem 'rollbar'
 gem 'oj' # needed by rollbar
+gem 'nokogiri'
 
 gem 'pg_search'
 gem 'kaminari'

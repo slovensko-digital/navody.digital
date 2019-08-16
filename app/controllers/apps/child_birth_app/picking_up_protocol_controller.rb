@@ -1,6 +1,6 @@
 class Apps::ChildBirthApp::PickingUpProtocolController < ApplicationController
   before_action :load_params, :set_app_id
-  layout 'embededd_app'
+  layout 'embedded_app'
 
   def show
     respond_to :js, :html
