@@ -2,7 +2,7 @@ module CustomComponentsHelper
   def raw_with_custom_components(stringish)
     fragment = Nokogiri::HTML.fragment(stringish)
 
-    fragment.xpath('.//embedded-app').each do |f|
+    fragment.css('embedded-app').each do |f|
       f.replace render_embedded_app(f)
     end
 
