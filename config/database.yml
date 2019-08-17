@@ -57,7 +57,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: navody_slovensko_digital_test
+  host: <%= ENV['POSTGRES_HOST'] %>
+  database: <%= ENV.fetch("POSTGRES_DB_NAME") { 'navody_slovensko_digital_test' } %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

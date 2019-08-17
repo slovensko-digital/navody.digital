@@ -6,12 +6,15 @@ jobs:
     docker:
       - image: circleci/ruby:2.6.2-node-browsers
         environment:
+          POSTGRES_HOST: localhost
+          POSTGRES_DB_NAME: circle_ruby_test
+          RAILS_MAX_THREADS: 50
           RAILS_ENV: test
           CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
 
       - image: circleci/postgres:10-alpine-ram
         environment:
-          POSTGRES_USER: ubuntu
+          POSTGRES_USER: circleci
           POSTGRES_PASSWORD: ''
 
     steps:
@@ -25,7 +28,6 @@ jobs:
       - run: bundle install --path vendor/bundle
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
       - run: dockerize -wait tcp://localhost:5432 -timeout 60s
-      - run: mv .circleci/database.yml config/database.yml
       - run: bundle exec rake db:create db:structure:load --trace
       - run:
           name: Setup Code Climate test-reporter
