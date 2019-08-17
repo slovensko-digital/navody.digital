@@ -21,6 +21,11 @@ RSpec.describe NotificationSubscriptionsHelper, type: :helper do
         result = helper.raw_with_custom_components('<embedded-app app-id="narodenie-rodny-list" /><embedded-app app-id="narodenie-rodny-list" />')
         expect(Nokogiri(result).xpath('.//div[@data-navody-app="narodenie-rodny-list"]').size).to eq 2
       end
+
+      it 'supports component being deeper' do
+        result = helper.raw_with_custom_components('<div><embedded-app app-id="narodenie-rodny-list" /></div>')
+        expect(result).to include "Slobodná"
+      end
     end
   end
 end
