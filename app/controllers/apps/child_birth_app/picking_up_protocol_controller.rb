@@ -6,8 +6,8 @@ class Apps::ChildBirthApp::PickingUpProtocolController < ApplicationController
     respond_to :js, :html
 
     return render action: :result if all_questions_answered?
-    return render action: :ask_divorced if @mother_civil_state === :divorced
-    return render action: :ask_widow if @mother_civil_state === :widow
+    return render action: :ask_divorced if @mother_civil_state == :divorced
+    return render action: :ask_widow if @mother_civil_state == :widow
 
     render action: :start
   end
