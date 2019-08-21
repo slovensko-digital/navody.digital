@@ -49,8 +49,6 @@ RSpec.describe CustomComponentsHelper, type: :helper do
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
       end
 
-      private
-
       def create_fake_user
         @user = double(User, email: 'customer@test.sk', logged_in?: true)
         NotificationSubscriptionsHelper.module_eval { def current_user; @user; end }
