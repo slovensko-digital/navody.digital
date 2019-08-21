@@ -6,6 +6,10 @@ module CustomComponentsHelper
       f.replace render_embedded_app(f)
     end
 
+    fragment.css('notification-subscription').each do |f|
+      f.replace render_notification_subscription(f)
+    end
+
     raw(fragment.to_s)
   end
 
@@ -18,10 +22,10 @@ module CustomComponentsHelper
       @extra_attributes = fragment.attributes.except("app-id").map { |k,v| [k.to_sym, v.value] }.to_h
       return render template: 'apps/child_birth_app/picking_up_protocol/start', layout: 'layouts/embedded_app'
     end
+  end
 
-    if @app_id == 'notification-subscription'
-      @extra_attributes = fragment.attributes.except("app-id").map { |k,v| [k.to_sym, v.value] }.to_h
-      return render_notification_subscription_component(@extra_attributes[:type].split)
-    end
+  def render_notification_subscription(fragment)
+    @extra_attributes = fragment.attributes.map { |k,v| [k.to_sym, v.value] }.to_h
+    return render_notification_subscription_component(@extra_attributes[:type].split(%r{,\s*}))
   end
 end
