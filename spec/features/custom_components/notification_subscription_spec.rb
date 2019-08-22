@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Notification subscription components" do
   let!(:journey) { create(:journey, description: '<notification-subscription types="BlankJourneySubscription" />') }
-  let!(:step) { create(:step, journey: journey, description: '<notification-subscription types="BlankJourneySubscription, NextVoteSubscription" />') }
+  let!(:step) { create(:step, journey: journey, description: '<notification-subscription types="BlankJourneySubscription,NextVoteSubscription" />') }
 
   scenario 'inserts notification subscription component in a journey' do
     visit journey_path(journey)
