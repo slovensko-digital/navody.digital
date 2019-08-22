@@ -30,28 +30,24 @@ RSpec.describe CustomComponentsHelper, type: :helper do
 
     describe '<notification-subscription />' do
       before(:each) do
-        create_fake_user
+        @user = double(User, email: 'customer@test.sk', logged_in?: true)
+        NotificationSubscriptionsHelper.module_eval { def current_user; @user; end }
       end
 
-      it 'renders an embedded notification subscription component' do
-        result = helper.raw_with_custom_components('<notification-subscription type="BlankJourneySubscription" />')
+      it 'renders a notification subscription component' do
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
 
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
       end
 
       it 'supports multiple occurences' do
-        result = helper.raw_with_custom_components('<notification-subscription type="BlankJourneySubscription" /><notification-subscription type="BlankJourneySubscription" />')
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" /><notification-subscription types="BlankJourneySubscription" />')
         expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
       end
 
       it 'supports component being deeper' do
-        result = helper.raw_with_custom_components('<div><notification-subscription type="BlankJourneySubscription" /></div>')
+        result = helper.raw_with_custom_components('<div><notification-subscription types="BlankJourneySubscription" /></div>')
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
-      end
-
-      def create_fake_user
-        @user = double(User, email: 'customer@test.sk', logged_in?: true)
-        NotificationSubscriptionsHelper.module_eval { def current_user; @user; end }
       end
     end
   end

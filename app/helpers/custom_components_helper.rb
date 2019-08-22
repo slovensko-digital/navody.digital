@@ -25,7 +25,8 @@ module CustomComponentsHelper
   end
 
   def render_notification_subscription(fragment)
-    @extra_attributes = fragment.attributes.map { |k,v| [k.to_sym, v.value] }.to_h
-    return render_notification_subscription_component(@extra_attributes[:type].split(%r{,\s*}))
+    @types = fragment[:types].split(',')
+    @extra_attributes = fragment.attributes.except('types').map { |k,v| [k.to_sym, v.value] }.to_h
+    return render_notification_subscription_component(@types)
   end
 end
