@@ -38,16 +38,29 @@ RSpec.describe CustomComponentsHelper, type: :helper do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
 
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
+        expect(Nokogiri(result).css('div.notification-subscription[types="BlankJourneySubscription"][aria-live="polite"]').size).to eq 1
       end
 
-      it 'supports multiple occurences' do
+      it 'supports multiple occurrences' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" /><notification-subscription types="BlankJourneySubscription" />')
         expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 2
+      end
+
+      it 'supports multiple types' do
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription,NextVoteSubscription" />')
+        expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 1
       end
 
       it 'supports component being deeper' do
-        result = helper.raw_with_custom_components('<div><notification-subscription types="BlankJourneySubscription" /></div>')
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
+      end
+
+      it 'supports extra attributes' do
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" style="height: 300px" />')
+        expect(Nokogiri(result).css('div.notification-subscription[style="height: 300px"]').size).to eq 1
       end
     end
   end
