@@ -171,11 +171,11 @@ RSpec.feature "EP vote app", type: :feature do
     expect(page).to have_content('Hlasovanie v zahraničí')
   end
 
-  scenario 'Expired application' do
+  scenario 'As a citizen I want to see subscription options when vote is not active' do
     allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(false)
     visit apps_ep_vote_app_application_forms_path
 
-    expect(page).to have_content('Voľby do Európskeho parlamentu už skončili.')
+    expect(page).to have_content('Voľby do Európskeho parlamentu sa už konali')
     expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
   end
 end
