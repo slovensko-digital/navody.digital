@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../../app/models/apps/ep_vote_app/application_form'
 
 RSpec.feature "Notification subscriptions", type: :feature do
   let!(:user) {create(:user, email: 'someone@example.com')}
@@ -17,10 +18,11 @@ RSpec.feature "Notification subscriptions", type: :feature do
     visit link_in_last_email
   end
 
-  before(:each) do
+  before do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
     default_url_options[:host] = "localhost:3000"
     Capybara.default_host = "http://localhost:3000"
+    allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(true)
   end
 
   scenario 'As a visitor I want to subscribe to various notifications' do

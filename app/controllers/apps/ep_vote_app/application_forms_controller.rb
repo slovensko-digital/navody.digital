@@ -1,5 +1,5 @@
 class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
-  before_action :set_metadata
+  before_action :set_metadata, :check_inactive_eu_application
 
   def show
     @metadata.og.title = 'Voľby do Európskeho parlamentu'
@@ -37,5 +37,11 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
   def set_metadata
     @metadata.og.image = 'og-ep-vote-app.png'
     @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
+  end
+
+  def check_inactive_eu_application
+    return if Apps::EpVoteApp::ApplicationForm.active?
+    return redirect_to apps_ep_vote_app_application_forms_path if action_name != "show"
+    render 'inactive'
   end
 end

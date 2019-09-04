@@ -38,6 +38,10 @@ module Apps
       validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
 
+      def self.active?
+        false
+      end
+
       def nationality
         return @nationality unless @nationality.blank?
         return 'Slovenská republika' if sk_citizen == 'yes'
@@ -64,7 +68,7 @@ Dobrý deň,
 týmto žiadam o vydanie hlasovacieho preukazu pre voľby do Európskeho parlamentu v roku 2019.
 
 Moje identifikačné údaje sú:
-          
+
 Meno: #{full_name}
 Rodné číslo: #{pin}
 Trvalý pobyt: #{street}, #{pobox} #{municipality}

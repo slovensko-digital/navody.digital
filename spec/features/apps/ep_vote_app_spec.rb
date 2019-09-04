@@ -1,6 +1,11 @@
 require 'rails_helper'
+require_relative '../../../app/models/apps/ep_vote_app/application_form'
 
 RSpec.feature "EP vote app", type: :feature do
+  before do
+    allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(true)
+  end
+
   scenario 'As a citizen I want to request voting permit via post' do
     travel_to Date.new(2019, 5, 3)
 
@@ -164,5 +169,13 @@ RSpec.feature "EP vote app", type: :feature do
     click_button 'Pokračovať'
 
     expect(page).to have_content('Hlasovanie v zahraničí')
+  end
+
+  scenario 'As a citizen I want to see subscription options when vote is not active' do
+    allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(false)
+    visit apps_ep_vote_app_application_forms_path
+
+    expect(page).to have_content('Voľby do Európskeho parlamentu sa už konali')
+    expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
   end
 end
