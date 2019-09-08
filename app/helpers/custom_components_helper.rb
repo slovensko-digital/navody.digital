@@ -20,13 +20,13 @@ module CustomComponentsHelper
 
     if @app_id == 'narodenie-rodny-list'
       @extra_attributes = fragment.attributes.except("app-id").map { |k,v| [k.to_sym, v.value] }.to_h
-      return render template: 'apps/child_birth_app/picking_up_protocol/start', layout: 'layouts/embedded_app'
+      render template: 'apps/child_birth_app/picking_up_protocol/start', layout: 'layouts/embedded_app'
     end
   end
 
   def render_notification_subscription(fragment)
-    types = fragment[:types].split(',')
-    @extra_attributes = fragment.attributes.except('types').map { |k,v| [k.to_sym, v.value] }.to_h
-    render_notification_subscription_component(types)
+    subscription_types = fragment[:types].split(',')
+    extra_attributes = fragment.attributes.except('types').map { |k,v| [k.to_sym, v.value] }.to_h
+    render_notification_subscription_component(subscription_types, extra_attributes)
   end
 end
