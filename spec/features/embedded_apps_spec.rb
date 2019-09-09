@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Embedded apps", type: :feature do
+RSpec.feature "Embedded apps" do
   let!(:journey) {create(:journey)}
   let!(:child_birth_step) {create(:step, journey: journey, description: '<embedded-app app-id="narodenie-rodny-list" />')}
 
