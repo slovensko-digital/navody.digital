@@ -1,0 +1,22 @@
+<%= content_for :title, build_page_title('Hlasovanie v zahraničí', 'Voľby do Európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-xl">Hlasovanie v zahraničí</h2>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+        Je nám ľúto, ale občania Slovenskej republiky, ktorí sa v čase volieb nezdržiavajú na území SR nemôžu vo voľbách hlasovať zo zahraničia.
+      </strong>
+    </div>
+
+    <h3 class="govuk-heading-l">Aktivujte si notifikácie na email, aby Vám už nič neušlo.</h3>
+    <%= render_notification_subscription_component ['VoteSubscription', 'NewsletterSubscription'] %>
+
+    <h3 class="govuk-heading-l">Čo ďalej?</h3>
+    <p class="govuk-body">Ak sa Vám táto aplikácia páčila, na portáli Návody.Digital nájdete <%= link_to 'množstvo ďalších návodov', root_path %> ako vyriešiť aj iné životné situácie, ktoré si vyžadujú kontakt so štátnou byrokraciou.</p>
+  </div>
+</div>
