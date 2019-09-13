@@ -2,20 +2,24 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show
-    @metadata.og.title = 'Voľby do Európskeho parlamentu'
-
-    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(
-      step: 'start'
-    )
+    @metadata.og.title = 'Parlamentne Voľby'
+    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'start')
     render 'start'
+  end
+
+  def delivery
+    if request.post?
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
+      @application_form.run(self)
+    else
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'delivery')
+      render 'delivery'
+    end
   end
 
   def create
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
-  end
-
-  def end
   end
 
   private def form_params
@@ -33,7 +37,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   private def set_metadata
-    @metadata.og.image = 'og-ep-vote-app.png'
+    @metadata.og.image = 'og-navody.png'
     @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
   end
 

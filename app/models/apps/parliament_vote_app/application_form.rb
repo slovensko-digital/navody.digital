@@ -61,25 +61,6 @@ module Apps
         else
           email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}, #{delivery_country}"
         end
-
-        <<-TEXT
-Dobrý deň,
-
-týmto žiadam o vydanie hlasovacieho preukazu pre voľby do Európskeho parlamentu v roku 2019.
-
-Moje identifikačné údaje sú:
-
-Meno: #{full_name}
-Rodné číslo: #{pin}
-Trvalý pobyt: #{street}, #{pobox} #{municipality}
-Štátna príslušnosť: #{nationality}
-
-#{email_body_delivery}
-
-Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
-
-Ďakujem.
-        TEXT
       end
 
       def run(listener)
@@ -101,38 +82,18 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
         end
       end
 
-      private
 
-
-      def start_step(listener)
-        self.step = 'place'
-        listener.render :place
+      private def start_step(listener)
+        self.step = 'sk_citizen'
+        listener.render :sk_citizen
       end
 
-      def place_step(listener)
-        if valid?(:place)
-          case place
-          when 'home'
-            listener.redirect_to action: :home
-          when 'sk'
-            self.step = 'sk_citizen'
-            listener.render :sk_citizen
-          when 'eu'
-            listener.redirect_to action: :eu
-          when 'world'
-            listener.redirect_to action: :world
-          end
-        else
-          listener.render :place
-        end
-      end
-
-      def sk_citizen_step(listener)
+      private def sk_citizen_step(listener)
         if valid?(:sk_citizen)
           case sk_citizen
           when 'yes'
-            self.step = 'delivery'
-            listener.render :delivery
+            self.step = 'place'
+            listener.render :place
           when 'no'
             listener.redirect_to action: :non_sk_nationality
           end
@@ -141,12 +102,29 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
         end
       end
 
-      def delivery_step(listener)
+      private def place_step(listener)
+        if valid?(:place)
+          case place
+          when 'home'
+            listener.redirect_to action: :home
+          when 'sk'
+            listener.redirect_to action: :delivery
+          when 'world'
+            listener.redirect_to action: :world
+          end
+        else
+          listener.render :place
+        end
+      end
+
+      private def delivery_step(listener)
         if valid?(:delivery)
           case delivery
           when 'post'
             self.step = 'identity'
             listener.render :identity
+          when 'representative_person'
+            listener.redirect_to action: :representative_person
           when 'person'
             listener.redirect_to action: :person
           end
@@ -156,7 +134,7 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
       end
 
 
-      def identity_step(listener)
+      private def identity_step(listener)
         if valid?(:identity)
           self.step = 'address'
           listener.render :address
@@ -165,7 +143,7 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
         end
       end
 
-      def address_step(listener)
+      private def address_step(listener)
         if valid?(:address)
           self.step = 'delivery_address'
           listener.render :delivery_address
@@ -174,7 +152,7 @@ Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
         end
       end
 
-      def delivery_address_step(listener)
+      private def delivery_address_step(listener)
         if valid?(:delivery_address)
           self.step = 'send'
           listener.render :send

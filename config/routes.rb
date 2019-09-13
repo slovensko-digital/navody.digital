@@ -63,12 +63,14 @@ Rails.application.routes.draw do
     namespace :parliament_vote_app, path: 'parlamentne-volby' do
       resource :application_forms, path: '' do
         member do
-          get :end, path: 'hlasovacim-preukazom'
-          get :world, path: 'hlasovanie-v-zahranici'
-          get :eu, path: 'hlasovanie-v-inom-clenskom-state'
+          # get :end, path: 'hlasovacim-preukazom'
           get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
           get :person, path: 'hlasovaci-preukaz-osobne'
-          get :non_sk_nationality, path: 'hlasovanie-obcanov-eu-na-slovensku'
+          get :representative_person, path: 'splnomocnena-osoba'
+          get :world, path: 'hlasovanie-v-zahranici'
+          get :non_sk_nationality, path: 'hlasovanie-obcanov-inej-narodnosti'
+          get :delivery, path: 'hlasovaci-preukaz'
+          post :delivery, path: 'hlasovaci-preukaz'
         end
       end
     end
