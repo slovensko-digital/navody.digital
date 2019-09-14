@@ -11,6 +11,16 @@
       <th class="govuk-table__header" scope="col" colspan="2"></th>
     </tr>
   </thead>
+ <%= form_tag(admin_journeys_path, method: :get) do %>
+  <%= label_tag(:filter_status, "Filter by published Status:") %>
+  <%= select_tag(
+        :status,
+        options_for_select(Journey.defined_enums['published_status'], params[:status]),
+        onchange: 'this.form.submit();',
+        include_blank: true
+      )
+  %>
+<% end %>
   <tbody class="govuk-table__body">
     <% @journeys.each do |journey| %>
       <tr class="govuk-table__row">
