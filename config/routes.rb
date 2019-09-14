@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :documents do
       put :feature, on: :member
       put :hide, on: :member
+      post :reposition, on: :collection
     end
     resources :apps, except: [:show]
     resources :pages, except: [:show]
