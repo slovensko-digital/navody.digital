@@ -1,9 +1,9 @@
-<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Parlamentne Voľby') %>
+<%= content_for(:headerline, 'Parlamentne Voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: :delivery_apps_parliament_vote_app_application_forms do |f| %>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <%= f.hidden_field :full_name %>
@@ -31,7 +31,6 @@
       </div>
 
       <%= f.submit 'Pokračovať' %>
-
     <% end %>
   </div>
 </div>

@@ -1,7 +1,8 @@
 module Apps
   module ParliamentVoteApp
     class ApplicationForm
-      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2020, 5, 3)
+      DATE = Date.new(2020, 2, 29)
+      DELIVERY_BY_POST_DEADLINE_DATE = DATE - 3.days
 
       include ActiveModel::Model
 
@@ -61,6 +62,19 @@ module Apps
         else
           email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}, #{delivery_country}"
         end
+
+        ActionController::Base.new.render_to_string(
+          partial: "apps/parliament_vote_app/application_forms/email",
+          locals: {
+            full_name: full_name,
+            pin: pin,
+            street: street,
+            pobox: pobox,
+            municipality: municipality,
+            nationality: nationality,
+            email_body_delivery: email_body_delivery,
+          },
+        )
       end
 
       def run(listener)
@@ -132,7 +146,6 @@ module Apps
           listener.render :delivery
         end
       end
-
 
       private def identity_step(listener)
         if valid?(:identity)
