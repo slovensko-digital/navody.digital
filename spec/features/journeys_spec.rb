@@ -17,12 +17,12 @@ RSpec.feature "Journeys", type: :feature do
     visit link_in_last_email
   end
 
-  let!(:user) {create(:user, email: 'someone@example.com')}
-  let!(:journey) {create(:journey)}
-  let!(:step1) {create(:step, journey: journey)}
-  let!(:step2) {create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep')}
-  let!(:task) {create(:task, step: step1)}
-  let!(:blank_journey) {create(:journey, published_status: "BLANK")}
+  let!(:user) { create(:user, email: 'someone@example.com') }
+  let!(:journey) { create(:journey) }
+  let!(:step1) { create(:step, journey: journey) }
+  let!(:step2) { create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep') }
+  let!(:task) { create(:task, step: step1) }
+  let!(:blank_journey) { create(:journey, published_status: "BLANK", description: nil) }
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails

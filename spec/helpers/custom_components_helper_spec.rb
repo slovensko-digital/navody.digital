@@ -9,17 +9,12 @@ RSpec.describe CustomComponentsHelper, type: :helper do
 
         expect(result).to include "Slobodná"
         expect(parsed_result.root.name).to eq 'div'
-        expect(parsed_result.root['data-navody-app']).to eq 'narodenie-rodny-list'
-      end
-
-      it 'supports extra attributes' do
-        parsed_result = Nokogiri(helper.raw_with_custom_components('<embedded-app app-id="narodenie-rodny-list" extra-attr="123" />'))
-        expect(parsed_result.root.attributes['extra-attr'].value).to eq '123'
+        expect(parsed_result.root['data-embedded-app']).to eq 'narodenie-rodny-list'
       end
 
       it 'supports multiple occurences' do
         result = helper.raw_with_custom_components('<embedded-app app-id="narodenie-rodny-list" /><embedded-app app-id="narodenie-rodny-list" />')
-        expect(Nokogiri(result).css('div[data-navody-app="narodenie-rodny-list"]').size).to eq 2
+        expect(Nokogiri(result).css('div[data-embedded-app="narodenie-rodny-list"]').size).to eq 2
       end
 
       it 'supports component being deeper' do
@@ -38,7 +33,6 @@ RSpec.describe CustomComponentsHelper, type: :helper do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
 
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
-        expect(Nokogiri(result).css('div.notification-subscription[types="BlankJourneySubscription"][aria-live="polite"]').size).to eq 1
       end
 
       it 'supports multiple occurrences' do
@@ -56,11 +50,6 @@ RSpec.describe CustomComponentsHelper, type: :helper do
       it 'supports component being deeper' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'
-      end
-
-      it 'supports extra attributes' do
-        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" style="height: 300px" />')
-        expect(Nokogiri(result).css('div.notification-subscription[style="height: 300px"]').size).to eq 1
       end
     end
   end

@@ -1,13 +1,14 @@
 module CustomComponentsHelper
-  def raw_with_custom_components(stringish)
-    fragment = Nokogiri::HTML.fragment(stringish)
+  def raw_with_custom_components(html)
+    fragment = Nokogiri::HTML.fragment(html)
 
-    fragment.css('embedded-app').each do |f|
-      f.replace render_embedded_app(f)
+    fragment.css('embedded-app').each do |elm|
+      elm.replace render_embedded_app(elm)
     end
 
-    fragment.css('notification-subscription').each do |f|
-      f.replace render_notification_subscription(f)
+    fragment.css('notification-subscription').each do |elm|
+      subscription_types = elm[:types].split(',')
+      elm.replace render_notification_subscription_component(subscription_types)
     end
 
     raw(fragment.to_s)
@@ -16,17 +17,12 @@ module CustomComponentsHelper
   private
 
   def render_embedded_app(fragment)
-    @app_id = fragment['app-id']
-
-    if @app_id == 'narodenie-rodny-list'
-      @extra_attributes = fragment.attributes.except("app-id").map { |k,v| [k.to_sym, v.value] }.to_h
-      render template: 'apps/child_birth_app/picking_up_protocol/start', layout: 'layouts/embedded_app'
+    app_id = fragment['app-id']
+    # TODO why is this hardcoded?
+    if app_id == 'narodenie-rodny-list'
+      render partial: 'components/embedded_app', locals: {app_id: app_id, template: 'apps/child_birth_app/picking_up_protocol/start'}
+    else
+      'error'
     end
-  end
-
-  def render_notification_subscription(fragment)
-    subscription_types = fragment[:types].split(',')
-    extra_attributes = fragment.attributes.except('types').map { |k,v| [k.to_sym, v.value] }.to_h
-    render_notification_subscription_component(subscription_types, nil, extra_attributes)
   end
 end

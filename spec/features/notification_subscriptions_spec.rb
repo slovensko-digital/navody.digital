@@ -3,7 +3,7 @@ require_relative '../../app/models/apps/ep_vote_app/application_form'
 
 RSpec.feature "Notification subscriptions", type: :feature do
   let!(:user) {create(:user, email: 'someone@example.com')}
-  let!(:blank_journey) {create(:journey, published_status: "BLANK")}
+  let!(:blank_journey) {create(:journey, published_status: "BLANK", description: nil)}
 
   def sign_in(user)
     OmniAuth.config.test_mode = false

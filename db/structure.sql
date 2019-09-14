@@ -86,7 +86,7 @@ CREATE TABLE public.journeys (
     slug character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    description text NOT NULL,
+    description text,
     featured_position integer DEFAULT 0 NOT NULL,
     image_name text,
     custom_title character varying
@@ -1025,6 +1025,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190608130459'),
 ('20190608135807'),
 ('20190608201245'),
-('20190914143708');
+('20190914143708'),
+('20190914164512');
 
 
