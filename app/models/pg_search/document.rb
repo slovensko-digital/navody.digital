@@ -8,6 +8,13 @@ class PgSearch::Document < ::ActiveRecord::Base
   scope :featureable, -> { where(searchable_type: ['Journey', 'App']) }
   scope :featured, -> { featureable.where(featured: true) }
 
+  def self.reposition_all
+    Document.featured.each_with_index(1) do |document, index|
+      document.position = index
+      document.save
+    end
+  end
+
   pg_search_scope :search, against: {
     keywords: 'A',
     title: 'A',
