@@ -202,7 +202,8 @@ CREATE TABLE public.pg_search_documents (
     tsv_keywords tsvector,
     tsv_title tsvector,
     "position" integer DEFAULT 0,
-    published boolean DEFAULT false
+    published boolean DEFAULT false,
+    featured boolean DEFAULT false NOT NULL
 );
 
 
@@ -1023,6 +1024,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190608102251'),
 ('20190608130459'),
 ('20190608135807'),
-('20190608201245');
+('20190608201245'),
+('20190914143708');
 
 
