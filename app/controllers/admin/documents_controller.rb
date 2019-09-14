@@ -1,5 +1,5 @@
 class Admin::DocumentsController < Admin::AdminController
-  before_action :set_document, except: [:index]
+  before_action :set_document, except: [:index, :reposition]
 
   # GET /admin/documents
   def index
@@ -29,6 +29,11 @@ class Admin::DocumentsController < Admin::AdminController
     if @document.update(featured: false)
       redirect_to admin_documents_url, notice: 'Document was successfully updated.'
     end
+  end
+    
+  def reposition
+    PgSearch::Document.reposition_all
+    redirect_to admin_documents_path, notice: 'Documents were successfully repositioned.'
   end
 
   private
