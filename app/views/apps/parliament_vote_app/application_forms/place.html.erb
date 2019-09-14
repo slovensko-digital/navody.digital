@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
       <%= f.hidden_field :step %>
-      <% hint = 'Parlamentné voľby sa na Slovensku konajú v sobotu 25. mája 2019, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania volieb' %>
+      <% hint = 'Parlamentné voľby sa na Slovensku konajú v sobotu 29. februára 2020, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania volieb' %>
       <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
         <%= f.radio_button :place, 'sk', label: "Na Slovensku, mimo trvalého bydliska", hint: "Ak si nie ste istý, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku." %>
         <%= f.radio_button :place, 'home', label: "Na Slovensku, v mieste trvalého bydliska"%>

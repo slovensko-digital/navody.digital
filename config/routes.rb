@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     namespace :parliament_vote_app, path: 'parlamentne-volby' do
       resource :application_forms, path: '' do
         member do
+          get :end, path: 'volte-zodpovedne'
           get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
           get :person, path: 'hlasovaci-preukaz-osobne'
           get :representative_person, path: 'splnomocnena-osoba'
