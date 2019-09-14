@@ -2,7 +2,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show
-    @metadata.og.title = 'Parlamentne Voľby'
+    @metadata.og.title = 'Parlamentné voľby'
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'start')
     render 'start'
   end
