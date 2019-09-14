@@ -3,7 +3,11 @@ class Admin::JourneysController < Admin::AdminController
 
   # GET /admin/journeys
   def index
-    @journeys = Journey.all
+    @journeys = if params[:status].blank?
+                  Journey.all
+                else
+                  Journey.where(published_status: params[:status])
+                end
   end
 
   # GET /admin/journeys/new

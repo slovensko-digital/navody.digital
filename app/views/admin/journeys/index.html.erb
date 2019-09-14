@@ -2,6 +2,22 @@
 
 <%= render 'breadcrumbs', crumbs: [], current: 'Journeys' %>
 
+<div class="govuk-body">
+  <%= form_tag(admin_journeys_path, method: :get) do %>
+    <div class="govuk-form-group">
+      <%= label_tag(:filter_status, "Filter by status", class: 'govuk-label') %>
+      <%= select_tag(
+            :status,
+            options_for_select(Journey.defined_enums['published_status'], params[:status]),
+            onchange: 'this.form.submit();',
+            include_blank: true,
+            class: 'govuk-select'
+          )
+      %>
+    </div>
+  <% end %>
+</div>
+
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
