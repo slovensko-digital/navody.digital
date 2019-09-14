@@ -9,9 +9,8 @@ class PgSearch::Document < ::ActiveRecord::Base
   scope :featured, -> { featureable.where(featured: true) }
 
   def self.reposition_all
-    Document.featured.each_with_index(1) do |document, index|
-      document.position = index
-      document.save
+    Document.featured.each.with_index(1) do |document, index|
+      document.update!(position: index)
     end
   end
 
