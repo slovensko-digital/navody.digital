@@ -48,7 +48,6 @@ RSpec.feature "Notification subscriptions", type: :feature do
   end
 
   scenario 'As a logged in user I want to subscribe to various notifications' do
-    expect(SubscribeSendinblueJob).to receive(:perform_later).with('someone@example.com', 'NewsletterSubscription')
     expect(SubscribeSendinblueJob).to receive(:perform_later).with('someone@example.com', 'VoteSubscription')
 
     sign_in user

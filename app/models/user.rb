@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def create_notification_subscriptions(params)
-    params[:subscription_types].each do |type|
+    params[:subscriptions].each do |type|
       subscription = notification_subscriptions.find_or_initialize_by(type: type)
       subscription.journey = Journey.find(params[:journey_id]) if params[:journey_id].present?
       subscription.confirm
