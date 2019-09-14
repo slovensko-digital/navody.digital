@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: redirect('admin/pages')
 
-    resources :documents, only: [:index, :edit, :update]
+    resources :documents do
+      put :feature, on: :member
+      put :hide, on: :member
+    end
     resources :apps, except: [:show]
     resources :pages, except: [:show]
     resources :journeys, except: [:show] do
@@ -74,7 +77,7 @@ Rails.application.routes.draw do
   get '/auth/magiclink/info', to: 'sessions#magic_link_info'
   get '/auth/failure', to: 'sessions#failure'
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
-  get '/auth/:provider', to: lambda{ |_| [404, {}, ["Not Found"]] }, as: :auth
+  get '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'

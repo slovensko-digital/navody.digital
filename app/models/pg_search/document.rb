@@ -5,7 +5,8 @@ class PgSearch::Document < ::ActiveRecord::Base
 
   default_scope { order(position: :asc) }
 
-  scope :featured_on_front_page, -> { where(searchable_type: ['Journey', 'App']).where(published: true)}
+  scope :featureable, -> { where(searchable_type: ['Journey', 'App']) }
+  scope :featured, -> { featureable.where(featured: true) }
 
   pg_search_scope :search, against: {
     keywords: 'A',
