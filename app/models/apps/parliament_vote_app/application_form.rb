@@ -16,10 +16,12 @@ module Apps
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
+      attr_accessor :permanent_resident
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
+      validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
       validates_exclusion_of :delivery, in: ['post'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
@@ -83,6 +85,8 @@ module Apps
           start_step(listener)
         when 'place'
           place_step(listener)
+        when 'permanent_resident'
+          permanent_resident_step(listener)
         when 'sk_citizen'
           sk_citizen_step(listener)
         when 'delivery'
@@ -124,10 +128,24 @@ module Apps
           when 'sk'
             listener.redirect_to action: :delivery
           when 'world'
-            listener.redirect_to action: :world
+            self.step = 'permanent_resident'
+            listener.render :permanent_resident
           end
         else
           listener.render :place
+        end
+      end
+
+      private def permanent_resident_step(listener)
+        if valid?(:permanent_resident)
+          case permanent_resident
+          when 'yes'
+            listener.redirect_to action: :world_permanent_resident
+          when 'no'
+            listener.redirect_to action: :world_non_permanent_resident
+          end
+        else
+          listener.render :permanent_resident
         end
       end
 

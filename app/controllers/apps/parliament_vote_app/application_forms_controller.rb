@@ -32,7 +32,8 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :street, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
-      :municipality_email
+      :municipality_email,
+      :permanent_resident
     )
   end
 
