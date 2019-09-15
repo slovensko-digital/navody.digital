@@ -215,7 +215,7 @@ GEM
     public_suffix (4.0.1)
     puma (4.1.1)
       nio4r (~> 2.0)
-    que (0.14.3)
+    que (1.0.0.beta3)
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
@@ -376,7 +376,7 @@ DEPENDENCIES
   premailer-rails
   pry-rails
   puma
-  que
+  que (= 1.0.0.beta3)
   rails (~> 6.0)
   rails-i18n
   rollbar
