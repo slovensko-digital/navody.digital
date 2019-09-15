@@ -10,11 +10,11 @@ class UserStep < ApplicationRecord
 
   def refresh_status
     if all_tasks_completed?
-      update_attributes(status: 'done')
+      update(status: 'done')
     elsif user_tasks.completed.none?
-      update_attributes(status: 'not_started')
+      update(status: 'not_started')
     else
-      update_attributes(status: 'started')
+      update(status: 'started')
     end
   end
 
