@@ -34,7 +34,7 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'que', '1.0.0.beta3'
+gem 'que', github: 'chanks/que' # https://github.com/chanks/que/issues/253
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

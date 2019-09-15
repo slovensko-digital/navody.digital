@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/chanks/que.git
+  revision: 5ddddd5ebac6153d7a683ef08c86bced8e03fb51
+  specs:
+    que (1.0.0.beta3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -215,7 +221,6 @@ GEM
     public_suffix (4.0.1)
     puma (4.1.1)
       nio4r (~> 2.0)
-    que (1.0.0.beta3)
     rack (2.0.7)
     rack-proxy (0.6.5)
       rack
@@ -376,7 +381,7 @@ DEPENDENCIES
   premailer-rails
   pry-rails
   puma
-  que (= 1.0.0.beta3)
+  que!
   rails (~> 6.0)
   rails-i18n
   rollbar
