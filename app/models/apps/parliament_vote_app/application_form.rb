@@ -1,8 +1,8 @@
 module Apps
   module ParliamentVoteApp
     class ApplicationForm
-      DATE = Date.new(2020, 2, 29)
-      DELIVERY_BY_POST_DEADLINE_DATE = DATE - 3.days
+      VOTE_DATE = Date.new(2020, 2, 29)
+      DELIVERY_BY_POST_DEADLINE_DATE = VOTE_DATE - 3.days
 
       include ActiveModel::Model
 
@@ -42,7 +42,7 @@ module Apps
       validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
 
       def self.active?
-        true
+        VOTE_DATE > Date.current
       end
 
       def nationality
