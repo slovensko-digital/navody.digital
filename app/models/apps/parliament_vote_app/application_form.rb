@@ -42,7 +42,7 @@ module Apps
       validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
 
       def self.active?
-        VOTE_DATE > Date.current
+        VOTE_DATE >= Date.current
       end
 
       def nationality

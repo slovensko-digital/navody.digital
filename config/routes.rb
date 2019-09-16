@@ -67,7 +67,7 @@ Rails.application.routes.draw do
           get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
           get :person, path: 'hlasovaci-preukaz-osobne'
           get :representative_person, path: 'splnomocnena-osoba'
-          get :world_permanent_resident, path: 'hlasovanie-v-zahranici-s-trvalym-pobytom'
+          get :world_permanent_resident, path: 'hlasovanie-v-zahranici-s-trvalym-pobytom-na-slovensku'
           get :world_non_permanent_resident, path: 'hlasovanie-v-zahranici'
           get :non_sk_nationality, path: 'hlasovanie-obcanov-inej-narodnosti'
           get :delivery, path: 'hlasovaci-preukaz'

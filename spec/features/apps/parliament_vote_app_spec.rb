@@ -8,11 +8,10 @@ end
 
 RSpec.feature "Parliament vote app", type: :feature do
   before do
-    allow(Apps::ParliamentVoteApp::ApplicationForm).to receive(:active?).and_return(true)
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE - 1.month
   end
 
   scenario 'As a citizen I want to request voting permit via post' do
-    travel_to Date.new(2020, 1, 1)
     start
 
     choose 'Áno'
@@ -47,7 +46,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via post to a different address' do
-    travel_to Date.new(2020, 1, 1)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -87,7 +85,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit by post after the deadline' do
-    travel_to Date.new(2020, 5, 4)
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::DELIVERY_BY_POST_DEADLINE_DATE + 1.day
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -102,7 +100,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit personaly' do
-    travel_to Date.new(2020, 5, 4)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -117,7 +114,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via authorized person' do
-    travel_to Date.new(2020, 5, 4)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -132,7 +128,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote at home address' do
-    travel_to Date.new(2020, 1, 1)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -144,7 +139,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency in Slovakia' do
-    travel_to Date.new(2020, 1, 1)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -160,7 +154,6 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency outside Slovakia' do
-    travel_to Date.new(2020, 1, 1)
     start
     choose 'Áno'
     click_button 'Pokračovať'
@@ -184,7 +177,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to see subscription options when vote is not active' do
-    allow(Apps::ParliamentVoteApp::ApplicationForm).to receive(:active?).and_return(false)
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE + 1.day
     visit apps_parliament_vote_app_application_forms_path
 
     expect(page).to have_content('Voľby do parlamentu sa už konali')

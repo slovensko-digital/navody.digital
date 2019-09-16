@@ -16,4 +16,5 @@ Rails.application.config.assets.precompile += %w(
   mailer.scss
   accessible-autocomplete.css
   admin.js
+  iframe.js
 )
