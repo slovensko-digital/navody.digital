@@ -25,7 +25,6 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Štátna príslušnosť', with: 'ruská'
     click_button 'Pokračovať'
 
     fill_in 'Ulica a číslo', with: 'Pupavova 31'
@@ -39,7 +38,6 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Meno: Ferko Mrkva')
     expect(page).to have_content('Rodné číslo: 123')
     expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
-    expect(page).to have_content('Štátna príslušnosť: ruská')
 
     click_link 'pokračujte ďalej'
     expect(page).to have_content('Gratulujeme')
@@ -58,7 +56,6 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Štátna príslušnosť', with: 'ruská'
     click_button 'Pokračovať'
 
     fill_in 'Ulica a číslo', with: 'Pupavova 31'
@@ -76,7 +73,6 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Meno: Ferko Mrkva')
     expect(page).to have_content('Rodné číslo: 123')
     expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
-    expect(page).to have_content('Štátna príslušnosť: ruská')
 
     expect(page).to have_content('Preukaz prosím zaslať na korešpondenčnú adresu: Konvalinkova 3, 456 Bratislava - Ruzinov, Slovensko')
 

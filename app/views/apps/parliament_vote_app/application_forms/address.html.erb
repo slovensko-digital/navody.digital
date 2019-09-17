@@ -3,11 +3,10 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder, url: :delivery_apps_parliament_vote_app_application_forms do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :full_name %>
       <%= f.hidden_field :pin %>
-      <%= f.hidden_field :nationality %>
       <%= f.hidden_field :municipality_email %>
 
       <h1 class="govuk-heading-l">Adresa trvalého pobytu</h1>

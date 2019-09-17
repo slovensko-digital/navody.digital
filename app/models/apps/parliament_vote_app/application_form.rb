@@ -11,7 +11,6 @@ module Apps
       attr_accessor :sk_citizen
       attr_accessor :delivery
       attr_accessor :full_name, :pin
-      attr_writer :nationality
       attr_accessor :street, :pobox, :municipality
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
@@ -29,7 +28,6 @@ module Apps
 
       validates_presence_of :full_name, message: 'Meno je povinná položka', on: :identity
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: :identity
-      validates_presence_of :nationality, message: 'Štátna príslušnosť je povinná položka', on: :identity
 
       validates_presence_of :street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :address
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: :address
@@ -43,11 +41,6 @@ module Apps
 
       def self.active?
         VOTE_DATE >= Date.current
-      end
-
-      def nationality
-        return @nationality unless @nationality.blank?
-        return 'Slovenská republika' if sk_citizen == 'yes'
       end
 
       def same_delivery_address?
@@ -73,7 +66,6 @@ module Apps
             street: street,
             pobox: pobox,
             municipality: municipality,
-            nationality: nationality,
             email_body_delivery: email_body_delivery,
           },
         )
