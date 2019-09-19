@@ -23,7 +23,7 @@ module Apps
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
-      validates_exclusion_of :delivery, in: ['post'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
+      validates_exclusion_of :delivery, in: ['email'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka', on: :identity
@@ -144,7 +144,7 @@ module Apps
       private def delivery_step(listener)
         if valid?(:delivery)
           case delivery
-          when 'post'
+          when 'email'
             self.step = 'identity'
             listener.render :identity
           when 'representative_person'
@@ -159,19 +159,10 @@ module Apps
 
       private def identity_step(listener)
         if valid?(:identity)
-          self.step = 'address'
-          listener.render :address
-        else
-          listener.render :identity
-        end
-      end
-
-      private def address_step(listener)
-        if valid?(:address)
           self.step = 'delivery_address'
           listener.render :delivery_address
         else
-          listener.render :address
+          listener.render :identity
         end
       end
 

@@ -1,23 +1,22 @@
-<%= content_for :title, build_page_title('Adresa trvalého pobytu', 'Parlamentné voľby') %>
-<%= content_for(:headerline, 'Parlamentné voľby') %>
+<%= form_for form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+  <h1 class="govuk-heading-xl">Vaše osobné údaje</h1>
+  <%= f.hidden_field :step %>
+  <%= f.hidden_field :full_name %>
+  <%= f.hidden_field :pin %>
+  <%= f.hidden_field :municipality_email %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
-      <%= f.hidden_field :step %>
-      <%= f.hidden_field :full_name %>
-      <%= f.hidden_field :pin %>
-      <%= f.hidden_field :municipality_email %>
 
-      <h1 class="govuk-heading-l">Adresa trvalého pobytu</h1>
-      <%= f.text_field :street, label: 'Ulica a číslo', hint: 'Napríklad: Kaštieľska 2', class: 'govuk-input--width-20', 'autocomplete': 'address-line1' %>
-      <%= f.text_field :pobox, label: 'PSČ', hint: 'Napríklad: 841 01', class: 'govuk-input--width-5', 'autocomplete': 'postal-code' %>
-      <%= f.text_field :municipality, label: 'Obec', class: 'govuk-input--width-20 input-to-replace' %>
+  <%= f.text_field :full_name, class: 'govuk-input--width-20', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
+  <%= f.text_field :pin, class: 'govuk-input--width-10', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
 
-      <%= f.submit 'Pokračovať' %>
-    <% end %>
-  </div>
-</div>
+  <br />
+  <h1 class="govuk-heading-l">Adresa trvalého pobytu</h1>
+  <%= f.text_field :street, label: 'Ulica a číslo', hint: 'Napríklad: Kaštieľska 2', class: 'govuk-input--width-20', 'autocomplete': 'address-line1' %>
+  <%= f.text_field :pobox, label: 'PSČ', hint: 'Napríklad: 841 01', class: 'govuk-input--width-5', 'autocomplete': 'postal-code' %>
+  <%= f.text_field :municipality, label: 'Obec', class: 'govuk-input--width-20 input-to-replace' %>
+
+  <%= f.submit 'Pokračovať'%>
+<% end %>
 
 <style>
   .autocomplete__hint,

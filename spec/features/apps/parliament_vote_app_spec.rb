@@ -20,13 +20,11 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Chcem ho dostať poštou'
+    choose 'Emailom'
     click_button 'Pokračovať'
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    click_button 'Pokračovať'
-
     fill_in 'Ulica a číslo', with: 'Pupavova 31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
@@ -51,13 +49,11 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Chcem ho dostať poštou'
+    choose 'Emailom'
     click_button 'Pokračovať'
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    click_button 'Pokračovať'
-
     fill_in 'Ulica a číslo', with: 'Pupavova 31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
@@ -89,7 +85,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Chcem ho dostať poštou'
+    choose 'Emailom'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
@@ -103,7 +99,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Osobne si ho vyzdvihnem na úrade'
+    choose 'Osobne'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Prevzatie hlasovacieho preukazu osobne')
@@ -131,7 +127,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, v mieste trvalého bydliska'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Hlasovanie v mieste trvalého bydliska')
+    expect(page).to have_content('Nepotrebujete nič vybavovať')
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency in Slovakia' do
@@ -145,8 +141,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Hlasovanie v zahraničí')
-    expect(page).to have_content('ziadost na samospravu')
+    expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency outside Slovakia' do
@@ -160,8 +155,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Nie'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Hlasovanie v zahraničí')
-    expect(page).to have_content('ziadost na min vnutra')
+    expect(page).to have_content('K žiadosti je potrebné pripojiť fotokópiu časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópiu osvedčenia o štátnom občianstve Slovenskej republiky.')
   end
 
   scenario "As a non-SK citizen I can't vote in parliament votes" do
@@ -169,7 +163,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Nie'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Ľutujeme ale v parlamentných volbach voliť nemôžeš.')
+    expect(page).to have_content('V parlamentných voľbách nemôžete voliť.')
   end
 
   scenario 'As a citizen I want to see subscription options when vote is not active' do
