@@ -6,9 +6,14 @@ Moje identifikačné údaje sú:
 
 Meno: <%= full_name %>
 Rodné číslo: <%= pin %>
-Trvalý pobyt: <%= street %>, <%= pobox%> <%= municipality %>
+Trvalý pobyt: <%= street %> <%= house_number %>, <%= pobox%> <%= municipality %>
 
-<%= email_body_delivery %>
+<% if same_delivery_address %>
+Preukaz prosím zaslať na adresu trvalého pobytu.
+<% else %>
+Preukaz prosím zaslať na korešpondenčnú adresu:
+<%= delivery_street %> <%= delivery_house_number %>, <%= delivery_pobox %> <%= delivery_municipality %>, <%= delivery_country %>
+<% end %>
 
 Zároveň žiadam o zaslanie potvrdenia, že ste túto žiadosť prijali.
 

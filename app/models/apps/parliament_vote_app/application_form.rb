@@ -11,9 +11,9 @@ module Apps
       attr_accessor :sk_citizen
       attr_accessor :delivery
       attr_accessor :full_name, :pin
-      attr_accessor :street, :pobox, :municipality
+      attr_accessor :street, :house_number, :pobox, :municipality
       attr_accessor :same_delivery_address
-      attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
+      attr_accessor :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
       attr_accessor :permanent_resident
 
@@ -26,15 +26,16 @@ module Apps
       validates_exclusion_of :delivery, in: ['email'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
-      validates_presence_of :full_name, message: 'Meno je povinná položka', on: :identity
-      validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: :identity
-
-      validates_presence_of :street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :identity
-      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: :identity
-      validates_presence_of :municipality, message: 'Vyberte obec', on: :identity
+      validates_presence_of :full_name, message: 'Meno je povinná položka', on: [:identity]
+      validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: [:identity]
+      validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: [:identity]
+      validates_presence_of :house_number, message: 'Zadajte číslo domu', on: [:identity]
+      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: [:identity]
+      validates_presence_of :municipality, message: 'Vyberte obec', on: [:identity]
 
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz', on: :delivery_address
-      validates_presence_of :delivery_street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_house_number, message: 'Zadajte číslo domu', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
       validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
@@ -52,21 +53,21 @@ module Apps
       end
 
       def email_body
-        if same_delivery_address?
-          email_body_delivery = 'Preukaz prosím zaslať na adresu trvalého pobytu.'
-        else
-          email_body_delivery = "Preukaz prosím zaslať na korešpondenčnú adresu: #{delivery_street}, #{delivery_pobox} #{delivery_municipality}, #{delivery_country}"
-        end
-
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/email",
           locals: {
+            same_delivery_address: same_delivery_address?,
             full_name: full_name,
             pin: pin,
             street: street,
+            house_number: house_number,
             pobox: pobox,
             municipality: municipality,
-            email_body_delivery: email_body_delivery,
+            delivery_street: delivery_street,
+            delivery_house_number: delivery_house_number,
+            delivery_pobox: delivery_pobox,
+            delivery_municipality: delivery_municipality,
+            delivery_country: delivery_country,
           },
         )
       end
@@ -91,7 +92,6 @@ module Apps
           delivery_address_step(listener)
         end
       end
-
 
       private def start_step(listener)
         self.step = 'sk_citizen'

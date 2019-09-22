@@ -25,7 +25,8 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica a číslo', with: 'Pupavova 31'
+    fill_in 'Ulica', with: 'Pupavova'
+    fill_in 'Číslo domu', with: '31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
     click_button 'Pokračovať'
@@ -54,13 +55,15 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica a číslo', with: 'Pupavova 31'
+    fill_in 'Ulica', with: 'Pupavova'
+    fill_in 'Číslo domu', with: '31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
     click_button 'Pokračovať'
 
     choose 'Na inú adresu'
-    fill_in 'Ulica a číslo', with: 'Konvalinkova 3'
+    fill_in 'Ulica', with: 'Konvalinkova'
+    fill_in 'Číslo domu', with: '3'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Ruzinov'
     fill_in 'Štát', with: 'Slovensko'
