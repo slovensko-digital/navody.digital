@@ -68,10 +68,13 @@ Rails.application.routes.draw do
           get :person, path: 'hlasovaci-preukaz-osobne'
           get :representative_person, path: 'splnomocnena-osoba'
           get :world_permanent_resident, path: 'hlasovanie-v-zahranici-s-trvalym-pobytom-na-slovensku'
-          get :world_non_permanent_resident, path: 'hlasovanie-v-zahranici'
+          get :world_non_permanent_resident, path: 'hlasovanie-s-trvalym-pobytom-v-zahranici'
           get :non_sk_nationality, path: 'hlasovanie-obcanov-inej-narodnosti'
           get :delivery, path: 'hlasovaci-preukaz'
           post :delivery, path: 'hlasovaci-preukaz'
+          get :world, path: 'hlasovanie-v-zahranici'
+          post :world, path: 'hlasovanie-v-zahranici'
+          post :world_sk_resident_form, path: 'ziadost-o-hlasovanie-v-zahranici'
         end
       end
     end

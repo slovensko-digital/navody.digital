@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h3 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h3>
     <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo Vášho trvalého bydliska, musíte požiadať Vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z ktoréhokoľvek volebného okrsku v SR.</p>
-    <%= form_for @application_form, :builder => AppFormBuilder, url: :delivery_apps_parliament_vote_app_application_forms do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">

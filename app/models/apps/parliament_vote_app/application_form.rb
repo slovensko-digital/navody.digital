@@ -10,7 +10,7 @@ module Apps
       attr_accessor :place
       attr_accessor :sk_citizen
       attr_accessor :delivery
-      attr_accessor :full_name, :pin
+      attr_accessor :full_name, :pin, :maiden_name
       attr_accessor :street, :house_number, :pobox, :municipality
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country
@@ -23,22 +23,34 @@ module Apps
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
-      validates_exclusion_of :delivery, in: ['email'], if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
+      validates_exclusion_of :delivery, in: ['email'],
+                            if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
-      validates_presence_of :full_name, message: 'Meno je povinná položka', on: [:identity]
-      validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: [:identity]
-      validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: [:identity]
-      validates_presence_of :house_number, message: 'Zadajte číslo domu', on: [:identity]
-      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: [:identity]
-      validates_presence_of :municipality, message: 'Vyberte obec', on: [:identity]
+      validates_presence_of :full_name, message: 'Meno je povinná položka', on: [:identity, :world_permanent_resident]
+      validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: [:identity, :world_permanent_resident]
+      validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: [:identity, :world_permanent_resident]
+      validates_presence_of :house_number, message: 'Zadajte číslo domu', on: [:identity, :world_permanent_resident]
+      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: [:identity, :world_permanent_resident]
+      validates_presence_of :municipality, message: 'Vyberte obec', on: [:identity, :world_permanent_resident]
 
-      validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz', on: :delivery_address
-      validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
-      validates_presence_of :delivery_house_number, message: 'Zadajte číslo domu', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
-      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
-      validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
-      validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
+                            on: :delivery_address
+      validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
+                            on: [:delivery_address, :world_permanent_resident],
+                            unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_house_number, message: 'Zadajte číslo domu',
+                            on: [:delivery_address, :world_permanent_resident],
+                            unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
+                            on: [:delivery_address, :world_permanent_resident],
+                            unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_municipality, message: 'Zadajte obec',
+                            on: [:delivery_address, :world_permanent_resident],
+                            unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_country, message: 'Zadajte štát',
+                            on: [:delivery_address, :world_permanent_resident],
+                            unless: -> (f) { f.same_delivery_address? }
 
       def self.active?
         VOTE_DATE >= Date.current
@@ -78,8 +90,6 @@ module Apps
           start_step(listener)
         when 'place'
           place_step(listener)
-        when 'permanent_resident'
-          permanent_resident_step(listener)
         when 'sk_citizen'
           sk_citizen_step(listener)
         when 'delivery'
@@ -90,6 +100,12 @@ module Apps
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
+        when 'world'
+          world_step(listener)
+        when 'world_permanent_resident'
+          world_permanent_resident_step(listener)
+        when 'world_permanent_resident_preview'
+          world_permanent_resident_preview_step(listener)
         end
       end
 
@@ -120,26 +136,16 @@ module Apps
           when 'sk'
             listener.redirect_to action: :delivery
           when 'world'
-            self.step = 'permanent_resident'
-            listener.render :permanent_resident
+            listener.redirect_to action: :world
           end
         else
           listener.render :place
         end
       end
 
-      private def permanent_resident_step(listener)
-        if valid?(:permanent_resident)
-          case permanent_resident
-          when 'yes'
-            listener.redirect_to action: :world_permanent_resident
-          when 'no'
-            listener.redirect_to action: :world_non_permanent_resident
-          end
-        else
-          listener.render :permanent_resident
-        end
-      end
+      # ---------
+      # Home flow
+      # ---------
 
       private def delivery_step(listener)
         if valid?(:delivery)
@@ -174,6 +180,45 @@ module Apps
           listener.render :delivery_address
         end
       end
+
+      # -------------
+      # End Home flow
+      # -------------
+
+      # ----------
+      # World flow
+      # ----------
+
+      private def world_step(listener)
+        if valid?(:permanent_resident)
+          case permanent_resident
+          when 'yes'
+            self.step = 'world_permanent_resident'
+            listener.render :world_permanent_resident
+          when 'no'
+            listener.redirect_to action: :world_non_permanent_resident
+          end
+        else
+          listener.render :world
+        end
+      end
+
+      private def world_permanent_resident_step(listener)
+        puts "============="
+        if valid?(:world_permanent_resident)
+          self.step = 'world_permanent_resident_preview'
+          listener.render :world_permanent_resident_preview
+        else
+          listener.render :world_permanent_resident
+        end
+      end
+
+      private def world_permanent_resident_preview_step(listener)
+        self.step = 'world_permanent_resident_preview'
+        listener.render :world_permanent_resident_preview
+      end
+
+      # End world flow
     end
   end
 end

@@ -17,7 +17,26 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
     end
   end
 
+  def world
+    if request.post?
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
+      @application_form.run(self)
+    else
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'world')
+      render 'world'
+    end
+  end
+
+  def world_sk_resident_form
+    respond_to do |format|
+      format.pdf do
+        render pdf: "ziadost-o-volbu-postou-zo-zahranicia", :template => 'a.pdf.erb', disposition: 'attachment'
+      end
+    end
+  end
+
   def create
+    puts "-0------"
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
   end
@@ -28,7 +47,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :place,
       :sk_citizen,
       :delivery,
-      :full_name, :pin, :nationality,
+      :full_name, :pin, :nationality, :maiden_name,
       :street, :house_number, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country,
