@@ -29,15 +29,15 @@ module Apps
       validates_presence_of :full_name, message: 'Meno je povinná položka', on: :identity
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: :identity
 
-      validates_presence_of :street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :address
-      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: :address
-      validates_presence_of :municipality, message: 'Vyberte obec', on: :address
+      validates_presence_of :street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :identity
+      validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo', on: :identity
+      validates_presence_of :municipality, message: 'Vyberte obec', on: :identity
 
-      validates_presence_of :same_delivery_address, on: :delivery_address
-      validates_presence_of :delivery_street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
-      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
-      validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
-      validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
+      validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz', on: :delivery_address
+      validates_presence_of :delivery_street, message: 'Zadajte ulicu a číslo alebo číslo domu', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_municipality, message: 'Zadajte obec', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
+      validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: -> (f) { f.same_delivery_address? }
 
       def self.active?
         VOTE_DATE >= Date.current
