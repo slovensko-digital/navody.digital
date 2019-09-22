@@ -155,7 +155,7 @@ module Apps
       private def delivery_step(listener)
         if valid?(:delivery)
           case delivery
-          when 'email'
+          when 'post'
             self.step = 'identity'
             listener.render :identity
           when 'representative_person'

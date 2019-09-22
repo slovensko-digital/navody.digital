@@ -16,10 +16,11 @@
 
     <p>Volič musí doručiť obálku s hlasovacím lístkom najneskôr <strong>posledný pracovný deň predo dňom konania volieb</strong>. Na obálky doručené po tomto termíne sa neprihliada.</p>
 
-    <%= form_for @application_form, :builder => AppFormBuilder, url: world_sk_resident_form_apps_parliament_vote_app_application_forms_path(format: :pdf) do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: world_sk_resident_form_apps_parliament_vote_app_application_forms_path(format: :pdf), remote: false do |f| %>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :name %>
       <%= f.hidden_field :surname %>
+      <%= f.hidden_field :maiden_name %>
       <%= f.hidden_field :pin %>
       <%= f.hidden_field :street %>
       <%= f.hidden_field :house_number %>

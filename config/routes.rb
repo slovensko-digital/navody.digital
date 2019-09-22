@@ -74,6 +74,7 @@ Rails.application.routes.draw do
           post :delivery, path: 'hlasovaci-preukaz'
           get :world, path: 'hlasovanie-v-zahranici'
           post :world, path: 'hlasovanie-v-zahranici'
+          get :world_sk_resident_form, path: 'ziadost-o-hlasovanie-v-zahranici'
           post :world_sk_resident_form, path: 'ziadost-o-hlasovanie-v-zahranici'
         end
       end

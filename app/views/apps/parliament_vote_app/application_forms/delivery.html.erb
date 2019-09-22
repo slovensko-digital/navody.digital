@@ -15,7 +15,7 @@
         <%= f.error_message :delivery %>
 
         <div class="govuk-radios">
-          <%= f.radio_button :delivery, 'email', label: "Emailom", hint: "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz Vám bude doručený na adresu uvedenú v žiadosti.", strong_label: true%>
+          <%= f.radio_button :delivery, 'post', label: "Poštou", hint: "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz Vám bude doručený na adresu uvedenú v žiadosti.", strong_label: true%>
           <%= f.radio_button :delivery, 'person', label: "Osobne", hint: "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz Vám vystavia na počkanie.", strong_label: true%>
           <%= f.radio_button :delivery, 'representative_person', label: "Vyzdvihne ho splnomocnena osoba", hint: "", strong_label: true%>
         </div>

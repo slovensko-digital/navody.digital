@@ -28,15 +28,18 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   def world_sk_resident_form
+    @data = form_params
     respond_to do |format|
       format.pdf do
-        render pdf: "ziadost-o-volbu-postou-zo-zahranicia", :template => 'a.pdf.erb', disposition: 'attachment'
+        render pdf: 'ziadost-o-volbu-postou-zo-zahranicia',
+              template: 'apps/parliament_vote_app/application_forms/_sk_citizen_work_form.pdf.erb',
+              encoding: "UTF-8",
+              disposition: 'attachment'
       end
     end
   end
 
   def create
-    puts "-0------"
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
   end

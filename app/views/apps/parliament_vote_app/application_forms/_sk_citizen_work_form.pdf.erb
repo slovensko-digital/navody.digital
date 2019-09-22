@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Žiadost o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2020</title>
+<style>
+  body {
+    font-size: 60px;
+    font-family: Times, 'Times New Roman', Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 70px;
+    padding: 0 300px
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .right {
+    text-align: right;
+    float: right;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .address {
+    padding-top: 20px;
+    border-top: 1px dotted black;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  td {
+    padding: 40px 5px 0 0;
+  }
+
+  .label {
+    width: 20%;
+  }
+
+  .label-2 {
+    width: 10%;
+  }
+
+  .user-input {
+    width: 80%;
+    border-bottom: 1px dotted black;
+    text-transform: uppercase;
+  }
+
+  .user-input-2 {
+    width: 40%;
+  }
+
+  .table-label {
+    padding-bottom: 10px;
+  }
+</style>
+
+</head>
+<body>
+    <strong class="right">Žiadosť vyplňte veľkými písmenami.</strong>
+    <br />
+    <br />
+    <h1>Žiadosť<br> o voľbu poštou<br> pre voľby do Národnej rady Slovenskej republiky v roku 2020</h1>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="right address">
+      (adresa obecného /mestského, miestneho/ úradu)
+    </div>
+    <br />
+    <br />
+    <p>Podľa   § 60 ods. 1   zákona   č. 180/2014 Z. z. o podmienkach výkonu volebného práva a o zmene a doplnení niektorých zákonov žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku 2020.</p>
+    <br />
+    <table>
+      <tr>
+        <td class="label">Meno:</td>
+        <td class="user-input"><%= @data[:name] %></td>
+      </tr>
+      <tr>
+        <td class="label">Priezvisko:</td>
+        <td class="user-input"><%= @data[:surname] %></td>
+      </tr>
+      <tr>
+        <td class="label">Rodné priezvisko:</td>
+        <td class="user-input"><%= @data[:maiden_name] %></td>
+      </tr>
+      <tr>
+        <td class="label">Rodné číslo:</td>
+        <td class="user-input"><%= @data[:pin] %></td>
+      </tr>
+    </table>
+
+    <br />
+    <div class="table-label">Adresa trvalého pobytu v Slovenskej republike:</div>
+    <table>
+      <tr>
+        <td class="label">Ulica:</td>
+        <td class="user-input"><%= @data[:street] %></td>
+      </tr>
+      <tr>
+        <td class="label">Číslo domu:</td>
+        <td class="user-input"><%= @data[:house_number] %></td>
+      </tr>
+      <tr>
+        <td class="label">Obec:</td>
+        <td class="user-input"><%= @data[:municipality] %></td>
+      </tr>
+      <tr>
+        <td class="label">PSČ:</td>
+        <td class="user-input"><%= @data[:pobox] %></td>
+      </tr>
+    </table>
+
+    <br />
+    <div class="table-label">Adresa miesta pobytu v cudzine (pre zaslanie hlasovacích lístkov a obálok):</div>
+    <table>
+      <tr>
+        <td class="label">Ulica:</td>
+        <td class="user-input"><%= @data[:delivery_street] %></td>
+      </tr>
+      <tr>
+        <td class="label">Číslo domu:</td>
+        <td class="user-input"><%= @data[:delivery_house_number] %></td>
+      </tr>
+      <tr>
+        <td class="label">Obec:</td>
+        <td class="user-input"><%= @data[:delivery_municipality] %></td>
+      </tr>
+      <tr>
+        <td class="label">PSČ:</td>
+        <td class="user-input"><%= @data[:delivery_pobox] %></td>
+      </tr>
+      <tr>
+        <td class="label">Štát:</td>
+        <td class="user-input"><%= @data[:delivery_country] %></td>
+      </tr>
+    </table>
+
+    <br />
+    <table>
+      <tr>
+        <td class="label label-2">V:</td>
+        <td class="user-input user-input-2" colspan="3"></td>
+      </tr>
+      <tr>
+        <td class="label label-2">Dátum:</td>
+        <td class="user-input user-input-2"></td>
+        <td class="label label-2" style="padding-left: 150px;">Podpis:</td>
+        <td class="user-input user-input-2"></td>
+      </tr>
+    </table>
+</body>
+</html>
