@@ -20,10 +20,11 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Emailom'
+    choose 'Poštou'
     click_button 'Pokračovať'
 
-    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
+    fill_in 'Meno', with: 'Ferko'
+    fill_in 'Priezvisko', with: 'Mrkva'
     fill_in 'Rodné číslo', with: '123'
     fill_in 'Ulica', with: 'Pupavova'
     fill_in 'Číslo domu', with: '31'
@@ -50,10 +51,11 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Emailom'
+    choose 'Poštou'
     click_button 'Pokračovať'
 
-    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
+    fill_in 'Meno', with: 'Ferko'
+    fill_in 'Priezvisko', with: 'Mrkva'
     fill_in 'Rodné číslo', with: '123'
     fill_in 'Ulica', with: 'Pupavova'
     fill_in 'Číslo domu', with: '31'
@@ -88,7 +90,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Emailom'
+    choose 'Poštou'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
@@ -145,6 +147,23 @@ RSpec.feature "Parliament vote app", type: :feature do
     click_button 'Pokračovať'
 
     expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
+
+    fill_in 'Meno', with: 'Ferko'
+    fill_in 'Priezvisko', with: 'Mrkva'
+    fill_in 'Rodné priezvisko:', with: 'Jablko'
+    fill_in 'Rodné číslo', with: '123'
+    fill_in 'Ulica', with: 'Pupavova', class: 'pernament-address'
+    fill_in 'Číslo domu', with: '31', class: 'pernament-address'
+    fill_in 'PSČ', with: '456', class: 'pernament-address'
+    fill_in 'Obec', with: 'Bratislava - Karlova ves', class: 'pernament-address'
+    fill_in 'Ulica', with: 'Polk', class: 'delivery-address'
+    fill_in 'Číslo domu', with: '1700', class: 'delivery-address'
+    fill_in 'PSČ', with: '94109', class: 'delivery-address'
+    fill_in 'Obec', with: 'San Francisco', class: 'delivery-address'
+    fill_in 'Štát', with: 'California, USA', class: 'delivery-address'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Volič musí doručiť obálku s hlasovacím lístkom najneskôr posledný pracovný deň predo dňom konania volieb. Na obálky doručené po tomto termíne sa neprihliada.')
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency outside Slovakia' do

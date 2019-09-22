@@ -23,7 +23,7 @@ module Apps
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
-      validates_exclusion_of :delivery, in: ['email'],
+      validates_exclusion_of :delivery, in: ['post'],
                             if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
@@ -209,7 +209,6 @@ module Apps
       end
 
       private def world_permanent_resident_step(listener)
-        puts "============="
         if valid?(:world_permanent_resident)
           self.step = 'world_permanent_resident_preview'
           listener.render :world_permanent_resident_preview
