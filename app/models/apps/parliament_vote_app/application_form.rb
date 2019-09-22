@@ -10,7 +10,7 @@ module Apps
       attr_accessor :place
       attr_accessor :sk_citizen
       attr_accessor :delivery
-      attr_accessor :full_name, :pin, :maiden_name
+      attr_accessor :name, :surname, :maiden_name, :pin, :maiden_name
       attr_accessor :street, :house_number, :pobox, :municipality
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country
@@ -27,7 +27,8 @@ module Apps
                             if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
-      validates_presence_of :full_name, message: 'Meno je povinná položka', on: [:identity, :world_permanent_resident]
+      validates_presence_of :name, message: 'Meno je povinná položka', on: [:identity, :world_permanent_resident]
+      validates_presence_of :surname, message: 'Priezvisko je povinná položka', on: [:identity, :world_permanent_resident]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka', on: [:identity, :world_permanent_resident]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice', on: [:identity, :world_permanent_resident]
       validates_presence_of :house_number, message: 'Zadajte číslo domu', on: [:identity, :world_permanent_resident]
@@ -58,6 +59,10 @@ module Apps
 
       def same_delivery_address?
         same_delivery_address == '1'
+      end
+
+      def full_name
+        "#{name} #{surname}"
       end
 
       def full_address

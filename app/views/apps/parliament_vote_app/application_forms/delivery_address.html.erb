@@ -5,7 +5,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= f.hidden_field :step %>
-      <%= f.hidden_field :full_name %>
+      <%= f.hidden_field :name %>
+      <%= f.hidden_field :surname %>
       <%= f.hidden_field :pin %>
       <%= f.hidden_field :street %>
       <%= f.hidden_field :house_number %>

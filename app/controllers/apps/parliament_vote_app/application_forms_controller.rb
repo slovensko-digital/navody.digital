@@ -47,7 +47,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :place,
       :sk_citizen,
       :delivery,
-      :full_name, :pin, :nationality, :maiden_name,
+      :name, :surname, :pin, :nationality, :maiden_name,
       :street, :house_number, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country,

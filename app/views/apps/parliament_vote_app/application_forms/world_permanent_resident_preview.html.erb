@@ -18,7 +18,8 @@
 
     <%= form_for @application_form, :builder => AppFormBuilder, url: world_sk_resident_form_apps_parliament_vote_app_application_forms_path(format: :pdf) do |f| %>
       <%= f.hidden_field :step %>
-      <%= f.hidden_field :full_name %>
+      <%= f.hidden_field :name %>
+      <%= f.hidden_field :surname %>
       <%= f.hidden_field :pin %>
       <%= f.hidden_field :street %>
       <%= f.hidden_field :house_number %>
