@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
       <h2 class="govuk-heading-l">Úvodné informácie</h2>
-      <%= raw_with_custom_components @journey.description %>
+      <%= raw_with_custom_components @journey.description, journey: @journey  %>
     </div>
 
       <%= render 'journeys/todo_list', step: @step %>
