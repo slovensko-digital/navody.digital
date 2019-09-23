@@ -177,7 +177,20 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Nie'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('K žiadosti je potrebné pripojiť fotokópiu časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópiu osvedčenia o štátnom občianstve Slovenskej republiky.')
+    expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
+
+    fill_in 'Meno', with: 'Ferko'
+    fill_in 'Priezvisko', with: 'Mrkva'
+    fill_in 'Rodné priezvisko:', with: 'Jablko'
+    fill_in 'Rodné číslo', with: '123'
+    fill_in 'Ulica', with: 'Polk'
+    fill_in 'Číslo domu', with: '1700'
+    fill_in 'PSČ', with: '94109'
+    fill_in 'Obec', with: 'San Francisco'
+    fill_in 'Štát', with: 'California, USA'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('K žiadosti je potrebné pripojiť fotokópiu časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópiu osvedčenia o štátnom občianstve Slovenskej republiky a pridať čestné prehlásenie o trvalom pobyte v zahraničí.')
   end
 
   scenario "As a non-SK citizen I can't vote in parliament votes" do

@@ -2,29 +2,16 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show
-    @metadata.og.title = 'Parlamentné voľby'
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'start')
     render 'start'
   end
 
   def delivery
-    if request.post?
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
-      @application_form.run(self)
-    else
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'delivery')
-      render 'delivery'
-    end
+    render_step 'delivery'
   end
 
   def world
-    if request.post?
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
-      @application_form.run(self)
-    else
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'world')
-      render 'world'
-    end
+    render_step 'world'
   end
 
   def world_sk_resident_form
@@ -32,7 +19,30 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
     respond_to do |format|
       format.pdf do
         render pdf: 'ziadost-o-volbu-postou-zo-zahranicia',
-              template: 'apps/parliament_vote_app/application_forms/_sk_citizen_work_form.pdf.erb',
+              template: 'apps/parliament_vote_app/application_forms/_sk_resident_form.pdf.erb',
+              encoding: "UTF-8",
+              disposition: 'attachment'
+      end
+    end
+  end
+
+  def world_abroad_resident_form
+    @data = form_params
+    respond_to do |format|
+      format.pdf do
+        render pdf: 'ziadost-o-volbu-postou-zo-zahranicia',
+              template: 'apps/parliament_vote_app/application_forms/_abroad_resident_form.pdf.erb',
+              encoding: "UTF-8",
+              disposition: 'attachment'
+      end
+    end
+  end
+
+  def world_abroad_resident_declaration
+    respond_to do |format|
+      format.pdf do
+        render pdf: 'cestne-prehlasenie-o-trvalom-pobyte-mimo-uzemia-slovenskej-republiky',
+              template: 'apps/parliament_vote_app/application_forms/_non_resident_declaration.pdf.erb',
               encoding: "UTF-8",
               disposition: 'attachment'
       end
@@ -42,6 +52,16 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   def create
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
+  end
+
+  private def render_step(step)
+    if request.post?
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
+      @application_form.run(self)
+    else
+      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: step)
+      render step
+    end
   end
 
   private def form_params
@@ -60,6 +80,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   private def set_metadata
+    @metadata.og.title = 'Parlamentné voľby'
     @metadata.og.image = 'og-navody.png'
     @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
   end
