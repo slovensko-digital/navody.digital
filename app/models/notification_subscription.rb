@@ -1,6 +1,6 @@
 class NotificationSubscription < ApplicationRecord
   self.inheritance_column = 'type2' # change
-
+  validates :journey, presence: true, if: -> {self.type == 'BlankJourneySubscription' }
   TYPES = {
     'EpApplicationFormSubscription' => {
       sendinblue_list_name: 'EpApplicationFormSubscription',
