@@ -15,6 +15,7 @@
 //= require activestorage
 //= require turbolinks
 //= require cookieconsent.min
+//= require google_analytics
 
 $(document).on('turbolinks:load', function () {
     // Initialize Cookie Bar
