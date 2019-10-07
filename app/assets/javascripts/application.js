@@ -15,6 +15,7 @@
 //= require activestorage
 //= require turbolinks
 //= require cookieconsent.min
+//= require newsletter_sign_up
 //= require google_analytics
 
 $(document).on('turbolinks:load', function () {
