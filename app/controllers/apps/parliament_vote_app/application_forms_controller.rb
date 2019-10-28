@@ -2,31 +2,31 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show
-    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: 'start')
-    render 'start'
+    render_step('start')
   end
 
   def delivery
-    render_step 'delivery'
+    return render_self if request.post?
+    render_step('delivery')
   end
 
   def world
-    render_step 'world'
+    return render_self if request.post?
+    render_step('world')
   end
 
   def create
+    render_self
+  end
+
+  private def render_self
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
   end
 
   private def render_step(step)
-    if request.post?
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
-      @application_form.run(self)
-    else
-      @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: step)
-      render step
-    end
+    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(step: step)
+    render step
   end
 
   private def form_params
