@@ -23,11 +23,9 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Poštou'
     click_button 'Pokračovať'
 
-    fill_in 'Meno', with: 'Ferko'
-    fill_in 'Priezvisko', with: 'Mrkva'
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica', with: 'Pupavova'
-    fill_in 'Číslo domu', with: '31'
+    fill_in 'Ulica', with: 'Pupavova 31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
     click_button 'Pokračovať'
@@ -54,18 +52,15 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Poštou'
     click_button 'Pokračovať'
 
-    fill_in 'Meno', with: 'Ferko'
-    fill_in 'Priezvisko', with: 'Mrkva'
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica', with: 'Pupavova'
-    fill_in 'Číslo domu', with: '31'
+    fill_in 'Ulica', with: 'Pupavova 31'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
     click_button 'Pokračovať'
 
     choose 'Na inú adresu'
-    fill_in 'Ulica', with: 'Konvalinkova'
-    fill_in 'Číslo domu', with: '3'
+    fill_in 'Ulica', with: 'Konvalinkova 3'
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Ruzinov'
     fill_in 'Štát', with: 'Slovensko'
@@ -148,22 +143,28 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
 
-    fill_in 'Meno', with: 'Ferko'
-    fill_in 'Priezvisko', with: 'Mrkva'
-    fill_in 'Rodné priezvisko:', with: 'Jablko'
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica', with: 'Pupavova', class: 'pernament-address'
-    fill_in 'Číslo domu', with: '31', class: 'pernament-address'
+    fill_in 'Ulica', with: 'Pupavova 31', class: 'pernament-address'
     fill_in 'PSČ', with: '456', class: 'pernament-address'
     fill_in 'Obec', with: 'Bratislava - Karlova ves', class: 'pernament-address'
-    fill_in 'Ulica', with: 'Polk', class: 'delivery-address'
-    fill_in 'Číslo domu', with: '1700', class: 'delivery-address'
+    fill_in 'Ulica', with: 'Polk 1700', class: 'delivery-address'
     fill_in 'PSČ', with: '94109', class: 'delivery-address'
     fill_in 'Obec', with: 'San Francisco', class: 'delivery-address'
     fill_in 'Štát', with: 'California, USA', class: 'delivery-address'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Volič musí doručiť obálku s hlasovacím lístkom najneskôr posledný pracovný deň predo dňom konania volieb. Na obálky doručené po tomto termíne sa neprihliada.')
+    expect(page).to have_content('Meno: Ferko Mrkva')
+    expect(page).to have_content('Rodné číslo: 123')
+    expect(page).to have_content('Ulica: Pupavova 31')
+    expect(page).to have_content('Obec: Bratislava - Karlova ves')
+    expect(page).to have_content('PSČ: 94109')
+    expect(page).to have_content('Ulica: Polk 1700')
+    expect(page).to have_content('Obec: San Francisco')
+    expect(page).to have_content('PSČ: 94109')
+    expect(page).to have_content('Štát: California, USA')
+    expect(page).to have_content('Zároveň Vás žiadam o potvrdenie prijatia tejto žiadosti.')
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency outside Slovakia' do
@@ -179,18 +180,22 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
 
-    fill_in 'Meno', with: 'Ferko'
-    fill_in 'Priezvisko', with: 'Mrkva'
-    fill_in 'Rodné priezvisko:', with: 'Jablko'
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'
-    fill_in 'Ulica', with: 'Polk'
-    fill_in 'Číslo domu', with: '1700'
+    fill_in 'Ulica', with: 'Polk 1700'
     fill_in 'PSČ', with: '94109'
     fill_in 'Obec', with: 'San Francisco'
     fill_in 'Štát', with: 'California, USA'
     click_button 'Pokračovať'
 
     expect(page).to have_content('K žiadosti je potrebné pripojiť fotokópiu časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópiu osvedčenia o štátnom občianstve Slovenskej republiky a pridať čestné prehlásenie o trvalom pobyte v zahraničí.')
+    expect(page).to have_content('Meno: Ferko Mrkva')
+    expect(page).to have_content('Rodné číslo: 123')
+    expect(page).to have_content('Ulica: Polk 1700')
+    expect(page).to have_content('Obec: San Francisco')
+    expect(page).to have_content('PSČ: 94109')
+    expect(page).to have_content('Štát: California, USA')
+    expect(page).to have_content('Zároveň Vás žiadam o potvrdenie prijatia tejto žiadosti.')
   end
 
   scenario "As a non-SK citizen I can't vote in parliament votes" do

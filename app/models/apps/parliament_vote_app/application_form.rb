@@ -10,10 +10,10 @@ module Apps
       attr_accessor :place
       attr_accessor :sk_citizen
       attr_accessor :delivery
-      attr_accessor :name, :surname, :maiden_name, :pin, :maiden_name
-      attr_accessor :street, :house_number, :pobox, :municipality
+      attr_accessor :full_name, :pin
+      attr_accessor :street, :pobox, :municipality
       attr_accessor :same_delivery_address
-      attr_accessor :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country
+      attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
       attr_accessor :permanent_resident
 
@@ -27,15 +27,11 @@ module Apps
                             if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
-      validates_presence_of :name, message: 'Meno je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident]
-      validates_presence_of :surname, message: 'Priezvisko je povinná položka',
+      validates_presence_of :full_name, message: 'Meno je povinná položka',
                             on: [:identity, :world_sk_permanent_resident]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
                             on: [:identity, :world_sk_permanent_resident]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:identity, :world_sk_permanent_resident]
-      validates_presence_of :house_number, message: 'Zadajte číslo domu',
                             on: [:identity, :world_sk_permanent_resident]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
                             on: [:identity, :world_sk_permanent_resident]
@@ -45,9 +41,6 @@ module Apps
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
                             on: :delivery_address
       validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:delivery_address, :world_sk_permanent_resident],
-                            unless: -> (f) { f.same_delivery_address? }
-      validates_presence_of :delivery_house_number, message: 'Zadajte číslo domu',
                             on: [:delivery_address, :world_sk_permanent_resident],
                             unless: -> (f) { f.same_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
@@ -64,34 +57,63 @@ module Apps
         VOTE_DATE >= Date.current
       end
 
-      def same_delivery_address?
-        same_delivery_address == '1'
+      def minv_email
+        "volby@minv.sk"
       end
 
-      def full_name
-        "#{name} #{surname}"
+      def same_delivery_address?
+        same_delivery_address == '1'
       end
 
       def full_address
         "#{street}, #{pobox} #{municipality}"
       end
 
-      def email_body
+      def from_slovakia_email_body
         ActionController::Base.new.render_to_string(
-          partial: "apps/parliament_vote_app/application_forms/email",
+          partial: "apps/parliament_vote_app/application_forms/from_slovakia_email_body",
           locals: {
             same_delivery_address: same_delivery_address?,
             full_name: full_name,
             pin: pin,
             street: street,
-            house_number: house_number,
             pobox: pobox,
             municipality: municipality,
             delivery_street: delivery_street,
-            delivery_house_number: delivery_house_number,
             delivery_pobox: delivery_pobox,
             delivery_municipality: delivery_municipality,
             delivery_country: delivery_country,
+          },
+        )
+      end
+
+      def world_abroad_resident_email_body
+        ActionController::Base.new.render_to_string(
+          partial: "apps/parliament_vote_app/application_forms/world_abroad_resident_email_body",
+          locals: {
+            full_name: full_name,
+            pin: pin,
+            delivery_street: delivery_street,
+            delivery_municipality: delivery_municipality,
+            delivery_country: delivery_country,
+            delivery_pobox: delivery_pobox,
+          },
+        )
+      end
+
+      def world_sk_resident_email_body
+        ActionController::Base.new.render_to_string(
+          partial: "apps/parliament_vote_app/application_forms/world_sk_resident_email_body",
+          locals: {
+            full_name: full_name,
+            pin: pin,
+            street: street,
+            pobox: pobox,
+            municipality: municipality,
+            delivery_street: delivery_street,
+            delivery_municipality: delivery_municipality,
+            delivery_country: delivery_country,
+            delivery_pobox: delivery_pobox,
           },
         )
       end
@@ -116,12 +138,12 @@ module Apps
           world_step(listener)
         when 'world_sk_permanent_resident'
           world_sk_permanent_resident_step(listener)
-        when 'world_sk_permanent_resident_preview'
-          world_sk_permanent_resident_preview_step(listener)
+        when 'world_sk_permanent_resident_end'
+          world_sk_permanent_resident_end_step(listener)
         when 'world_abroad_permanent_resident'
           world_abroad_permanent_resident_step(listener)
-        when 'world_abroad_permanent_resident_preview'
-          world_abroad_permanent_resident_preview_step(listener)
+        when 'world_abroad_permanent_resident_end'
+          world_abroad_permanent_resident_end_step(listener)
         end
       end
 
@@ -212,30 +234,30 @@ module Apps
 
       private def world_sk_permanent_resident_step(listener)
         if valid?(:world_sk_permanent_resident)
-          self.step = 'world_sk_permanent_resident_preview'
-          listener.render :world_sk_permanent_resident_preview
+          self.step = 'world_sk_permanent_resident_end'
+          listener.render :world_sk_permanent_resident_end
         else
           listener.render :world_sk_permanent_resident
         end
       end
 
-      private def world_sk_permanent_resident_preview_step(listener)
-        self.step = 'world_sk_permanent_resident_preview'
-        listener.render :world_sk_permanent_resident_preview
+      private def world_sk_permanent_resident_end_step(listener)
+        self.step = 'world_sk_permanent_resident_end'
+        listener.render :world_sk_permanent_resident_end
       end
 
       private def world_abroad_permanent_resident_step(listener)
         if valid?(:world_abroad_permanent_resident)
-          self.step = 'world_abroad_permanent_resident_preview'
-          listener.render :world_abroad_permanent_resident_preview
+          self.step = 'world_abroad_permanent_resident_end'
+          listener.render :world_abroad_permanent_resident_end
         else
           listener.render :world_abroad_permanent_resident
         end
       end
 
-      private def world_abroad_permanent_resident_preview_step(listener)
-        self.step = 'world_abroad_permanent_resident_preview'
-        listener.render :world_abroad_permanent_resident_preview
+      private def world_abroad_permanent_resident_end_step(listener)
+        self.step = 'world_abroad_permanent_resident_end'
+        listener.render :world_abroad_permanent_resident_end
       end
     end
   end

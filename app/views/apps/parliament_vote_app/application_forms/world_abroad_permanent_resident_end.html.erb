@@ -4,6 +4,32 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Pre voľbu zo zahraničia je potrebné požiadať o voľbu poštou</h1>
+
+    <ol class="govuk-list govuk-list--number govuk-!-font-size-24">
+      <li class="govuk-!-margin-bottom-4">
+        Otvorte
+        <%= mail_to @application_form.minv_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
+          target: '_blank',
+          body: @application_form.world_abroad_resident_email_body,
+          subject: 'Žiadosť o voľbu poštou.'
+        %>
+        alebo ju manuálne
+        <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>.
+        <div id="conditional-manual" <% unless Rails.env.test? %> style="display: none;"<% end %>>
+          <p class="govuk-body govuk-!-margin-top-5">Skopírujte text žiadosti.</p>
+          <div class="govuk-form-group">
+            <textarea onclick="this.focus();this.select();" rows="8" class="govuk-textarea"><%= @application_form.world_abroad_resident_email_body %></textarea>
+          </div>
+        </div>
+      </li>
+      <li class="govuk-!-margin-bottom-4">
+        Odošlite na emailovú adresu
+        <strong><%= @application_form.minv_email %></strong>.
+      </li>
+    </ol>
+
+    <br>
+
     <p>Zákon umožňuje voliť zo zahraničia občanom, ktorí nemajú trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiavajú mimo jej územia.</p>
 
     <p>Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť na Ministerstvo Vnútra do 50 dní pred dňom konania volieb.
@@ -17,39 +43,5 @@
 
     <p>Volič musí doručiť obálku s hlasovacím lístkom najneskôr posledný pracovný deň predo dňom konania volieb. Na obálky doručené po tomto termíne sa neprihliada.</p>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half" style="width: auto;">
-        <%= form_for @application_form, :builder => AppFormBuilder, url: world_abroad_resident_form_apps_parliament_vote_app_application_forms_path(format: :pdf), remote: false do |f| %>
-          <%= f.hidden_field :step %>
-          <%= f.hidden_field :name %>
-          <%= f.hidden_field :surname %>
-          <%= f.hidden_field :maiden_name %>
-          <%= f.hidden_field :pin %>
-          <%= f.hidden_field :delivery_street %>
-          <%= f.hidden_field :delivery_house_number %>
-          <%= f.hidden_field :delivery_pobox %>
-          <%= f.hidden_field :delivery_municipality %>
-          <%= f.hidden_field :delivery_country %>
-          <%= f.submit 'Stiahnuť žiadosť '%>
-        <% end %>
-    </div>
-
-    <div class="govuk-grid-column-one-half" style="width: auto;">
-      <%= form_for @application_form, :builder => AppFormBuilder, url: world_abroad_resident_declaration_apps_parliament_vote_app_application_forms_path(format: :pdf), remote: false do |f| %>
-        <%= f.hidden_field :step %>
-        <%= f.submit 'Stiahnuť čestné prehlásenie'%>
-      <% end %>
-    </div>
-
-    </div>
   </div>
 </div>
-
-<script>
-  $('.new_apps_parliament_vote_app_application_form').on('submit', function() {
-    var submit = $(this).find('[type="submit"]');
-    setTimeout(function() {
-      submit.removeAttr('disabled');
-    }, 1000);
-  });
-</script>

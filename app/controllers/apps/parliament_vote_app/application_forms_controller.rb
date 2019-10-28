@@ -14,41 +14,6 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
     render_step 'world'
   end
 
-  def world_sk_resident_form
-    @data = form_params
-    respond_to do |format|
-      format.pdf do
-        render pdf: 'ziadost-o-volbu-postou-zo-zahranicia',
-              template: 'apps/parliament_vote_app/application_forms/_sk_resident_form.pdf.erb',
-              encoding: "UTF-8",
-              disposition: 'attachment'
-      end
-    end
-  end
-
-  def world_abroad_resident_form
-    @data = form_params
-    respond_to do |format|
-      format.pdf do
-        render pdf: 'ziadost-o-volbu-postou-zo-zahranicia',
-              template: 'apps/parliament_vote_app/application_forms/_abroad_resident_form.pdf.erb',
-              encoding: "UTF-8",
-              disposition: 'attachment'
-      end
-    end
-  end
-
-  def world_abroad_resident_declaration
-    respond_to do |format|
-      format.pdf do
-        render pdf: 'cestne-prehlasenie-o-trvalom-pobyte-mimo-uzemia-slovenskej-republiky',
-              template: 'apps/parliament_vote_app/application_forms/_non_resident_declaration.pdf.erb',
-              encoding: "UTF-8",
-              disposition: 'attachment'
-      end
-    end
-  end
-
   def create
     @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
@@ -70,10 +35,10 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :place,
       :sk_citizen,
       :delivery,
-      :name, :surname, :pin, :nationality, :maiden_name,
-      :street, :house_number, :pobox, :municipality,
+      :full_name, :pin, :nationality, :maiden_name,
+      :street, :pobox, :municipality,
       :same_delivery_address,
-      :delivery_street, :delivery_house_number, :delivery_pobox, :delivery_municipality, :delivery_country,
+      :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
       :municipality_email,
       :permanent_resident
     )
