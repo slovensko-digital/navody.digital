@@ -1,16 +1,16 @@
 Dobrý deň,
-touto cestou žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku <%= Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE.year %> a o zaslanie hlasovacích lístkov a obálok na adresu:
+touto cestou žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku <%= model.year %> a o zaslanie hlasovacích lístkov a obálok na adresu:
 
-Meno: <%= full_name %>
-Rodné číslo: <%= pin %>
+Meno: <%= model.full_name %>
+Rodné číslo: <%= model.pin %>
 
-Ulica: <%= delivery_street %>
-Obec: <%= delivery_municipality %>
-PSČ: <%= delivery_pobox %>
-Štát: <%= delivery_country %>
+Ulica: <%= model.delivery_street %>
+Obec: <%= model.delivery_municipality %>
+PSČ: <%= model.delivery_pobox %>
+Štát: <%= model.delivery_country %>
 
 ČESTNÉ VYHLÁSENIE
-Na účely voľby poštou do Národnej rady Slovenskej republiky v roku <%= Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE.year %>
+Na účely voľby poštou do Národnej rady Slovenskej republiky v roku <%= model.year %>
 čestne vyhlasujem, že nemám trvalý pobyt na území Slovenskej republiky.
 
 Príloha:

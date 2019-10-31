@@ -113,10 +113,25 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Vyzdvihne ho splnomocnena osoba'
+    choose 'Vyzdvihne ho splnomocnená osoba'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Prevzatie hlasovacieho preukazu splnomocnenou osobou')
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva', class: 'person'
+    fill_in 'Rodné číslo', with: '123', class: 'person'
+    fill_in 'Ulica', with: 'Pupavova 31'
+    fill_in 'PSČ', with: '456'
+    fill_in 'Obec', with: 'Bratislava - Karlova ves'
+    fill_in 'Meno, priezvisko, titul', with: 'Jarko Mrkva', class: 'authorized-person'
+    fill_in 'Rodné číslo', with: '567', class: 'authorized-person'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Meno: Ferko Mrkva')
+    expect(page).to have_content('Rodné číslo: 123')
+    expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
+    expect(page).to have_content('Preukaz vyzdvihne splnomocnená osoba: Meno: Jarko Mrkva Rodné číslo: 567')
+
+    click_link 'pokračujte ďalej'
+    expect(page).to have_content('Gratulujeme')
   end
 
   scenario 'As a citizen I want to vote at home address' do

@@ -36,6 +36,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :sk_citizen,
       :delivery,
       :full_name, :pin, :nationality, :maiden_name,
+      :authorized_person_full_name, :authorized_person_pin,
       :street, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,

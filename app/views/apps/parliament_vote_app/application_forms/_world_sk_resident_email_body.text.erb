@@ -1,20 +1,20 @@
 Dobrý deň,
 
-touto cestou žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku <%= Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE.year %>
+touto cestou žiadam o voľbu poštou pre voľby do Národnej rady Slovenskej republiky v roku <%= model.year %>
 a o zaslanie hlasovacích lístkov a obálok na adresu:
-Meno: <%= full_name %>
-Rodné číslo: <%= pin %>
+Meno: <%= model.full_name %>
+Rodné číslo: <%= model.pin %>
 
 Adresa trvalého pobytu v Slovenskej republike:
-Ulica: <%= street %>
-Obec: <%= municipality %>
-PSČ: <%= pobox%>
+Ulica: <%= model.street %>
+Obec: <%= model.municipality %>
+PSČ: <%= model.pobox%>
 
 Adresa miesta pobytu v cudzine (pre zaslanie hlasovacích lístkov a obálok):
-Ulica: <%= delivery_street %>
-Obec: <%= delivery_municipality %>
-PSČ: <%= delivery_pobox %>
-Štát: <%= delivery_country %>
+Ulica: <%= model.delivery_street %>
+Obec: <%= model.delivery_municipality %>
+PSČ: <%= model.delivery_pobox %>
+Štát: <%= model.delivery_country %>
 
 Zároveň Vás žiadam o potvrdenie prijatia tejto žiadosti.
 

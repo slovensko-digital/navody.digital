@@ -11,6 +11,7 @@ module Apps
       attr_accessor :sk_citizen
       attr_accessor :delivery
       attr_accessor :full_name, :pin
+      attr_accessor :authorized_person_full_name, :authorized_person_pin
       attr_accessor :street, :pobox, :municipality
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
@@ -28,15 +29,20 @@ module Apps
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident]
+                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident]
+                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:identity, :world_sk_permanent_resident]
+                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:identity, :world_sk_permanent_resident]
+                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :municipality, message: 'Vyberte obec',
-                            on: [:identity, :world_sk_permanent_resident]
+                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+
+      validates_presence_of :authorized_person_full_name, message: 'Meno splnomocnenej osoby je povinná položka',
+                            on: [:authorized_person]
+      validates_presence_of :authorized_person_pin, message: 'Rodné číslo splnomocnenej osoby je povinná položka',
+                            on: [:authorized_person]
 
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
                             on: :delivery_address
@@ -61,6 +67,10 @@ module Apps
         "volby@minv.sk"
       end
 
+      def year
+        VOTE_DATE.year
+      end
+
       def same_delivery_address?
         same_delivery_address == '1'
       end
@@ -72,49 +82,28 @@ module Apps
       def from_slovakia_email_body
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/from_slovakia_email_body",
-          locals: {
-            same_delivery_address: same_delivery_address?,
-            full_name: full_name,
-            pin: pin,
-            street: street,
-            pobox: pobox,
-            municipality: municipality,
-            delivery_street: delivery_street,
-            delivery_pobox: delivery_pobox,
-            delivery_municipality: delivery_municipality,
-            delivery_country: delivery_country,
-          },
+          locals: { model: self },
+        )
+      end
+
+      def from_slovakia_authorized_person_email_body
+        ActionController::Base.new.render_to_string(
+          partial: "apps/parliament_vote_app/application_forms/from_slovakia_authorized_person_email_body",
+          locals: { model: self },
         )
       end
 
       def world_abroad_resident_email_body
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/world_abroad_resident_email_body",
-          locals: {
-            full_name: full_name,
-            pin: pin,
-            delivery_street: delivery_street,
-            delivery_municipality: delivery_municipality,
-            delivery_country: delivery_country,
-            delivery_pobox: delivery_pobox,
-          },
+          locals: { model: self },
         )
       end
 
       def world_sk_resident_email_body
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/world_sk_resident_email_body",
-          locals: {
-            full_name: full_name,
-            pin: pin,
-            street: street,
-            pobox: pobox,
-            municipality: municipality,
-            delivery_street: delivery_street,
-            delivery_municipality: delivery_municipality,
-            delivery_country: delivery_country,
-            delivery_pobox: delivery_pobox,
-          },
+          locals: { model: self },
         )
       end
 
@@ -130,6 +119,8 @@ module Apps
           delivery_step(listener)
         when 'identity'
           identity_step(listener)
+        when 'authorized_person'
+          authorized_person_step(listener)
         when 'address'
           address_step(listener)
         when 'delivery_address'
@@ -188,8 +179,9 @@ module Apps
           when 'post'
             self.step = 'identity'
             listener.render :identity
-          when 'representative_person'
-            listener.redirect_to action: :representative_person
+          when 'authorized_person'
+            self.step = 'authorized_person'
+            listener.render :authorized_person
           when 'person'
             listener.redirect_to action: :person
           end
@@ -213,6 +205,15 @@ module Apps
           listener.render :send
         else
           listener.render :delivery_address
+        end
+      end
+
+      private def authorized_person_step(listener)
+        if valid?(:authorized_person)
+          listener.render :authorized_person_send
+        else
+          self.step = 'authorized_person'
+          listener.render :authorized_person
         end
       end
 
