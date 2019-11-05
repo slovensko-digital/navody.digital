@@ -60,6 +60,20 @@ Rails.application.routes.draw do
         end
       end
     end
+    namespace :parliament_vote_app, path: 'parlamentne-volby' do
+      resource :application_forms, path: '' do
+        member do
+          get :end, path: 'volte-zodpovedne'
+          get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
+          get :person, path: 'hlasovaci-preukaz-osobne'
+          get :non_sk_nationality, path: 'hlasovanie-obcanov-inej-narodnosti'
+          get :delivery, path: 'hlasovaci-preukaz'
+          post :delivery, path: 'hlasovaci-preukaz'
+          get :world, path: 'hlasovanie-v-zahranici'
+          post :world, path: 'hlasovanie-v-zahranici'
+        end
+      end
+    end
     namespace :child_birth_app, path: 'narodenie-dietata' do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end

@@ -79,3 +79,14 @@
     padding: 30px 20px;
     margin: 20px 0;
 }
+
+.body__iframe .navody-template__content > .sdn-phase-banner,
+.body__iframe .sdn-header ,
+.body__iframe .navody-template__footer ,
+.body__iframe .sdn-feedbackbar  {
+    display: none !important;
+}
+
+.body__iframe [type="submit"]:last-child {
+    margin-bottom: 0;
+}

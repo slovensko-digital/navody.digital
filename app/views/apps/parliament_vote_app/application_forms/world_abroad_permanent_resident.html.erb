@@ -1,0 +1,26 @@
+<%= content_for :title, build_page_title('Hlasovanie v zahraničí', 'Parlamentné voľby') %>
+<%= content_for(:headerline, 'Parlamentné voľby') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Pre voľbu zo zahraničia je potrebné požiadať o voľbu poštou</h1>
+    <p class="govuk-body-lead">Zákon umožňuje voliť zo zahraničia občanom, ktorí majú trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiavajú mimo jej územia.</p>
+    <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb.</p>
+
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <h2 class="govuk-heading-m">Vaše osobné údaje</h1>
+      <%= f.hidden_field :step %>
+      <%= f.hidden_field :municipality_email %>
+
+     <%= f.text_field :full_name, class: 'govuk-input--width-20', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
+      <%= f.text_field :pin, class: 'govuk-input--width-10', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
+
+      <%= f.text_field :delivery_street, label: 'Ulica', class: 'govuk-input--width-20 delivery-address', 'autocomplete': 'address-line1' %>
+      <%= f.text_field :delivery_pobox, label: 'PSČ', hint: 'Napríklad: 841 01', class: 'govuk-input--width-5 delivery-address', 'autocomplete': 'postal-code' %>
+      <%= f.text_field :delivery_municipality, label: 'Obec', class: 'govuk-input--width-20 input-to-replace delivery-address' %>
+      <%= f.text_field :delivery_country, label: 'Štát', class: 'govuk-input--width-20 input-to-replace delivery-address' %>
+
+      <%= f.submit 'Pokračovať'%>
+    <% end %>
+  </div>
+</div>

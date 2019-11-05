@@ -1,0 +1,107 @@
+<style>
+  .autocomplete__hint,
+  .autocomplete__option {
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .autocomplete__hint,
+  .autocomplete__input {
+    padding: 5px 35px 5px 5px;
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    height: 40px;
+  }
+
+  @media (min-width: 40.0625em) {
+    .autocomplete__hint,
+    .autocomplete__input {
+      font-size: 18px;
+      font-size: 1.125rem;
+      line-height: 1.33333;
+    }
+  }
+</style>
+
+<%= stylesheet_link_tag 'accessible-autocomplete', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+<script>
+  var municipalities = [];
+  var municipalityEmails = {};
+
+  for (var i = 0; i < SLOVAK_MUNICIPALITIES.length; i++)
+  {
+    var municipality = SLOVAK_MUNICIPALITIES[i];
+
+    var searchText = replaceDiacritics(municipality[0]).toLowerCase();
+    var label = municipality[0] + (municipality[2] !== '' ? (' (' + municipality[2] + ')') : '');
+
+    SLOVAK_MUNICIPALITIES[i][3] = searchText.replace(/[ -]+/g, ' ');
+    SLOVAK_MUNICIPALITIES[i][4] = label;
+
+    municipalities.push(label);
+    municipalityEmails[label] = municipality[1];
+  }
+
+  var elm = document.querySelector('.input-to-replace');
+  if (elm) {
+    //Replace input field with new <div> which is then used by accessibleAutocomplete
+    var divForAutocomplete = document.createElement('div');
+    divForAutocomplete.id = 'municipality-field';
+    divForAutocomplete.className = 'govuk-input--width-20';
+    elm.parentElement.appendChild(divForAutocomplete);
+    elm.remove();
+  }
+
+  accessibleAutocomplete({
+    element: document.getElementById('municipality-field'),
+    id: 'apps_parliament_vote_app_application_form_municipality',
+    name: 'apps_parliament_vote_app_application_form[municipality]',
+    displayMenu: 'overlay',
+    showAllValues: true,
+    autoselect: true,
+    confirmOnBlur: false,
+    defaultValue: '<%=j @application_form.municipality %>',
+    source: function (query, populateResults) {
+      var results = [];
+
+      if (query === '') {
+        results = municipalities
+      } else {
+        var term = replaceDiacritics(query).toLowerCase();
+
+        for (var i = 0; i < municipalities.length && results.length < 50; i++) {
+          var municipality = SLOVAK_MUNICIPALITIES[i];
+          var index = municipality[3].indexOf(term);
+
+          if (municipality[4] === query) {
+            results.push(municipality[4])
+          } else if (index > -1 && (index === 0 || municipality[3][index - 1] === ' ')) {
+            results.push(municipality[4])
+          }
+        }
+      }
+
+      results = results.sort(function (a, b) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0))
+      });
+
+      populateResults(results)
+    },
+    dropdownArrow: function (config) {
+      return '<svg class="' + config.className + '" style="top: 8px;" viewBox="0 0 512 512" ><path d="M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9  c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3  z"/></svg>'
+    },
+    tNoResults: function () {
+      return 'Obec sa nenašla.'
+    },
+    onConfirm: function (value) {
+      document.querySelector('#apps_parliament_vote_app_application_form_municipality_email').value = municipalityEmails[value] ? municipalityEmails[value] : '';
+    }
+  });
+</script>
