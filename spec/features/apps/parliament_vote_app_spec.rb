@@ -169,7 +169,6 @@ RSpec.feature "Parliament vote app", type: :feature do
     fill_in 'Štát', with: 'California, USA', class: 'delivery-address'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('Volič musí doručiť obálku s hlasovacím lístkom najneskôr posledný pracovný deň predo dňom konania volieb. Na obálky doručené po tomto termíne sa neprihliada.')
     expect(page).to have_content('Meno: Ferko Mrkva')
     expect(page).to have_content('Rodné číslo: 123')
     expect(page).to have_content('Ulica: Pupavova 31')
@@ -203,7 +202,6 @@ RSpec.feature "Parliament vote app", type: :feature do
     fill_in 'Štát', with: 'California, USA'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('K žiadosti je potrebné pripojiť fotokópiu časti cestovného dokladu Slovenskej republiky s osobnými údajmi voliča alebo fotokópiu osvedčenia o štátnom občianstve Slovenskej republiky a pridať čestné prehlásenie o trvalom pobyte v zahraničí.')
     expect(page).to have_content('Meno: Ferko Mrkva')
     expect(page).to have_content('Rodné číslo: 123')
     expect(page).to have_content('Ulica: Polk 1700')
