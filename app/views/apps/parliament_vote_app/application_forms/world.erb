@@ -6,6 +6,8 @@
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= f.hidden_field :step %>
       <%= f.radios :permanent_resident, 'Máte trvalý pobyt na Slovensku?', inline: true do %>
+        <p class="govuk-body-lead">Na to aby ste nemali trvalý pobyt na Slovensku, museli ste si ho odhlásiť.</p>
+        <p>O odhlásenie trvalého pobytu z dôvodu presťahovania do zahraničia treba požiadať. Ak ste tak neurobili, stále ste prihlásený na trvalý pobyt na Slovensku, teda aj zapísaný v zozname voličov. V takom prípade zvoľte možnosť Áno.</p>
         <%= f.radio_button :permanent_resident, 'yes', label: "Áno" %>
         <%= f.radio_button :permanent_resident, 'no', label: "Nie"%>
       <% end %>
