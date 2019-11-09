@@ -16,6 +16,7 @@ module Apps
       attr_accessor :same_delivery_address
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
+      attr_accessor :municipality_email_verified
       attr_accessor :permanent_resident
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place

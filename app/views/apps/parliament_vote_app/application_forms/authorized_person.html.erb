@@ -8,18 +8,19 @@
       <h2 class="govuk-heading-l">Vaše osobné údaje</h1>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :municipality_email %>
+      <%= f.hidden_field :municipality_email_verified %>
 
       <%= f.text_field :full_name, class: 'govuk-input--width-20 person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
       <%= f.text_field :pin, class: 'govuk-input--width-10 person', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
 
       <br />
-      <h2 class="govuk-heading-l">Adresa trvalého pobytu</h1>
+      <h2 class="govuk-heading-l">Adresa trvalého pobytu</h2>
       <%= f.text_field :street, label: 'Ulica a číslo', hint: 'Napríklad: Kaštieľska 2', class: 'govuk-input--width-20', 'autocomplete': 'address-line1' %>
       <%= f.text_field :pobox, label: 'PSČ', hint: 'Napríklad: 841 01', class: 'govuk-input--width-5', 'autocomplete': 'postal-code' %>
       <%= f.text_field :municipality, label: 'Obec', class: 'govuk-input--width-20 input-to-replace' %>
 
        <br />
-      <h2 class="govuk-heading-l">Splnomocnená osoba</h1>
+      <h2 class="govuk-heading-l">Splnomocnená osoba</h2>
       <%= f.text_field :authorized_person_full_name, class: 'govuk-input--width-20 authorized-person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
       <%= f.text_field :authorized_person_pin, class: 'govuk-input--width-10 authorized-person', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
 

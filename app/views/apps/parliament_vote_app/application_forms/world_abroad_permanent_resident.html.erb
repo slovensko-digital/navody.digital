@@ -8,9 +8,10 @@
     <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb.</p>
 
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
-      <h2 class="govuk-heading-m">Vaše osobné údaje</h1>
+      <h2 class="govuk-heading-m">Vaše osobné údaje</h2>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :municipality_email %>
+      <%= f.hidden_field :municipality_email_verified %>
 
      <%= f.text_field :full_name, class: 'govuk-input--width-20', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
       <%= f.text_field :pin, class: 'govuk-input--width-10', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
