@@ -15,7 +15,7 @@
           <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
             target: '_blank',
             body: @application_form.from_slovakia_authorized_person_email_body,
-            subject: 'Žiadosť o hlasovací preukaz do volieb do parlamentnynch volieb.'
+            subject: 'Žiadosť o hlasovací preukaz do volieb do parlamentých volieb.'
           %>
           alebo ju manuálne
           <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>.
