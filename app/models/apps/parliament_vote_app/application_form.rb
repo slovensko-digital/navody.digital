@@ -74,7 +74,7 @@ module Apps
       end
 
       def same_delivery_address?
-        same_delivery_address == '1'
+        same_delivery_address == '1' || same_delivery_address.blank?
       end
 
       def full_address

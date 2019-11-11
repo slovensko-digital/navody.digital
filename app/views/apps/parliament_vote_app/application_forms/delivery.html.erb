@@ -4,6 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'components/error_summary', form: @application_form %>
       <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
       <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo Vášho trvalého bydliska, musíte požiadať Vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
       <%= f.hidden_field :step %>

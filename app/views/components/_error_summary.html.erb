@@ -1,0 +1,26 @@
+<% if form.errors.any? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <% if form.errors.messages.size > 1 %>
+        Vyskytolo sa niekoľko problémov
+      <% else %>
+        Vyskytol sa problém
+      <% end %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% form.errors.messages.each do |id, msg| %>
+          <li><a href="#apps_parliament_vote_app_application_form_<%= id %>" data-js-scroll-to><%= msg.first %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $('[data-js-scroll-to]').on('click', function(e) {
+    var id = $(this).attr('href');
+    location.href = id;
+    e.preventDefault();
+  });
+</script>

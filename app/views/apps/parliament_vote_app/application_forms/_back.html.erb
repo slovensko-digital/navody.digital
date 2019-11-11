@@ -1,5 +1,5 @@
 <button type="submit" class="govuk-back-link button-back vote-app-back">Späť</button>
-<%= f.hidden_field :back, value: false %>
+<%= form.hidden_field :back, value: false %>
 <script>
   $(document).ready(function() {
     $(".vote-app-back").on("click", function(e) {
