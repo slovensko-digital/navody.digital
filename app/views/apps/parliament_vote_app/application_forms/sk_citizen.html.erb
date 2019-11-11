@@ -6,7 +6,7 @@
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
-      <%= f.radios :sk_citizen, 'Ste občan Slovenskej republiky?', inline: true, id: "apps_parliament_vote_app_application_form_sk_citizen" do %>
+      <%= f.radios :sk_citizen, 'Ste občan Slovenskej republiky?', inline: true do %>
         <%= f.radio_button :sk_citizen, 'yes', label: "Áno" %>
         <%= f.radio_button :sk_citizen, 'no', label: "Nie" %>
       <% end %>
