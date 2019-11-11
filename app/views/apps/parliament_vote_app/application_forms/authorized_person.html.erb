@@ -23,7 +23,7 @@
        <br />
       <h2 class="govuk-heading-l">Splnomocnená osoba</h2>
       <%= f.text_field :authorized_person_full_name, class: 'govuk-input--width-20 authorized-person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrvička', autocomplete: 'name' %>
-      <%= f.text_field :authorized_person_pin, class: 'govuk-input--width-10 authorized-person', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
+      <%= f.text_field :authorized_person_pin, class: 'govuk-input--width-10 authorized-person', label: 'Číslo občianskeho preukazu', hint: 'Napríklad: EP123456' %>
 
       <%= f.submit 'Pokračovať'%>
     <% end %>

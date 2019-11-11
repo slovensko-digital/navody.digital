@@ -122,7 +122,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     fill_in 'PSČ', with: '456'
     fill_in 'Obec', with: 'Bratislava - Karlova ves'
     fill_in 'Meno, priezvisko, titul', with: 'Jarko Mrkva', class: 'authorized-person'
-    fill_in 'Rodné číslo', with: '567', class: 'authorized-person'
+    fill_in 'Číslo občianskeho preukazu', with: '567', class: 'authorized-person'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Meno: Ferko Mrkva')
