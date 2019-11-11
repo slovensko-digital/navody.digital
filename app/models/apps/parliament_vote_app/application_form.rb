@@ -18,6 +18,7 @@ module Apps
       attr_accessor :municipality_email
       attr_accessor :municipality_email_verified
       attr_accessor :permanent_resident
+      attr_accessor :back
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
 
@@ -78,6 +79,10 @@ module Apps
 
       def full_address
         "#{street}, #{pobox} #{municipality}"
+      end
+
+      def go_back?
+        back == "true"
       end
 
       def from_slovakia_email_body
@@ -159,7 +164,10 @@ module Apps
       end
 
       private def place_step(listener)
-        if valid?(:place)
+        if go_back?
+          self.step = 'sk_citizen'
+          listener.render :sk_citizen
+        elsif valid?(:place)
           case place
           when 'home'
             listener.redirect_to action: :home
@@ -192,7 +200,10 @@ module Apps
       end
 
       private def identity_step(listener)
-        if valid?(:identity)
+        if go_back?
+          self.step = 'delivery'
+          listener.render :delivery
+        elsif valid?(:identity)
           self.step = 'delivery_address'
           listener.render :delivery_address
         else
@@ -201,7 +212,10 @@ module Apps
       end
 
       private def delivery_address_step(listener)
-        if valid?(:delivery_address)
+        if go_back?
+          self.step = 'identity'
+          listener.render :identity
+        elsif valid?(:delivery_address)
           self.step = 'send'
           listener.render :send
         else
@@ -210,7 +224,10 @@ module Apps
       end
 
       private def authorized_person_step(listener)
-        if valid?(:authorized_person)
+        if go_back?
+          self.step = 'delivery'
+          listener.render :delivery
+        elsif valid?(:authorized_person)
           listener.render :authorized_person_send
         else
           self.step = 'authorized_person'
@@ -235,7 +252,10 @@ module Apps
       end
 
       private def world_sk_permanent_resident_step(listener)
-        if valid?(:world_sk_permanent_resident)
+        if go_back?
+          self.step = 'world'
+          listener.render :world
+        elsif valid?(:world_sk_permanent_resident)
           self.step = 'world_sk_permanent_resident_end'
           listener.render :world_sk_permanent_resident_end
         else
@@ -249,7 +269,10 @@ module Apps
       end
 
       private def world_abroad_permanent_resident_step(listener)
-        if valid?(:world_abroad_permanent_resident)
+        if go_back?
+          self.step = 'world'
+          listener.render :world
+        elsif valid?(:world_abroad_permanent_resident)
           self.step = 'world_abroad_permanent_resident_end'
           listener.render :world_abroad_permanent_resident_end
         else
