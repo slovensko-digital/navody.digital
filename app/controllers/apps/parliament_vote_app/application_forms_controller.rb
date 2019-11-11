@@ -41,7 +41,8 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
       :municipality_email,
-      :permanent_resident
+      :permanent_resident,
+      :back
     )
   end
 

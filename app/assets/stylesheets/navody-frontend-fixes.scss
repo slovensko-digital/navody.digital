@@ -45,3 +45,18 @@ a.sdn-timeline-dropdown__option {
 .sdn-next-link__link {
   display: block;
 }
+
+.button-back ,
+.button-back:hover ,
+.button-back:focus ,
+.button-back:active {
+  border: none;
+  background: none;
+  padding: 0 0 0 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.vote-app-back {
+  top: -15px;
+}

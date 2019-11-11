@@ -4,6 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/parliament_vote_app/application_forms/back', f: f %>
       <h1 class="govuk-heading-xl">Prevzatie hlasovacieho preukazu splnomocnenou osobou</h2>
       <h2 class="govuk-heading-l">Vaše osobné údaje</h1>
       <%= f.hidden_field :step %>

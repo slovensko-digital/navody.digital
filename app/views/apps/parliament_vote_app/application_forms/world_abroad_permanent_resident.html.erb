@@ -3,11 +3,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Pre voľbu zo zahraničia je potrebné požiadať o voľbu poštou</h1>
-    <p class="govuk-body-lead">Zákon umožňuje voliť zo zahraničia občanom, ktorí majú trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiavajú mimo jej územia.</p>
-    <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb.</p>
-
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/parliament_vote_app/application_forms/back', f: f %>
+      <h1 class="govuk-heading-xl">Pre voľbu zo zahraničia je potrebné požiadať o voľbu poštou</h1>
+      <p class="govuk-body-lead">Zákon umožňuje voliť zo zahraničia občanom, ktorí majú trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiavajú mimo jej územia.</p>
+      <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb.</p>
+
       <h2 class="govuk-heading-m">Vaše osobné údaje</h2>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :municipality_email %>

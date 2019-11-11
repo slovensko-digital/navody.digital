@@ -3,9 +3,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
-    <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo Vášho trvalého bydliska, musíte požiadať Vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
+      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo Vášho trvalého bydliska, musíte požiadať Vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
@@ -20,7 +20,6 @@
           <%= f.radio_button :delivery, 'authorized_person', label: "Vyzdvihne ho splnomocnená osoba", hint: "", strong_label: true%>
         </div>
       </div>
-
       <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
     <% end %>
   </div>
