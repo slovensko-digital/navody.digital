@@ -8,19 +8,11 @@
       <% end %>
     </h2>
     <div class="govuk-error-summary__body">
-      <ul class="govuk-list govuk-error-summary__list">
+      <ul class="govuk-list govuk-error-summary__list" data-turbolinks="false">
         <% form.errors.messages.each do |id, msg| %>
-          <li><a href="#<%= form.model_name.singular %>_<%= id %>" data-js-scroll-to><%= msg.first %></a></li>
+          <li><a href="#<%= form.model_name.singular %>_<%= id %>"><%= msg.first %></a></li>
         <% end %>
       </ul>
     </div>
   </div>
 <% end %>
-
-<script>
-  $('[data-js-scroll-to]').on('click', function(e) {
-    var id = $(this).attr('href');
-    location.href = id;
-    e.preventDefault();
-  });
-</script>
