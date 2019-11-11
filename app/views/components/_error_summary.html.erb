@@ -10,7 +10,7 @@
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
         <% form.errors.messages.each do |id, msg| %>
-          <li><a href="#apps_parliament_vote_app_application_form_<%= id %>" data-js-scroll-to><%= msg.first %></a></li>
+          <li><a href="#<%= form.model_name.singular %>_<%= id %>" data-js-scroll-to><%= msg.first %></a></li>
         <% end %>
       </ul>
     </div>
