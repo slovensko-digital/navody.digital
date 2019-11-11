@@ -8,7 +8,7 @@ Meno: <%= model.full_name %>
 Rodné číslo: <%= model.pin %>
 Trvalý pobyt: <%= model.street %>, <%= model.pobox%> <%= model.municipality %>
 
-<% if model.same_delivery_address? %>
+<% if model.custom_delivery_address? %>
 Preukaz prosím zaslať na adresu trvalého pobytu.
 <% else %>
 Preukaz prosím zaslať na korešpondenčnú adresu:
