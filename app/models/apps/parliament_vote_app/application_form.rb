@@ -74,7 +74,7 @@ module Apps
       end
 
       def custom_delivery_address?
-        same_delivery_address == '2'
+        same_delivery_address == '0'
       end
 
       def full_address
