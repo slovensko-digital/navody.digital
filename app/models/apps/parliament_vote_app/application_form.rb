@@ -50,16 +50,16 @@ module Apps
                             on: :delivery_address
       validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
                             on: [:delivery_address, :world_sk_permanent_resident],
-                            unless: -> (f) { f.same_delivery_address? }
+                            if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
                             on: [:delivery_address, :world_sk_permanent_resident],
-                            unless: -> (f) { f.same_delivery_address? }
+                            if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_municipality, message: 'Zadajte obec',
                             on: [:delivery_address, :world_sk_permanent_resident],
-                            unless: -> (f) { f.same_delivery_address? }
+                            if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát',
                             on: [:delivery_address, :world_sk_permanent_resident],
-                            unless: -> (f) { f.same_delivery_address? }
+                            if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
         VOTE_DATE >= Date.current
@@ -73,8 +73,8 @@ module Apps
         VOTE_DATE.year
       end
 
-      def same_delivery_address?
-        same_delivery_address == '1'
+      def custom_delivery_address?
+        same_delivery_address == '0'
       end
 
       def full_address
