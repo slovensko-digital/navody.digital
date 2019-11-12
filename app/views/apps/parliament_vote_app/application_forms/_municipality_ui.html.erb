@@ -33,7 +33,6 @@
 <%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
 <script>
   var MUNICIPALITIES_AUTOCOMPLETE_SETTINGS = {
-    element: document.getElementById('municipality-field'),
     id: 'apps_parliament_vote_app_application_form_municipality',
     name: 'apps_parliament_vote_app_application_form[municipality]',
     displayMenu: 'overlay',
@@ -46,13 +45,11 @@
     }
   };
 
-  var MUNICIPALITIES_AUTOCOMPLETE_EMAIL_ELEMENT = document.querySelector('#apps_parliament_vote_app_application_form_municipality_email);
+  var MUNICIPALITIES_AUTOCOMPLETE_EMAIL_ELEMENT = document.querySelector('#apps_parliament_vote_app_application_form_municipality_email');
   var MUNICIPALITIES_AUTOCOMPLETE_NOT_FOUND_CALLBACK = function (municipality) {};
   var MUNICIPALITIES_AUTOCOMPLETE_FOUND_CALLBACK = function (municipality, payload) {
-    console.log(municipality, payload);
+    // console.log(municipality, payload);
   };
-
-
 
   /* ------------------------------------------------------------ */
   /* ------------------------------------------------------------ */
@@ -211,6 +208,18 @@
       settings['dropdownArrow'] = function (config) {
         return '<svg class="' + config.className + '" style="top: 8px;" viewBox="0 0 512 512" ><path d="M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9  c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3  z"/></svg>';
       };
+
+      var elm = document.querySelector('.input-to-replace');
+      if (elm) {
+        //Replace input field with new <div> which is then used by accessibleAutocomplete
+        var divForAutocomplete = document.createElement('div');
+        divForAutocomplete.id = 'municipality-field';
+        divForAutocomplete.className = 'govuk-input--width-20';
+        elm.parentElement.appendChild(divForAutocomplete);
+        elm.remove();
+      }
+
+      settings.element = document.getElementById('municipality-field');
 
       accessibleAutocomplete(settings);
 
