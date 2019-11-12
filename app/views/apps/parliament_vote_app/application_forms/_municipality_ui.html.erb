@@ -214,7 +214,7 @@
         //Replace input field with new <div> which is then used by accessibleAutocomplete
         var divForAutocomplete = document.createElement('div');
         divForAutocomplete.id = 'municipality-field';
-        divForAutocomplete.className = 'govuk-input--width-20';
+        divForAutocomplete.className = 'govuk-input--width-20 govuk-input-autocomplete';
         elm.parentElement.appendChild(divForAutocomplete);
         elm.remove();
       }

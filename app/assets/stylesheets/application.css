@@ -90,3 +90,13 @@
 .body__iframe [type="submit"]:last-child {
     margin-bottom: 0;
 }
+
+.govuk-input-autocomplete {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 1.125rem;
+    line-height: 1.33333;
+    font-family: "Roboto", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
