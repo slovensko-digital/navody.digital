@@ -6,7 +6,7 @@
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= render 'components/error_summary', form: @application_form %>
       <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
-      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo Vášho trvalého bydliska, musíte požiadať Vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
+      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
@@ -16,9 +16,9 @@
         <%= f.error_message :delivery %>
 
         <div class="govuk-radios">
-          <%= f.radio_button :delivery, 'post', label: "Poštou", hint: "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz Vám bude doručený na adresu uvedenú v žiadosti.", strong_label: true%>
-          <%= f.radio_button :delivery, 'person', label: "Osobne na úrade", hint: "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz Vám vystavia na počkanie.", strong_label: true%>
-          <%= f.radio_button :delivery, 'authorized_person', label: "Vyzdvihne ho za mňa iná osoba", hint: 'Hlasovací preukaz za Vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti.', strong_label: true%>
+          <%= f.radio_button :delivery, 'post', label: "Poštou", hint: "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz vám bude doručený na adresu uvedenú v žiadosti.", strong_label: true%>
+          <%= f.radio_button :delivery, 'person', label: "Osobne na úrade", hint: "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz vám vystavia na počkanie.", strong_label: true%>
+          <%= f.radio_button :delivery, 'authorized_person', label: "Vyzdvihne ho za mňa iná osoba", hint: 'Hlasovací preukaz za vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti.', strong_label: true%>
         </div>
       </div>
       <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
