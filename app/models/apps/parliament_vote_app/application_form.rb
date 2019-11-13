@@ -43,7 +43,7 @@ module Apps
 
       validates_presence_of :authorized_person_full_name, message: 'Meno splnomocnenej osoby je povinná položka',
                             on: [:authorized_person]
-      validates_presence_of :authorized_person_pin, message: 'Rodné číslo splnomocnenej osoby je povinná položka',
+      validates_presence_of :authorized_person_pin, message: 'Číslo občianskeho preukazu splnomocnenej osoby je povinná položka',
                             on: [:authorized_person]
 
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
