@@ -7,7 +7,7 @@
       <%= render 'apps/parliament_vote_app/application_forms/back', form: f %>
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
-      <% hint = 'Parlamentné voľby sa na Slovensku konajú v sobotu 29. februára 2020, od 7:00 do 22:00 h. Hlasovať je možné osobne na území Slovenska, v čase konania volieb, alebo poštou zo zahraničia.' %>
+      <% hint = 'Parlamentné voľby sa na Slovensku konajú v sobotu 29. februára 2020, od 7:00 do 22:00. Hlasovať je možné osobne na území Slovenska, alebo poštou zo zahraničia.' %>
       <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
         <%= f.radio_button :place, 'sk', label: "Na Slovensku, mimo trvalého bydliska", hint: "Ak si nie ste istý, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku." %>
         <%= f.radio_button :place, 'home', label: "Na Slovensku, v mieste trvalého bydliska"%>
