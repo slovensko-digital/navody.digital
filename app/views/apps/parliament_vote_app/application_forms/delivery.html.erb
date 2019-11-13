@@ -6,7 +6,7 @@
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= render 'components/error_summary', form: @application_form %>
       <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
-      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz Vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
+      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
       <%= f.hidden_field :step %>
       <%= f.hidden_field :sk_citizen %>
       <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
