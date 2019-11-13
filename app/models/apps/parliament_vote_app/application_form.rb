@@ -31,15 +31,15 @@ module Apps
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :municipality, message: 'Vyberte obec',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
 
       validates_presence_of :authorized_person_full_name, message: 'Meno splnomocnenej osoby je povinná položka',
                             on: [:authorized_person]
@@ -49,16 +49,16 @@ module Apps
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
                             on: :delivery_address
       validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:delivery_address, :world_sk_permanent_resident],
+                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:delivery_address, :world_sk_permanent_resident],
+                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_municipality, message: 'Zadajte obec',
-                            on: [:delivery_address, :world_sk_permanent_resident],
+                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát',
-                            on: [:delivery_address, :world_sk_permanent_resident],
+                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
@@ -74,7 +74,7 @@ module Apps
       end
 
       def custom_delivery_address?
-        same_delivery_address == '0'
+        same_delivery_address == '0' || step == 'world_abroad_permanent_resident'
       end
 
       def municipality_email_verified?
