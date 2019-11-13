@@ -231,7 +231,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Nie'
     click_button 'Pokračovať'
 
-    expect(page).to have_content('V parlamentných voľbách nemôžete voliť.')
+    expect(page).to have_content('môžu voliť len občania Slovenskej republiky.')
   end
 
   scenario 'As a citizen I want to see subscription options when vote is not active' do
