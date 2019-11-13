@@ -50,7 +50,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   private def set_metadata
     @metadata.og.title = 'Žiadosť o hlasovací preukaz alebo voľbu poštou'
     @metadata.og.image = 'og-parliament-vote-app.jpg'
-    @metadata.og.description = 'Či už budete počas volieb v zahraničí alebo mimo trvalého pobytu. Voliť sa dá, stačí požiadať.'
+    @metadata.og.description = 'Či budete počas volieb v zahraničí alebo mimo trvalého pobytu, voliť sa dá. Stačí požiadať.'
   end
 
   private def check_inactive_parliament_application
