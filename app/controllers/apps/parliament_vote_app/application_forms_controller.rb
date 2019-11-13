@@ -48,9 +48,9 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   private def set_metadata
-    @metadata.og.title = 'Parlamentné voľby'
-    @metadata.og.image = 'og-navody.png'
-    @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
+    @metadata.og.title = 'Žiadosť o hlasovací preukaz alebo voľbu poštou'
+    @metadata.og.image = 'og-parliament-vote-app.jpg'
+    @metadata.og.description = 'Či už budete počas volieb v zahraničí alebo mimo trvalého pobytu. Voliť sa dá, stačí požiadať.'
   end
 
   private def check_inactive_parliament_application
