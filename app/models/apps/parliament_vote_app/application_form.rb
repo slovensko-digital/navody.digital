@@ -9,6 +9,7 @@ module Apps
       attr_accessor :step
       attr_accessor :place
       attr_accessor :sk_citizen
+      attr_accessor :permanent_resident
       attr_accessor :delivery
       attr_accessor :full_name, :pin
       attr_accessor :authorized_person_full_name, :authorized_person_pin
@@ -17,7 +18,6 @@ module Apps
       attr_accessor :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country
       attr_accessor :municipality_email
       attr_accessor :municipality_email_verified
-      attr_accessor :permanent_resident
       attr_accessor :back
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
@@ -77,6 +77,10 @@ module Apps
         same_delivery_address == '0'
       end
 
+      def municipality_email_verified?
+        municipality_email_verified == "OK"
+      end
+
       def full_address
         "#{street}, #{pobox} #{municipality}"
       end
@@ -121,6 +125,8 @@ module Apps
           place_step(listener)
         when 'sk_citizen'
           sk_citizen_step(listener)
+        when 'permanent_resident'
+          permanent_resident_step(listener)
         when 'delivery'
           delivery_step(listener)
         when 'identity'
@@ -131,8 +137,6 @@ module Apps
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
-        when 'world'
-          world_step(listener)
         when 'world_sk_permanent_resident'
           world_sk_permanent_resident_step(listener)
         when 'world_sk_permanent_resident_end'
@@ -153,8 +157,8 @@ module Apps
         if valid?(:sk_citizen)
           case sk_citizen
           when 'yes'
-            self.step = 'place'
-            listener.render :place
+            self.step = 'permanent_resident'
+            listener.render :permanent_resident
           when 'no'
             listener.redirect_to action: :non_sk_nationality
           end
@@ -165,8 +169,8 @@ module Apps
 
       private def place_step(listener)
         if go_back?
-          self.step = 'sk_citizen'
-          listener.render :sk_citizen
+          self.step = 'permanent_resident'
+          listener.render :permanent_resident
         elsif valid?(:place)
           case place
           when 'home'
@@ -174,7 +178,8 @@ module Apps
           when 'sk'
             listener.redirect_to action: :delivery
           when 'world'
-            listener.redirect_to action: :world
+            self.step = 'world_sk_permanent_resident'
+            listener.render :world_sk_permanent_resident
           end
         else
           listener.render :place
@@ -235,26 +240,25 @@ module Apps
         end
       end
 
-      # World flow
-      private def world_step(listener)
+      private def permanent_resident_step(listener)
         if valid?(:permanent_resident)
           case permanent_resident
           when 'yes'
-            self.step = 'world_sk_permanent_resident'
-            listener.render :world_sk_permanent_resident
+            self.step = 'place'
+            listener.render :place
           when 'no'
             self.step = 'world_abroad_permanent_resident'
             listener.render :world_abroad_permanent_resident
           end
         else
-          listener.render :world
+          listener.render :permanent_resident
         end
       end
 
       private def world_sk_permanent_resident_step(listener)
         if go_back?
-          self.step = 'world'
-          listener.render :world
+          self.step = 'place'
+          listener.render :place
         elsif valid?(:world_sk_permanent_resident)
           self.step = 'world_sk_permanent_resident_end'
           listener.render :world_sk_permanent_resident_end
@@ -270,8 +274,8 @@ module Apps
 
       private def world_abroad_permanent_resident_step(listener)
         if go_back?
-          self.step = 'world'
-          listener.render :world
+          self.step = 'permanent_resident'
+          listener.render :permanent_resident
         elsif valid?(:world_abroad_permanent_resident)
           self.step = 'world_abroad_permanent_resident_end'
           listener.render :world_abroad_permanent_resident_end

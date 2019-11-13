@@ -17,6 +17,9 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
@@ -43,6 +46,9 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a citizen I want to request voting permit via post to a different address' do
     start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -82,6 +88,9 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
@@ -91,8 +100,11 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
   end
 
-  scenario 'As a citizen I want to request voting permit personaly' do
+  scenario 'As a citizen I want to request voting permit personally' do
     start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -110,10 +122,13 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Vyzdvihne ho splnomocnená osoba'
+    choose 'Vyzdvihne ho za mňa iná osoba'
     click_button 'Pokračovať'
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva', class: 'person'
@@ -139,6 +154,9 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
+    choose 'Áno'
+    click_button 'Pokračovať'
+
     choose 'Na Slovensku, v mieste trvalého bydliska'
     click_button 'Pokračovať'
 
@@ -150,10 +168,10 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    choose 'V zahraničí'
+    choose 'Áno'
     click_button 'Pokračovať'
 
-    choose 'Áno'
+    choose 'V zahraničí'
     click_button 'Pokračovať'
 
     expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
@@ -186,13 +204,10 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    choose 'V zahraničí'
+    choose 'Nie, mám odhlásený trvalý pobyt zo Slovenska'
     click_button 'Pokračovať'
 
-    choose 'Nie'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť svojej obci v mieste trvalého bydliska najneskôr do 50 dní pred dňom konania volieb')
+    expect(page).to have_content('Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť na Ministerstvo vnútra najneskôr do 50 dní pred dňom konania volieb')
 
     fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva'
     fill_in 'Rodné číslo', with: '123'

@@ -48,7 +48,8 @@
   var MUNICIPALITIES_AUTOCOMPLETE_EMAIL_ELEMENT = document.querySelector('#apps_parliament_vote_app_application_form_municipality_email');
   var MUNICIPALITIES_AUTOCOMPLETE_NOT_FOUND_CALLBACK = function (municipality) {};
   var MUNICIPALITIES_AUTOCOMPLETE_FOUND_CALLBACK = function (municipality, payload) {
-    // console.log(municipality, payload);
+    var elm = document.getElementById('apps_parliament_vote_app_application_form_municipality_email_verified');
+    elm.value = payload['status'];
   };
 
   /* ------------------------------------------------------------ */

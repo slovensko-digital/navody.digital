@@ -10,9 +10,9 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
     render_step('delivery')
   end
 
-  def world
+  def permanent_resident
     return render_self if request.post?
-    render_step('world')
+    render_step('permanent_resident')
   end
 
   def create
@@ -41,6 +41,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
       :municipality_email,
+      :municipality_email_verified,
       :permanent_resident,
       :back
     )
