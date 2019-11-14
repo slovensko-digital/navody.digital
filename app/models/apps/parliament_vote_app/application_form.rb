@@ -2,7 +2,9 @@ module Apps
   module ParliamentVoteApp
     class ApplicationForm
       VOTE_DATE = Date.new(2020, 2, 29)
-      DELIVERY_BY_POST_DEADLINE_DATE = VOTE_DATE - 15.days
+      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2020, 2, 10)
+      PICKUP_DEADLINE_DATE = Date.new(2020, 2, 28)
+      VOTE_BY_POST_DEADLINE_DATE = Date.new(2020, 1, 10)
 
       include ActiveModel::Model
 
@@ -21,14 +23,23 @@ module Apps
       attr_accessor :back
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
+      validates_exclusion_of :place, in: %w(world),
+                            if: -> { Date.current > VOTE_BY_POST_DEADLINE_DATE },
+                             message: 'Termín na voľbu poštou už uplynul.', on: :place
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
+      validates_exclusion_of :permanent_resident, in: %w(no),
+                            if: -> { Date.current > VOTE_BY_POST_DEADLINE_DATE },
+                             message: 'Termín na voľbu poštou už uplynul.', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
-      validates_exclusion_of :delivery, in: ['post'],
+      validates_exclusion_of :delivery, in: %w(post),
                             if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
+      validates_exclusion_of :delivery, in: %w(person authorized_person),
+                            if: -> { Date.current > PICKUP_DEADLINE_DATE },
+                             message: 'Termín na vybavenie hlasovacieho preukazu už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]

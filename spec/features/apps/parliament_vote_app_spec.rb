@@ -8,7 +8,7 @@ end
 
 RSpec.feature "Parliament vote app", type: :feature do
   before do
-    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE - 1.month
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_DATE - 2.months
   end
 
   scenario 'As a citizen I want to request voting permit via post' do
@@ -82,6 +82,42 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Gratulujeme')
   end
 
+  scenario 'As a citizen I want to request voting permit personally after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
+
+    choose 'Osobne na úrade'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Termín na vybavenie hlasovacieho preukazu už uplynul')
+  end
+
+  scenario 'As a citizen I want to request voting permit by authorized person after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
+
+    choose 'Vyzdvihne ho za mňa iná osoba'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Termín na vybavenie hlasovacieho preukazu už uplynul')
+  end
+
   scenario 'As a citizen I want to request voting permit by post after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::DELIVERY_BY_POST_DEADLINE_DATE + 1.day
     start
@@ -98,6 +134,33 @@ RSpec.feature "Parliament vote app", type: :feature do
     click_button 'Pokračovať'
 
     expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
+  end
+
+  scenario 'As a pernament citizen with I want to vote by post after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_BY_POST_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'V zahraničí'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Termín na voľbu poštou už uplynul')
+  end
+
+  scenario 'As a abroad citizen I want to vote by post after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_BY_POST_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
+
+    choose 'Nie, mám odhlásený trvalý pobyt zo Slovenska'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Termín na voľbu poštou už uplynul')
   end
 
   scenario 'As a citizen I want to request voting permit personally' do
