@@ -11,7 +11,7 @@
         <%= mail_to @application_form.minv_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
           target: '_blank',
           body: @application_form.world_abroad_resident_email_body,
-          subject: 'Žiadosť o voľbu poštou.'
+          subject: 'Žiadosť o voľbu poštou'
         %>
         alebo ju manuálne
         <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>.
