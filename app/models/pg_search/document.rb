@@ -22,7 +22,7 @@ class PgSearch::Document < ::ActiveRecord::Base
     tsearch: {
       any_word: true,
       prefix: false,
-      normalization: 1,
+      normalization: 0,
     },
   }
 end

@@ -38,10 +38,10 @@ RSpec.describe PgSearch::Document, type: :model do
     end
 
     context 'doc length normalization' do
-      it 'penalizes by document lengths' do
+      it 'will not penalize by document lengths' do
         page2 = create(:page, is_faq: true, title: (query+' ') * 20)
         page1 = create(:page, is_faq: true, title: (query+' ') * 5)
-        expect(subject.collect(&:searchable)).to eq [page1, page2]
+        expect(subject.collect(&:searchable)).to eq [page2, page1]
       end
     end
   end
