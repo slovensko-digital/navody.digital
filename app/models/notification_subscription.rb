@@ -26,6 +26,11 @@ class NotificationSubscription < ApplicationRecord
       label: 'Chcem odoberať informácie k tomuto návodu',
       hint: 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.',
     },
+    'CompanyNewsletterSubscription' => {
+      sendinblue_list_name: 'CompanyNewsletterSubscription',
+      label: 'Chcem dostávať novinky týkajúce sa podnikateľských subjektov',
+      hint: 'Dáme vám vedieť, ak bude potrebné splniť nejakú povinnosť pre vaše podnikanie.'
+    }
   }
 
   belongs_to :user, optional: true
