@@ -94,10 +94,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Osobne na úrade'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Termín na vybavenie hlasovacieho preukazu už uplynul')
+    expect(page).to have_field('Osobne na úrade', disabled: true)
   end
 
   scenario 'As a citizen I want to request voting permit by authorized person after the deadline' do
@@ -112,10 +109,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Vyzdvihne ho za mňa iná osoba'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Termín na vybavenie hlasovacieho preukazu už uplynul')
+    expect(page).to have_field('Vyzdvihne ho za mňa iná osoba', disabled: true)
   end
 
   scenario 'As a citizen I want to request voting permit by post after the deadline' do
@@ -130,10 +124,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Na Slovensku, mimo trvalého bydliska'
     click_button 'Pokračovať'
 
-    choose 'Poštou'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Termín na zaslanie hlasovacieho preukazu poštou už uplynul')
+    expect(page).to have_field('Poštou', disabled: true)
   end
 
   scenario 'As a pernament citizen with I want to vote by post after the deadline' do
@@ -145,10 +136,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    choose 'V zahraničí'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Termín na voľbu poštou už uplynul')
+    expect(page).to have_field('V zahraničí', disabled: true)
   end
 
   scenario 'As a abroad citizen I want to vote by post after the deadline' do
@@ -157,10 +145,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    choose 'Nie, mám odhlásený trvalý pobyt zo Slovenska'
-    click_button 'Pokračovať'
-
-    expect(page).to have_content('Termín na voľbu poštou už uplynul')
+    expect(page).to have_field('Nie, mám odhlásený trvalý pobyt zo Slovenska', disabled: true)
   end
 
   scenario 'As a citizen I want to request voting permit personally' do

@@ -9,7 +9,13 @@
       <%= f.radios :permanent_resident, 'Máte trvalý pobyt na Slovensku?' do %>
         <p class="govuk-body-lead">Na to aby ste nemali trvalý pobyt na Slovensku, museli ste si ho odhlásiť.</p>
         <%= f.radio_button :permanent_resident, 'yes', label: "Áno" %>
-        <%= f.radio_button :permanent_resident, 'no', label: "Nie, mám odhlásený trvalý pobyt zo Slovenska", hint: 'Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali zvoľte túto možnosť.' %>
+        <%= f.radio_button :permanent_resident, 'no',
+          disabled: @application_form.vote_by_post_expired?,
+          label: "Nie, mám odhlásený trvalý pobyt zo Slovenska",
+          hint: @application_form.vote_by_post_expired? ?
+            "Termín hlasovania poštou už uplynul." :
+            "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali zvoľte túto možnosť. Ostáva ešte #{@application_form.vote_by_post_remaining_days} #{@application_form.pickup_remaining_days > 1 ? 'dní' : 'deň'}."
+        %>
       <% end %>
 
       <%= f.submit 'Pokračovať' %>

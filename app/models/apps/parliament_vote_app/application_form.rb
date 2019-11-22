@@ -24,21 +24,21 @@ module Apps
 
       validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
       validates_exclusion_of :place, in: %w(world),
-                            if: -> { Date.current > VOTE_BY_POST_DEADLINE_DATE },
+                            if: -> { vote_by_post_expired? },
                              message: 'Termín na voľbu poštou už uplynul.', on: :place
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
       validates_exclusion_of :permanent_resident, in: %w(no),
-                            if: -> { Date.current > VOTE_BY_POST_DEADLINE_DATE },
+                            if: -> { vote_by_post_expired? },
                              message: 'Termín na voľbu poštou už uplynul.', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
       validates_exclusion_of :delivery, in: %w(post),
-                            if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
+                            if: -> { delivery_by_post_expired? },
                              message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
       validates_exclusion_of :delivery, in: %w(person authorized_person),
-                            if: -> { Date.current > PICKUP_DEADLINE_DATE },
+                            if: -> { pickup_expired? },
                              message: 'Termín na vybavenie hlasovacieho preukazu už uplynul.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
@@ -98,6 +98,30 @@ module Apps
 
       def go_back?
         back == "true"
+      end
+
+      def delivery_by_post_remaining_days
+        (DELIVERY_BY_POST_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def pickup_remaining_days
+        (PICKUP_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def vote_by_post_remaining_days
+        (VOTE_BY_POST_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def delivery_by_post_expired?
+        Date.current > DELIVERY_BY_POST_DEADLINE_DATE
+      end
+
+      def pickup_expired?
+        Date.current > PICKUP_DEADLINE_DATE
+      end
+
+      def vote_by_post_expired?
+        Date.current > VOTE_BY_POST_DEADLINE_DATE
       end
 
       def from_slovakia_email_body
