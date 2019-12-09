@@ -40,9 +40,8 @@ class Admin::StepsController < Admin::AdminController
   def destroy
     recently_active_steps = @step.user_steps
                                .where('updated_at > ?', 1.month.ago)
-                               .where('status != ? and status != ?', 'done', 'not_started').count
+                               .where.not('status in (?)', ['done', 'not_started']).count
     recently_active_tasks = @step.user_tasks.where('user_tasks.updated_at > ?', 1.month.ago).count
-
 
     if (recently_active_steps + recently_active_tasks) > 0 && params[:confirmed] != 'true'
       respond_to do |format|
