@@ -48,8 +48,7 @@ class Admin::StepsController < Admin::AdminController
         format.js
       end
     else
-      # @step.destroy
-      puts 'destroying step ...'
+      @step.destroy
       redirect_to admin_journey_steps_url(@step.journey), notice: 'Step was successfully destroyed.'
     end
   end
