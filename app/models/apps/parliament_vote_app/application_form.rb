@@ -4,6 +4,24 @@ module Apps
       VOTE_DATE = Date.new(2020, 2, 29)
       DELIVERY_BY_POST_DEADLINE_DATE = VOTE_DATE - 15.days
       STATE_KEY = ('%s-state' % self.to_s.parameterize).freeze
+      STEP_DEPENDENCIES = ActiveSupport::HashWithIndifferentAccess.new({
+          start: [],
+          sk_citizen: [:start], # -> permanent_resident, non_sk_nationality
+          permanent_resident: [:sk_citizen], # -> place, world_abroad_permanent_resident
+          place: [:permanent_resident], # -> delivery, home, world_sk_permanent_resident
+          world_abroad_permanent_resident: [:permanent_resident], # -> world_abroad_permanent_resident_end
+          world_abroad_permanent_resident_end: [:world_abroad_permanent_resident], # -> end
+          world_sk_permanent_resident: [:place], # -> world_sk_permanent_resident_end
+          world_sk_permanent_resident_end: [:world_sk_permanent_resident], # -> end
+          delivery: [:place], # -> identity, person, authorized_person
+          authorized_person: [:delivery], # -> authorized_person_send
+          authorized_person_send: [:authorized_person], # -> end
+          person: [:delivery], # none
+          identity: [:delivery], # -> delivery_address
+          delivery_address: [:identity], # -> send,
+          send: [:delivery_address], # -> end
+          end: [:send, :authorized_person_send, :world_sk_permanent_resident_end, :world_abroad_permanent_resident_end]
+      })
 
       include ActiveModel::Model
 
@@ -147,6 +165,16 @@ module Apps
         when 'world_abroad_permanent_resident_end'
           world_abroad_permanent_resident_end_step(listener)
         end
+      end
+
+      def allowed_step?(step)
+        dependencies = STEP_DEPENDENCIES.fetch(step, [])
+        return true if dependencies.empty?
+        
+        result = dependencies.map do |dependent_step|
+          valid?(dependent_step) && allowed_step?(dependent_step)
+        end
+        result.any?
       end
 
       private def start_step(listener)

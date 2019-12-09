@@ -2,7 +2,6 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show
-    set_form_state({}) # TODO: dont reset! implement resume
     render_step('start')
   end
 
@@ -25,21 +24,26 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   def world_sk_permanent_resident; process_or_render('world_sk_permanent_resident'); end
   def world_sk_permanent_resident_end; process_or_render('world_sk_permanent_resident_end'); end
 
-  private def process_or_render(step)
-    if request.post?
-      return create
-    elsif form_state.empty?
-      return redirect_to action: :show
-    end
-    render_step(step)
+  def redirect_to_step(step)
+    set_form_state form_state.merge(step: step)
+    redirect_to self.public_send(:"#{step}_apps_parliament_vote_app_application_forms_url")
   end
 
-  def redirect_to_step(step)
-    redirect_to self.public_send(:"#{step}_apps_parliament_vote_app_application_forms_url")
+  def redirect_to_begining
+    redirect_to action: :show
   end
 
   def render_form
     render form_params[:step]
+  end
+
+  private def process_or_render(step)
+    if request.post?
+      return create
+    elsif form_state.empty?
+      return redirect_to_begining
+    end
+    render_step(step)
   end
 
   private def merge_params
@@ -47,11 +51,11 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   private def form_state
-    session.fetch(Apps::ParliamentVoteApp::ApplicationForm::STATE_KEY, {})
+    ActiveSupport::HashWithIndifferentAccess.new(session.fetch(Apps::ParliamentVoteApp::ApplicationForm::STATE_KEY, {}))
   end
 
   private def set_form_state(value)
-    session[Apps::ParliamentVoteApp::ApplicationForm::STATE_KEY] = value
+    session[Apps::ParliamentVoteApp::ApplicationForm::STATE_KEY] = value.to_h
   end
 
 
@@ -61,8 +65,13 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   private def render_step(step)
-    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_state.merge(step: step))
-    render step
+    set_form_state form_state.merge(step: step)
+    @application_form = Apps::ParliamentVoteApp::ApplicationForm.new(form_state)
+    if @application_form.allowed_step?(step)
+      render step
+    else
+      redirect_to_begining
+    end
   end
 
   private def form_params
@@ -94,5 +103,4 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
     return redirect_to apps_parliament_vote_app_application_forms_path if action_name != "show"
     render 'inactive'
   end
-  private
 end
