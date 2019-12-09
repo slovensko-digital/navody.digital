@@ -73,6 +73,22 @@ Rails.application.routes.draw do
             post :delivery, path: 'hlasovaci-preukaz'
             get :world, path: 'hlasovanie-v-zahranici'
             post :world, path: 'hlasovanie-v-zahranici'
+
+            match :authorized_person, path: 'authorized_person', via: [:get, :post]
+            match :authorized_person_send, path: 'authorized_person_send', via: [:get, :post]
+            match :delivery, path: 'delivery', via: [:get, :post]
+            match :delivery_address, path: 'delivery_address', via: [:get, :post]
+            match :identity, path: 'identity', via: [:get, :post]
+            match :permanent_resident, path: 'permanent_resident', via: [:get, :post]
+            match :place, path: 'place', via: [:get, :post]
+            match :to_send, path: 'send', via: [:get, :post]
+            match :sk_citizen, path: 'sk_citizen', via: [:get, :post]
+            match :world_abroad_permanent_resident, path: 'world_abroad_permanent_resident', via: [:get, :post]
+            match :world_abroad_permanent_resident_end, path: 'world_abroad_permanent_resident_end', via: [:get, :post]
+            match :world_sk_permanent_resident, path: 'world_sk_permanent_resident', via: [:get, :post]
+            match :world_sk_permanent_resident_end, path: 'world_sk_permanent_resident_end', via: [:get, :post]
+
+            get '/:step', to: 'application_forms#show', as: :step
           end
         end
       end
