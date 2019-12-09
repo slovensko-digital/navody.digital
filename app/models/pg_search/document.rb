@@ -3,13 +3,11 @@ class PgSearch::Document < ::ActiveRecord::Base
   self.table_name = 'pg_search_documents'
   belongs_to :searchable, polymorphic: true
 
-  default_scope { order(position: :asc) }
-
   scope :featureable, -> { where(searchable_type: ['Journey', 'App']) }
   scope :featured, -> { featureable.where(featured: true) }
 
   def self.reposition_all
-    Document.featured.each.with_index(1) do |document, index|
+    featured.order(position: :asc).each.with_index(1) do |document, index|
       document.update!(position: index)
     end
   end
