@@ -38,9 +38,13 @@ class Admin::StepsController < Admin::AdminController
 
   # DELETE /steps/1
   def destroy
-    @recently_active_steps = UserStep.recently_active.joins(:step).where(steps: { id: @step.id }).count
+    recently_active_steps = @step.user_steps
+                               .where('updated_at > ?', 1.month.ago)
+                               .where('status != ? and status != ?', 'done', 'not_started').count
+    recently_active_tasks = @step.user_tasks.where('user_tasks.updated_at > ?', 1.month.ago).count
 
-    if @recently_active_steps > 0 && params[:confirmed] != 'true'
+
+    if (recently_active_steps + recently_active_tasks) > 0 && params[:confirmed] != 'true'
       respond_to do |format|
         format.js
       end
