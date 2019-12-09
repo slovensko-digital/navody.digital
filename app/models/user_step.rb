@@ -5,6 +5,11 @@ class UserStep < ApplicationRecord
   has_many :user_tasks, dependent: :destroy
 
   scope :completed, -> { where(status: 'done') }
+  scope :recently_active, -> do
+    joins('LEFT JOIN user_tasks on user_tasks.user_step_id = user_steps.id')
+      .where('user_steps.updated_at > ? or user_tasks.updated_at > ?', 1.month.ago, 1.month.ago)
+      .where('user_steps.status != ? and user_steps.status != ?', 'done', 'not_started')
+  end
 
   validates :status, inclusion: { in: %w(not_started started waiting done) }
 

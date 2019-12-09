@@ -1,10 +1,10 @@
 class Admin::StepsController < Admin::AdminController
   before_action :set_journey
-  before_action :set_step, only: [:show, :edit, :update, :destroy, :reposition]
+  before_action :set_step, only: [:edit, :update, :destroy, :reposition]
 
   # GET /steps
   def index
-    @steps = @journey.steps.all
+    @steps = @journey.steps.all.includes(:user_steps)
   end
 
   # GET /steps/new
