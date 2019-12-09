@@ -1,0 +1,16 @@
+var confirmed = confirm("This step is currently active for #{@recently_active_steps} users. Do you really confirm this action?");
+if (confirmed == true) {
+//    window.location.replace('<%#= admin_journey_step_url(@step.journey, @step, confirmed: true) %>');
+
+    jQuery.ajax({
+        type: "DELETE",
+        url: '<%= admin_journey_step_url(@step.journey, @step, confirmed: true) %>',
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        } //,
+//        success: function(response){
+//            window.location.href = response.redirect;
+//            window.location.href = '<%#= admin_journey_steps_url(@step.journey) %>'
+//        }
+    });
+}

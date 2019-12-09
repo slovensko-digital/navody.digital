@@ -4,7 +4,7 @@ class Admin::StepsController < Admin::AdminController
 
   # GET /steps
   def index
-    @steps = @journey.steps.all.includes(:user_steps)
+    @steps = @journey.steps.all
   end
 
   # GET /steps/new
@@ -38,8 +38,17 @@ class Admin::StepsController < Admin::AdminController
 
   # DELETE /steps/1
   def destroy
-    @step.destroy
-    redirect_to admin_journey_steps_url(@step.journey), notice: 'Step was successfully destroyed.'
+    @recently_active_steps = UserStep.recently_active.joins(:step).where(steps: { id: @step.id }).count
+
+    if @recently_active_steps > 0 && params[:confirmed] != 'true'
+      respond_to do |format|
+        format.js
+      end
+    else
+      # @step.destroy
+      puts 'destroying step ...'
+      redirect_to admin_journey_steps_url(@step.journey), notice: 'Step was successfully destroyed.'
+    end
   end
 
   # POST /steps/1/reposition
