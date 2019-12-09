@@ -87,8 +87,6 @@ Rails.application.routes.draw do
             match :world_abroad_permanent_resident_end, path: 'world_abroad_permanent_resident_end', via: [:get, :post]
             match :world_sk_permanent_resident, path: 'world_sk_permanent_resident', via: [:get, :post]
             match :world_sk_permanent_resident_end, path: 'world_sk_permanent_resident_end', via: [:get, :post]
-
-            get '/:step', to: 'application_forms#show', as: :step
           end
         end
       end

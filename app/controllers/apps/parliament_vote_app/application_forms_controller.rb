@@ -33,7 +33,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   end
 
   def redirect_to_step(step)
-    redirect_to step_apps_parliament_vote_app_application_forms_url(step)
+    redirect_to self.public_send(:"#{step}_apps_parliament_vote_app_application_forms_url")
   end
 
   def render_form
