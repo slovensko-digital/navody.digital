@@ -28,6 +28,8 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
   private def process_or_render(step)
     if request.post?
       return create
+    elsif form_state.empty?
+      return redirect_to action: :show
     end
     render_step(step)
   end
