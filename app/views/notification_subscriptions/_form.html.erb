@@ -1,13 +1,12 @@
 <%= form_with model: form, id: 'new_subscription_notification_group', html: {novalidate: true} do |f| %>
-  <div class="govuk-form-group
-    <% if form.errors[:subscriptions].any? %> govuk-form-group--error
-    <% end %>">
+  <div class="govuk-form-group <% if form.errors[:subscriptions].any? %> govuk-form-group--error<% end %>">
     <% form.errors[:subscriptions].each do |error| %>
       <span class="govuk-error-message"><%= error %></span>
     <% end %>
     <div class="govuk-checkboxes">
       <% form.subscription_types.each_with_index do |type, index| %>
-        <% subscription = NotificationSubscription::TYPES.fetch(type) %>
+        <% subscription = NotificationSubscription::TYPES[type] %>
+        <% next unless subscription %>
         <div class="govuk-checkboxes__item">
           <%= check_box_tag 'notification_subscription_group[subscriptions][]', type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
           <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s' %>

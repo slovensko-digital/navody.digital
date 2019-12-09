@@ -7,7 +7,7 @@ module CustomComponentsHelper
     end
 
     fragment.css('notification-subscription').each do |elm|
-      subscription_types = elm[:types].split(',')
+      subscription_types = elm[:types].split(/[,\s]+/)
       elm.replace render_notification_subscription_component(subscription_types, journey: journey)
     end
 
