@@ -100,3 +100,22 @@
     font-family: "Roboto", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
+
+.notification-subscription-group {
+    background-color: #fafafa;
+    padding: 2em;
+    margin: 2em 0;
+}
+
+
+.notification-subscription-group .govuk-button {
+    border: 2px solid #3a67e8;
+    color: #3a67e8;
+    background-color: inherit;
+    border-radius: 3px;
+    margin-bottom: 0;
+}
+
+.notification-subscription-group .govuk-form-group:last-child {
+    margin-bottom: 0;
+}
