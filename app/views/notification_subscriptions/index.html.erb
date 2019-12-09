@@ -1,3 +1,17 @@
-<%= render_notification_subscription_component ['NewsletterSubscription', 'VoteSubscription', 'CompanyNewsletterSubscription'] do %>
-  <h3 class="govuk-heading-l">Aktivujte si upozornenia na email, aby ste nabudúce na nič nezabudli.</h3>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body sdn-content">
+      <%= render_notification_subscription_component([
+                                                       'NewsletterSubscription',
+                                                       'VoteSubscription',
+                                                       'CompanyNewsletterSubscription',
+                                                       'NGOSubscription',
+                                                       'SelfEmployedSubscription',
+                                                       'CarOwnerSubscription'
+                                                     ]) do %>
+        <h2 class="govuk-heading-l">Aktivujte si upozornenia na email</h2>
+        <h3 class="">Prihláste sa k odberu upozornení, aby vám neunikol dôležitý termín, povinnosť, či príležitosť.</h3>
+      <% end %>
+    </div>
+  </div>
+</div>
