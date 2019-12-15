@@ -93,4 +93,11 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     expect(ActionMailer::Base.deliveries).to be_empty
   end
+
+  scenario 'I visit a page to see possible subscriptions' do
+    visit notification_subscription_groups_path
+
+    expect(page).to have_content('Aktivujte si upozornenia na email')
+    expect(page).to have_content('Prihláste sa k odberu upozornení, aby vám neunikol dôležitý termín, povinnosť, či príležitosť.')
+  end
 end
