@@ -30,6 +30,21 @@ class NotificationSubscription < ApplicationRecord
       sendinblue_list_name: 'CompanyNewsletterSubscription',
       label: 'Chcem dostávať novinky týkajúce sa podnikateľských subjektov',
       hint: 'Dáme vám vedieť, ak bude potrebné splniť nejakú povinnosť pre vaše podnikanie.'
+    },
+    'NGOSubscription' => {
+      sendinblue_list_name: 'NGOSubscription',
+      label: 'Chcem dostávať novinky týkajúce sa neziskových organizácií',
+      hint: 'Upozorníme vás na prichádzajúce lehoty či povinnosti pre vaše združenie.'
+    },
+    'SelfEmployedSubscription' => {
+      sendinblue_list_name: 'SelfEmployedSubscription',
+      label: 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby',
+      hint: 'Dáme vám vedieť, keď budú mať živnostníci nové povinnosti či možnosti.'
+    },
+    'CarOwnerSubscription' => {
+      sendinblue_list_name: 'CarOwnerSubscription',
+      label: 'Chcem dostávať novinky týkajúce sa majiteľov motorových vozidiel',
+      hint: 'Dostávajte relevatné informácie týkajúce sa motorových vozidiel na mail.'
     }
   }
 

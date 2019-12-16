@@ -1,4 +1,8 @@
 class NotificationSubscriptionsController < ApplicationController
+  def index
+
+  end
+
   def create
     @group = NotificationSubscriptionGroup.new
     @group.email = params[:notification_subscription_group][:email]
