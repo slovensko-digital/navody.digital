@@ -97,7 +97,6 @@ RSpec.feature "Notification subscriptions", type: :feature do
   scenario 'I visit a page to see possible subscriptions' do
     visit notification_subscription_groups_path
 
-    expect(page).to have_content('Aktivujte si upozornenia na email')
-    expect(page).to have_content('Prihláste sa k odberu upozornení, aby vám neunikol dôležitý termín, povinnosť, či príležitosť.')
+    expect(page).to have_content('Aktivujte si užitočné upozornenia na email')
   end
 end
