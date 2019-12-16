@@ -1,6 +1,6 @@
 class NotificationSubscriptionsController < ApplicationController
   def index
-
+    @metadata.og.image = 'og-subscriptions.jpg'
   end
 
   def create
