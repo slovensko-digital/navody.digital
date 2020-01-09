@@ -136,7 +136,10 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    expect(page).to have_field('V zahraničí', disabled: true)
+    choose 'V zahraničí'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Lehota na zaslanie žiadosti o voľbu poštou zo zahraničia uplynula 10.1.2020.')
   end
 
   scenario 'As a abroad citizen I want to vote by post after the deadline' do
@@ -145,7 +148,10 @@ RSpec.feature "Parliament vote app", type: :feature do
     choose 'Áno'
     click_button 'Pokračovať'
 
-    expect(page).to have_field('Nie, mám odhlásený trvalý pobyt zo Slovenska', disabled: true)
+    choose 'Nie, mám odhlásený trvalý pobyt zo Slovenska'
+    click_button 'Pokračovať'
+
+    expect(page).to have_content('Lehota na zaslanie žiadosti o voľbu poštou zo zahraničia uplynula 10.1.2020.')
   end
 
   scenario 'As a citizen I want to request voting permit personally' do
