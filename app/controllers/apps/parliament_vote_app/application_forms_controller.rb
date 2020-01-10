@@ -50,7 +50,7 @@ class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationControlle
 
   private def set_metadata
     @metadata.og.title = 'Žiadosť o hlasovací preukaz alebo voľbu poštou'
-    @metadata.og.image = 'og-parliament-vote-app.jpg'
+    @metadata.og.image = 'facebook_share_2020.png'
     @metadata.og.description = 'Či budete počas volieb v zahraničí alebo mimo trvalého pobytu, voliť sa dá. Stačí požiadať.'
   end
 

@@ -47,6 +47,12 @@ RSpec.describe CustomComponentsHelper, type: :helper do
         expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 1
       end
 
+      it 'does not break on typos and spaces' do
+        result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription, NextVoteSubscription, Bogus" />')
+        expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 1
+      end
+
       it 'supports component being deeper' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" />')
         expect(result).to include 'Zašleme Vám e-mail, keď vytvoríme tento návod alebo sa bude diať niečo relevantné.'

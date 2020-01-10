@@ -15,7 +15,7 @@
   <tbody class="govuk-table__body">
     <% @documents.each do |document| %>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= document.position %></td>
+        <td class="govuk-table__cell"><%= document.featured_position %></td>
         <td class="govuk-table__cell">
           <% if document.featured? %>
             <%= link_to '&#10004;'.html_safe, hide_admin_document_path(document), method: :put %>

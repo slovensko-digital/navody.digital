@@ -11,6 +11,7 @@
       <p class="govuk-body-m">Zákon umožňuje voliť zo zahraničia občanom Slovenskej republiky, ktorí nemajú na jej území trvalý pobyt.</p>
       <p class="govuk-body-m">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť na Ministerstvo vnútra najneskôr do 50 dní pred dňom konania volieb.</p>
 
+
       <% if @application_form.vote_by_post_expired? %>
         <%= render 'apps/parliament_vote_app/application_forms/partials/next_vote_notifications' %>
       <% else %>
