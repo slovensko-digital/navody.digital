@@ -27,8 +27,7 @@
         </div>
       </li>
       <li class="govuk-!-margin-bottom-4">
-        Odošlite na emailovú adresu obce
-        <% if @application_form.municipality_email.present? %> <strong><%= @application_form.municipality_email %></strong><% end %>.
+        Odošlite na emailovú adresu obce<% if @application_form.municipality_email.present? %> <strong><%= @application_form.municipality_email %></strong><% end %>.
       </li>
       <li class="govuk-!-margin-bottom-4">
         A potom <%= link_to 'pokračujte ďalej', end_apps_parliament_vote_app_application_forms_path %>.

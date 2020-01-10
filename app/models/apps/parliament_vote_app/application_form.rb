@@ -2,7 +2,10 @@ module Apps
   module ParliamentVoteApp
     class ApplicationForm
       VOTE_DATE = Date.new(2020, 2, 29)
-      DELIVERY_BY_POST_DEADLINE_DATE = VOTE_DATE - 15.days
+      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2020, 2, 10)
+      PICKUP_DEADLINE_DATE = Date.new(2020, 2, 28)
+      VOTE_BY_POST_DEADLINE_DATE = Date.new(2020, 1, 10)
+      REQUEST_SENDING_DEADLINE_DATE = Date.new(2020, 2, 10)
 
       include ActiveModel::Model
 
@@ -26,9 +29,12 @@ module Apps
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
-      validates_exclusion_of :delivery, in: ['post'],
-                            if: -> { Date.current > DELIVERY_BY_POST_DEADLINE_DATE },
-                             message: 'Termín na zaslanie hlasovacieho preukazu poštou už uplynul.', on: :delivery
+      validates_exclusion_of :delivery, in: %w(post authorized_person),
+                            if: -> { request_sending_expired? },
+                             message: 'Lehota na zaslanie žiadosti o hlasovací preukaz uplynula 10.2.2020.', on: :delivery
+      validates_exclusion_of :delivery, in: %w(person),
+                            if: -> { pickup_expired? },
+                             message: 'Termín na vybavenie hlasovacieho preukazu uplynul 28.2.2020.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
@@ -87,6 +93,38 @@ module Apps
 
       def go_back?
         back == "true"
+      end
+
+      def delivery_by_post_remaining_days
+        (DELIVERY_BY_POST_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def pickup_remaining_days
+        (PICKUP_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def vote_by_post_remaining_days
+        (VOTE_BY_POST_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def request_sending_remaining_days
+        (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i
+      end
+
+      def delivery_by_post_expired?
+        Date.current > DELIVERY_BY_POST_DEADLINE_DATE
+      end
+
+      def pickup_expired?
+        Date.current > PICKUP_DEADLINE_DATE
+      end
+
+      def vote_by_post_expired?
+        Date.current > VOTE_BY_POST_DEADLINE_DATE
+      end
+
+      def request_sending_expired?
+        Date.current > REQUEST_SENDING_DEADLINE_DATE
       end
 
       def from_slovakia_email_body
@@ -167,6 +205,21 @@ module Apps
         end
       end
 
+      private def permanent_resident_step(listener)
+        if valid?(:permanent_resident)
+          case permanent_resident
+          when 'yes'
+            self.step = 'place'
+            listener.render :place
+          when 'no'
+            self.step = 'world_abroad_permanent_resident'
+            listener.render :world_abroad_permanent_resident
+          end
+        else
+          listener.render :permanent_resident
+        end
+      end
+
       private def place_step(listener)
         if go_back?
           self.step = 'permanent_resident'
@@ -237,21 +290,6 @@ module Apps
         else
           self.step = 'authorized_person'
           listener.render :authorized_person
-        end
-      end
-
-      private def permanent_resident_step(listener)
-        if valid?(:permanent_resident)
-          case permanent_resident
-          when 'yes'
-            self.step = 'place'
-            listener.render :place
-          when 'no'
-            self.step = 'world_abroad_permanent_resident'
-            listener.render :world_abroad_permanent_resident
-          end
-        else
-          listener.render :permanent_resident
         end
       end
 
