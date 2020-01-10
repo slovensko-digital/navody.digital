@@ -1,4 +1,5 @@
 class Apps::ParliamentVoteApp::ApplicationFormsController < ApplicationController
+  helper RemainingDaysHelper
   before_action :set_metadata, :check_inactive_parliament_application
 
   def show

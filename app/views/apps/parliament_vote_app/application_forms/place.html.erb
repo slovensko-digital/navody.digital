@@ -13,9 +13,7 @@
         <%= f.radio_button :place, 'home', label: "Na Slovensku, v mieste trvalého bydliska"%>
         <%= f.radio_button :place, 'world',
           label: "V zahraničí",
-          hint: @application_form.vote_by_post_expired? ?
-                  "Termín hlasovania poštou uplynul 10.1.2020." :
-            "Ostáva ešte #{@application_form.vote_by_post_remaining_days} #{@application_form.vote_by_post_remaining_days > 1 ? 'dní' : 'deň'}."
+          hint: format_vote_post_remaining_days_hint(@application_form)
         %>
       <% end %>
 

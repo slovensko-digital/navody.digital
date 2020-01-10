@@ -11,9 +11,7 @@
         <%= f.radio_button :permanent_resident, 'yes', label: "Áno" %>
         <%= f.radio_button :permanent_resident, 'no',
           label: "Nie, mám odhlásený trvalý pobyt zo Slovenska",
-          hint: @application_form.vote_by_post_expired? ?
-            "Termín hlasovania poštou uplynul 10.1.2020." :
-            "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali zvoľte túto možnosť. Ostáva ešte #{@application_form.vote_by_post_remaining_days} #{@application_form.vote_by_post_remaining_days > 1 ? 'dní' : 'deň'}."
+          hint: format_vote_post_remaining_days_hint(@application_form, "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali, zvoľte túto možnosť.")
         %>
       <% end %>
 
