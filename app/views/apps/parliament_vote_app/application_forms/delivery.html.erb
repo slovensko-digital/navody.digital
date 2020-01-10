@@ -21,7 +21,7 @@
                              disabled: @application_form.request_sending_expired?,
                              hint: @application_form.request_sending_expired? ?
                                      "Lehota na zaslanie žiadosti o hlasovací preukaz uplynula 10.2.2020." :
-                                     "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz vám bude doručený na adresu uvedenú v žiadosti. Ostáva ešte #{@application_form.request_sending_remaining_days} #{@application_form.request_sending_remaining_days > 1 ? 'dní' : 'deň'}.",
+                                     "O hlasovací preukaz môžete požiadať elektronicky (emailom) najneskôr 15 pracovných dní predo dňom konania volieb. Hlasovací preukaz vám bude doručený na adresu uvedenú v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
                              strong_label: true
           %>
           <%= f.radio_button :delivery, 'authorized_person',
@@ -29,7 +29,7 @@
                              disabled: @application_form.request_sending_expired?,
                              hint: @application_form.request_sending_expired? ?
                                      "Lehota na zaslanie žiadosti o hlasovací preukaz uplynula 10.2.2020." :
-                                     "Hlasovací preukaz za vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti. Ostáva ešte #{@application_form.request_sending_remaining_days} #{@application_form.request_sending_remaining_days > 1 ? 'dní' : 'deň'}.",
+                                     "Hlasovací preukaz za vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
                              strong_label: true
           %>
           <%= f.radio_button :delivery, 'person',
@@ -37,7 +37,7 @@
                              disabled: @application_form.pickup_expired?,
                              hint:  @application_form.pickup_expired? ?
                                       "Termín na vyzdvihnutie hlasovacieho preukazu už uplynul." :
-                                      "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz vám vystavia na počkanie. Ostáva ešte #{@application_form.pickup_remaining_days} #{@application_form.pickup_remaining_days > 1 ? 'dní' : 'deň'}.",
+                                      "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz vám vystavia na počkanie. #{format_remaining_days(@application_form.pickup_remaining_days)}",
                              strong_label: true
           %>
         </div>
