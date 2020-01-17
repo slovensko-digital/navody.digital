@@ -197,7 +197,7 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Meno: Ferko Mrkva')
     expect(page).to have_content('Rodné číslo: 123')
     expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
-    expect(page).to have_content('Preukaz vyzdvihne splnomocnená osoba: Meno: Jarko Mrkva Rodné číslo: 567')
+    expect(page).to have_content('Preukaz vyzdvihne splnomocnená osoba: Meno: Jarko Mrkva Číslo občianskeho preukazu: 567')
 
     click_link 'pokračujte ďalej'
     expect(page).to have_content('Gratulujeme')
