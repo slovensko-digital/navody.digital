@@ -15,6 +15,14 @@ Master ide automaticky na https://staging.navody.digital/
  - `bin/setup`
  - `bin/rails s`
 
+#### Test Enviroment
+
+Na spustenie system testov:
+
+ - `bin/rails db:create`
+ - `bin/rails db:setup`
+ - `bin/rake`
+
 ### Neprogramátorské úlohy
 Wishlist ďalších návodov na spracovanie a editovanie, eventy a ďalší progress nájdete na https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital
 
