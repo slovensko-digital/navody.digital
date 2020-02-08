@@ -14,11 +14,11 @@ module JourneysHelper
           'position' => idx,
           'text' => sanitize_description(step.description, length: 100),
           'image' => image_url("steps/step-#{idx.to_s.rjust(2, '0')}.png"),
-          'itemListElement' => step.tasks.map do |task|
+          'itemListElement' => step.tasks.map.with_index(1) do |task, step_idx|
             {
               '@type' => 'HowToDirection',
               'text' => task.title,
-              'position' => task.position
+              'position' => step_idx
             }
           end
         }
