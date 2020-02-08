@@ -11,7 +11,7 @@ module JourneysHelper
           '@type' => 'HowToStep',
           'name' => step.title,
           'url' => url_for([journey, step, only_path: false]),
-          'position' => step.position,
+          'position' => idx,
           'text' => sanitize_description(step.description, length: 100),
           'image' => image_url("steps/step-#{idx.to_s.rjust(2, '0')}.png"),
           'itemListElement' => step.tasks.map do |task|
