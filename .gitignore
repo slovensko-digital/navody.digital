@@ -40,7 +40,7 @@
 # Ignore coverage
 /coverage
 
-/.env
+/.env*
 
 /public/packs
 /public/packs-test
