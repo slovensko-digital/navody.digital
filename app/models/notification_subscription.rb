@@ -9,7 +9,7 @@ class NotificationSubscription < ApplicationRecord
     },
     'VoteSubscription' => {
       sendinblue_list_name: 'VoteSubscription',
-      label: 'Chcem dostávať upozornenia k&nbsp;voľbám'.html_safe,
+      label: 'Chcem dostávať upozornenia k voľbám',
       hint: 'Zašleme Vám správu s praktickými informáciami pred týmito a ďaľšími voľbami.',
     },
     'NextVoteSubscription' => {
