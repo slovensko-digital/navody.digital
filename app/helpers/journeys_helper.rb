@@ -4,7 +4,7 @@ module JourneysHelper
       '@context' => 'http://schema.org',
       '@type' => 'HowTo',
       'description' => sanitize_description(journey.description).to_str,
-      'image' => asset_url("journeys/#{journey.image_name}"),
+      'image' => image_url("journeys/#{journey.image_name}"),
       'name' => journey.title,
       'step' => journey.steps.map.with_index(1) do |step, idx|
         {
@@ -13,7 +13,7 @@ module JourneysHelper
           'url' => url_for([journey, step, only_path: false]),
           'position' => step.position,
           'text' => sanitize_description(step.description, length: 100),
-          'image' => asset_url("steps/step-#{idx.to_s.rjust(2, '0')}.png"),
+          'image' => image_url("steps/step-#{idx.to_s.rjust(2, '0')}.png"),
           'itemListElement' => step.tasks.map do |task|
             {
               '@type' => 'HowToDirection',
