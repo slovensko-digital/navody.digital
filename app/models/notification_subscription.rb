@@ -9,7 +9,7 @@ class NotificationSubscription < ApplicationRecord
     },
     'VoteSubscription' => {
       sendinblue_list_name: 'VoteSubscription',
-      label: 'Chcem dostávať upozornenia k voľbám',
+      label: 'Chcem dostávať upozornenia k&nbsp;voľbám'.html_safe,
       hint: 'Zašleme Vám správu s praktickými informáciami pred týmito a ďaľšími voľbami.',
     },
     'NextVoteSubscription' => {
@@ -20,7 +20,7 @@ class NotificationSubscription < ApplicationRecord
     'NewsletterSubscription' => {
       sendinblue_list_name: 'NewsletterSubscription',
       label: 'Chcem odoberať pravidelné novinky Návody.Digital',
-      hint: 'Ak chcete vedieť o ďalších zlepšovákoch, ktoré pripravujeme, zvoľte si aj túto možnosť. Neposielame žiadny spam, bude to užitočné a len raz za čas.',
+      hint: 'Ak chcete vedieť o ďalších zlepšovákoch, ktoré pripravujeme, zvoľte si túto možnosť. Neposielame žiadny spam, bude to užitočné a len raz za čas.',
     },
     'BlankJourneySubscription' => {
       label: 'Chcem odoberať informácie k tomuto návodu',
@@ -44,7 +44,7 @@ class NotificationSubscription < ApplicationRecord
     'CarOwnerSubscription' => {
       sendinblue_list_name: 'CarOwnerSubscription',
       label: 'Chcem dostávať novinky týkajúce sa majiteľov motorových vozidiel',
-      hint: 'Dostávajte relevatné informácie týkajúce sa motorových vozidiel na mail.'
+      hint: 'Dostávajte relevatné informácie týkajúce sa motorových vozidiel na email.'
     }
   }
 
