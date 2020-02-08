@@ -16,4 +16,8 @@ module ApplicationHelper
   def build_journey_page_title(journey)
     build_page_title(journey.custom_title.presence || journey.title)
   end
+
+  def sanitize_description(description, length: 500)
+    truncate(strip_tags(description), length: length)
+  end
 end
