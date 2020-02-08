@@ -65,5 +65,12 @@
   <%= render 'components/footer' %>
 </div>
 <%= render 'shared/google_analytics' %>
+
+<% if content_for?(:json_ld) %>
+  <script type="application/ld+json">
+    <%= yield(:json_ld) %>
+  </script>
+<% end %>
+
 </body>
 </html>

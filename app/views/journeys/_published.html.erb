@@ -13,3 +13,7 @@
       <%= render 'components/timeline' %>
     </div>
   </div>
+
+<% content_for :json_ld do %>
+  <%== how_to_json_ld(@journey) %>
+<% end %>
