@@ -12,7 +12,7 @@
       <%= f.hidden_field :municipality_email %>
       <%= f.hidden_field :municipality_email_verified %>
 
-      <%= f.text_field :full_name, class: 'govuk-input--width-20 person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrkvička', autocomplete: 'name' %>
+      <%= f.text_field :full_name, class: 'govuk-input--width-20 person', label: 'Meno, priezvisko, titul', hint: 'Napríklad: Ján, Mrkvička, JUDr.', autocomplete: 'name' %>
       <%= f.text_field :pin, class: 'govuk-input--width-10 person', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>
 
       <br />
@@ -23,7 +23,7 @@
 
        <br />
       <h2 class="govuk-heading-l">Splnomocnená osoba</h2>
-      <%= f.text_field :authorized_person_full_name, class: 'govuk-input--width-20 authorized-person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrkvička', autocomplete: 'name' %>
+      <%= f.text_field :authorized_person_full_name, class: 'govuk-input--width-20 authorized-person', label: 'Meno, priezvisko, titul', hint: 'Napríklad: Ján, Mrkvička, JUDr.', autocomplete: 'name' %>
       <%= f.text_field :authorized_person_pin, class: 'govuk-input--width-10 authorized-person', label: 'Číslo občianskeho preukazu', hint: 'Napríklad: EP123456' %>
 
       <%= f.submit 'Pokračovať'%>
