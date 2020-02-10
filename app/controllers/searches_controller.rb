@@ -4,7 +4,7 @@ class SearchesController < ApplicationController
   def show
     @q = params[:q]
     @analyzed_q = Transliterator.transliterate(@q)
-    @searches = PgSearch::Document
+    @searches = Document
                   .where(searchable_type: %w(Page Journey App))
                   .search(@analyzed_q)
                   .page(params[:page])

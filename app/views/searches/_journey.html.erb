@@ -5,7 +5,7 @@
   <p class="govuk-body-s">
     <%= searched_text(journey.description, query) %>
   </p>
-  <% steps = PgSearch::Document.where(searchable: journey.steps).search(analyzed_query).page(1).per(4) %>
+  <% steps = Document.where(searchable: journey.steps).search(analyzed_query).page(1).per(4) %>
   <% if steps.count == 1 %>
     <div class="govuk-grid-row">
       <%= render partial: 'step', locals: { step: steps.first.searchable, query: query } %>

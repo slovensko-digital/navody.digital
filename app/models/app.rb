@@ -4,7 +4,7 @@ class App < ApplicationRecord
 
   scope :published, -> { where(published_status: 'PUBLISHED')}
 
-  has_many :search_documents, :class_name => 'PgSearch::Document', as: :searchable
+  has_many :search_documents, :class_name => 'Document', as: :searchable
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED}
 

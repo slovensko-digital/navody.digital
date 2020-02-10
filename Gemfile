@@ -50,7 +50,7 @@ gem 'rollbar'
 gem 'oj' # needed by rollbar
 gem 'nokogiri'
 
-gem 'pg_search'
+gem 'pg_search', '2.3.0'
 gem 'kaminari'
 gem 'exception_handler'
 
@@ -66,7 +66,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '4.0.0.beta4'
   gem 'rspec_junit_formatter'
   gem 'faker'
 end
