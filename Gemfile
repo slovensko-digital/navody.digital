@@ -50,7 +50,7 @@ gem 'rollbar'
 gem 'oj' # needed by rollbar
 gem 'nokogiri'
 
-gem 'pg_search', '2.3.0'
+gem 'pg_search'
 gem 'kaminari'
 gem 'exception_handler'
 
