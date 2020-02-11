@@ -88,7 +88,7 @@ group :test do
   gem 'show_me_the_cookies'
   gem 'selenium-webdriver'
   gem 'webdrivers'
-  gem 'simplecov'
+  gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -300,10 +300,11 @@ GEM
     sib-api-v3-sdk (5.2.5)
       json (~> 2.1, >= 2.1.0)
       typhoeus (~> 1.0, >= 1.0.1)
-    simplecov (0.18.1)
+    simplecov (0.17.0)
       docile (~> 1.1)
-      simplecov-html (~> 0.11.0)
-    simplecov-html (0.11.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     sitemap_generator (6.1.0)
       builder (~> 3.0)
     spring (2.1.0)
@@ -387,7 +388,7 @@ DEPENDENCIES
   selenium-webdriver
   show_me_the_cookies
   sib-api-v3-sdk
-  simplecov
+  simplecov (< 0.18)
   sitemap_generator
   spring
   spring-watcher-listen
