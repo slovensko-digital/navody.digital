@@ -23,7 +23,7 @@
             <%= link_to '&#10060;'.html_safe, feature_admin_document_path(document), method: :put %>
           <% end %>
         </td>
-        <td class="govuk-table__cell"><%= link_to document.searchable.slug, decide_searchable_path(document.searchable) %></td>
+        <td class="govuk-table__cell"><%= link_to document.searchable.slug, document.searchable %></td>
         <td class="govuk-table__cell"><%= document.searchable_type %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_document_path(document) %></td>
       </tr>
