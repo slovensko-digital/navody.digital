@@ -4,7 +4,7 @@ require "net/http"
 class FeedbacksController < ApplicationController
   def create
     respond_to do |format|
-      if verify_recaptcha
+      if verify_recaptcha || params[:feedback_type] == 'Useful'
         Net::HTTP.post_form(URI.parse('https://docs.google.com/forms/d/e/1FAIpQLSeZb9UvcF8JZ2-beCa1zMMjjwngbdV8UHAf-YQh-RDKnLrWMw/formResponse'), {
           'entry.1152016273': params[:current_path],
           'entry.366340186': params[:feedback_type],
@@ -13,10 +13,11 @@ class FeedbacksController < ApplicationController
           'entry.1623207670': params[:bug_what_were_you_doing],
           'entry.480582804': params[:bug_what_went_wrong],
         })
-        format.js
+        @message = 'Váš podnet bol odoslaný. Ďakujeme.'
       else
-        format.js { render :invalid_captcha }
+        @message = 'Prosím, potvrďte, že nie ste robot.'
       end
+      format.js
     end
   end
 end
