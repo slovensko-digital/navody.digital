@@ -13,10 +13,11 @@ class FeedbacksController < ApplicationController
           'entry.1623207670': params[:bug_what_were_you_doing],
           'entry.480582804': params[:bug_what_went_wrong],
         })
-        format.js
+        @message = 'Váš podnet bol odoslaný. Ďakujeme.'
       else
-        format.js { render :invalid_captcha }
+        @message = 'Prosím, potvrďte, že nie ste robot.'
       end
+      format.js
     end
   end
 end
