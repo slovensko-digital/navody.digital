@@ -4,7 +4,7 @@ require "net/http"
 class FeedbacksController < ApplicationController
   def create
     respond_to do |format|
-      if verify_recaptcha || params[:feedback_type] == 'Useful'
+      if verify_recaptcha
         Net::HTTP.post_form(URI.parse('https://docs.google.com/forms/d/e/1FAIpQLSeZb9UvcF8JZ2-beCa1zMMjjwngbdV8UHAf-YQh-RDKnLrWMw/formResponse'), {
           'entry.1152016273': params[:current_path],
           'entry.366340186': params[:feedback_type],
