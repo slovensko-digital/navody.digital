@@ -12,7 +12,7 @@ jobs:
           RAILS_ENV: test
           CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
 
-      - image: circleci/postgres:10-alpine-ram
+      - image: circleci/postgres:12-alpine-ram
         environment:
           POSTGRES_USER: circleci
           POSTGRES_PASSWORD: ''
