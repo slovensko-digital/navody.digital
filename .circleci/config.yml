@@ -17,6 +17,10 @@ jobs:
 
     steps:
       - checkout
+      - run: echo "deb http://apt.postgresql.org/pub/repos/apt stretch-pgdg main" | sudo tee -a /etc/apt/sources.list.d/pgdg.list
+      - run: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+      - run: sudo apt-get update
+      - run: sudo apt-get install postgresql-client-12
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./test-reporter
       - run: chmod +x ./test-reporter
       - restore_cache: { keys: ['{{ checksum "Gemfile.lock" }}'] }
