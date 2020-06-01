@@ -8,6 +8,7 @@ jobs:
       - image: circleci/ruby:2.6.6-node-browsers
         environment:
           CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
+          PGHOST: localhost
           RAILS_ENV: test
 
       - image: circleci/postgres:12-alpine-ram
@@ -29,7 +30,7 @@ jobs:
       - run: bundle config set deployment true
       - run: bundle install
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
-      - restore_cache: { keys: '{{ checksum "yarn.lock" }}' }
+      - restore_cache: { keys: ['{{ checksum "yarn.lock" }}'] }
       - run: yarn install
       - save_cache: { key: '{{ checksum "yarn.lock" }}', paths: [~/.cache/yarn] }
       - run: dockerize -wait tcp://localhost:5432 -timeout 60s
