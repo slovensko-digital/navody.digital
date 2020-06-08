@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - checkout
-      - run: git push dokku@ekosystem.staging.slovensko.digital:navody master
+      - run: git push dokku@195.210.28.160:navody.slovensko.digital master
 
 workflows:
   main:
