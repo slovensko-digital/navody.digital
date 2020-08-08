@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - checkout
-      - run: git push dokku@195.210.28.160:navody.slovensko.digital master
+      - run: git push dokku@195.210.28.160:navody.digital master
 
 workflows:
   main:
