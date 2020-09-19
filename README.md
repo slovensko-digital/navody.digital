@@ -13,6 +13,7 @@ Master ide automaticky na https://staging.navody.digital/
 #### OSX (homebrew)
  - `brew install postgresql`
  - `brew services start postgresql`
+ - `bundle install`
  - `yarn`
  - premenuj `.env.sample` na `.env`
  - `bin/setup`
