@@ -1,10 +1,10 @@
-<%= content_for :title, build_page_title(@page.title, 'Často kladené otázky') %>
+<%= content_for :title, build_page_title(@page.title, 'Časté otázky') %>
 <%= content_for :description, truncate(strip_tags(@page.content), length: 500) %>
 <% content_for :before_content do %>
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <%= link_to 'Často kladené otázky', faqs_path, class: 'govuk-breadcrumbs__link' %>
+        <%= link_to 'Časté otázky', faqs_path, class: 'govuk-breadcrumbs__link' %>
       </li>
       <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= @page.title %></li>
     </ol>
