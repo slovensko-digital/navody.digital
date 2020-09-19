@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :set_default_metadata
+  before_action :set_default_metadata, :set_active_current_topic
 
   protected
 
@@ -45,5 +45,11 @@ class ApplicationController < ActionController::Base
         image: 'og-navody.png'
       )
     )
+  end
+
+  def set_active_current_topic
+    active_current_topic = CurrentTopic.active
+    return if active_current_topic.blank? || cookies[:current_topic] == active_current_topic.key
+    @active_current_topic = active_current_topic
   end
 end

@@ -2,6 +2,8 @@
 
 <% content_for(:before_main_wrapper) do %>
   <%= render 'searches/search_box' %>
+  <%= render 'components/active_topic' if @active_current_topic.present? %>
+
   <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-0" role="main">
     <div class="featured-journeys govuk-!-padding-top-9 govuk-!-padding-bottom-9">
       <div class="govuk-width-container">
@@ -20,11 +22,6 @@
             </div>
           </div>
         </div>
-        <!--        <div class="govuk-grid-row">-->
-        <!--          <div id="show-more-container" class="govuk-grid-column-full govuk-!-padding-top-6">-->
-        <%#= link_to 'Zobraziť viac', '#', class: 'govuk-button', role: 'button', draggable: false  %>
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
     </div>
 

@@ -1,5 +1,9 @@
 class CurrentTopic < ApplicationRecord
 
+  def key
+    updated_at.to_s
+  end
+
   def self.active
     last_current_topic = self.last
 

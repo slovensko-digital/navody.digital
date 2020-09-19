@@ -45,6 +45,7 @@
   <% if content_for?(:before_main_wrapper) %>
     <%= yield(:before_main_wrapper) %>
   <% else %>
+    <%= render 'components/active_topic' if @active_current_topic.present? %>
     <div class="govuk-width-container">
       <%= yield(:before_content) %>
 

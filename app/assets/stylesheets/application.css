@@ -124,3 +124,27 @@
 .notification-subscription-group .govuk-form-group:last-child {
     margin-bottom: 0;
 }
+
+.active-topic {
+    background-color: #e4e9f0;
+    padding: 20px 0;
+    font-size: 1rem;
+}
+
+.active-topic p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.active-topic p:first-child {
+    margin-top: 0;
+}
+
+.active-topic p:last-child {
+    margin-bottom: 0;
+}
+
+.active-topic__inner {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+}

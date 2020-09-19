@@ -1,11 +1,12 @@
-<div class="sdn-phase-banner govuk-phase-banner" role="banner">
+<div class="active-topic" role="banner">
   <div class="govuk-width-container">
-    <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag ">
-      BETA verzia
-    </strong>
-      <span class="govuk-phase-banner__text">
-                Toto je nová služba občianskeho združenia <strong>Slovensko.Digital</strong>. <%= link_to 'Pomôžte nám ju zlepšiť.', page_path('ako-sa-zapojit') %>
-              </span>
-    </p>
+  <div class="active-topic__inner">
+    <div>
+      <%= @active_current_topic.body.html_safe %>
+    </div>
+    <div>
+      <a href="#" data-key="<%= @active_current_topic.key %>">Skryť správu</a>
+    </div>
+  </div>
   </div>
 </div>
