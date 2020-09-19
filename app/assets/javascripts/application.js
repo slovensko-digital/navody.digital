@@ -38,4 +38,17 @@ $(document).on("turbolinks:load", function () {
     },
     showLink: false,
   });
+
+  var activeTopicClose = document.querySelector(".js__active-topic-close");
+  if (activeTopicClose) {
+    activeTopicClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      Cookies.set("current_topic", activeTopicClose.dataset.key, {
+        expires: 365,
+      });
+      document
+        .querySelector(".active-topic")
+        .classList.add("active-topic__hidden");
+    });
+  }
 });

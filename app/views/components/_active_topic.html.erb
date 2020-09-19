@@ -5,15 +5,8 @@
       <%= @active_current_topic.body.html_safe %>
     </div>
     <div>
-      <a href="#" class="js__active-topic-close">Skryť správu</a>
+      <a href="#" class="js__active-topic-close" data-key="<%= @active_current_topic.key %>">Skryť správu</a>
     </div>
   </div>
   </div>
 </div>
-<script>
-  document.querySelector('.js__active-topic-close').addEventListener('click', function(e) {
-    e.preventDefault()
-    Cookies.set('current_topic', '<%= @active_current_topic.key %>', { expires: 365 });
-    document.querySelector('.active-topic').classList.add('active-topic__hidden');
-  });
-</script>
