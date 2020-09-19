@@ -1,5 +1,5 @@
 class Admin::CurrentTopicsController < Admin::AdminController
-  before_action :set_current_topic, only: [:show, :edit, :update, :destroy]
+  before_action :set_current_topic, only: [:show, :edit, :update]
 
   def index
     current_topic = CurrentTopic.last
