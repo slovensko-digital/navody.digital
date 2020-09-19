@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/slovensko-digital/navody.slovensko.digital
 
     docker:
-      - image: circleci/ruby:2.6.6-node-browsers
+      - image: circleci/ruby:2.7.1-node-browsers
         environment:
           CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
           PGHOST: localhost
@@ -28,6 +28,7 @@ jobs:
       - run: gem update --system
       - run: gem install bundler
       - run: bundle config set deployment true
+      - run: bundle config set path vendor/bundle
       - run: bundle install
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
       - restore_cache: { keys: ['{{ checksum "yarn.lock" }}'] }

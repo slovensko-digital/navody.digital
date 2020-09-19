@@ -1,7 +1,5 @@
-class PgSearch::Document < ::ActiveRecord::Base
+class Document < ::PgSearch::Document
   include Searchable
-  self.table_name = 'pg_search_documents'
-  belongs_to :searchable, polymorphic: true
 
   scope :featureable, -> { where(searchable_type: ['Journey', 'App', 'Page']) }
   scope :featured, -> { featureable.where(featured: true) }

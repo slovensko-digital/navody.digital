@@ -14,7 +14,7 @@ class Journey < ApplicationRecord
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
-  has_many :search_documents, :class_name => 'PgSearch::Document', as: :searchable
+  has_many :search_documents, :class_name => 'Document', as: :searchable
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -82,6 +82,6 @@ class Journey < ApplicationRecord
   end
 
   def steps_search(column)
-    PgSearch::Document.where(searchable: steps).pluck(column).join(' ')
+    Document.where(searchable: steps).pluck(column).join(' ')
   end
 end

@@ -50,7 +50,7 @@ module OmniAuth
 
       def parse_payload(token)
         payload = verifier.verify(token, purpose: :magic_link).symbolize_keys
-        return false if payload[:session_id] != session.id
+        return false if payload[:session_id].public_id != session.id.public_id
 
         payload
       rescue ActiveSupport::MessageVerifier::InvalidSignature

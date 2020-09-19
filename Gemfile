@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0'
 gem 'rails-i18n'
 # Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
@@ -37,7 +37,7 @@ gem 'jbuilder'
 gem 'que', github: 'chanks/que' # https://github.com/chanks/que/issues/253
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', require: false
 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
@@ -67,7 +67,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rspec-rails', '4.0.0.beta4'
   gem 'rspec_junit_formatter'
   gem 'faker'
 end
@@ -85,11 +85,11 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'show_me_the_cookies'
   gem 'selenium-webdriver'
-  gem 'webdrivers', '~> 3.0'
-  gem 'simplecov'
+  gem 'webdrivers'
+  gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

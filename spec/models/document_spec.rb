@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PgSearch::Document, type: :model do
+RSpec.describe Document, type: :model do
 
   subject { described_class.search(query) }
 

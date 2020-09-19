@@ -43,7 +43,7 @@ RSpec.describe Page, type: :model do
       it 'is not stored' do
         expect {
           page.save!
-        }.not_to change(PgSearch::Document, :count)
+        }.not_to change(Document, :count)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Page, type: :model do
         page2 = create(:page, title: 'Batman Batman', content: 'bla', keywords: '', is_faq: true)
         create(:page, title: 'Superman', content: 'bla', keywords: '')
 
-        expect(PgSearch::Document.search('Batman').map(&:searchable)).to eq [page2, page]
+        expect(Document.search('Batman').map(&:searchable)).to eq [page2, page]
       end
     end
   end

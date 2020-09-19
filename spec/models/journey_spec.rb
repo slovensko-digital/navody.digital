@@ -24,8 +24,8 @@ RSpec.describe Journey, type: :model do
       it 'creates Search with terms from title, content and keywords' do
         expect {
           journey.save!
-        }.to change(PgSearch::Document, :count).by(1)
-        search = PgSearch::Document.first
+        }.to change(Document, :count).by(1)
+        search = Document.first
         expect(search.searchable).to eq journey
         expect(search.content).to eq 'content in html'
         expect(search.keywords).to eq 'keyword1 keyword2'
@@ -38,7 +38,7 @@ RSpec.describe Journey, type: :model do
         end
         it 'updates terms and enabled status' do
           journey.update!(title: 'New title')
-          search = PgSearch::Document.first
+          search = Document.first
           expect(search.title).to eq 'new title'
         end
       end
@@ -51,7 +51,7 @@ RSpec.describe Journey, type: :model do
         it 'deletes search' do
           expect{
             journey.update!(published_status: 'DRAFT')
-          }.to change(PgSearch::Document, :count).by(-1)
+          }.to change(Document, :count).by(-1)
         end
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe Journey, type: :model do
       it 'is disabled' do
         expect {
           journey.save!
-        }.not_to change(PgSearch::Document, :count)
+        }.not_to change(Document, :count)
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Journey, type: :model do
         journey2 = create(:journey, title: 'Batman Batman', description: 'bla', keywords: '')
         _unmatched = create(:journey, title: 'Superman', description: 'bla', keywords: '')
 
-        expect(PgSearch::Document.search('Batman').map(&:searchable)).to eq [journey2, journey]
+        expect(Document.search('Batman').map(&:searchable)).to eq [journey2, journey]
       end
     end
 
@@ -89,12 +89,12 @@ RSpec.describe Journey, type: :model do
         it 'stores step for journey' do
           expect{
             journey.save!
-          }.to change(PgSearch::Document, :count).by(2)
-          search = PgSearch::Document.where(searchable: step).first
+          }.to change(Document, :count).by(2)
+          search = Document.where(searchable: step).first
           expect(search.content).to eq 'step-description'
           expect(search.keywords).to eq 'step-keywords'
           expect(search.title).to eq 'step-title'
-          search = PgSearch::Document.where(searchable: journey).first
+          search = Document.where(searchable: journey).first
           expect(search.content).to eq 'content in html step-description'
           expect(search.keywords).to eq 'keyword1 keyword2 step-keywords'
           expect(search.title).to eq 'title step-title'
@@ -106,7 +106,7 @@ RSpec.describe Journey, type: :model do
             journey.save!
             expect{
               journey.update!(published_status: 'DRAFT')
-            }.to change(PgSearch::Document, :count).by(-2)
+            }.to change(Document, :count).by(-2)
           end
         end
 
@@ -116,7 +116,7 @@ RSpec.describe Journey, type: :model do
         it 'does not store to index' do
           expect{
             journey.save!
-          }.not_to change(PgSearch::Document, :count)
+          }.not_to change(Document, :count)
         end
 
         context 'updating to published' do
@@ -124,7 +124,7 @@ RSpec.describe Journey, type: :model do
             journey.published_status = 'PUBLISHED'
             expect{
               journey.save!
-            }.to change(PgSearch::Document, :count).by(2)
+            }.to change(Document, :count).by(2)
           end
         end
       end
