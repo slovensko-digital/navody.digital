@@ -1,7 +1,7 @@
 class CurrentTopic < ApplicationRecord
 
   def key
-    updated_at.to_s
+    Digest::MD5.hexdigest updated_at.to_s
   end
 
   def self.active

@@ -126,12 +126,18 @@
 }
 
 .active-topic {
-    background-color: #e4e9f0;
+    background-color: #F3F2F1;
     padding: 20px 0;
     font-size: 1rem;
 }
 
-.active-topic p {
+.active-topic p ,
+.active-topic h1,
+.active-topic h2,
+.active-topic h3,
+.active-topic h4,
+.active-topic h5,
+.active-topic h6 {
     margin: 10px 0;
     font-size: 1rem;
 }
@@ -147,4 +153,8 @@
 .active-topic__inner {
     display: grid;
     grid-template-columns: 1fr 100px;
+}
+
+.active-topic__hidden {
+    display: none;
 }
