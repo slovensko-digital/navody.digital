@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.feature 'Feedback Bar', type: :feature, js: true do
 
   scenario 'User opens feedback bar' do
-    visit '/'
+    visit root_path
     find('#ga-feedback-bug-report').click
+    
     expect(page.body).to have_text('Nahlásenie chyby')
   end
 
