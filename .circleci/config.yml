@@ -28,7 +28,8 @@ jobs:
       - run: gem update --system
       - run: gem install bundler
       - run: bundle config set deployment true
-      - run: bundle install --path vendor/bundle
+      - run: bundle config set path vendor/bundle
+      - run: bundle install
       - save_cache: { key: '{{ checksum "Gemfile.lock" }}', paths: [vendor/bundle] }
       - restore_cache: { keys: ['{{ checksum "yarn.lock" }}'] }
       - run: yarn install
