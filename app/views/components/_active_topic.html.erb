@@ -1,0 +1,12 @@
+<div class="active-topic" role="banner">
+  <div class="govuk-width-container">
+  <div class="active-topic__inner">
+    <div>
+      <%= @active_current_topic.body.html_safe %>
+    </div>
+    <div>
+      <a href="#" class="js__active-topic-close" data-key="<%= @active_current_topic.key %>">Skryť správu</a>
+    </div>
+  </div>
+  </div>
+</div>

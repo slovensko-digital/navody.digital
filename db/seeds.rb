@@ -103,3 +103,9 @@ step.tasks.create!(
   title: "Zaregistrujte sa na DPH",
   type: "SimpleTask",
 )
+
+CurrentTopic.create!(
+  key: 'Brexit',
+  value: 'A Brexit deal has been agreed but needs to be ratified',
+  enabled: true
+)

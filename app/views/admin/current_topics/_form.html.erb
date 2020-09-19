@@ -1,0 +1,30 @@
+<%= form_with(model: [:admin, current_topic], local: true, builder: AdminFormBuilder) do |form| %>
+
+  <div class="app-whitespace-highlight">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Pozor!</span>
+        Každou aktualizáciou sa užívateľom vynuluje skrytie banneru.
+      </strong>
+    </div>
+  </div>
+
+
+  <% if current_topic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(current_topic.errors.count, "error") %> prohibited this current topic from being saved</h2>
+    </div>
+  <% end %>
+
+  <%= form.text_area :body, size: "60x12" %>
+  <%= form.check_box :enabled %>
+
+  <br />
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  </div>
+<% end %>
