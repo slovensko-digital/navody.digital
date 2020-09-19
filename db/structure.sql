@@ -262,6 +262,38 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: current_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.current_topics (
+    id bigint NOT NULL,
+    body character varying,
+    enabled boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: current_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.current_topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: current_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.current_topics_id_seq OWNED BY public.current_topics.id;
+
+
+--
 -- Name: journeys; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -724,6 +756,13 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 
 
 --
+-- Name: current_topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.current_topics ALTER COLUMN id SET DEFAULT nextval('public.current_topics_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -821,6 +860,14 @@ ALTER TABLE ONLY public.apps
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: current_topics current_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.current_topics
+    ADD CONSTRAINT current_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -1276,6 +1323,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190915104202'),
 ('20191209121011'),
 ('20200316102804'),
-('20200316104715');
+('20200316104715'),
+('20200919092214');
 
 
