@@ -1,0 +1,15 @@
+<%= form_with(model: [:admin, current_topic], local: true, builder: AdminFormBuilder) do |form| %>
+  <% if current_topic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(current_topic.errors.count, "error") %> prohibited this current topic from being saved</h2>
+    </div>
+  <% end %>
+
+  <%= form.text_field :key %>
+  <%= form.text_area :value, size: "60x12" %>
+  <%= form.check_box :enabled %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

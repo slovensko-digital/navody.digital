@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       post :reposition, on: :collection
     end
     resources :apps, except: [:show]
+    resources :current_topics, except: [:show, :destroy]
     resources :pages, except: [:show]
     resources :journeys, except: [:show] do
       resources :steps, except: [:show] do
