@@ -267,8 +267,7 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.current_topics (
     id bigint NOT NULL,
-    key character varying NOT NULL,
-    value character varying,
+    body character varying,
     enabled boolean,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

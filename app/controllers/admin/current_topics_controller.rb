@@ -27,10 +27,6 @@ class Admin::CurrentTopicsController < Admin::AdminController
   end
 
   private def current_topic_params
-    params.require(:current_topic).permit(
-      :key,
-      :value,
-      :enabled
-    )
+    params.require(:current_topic).permit(:body, :enabled)
   end
 end

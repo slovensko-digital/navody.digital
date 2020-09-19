@@ -53,7 +53,7 @@ RSpec.describe Admin::CurrentTopicsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          value: 'Foo bar'
+          body: 'Foo bar'
         }
       }
 
@@ -61,7 +61,7 @@ RSpec.describe Admin::CurrentTopicsController, type: :controller do
         current_topic = create(:current_topic)
         put :update, params: {id: current_topic.to_param, current_topic: new_attributes}, session: valid_session
         current_topic.reload
-        expect(current_topic.value).to eq 'Foo bar'
+        expect(current_topic.body).to eq 'Foo bar'
         expect(response).to redirect_to(admin_current_topics_url)
       end
     end

@@ -17,17 +17,9 @@ RSpec.describe CurrentTopic, type: :model do
       expect(active_current_topic).to eq nil
     end
 
-    it 'returns nil when key is empty' do
+    it 'returns nil when body is empty' do
       current_topic = create(:current_topic)
-      current_topic.key = ""
-      current_topic.save!
-      active_current_topic = CurrentTopic.active
-      expect(active_current_topic).to eq nil
-    end
-
-    it 'returns nil when value is empty' do
-      current_topic = create(:current_topic)
-      current_topic.key = ""
+      current_topic.body = ""
       current_topic.save!
       active_current_topic = CurrentTopic.active
       expect(active_current_topic).to eq nil
