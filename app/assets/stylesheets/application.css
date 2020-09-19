@@ -153,8 +153,15 @@
 .active-topic__inner {
     display: grid;
     grid-template-columns: 1fr 100px;
+    grid-gap: 30px;
 }
 
 .active-topic__hidden {
     display: none;
+}
+
+@media (max-width: 767px) {
+    .active-topic__inner {
+        grid-template-columns: 1fr;
+    }
 }
