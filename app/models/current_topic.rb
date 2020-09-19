@@ -1,0 +1,4 @@
+class CurrentTopic < ApplicationRecord
+
+
+end
