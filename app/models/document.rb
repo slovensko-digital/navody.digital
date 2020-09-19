@@ -1,7 +1,7 @@
 class Document < ::PgSearch::Document
   include Searchable
 
-  scope :featureable, -> { where(searchable_type: ['Journey', 'App']) }
+  scope :featureable, -> { where(searchable_type: ['Journey', 'App', 'Page']) }
   scope :featured, -> { featureable.where(featured: true) }
 
   def self.reposition_all

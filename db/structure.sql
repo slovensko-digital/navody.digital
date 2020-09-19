@@ -349,7 +349,9 @@ CREATE TABLE public.pages (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     "position" integer DEFAULT 0 NOT NULL,
-    keywords text
+    keywords text,
+    image_name character varying,
+    is_searchable boolean DEFAULT false NOT NULL
 );
 
 
@@ -1272,6 +1274,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190914143708'),
 ('20190914164512'),
 ('20190915104202'),
-('20191209121011');
+('20191209121011'),
+('20200316102804'),
+('20200316104715');
 
 

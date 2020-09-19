@@ -60,6 +60,7 @@ gem 'sitemap_generator'
 
 # sendinblue V3
 gem 'sib-api-v3-sdk'
+gem 'recaptcha'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
