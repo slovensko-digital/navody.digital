@@ -39,13 +39,16 @@
   <%= render 'components/header' %>
 
   <% if content_for?(:headerline) %>
+    <%= render 'components/active_topic' if @active_current_topic.present? %>
     <%= render 'components/headerline' %>
   <% end %>
 
   <% if content_for?(:before_main_wrapper) %>
     <%= yield(:before_main_wrapper) %>
   <% else %>
-    <%= render 'components/active_topic' if @active_current_topic.present? %>
+    <% unless content_for?(:headerline) %>
+      <%= render 'components/active_topic' if @active_current_topic.present? %>
+    <% end %>
     <div class="govuk-width-container">
       <%= yield(:before_content) %>
 
