@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/chanks/que.git
-  revision: da0fd08d9d33aa469f172d07f45dc398c2244108
+  revision: 77c6b92952b821898c393239ce0e4047b17d7dae
   specs:
     que (1.0.0.beta4)
 
@@ -408,7 +408,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.7.1p83
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.1.4
