@@ -35,6 +35,7 @@ module NavodySlovenskoDigital
     end
 
     config.action_mailer.default_url_options = options
+    config.action_mailer.deliver_later_queue_name = 'default'
 
     config.active_record.schema_format = :sql
 
