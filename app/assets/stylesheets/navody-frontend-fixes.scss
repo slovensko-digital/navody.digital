@@ -60,3 +60,15 @@ a.sdn-timeline-dropdown__option {
 .vote-app-back {
   top: -15px;
 }
+
+.buton_continue {
+  padding: 12px 40px 12px 15px;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+  .buton_continue {
+    font-size:0;
+    padding: 12px 30px 12px 15px;
+  }
+}

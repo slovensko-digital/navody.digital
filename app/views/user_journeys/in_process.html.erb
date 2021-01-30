@@ -1,0 +1,19 @@
+<%= content_for(:headerline, 'Moje životné situácie') %>
+<h1 class="govuk-heading-l">Rozpracované životné situácie</h1>
+
+<% if @user_journeys.any? %>
+    <table class="govuk-table">
+        <tbody class="govuk-table__body">
+            <% @user_journeys.each do |user_journey|%>
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell"><%= user_journey.journey.title %></td>
+                    <td class="govuk-table__cell"><%= user_journey.updated_at.strftime("%d.%m %Y") %></td>
+                    <td class="govuk-table__cell ">Nedokončené</td>
+                    <td class="govuk-table__cell"><%= link_to 'Pokračovať', journey_url(user_journey.journey.slug), class: 'govuk-button govuk-button--start no-arrow buton_continue' %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% else %>
+    <p>Nemáte žiadne rozpracované životné situácie.</p>
+<% end %>

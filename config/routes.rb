@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
   resources :quick_tips, path: 'caste-otazky', only: :show
 
+  get "rozpracovane-zivotne-situacie" => "user_journeys#in_process", as: "in_process"
+
   namespace :apps, path: 'aplikacie' do
     namespace :ep_vote_app, path: 'volby-do-europskeho-parlamentu' do
       resource :application_forms, path: '' do
