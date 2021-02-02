@@ -26,6 +26,10 @@ class UserStep < ApplicationRecord
     status == 'waiting'
   end
 
+  def not_started?
+    status == 'not_started'
+  end
+
   def all_tasks_completed?
     step.tasks.count == user_tasks.completed.count
   end
