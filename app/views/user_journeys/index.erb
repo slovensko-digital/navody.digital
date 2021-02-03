@@ -2,18 +2,22 @@
 <h1 class="govuk-heading-l">Rozpracované životné situácie</h1>
 
 <% if @user_journeys.any? %>
-    <table class="govuk-table">
-        <tbody class="govuk-table__body">
-            <% @user_journeys.each do |user_journey|%>
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell"><%= user_journey.journey.title %></td>
-                    <td class="govuk-table__cell"><%= user_journey.updated_at.strftime("%d.%m %Y") %></td>
-                    <td class="govuk-table__cell ">Nedokončené</td>
-                    <td class="govuk-table__cell"><%= link_to 'Pokračovať', journey_url(user_journey.journey.slug), class: 'govuk-button govuk-button--start no-arrow buton_continue' %></td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
+    <ul id="user_journeys_in_process">
+        <% @user_journeys.each do |user_journey|%>
+            <li class="sdn-thumbnail">
+                <div class="sdn-thumbnail-caption">
+                    <h2 class="govuk-heading-m"><%= user_journey.journey.title %></h2>
+                    <div class="govuk-body user_journey_body">
+                        <p>Vytvorené: <%= user_journey.started_at.strftime("%d.%m %Y") %></p>
+                        <p><%= t('views.steps_done', :count => user_journey.user_steps.completed.count) %> <%= t('views.steps_all', :count => user_journey.journey.steps.count) %></p>
+                    </div>
+                </div>
+                <div class="sdn-thumbnail-btn">
+                    <%= link_to 'Pokračovať', journey_url(user_journey.journey.slug), class: 'govuk-button govuk-button--start no-arrow buton_continue' %>
+                </div>
+            </li>
+        <% end %>
+    </ul>
 <% else %>
     <p>Nemáte žiadne rozpracované životné situácie.</p>
 <% end %>

@@ -66,9 +66,19 @@ a.sdn-timeline-dropdown__option {
   margin-bottom: 0;
 }
 
-@media screen and (max-width: 576px) and (min-width: 0px) {
-  .buton_continue {
-    font-size:0;
-    padding: 12px 30px 12px 15px;
-  }
+ul#user_journeys_in_process {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul#user_journeys_in_process .user_journey_body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul#user_journeys_in_process .user_journey_body > p {
+  display: inline-block;
+  flex: 1 1 30%; 
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }

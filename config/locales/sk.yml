@@ -10,3 +10,12 @@ sk:
       previous: "&lsaquo; Predchádzajúca"
       next: "Ďalšia &rsaquo;"
       truncate: "&hellip;"
+    steps_done:
+      zero: Vybavených 0 
+      one: Vybavený 1 
+      few: Vybavené %{count}
+      other: Vybavené %{count}
+    steps_all:
+      one: z 1 kroku
+      few: z %{count} krokov
+      other: z %{count} krokov
