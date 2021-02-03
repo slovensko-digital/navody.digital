@@ -27,11 +27,11 @@
                 <a href="#" data-turbolinks="false" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown"><span class="sdn-header__fixed-width-text"><%= current_user.email %></span></a>
                 <ul class="sdn-header__dropdown" id="subnav-dropdown">
                   <li>
-                    <%= link_to 'Odhlásiť', session_path, method: :delete %>
+                    <%= link_to 'Moje životné situácie', user_journeys_path %>
                   </li>
                   <li>
-                  <%= link_to 'Moje životné situácie', user_journeys_path %>
-                </li>
+                    <%= link_to 'Odhlásiť', session_path, method: :delete %>
+                  </li>
                 </ul>
               </div>
             <% else %>

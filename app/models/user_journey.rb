@@ -30,7 +30,7 @@ class UserJourney < ApplicationRecord
   end
 
   def started?
-    !(user_steps.count == 1 && user_steps.first.not_started?)
+    !(user_steps.count == user_steps.not_started.count)
   end
 
   def restart!
