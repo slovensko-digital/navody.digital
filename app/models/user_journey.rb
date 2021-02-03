@@ -29,10 +29,6 @@ class UserJourney < ApplicationRecord
     journey.steps.count == user_steps.completed.count
   end
 
-  def started?
-    !(user_steps.count == user_steps.not_started.count)
-  end
-
   def restart!
     destroy!
   end

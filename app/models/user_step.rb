@@ -5,7 +5,6 @@ class UserStep < ApplicationRecord
   has_many :user_tasks, dependent: :destroy
 
   scope :completed, -> { where(status: 'done') }
-  scope :not_started, -> { where(status: 'not_started') }
 
   validates :status, inclusion: { in: %w(not_started started waiting done) }
 
