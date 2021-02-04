@@ -135,7 +135,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content('Vybavené!')
 
     visit user_journeys_path
-    expect(page).to have_content('Nedokončené')
+    expect(page).to have_content(journey.title)
     expect(page).to have_content('Pokračovať')
   end
 
@@ -150,7 +150,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content('Označiť ako vybavené')
 
     visit user_journeys_path
-    expect(page).to have_content('Nedokončené')
+    expect(page).to have_content(journey.title)
     expect(page).to have_content('Pokračovať')
   end
 
@@ -183,7 +183,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_checked_field(task.title)
 
     visit user_journeys_path
-    expect(page).to have_content('Nedokončené')
+    expect(page).to have_content(journey.title)
     expect(page).to have_content('Pokračovať')
   end
 
@@ -205,7 +205,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).not_to have_checked_field(task.title)
 
     visit user_journeys_path
-    expect(page).to have_content('Nedokončené')
+    expect(page).to have_content(journey.title)
     expect(page).to have_content('Pokračovať')
   end
   
