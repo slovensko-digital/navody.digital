@@ -87,7 +87,6 @@ Rails.application.routes.draw do
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
-    get :index, on: :collection, path: 'rozpracovane'
   end
 
   resources :notification_subscription_groups, controller: :notification_subscriptions, path: 'notifikacie' do

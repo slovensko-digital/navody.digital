@@ -2,7 +2,7 @@ class UserJourneysController < ApplicationController
   before_action :require_user
 
   def index
-    @user_journeys = current_user.user_journeys.reject{ |user_journey| user_journey.all_steps_completed? }
+    @user_journeys = current_user.user_journeys.order(started_at: :desc).reject{ |user_journey| user_journey.all_steps_completed? }
   end
 
   def restart
