@@ -33,6 +33,7 @@ RSpec.feature "Journeys", type: :feature do
   scenario 'As an anonymous user I want to read a journey' do
     visit journey_path(journey)
     expect(page).to have_content('Aby ste na nič nezabudli')
+    expect(page).to have_content(/Aktualizované: \d\d.\d\d.\d{4}/)
 
     click_link 'Ďalší krok'
     expect(page).to have_content(step1.title)
