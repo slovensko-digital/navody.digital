@@ -10,8 +10,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
     <p class="govuk-body govuk-!-margin-bottom-8">
-      <%= link_to auth_path(:google_oauth2), class: 'govuk-link', title: 'Prihlásiť sa cez Google' do  %>
-        <%= image_tag 'google/btn_google_signin_dark_normal.svg', alt: 'Prihlásiť sa cez Google', style: 'max-width: 300px' %>
+      <%= form_tag(auth_path(:google_oauth2), method: :post) do %>
+        <%= submit_tag class: 'govuk-link', title: 'Prihlásiť sa cez Google' do  %>
+          <%= image_tag 'google/btn_google_signin_dark_normal.svg', alt: 'Prihlásiť sa cez Google', style: 'max-width: 300px' %>
+        <% end %>
       <% end %>
     </p>
 
