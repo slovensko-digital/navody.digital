@@ -60,25 +60,3 @@ a.sdn-timeline-dropdown__option {
 .vote-app-back {
   top: -15px;
 }
-
-.buton_continue {
-  padding: 12px 40px 12px 15px;
-  margin-bottom: 0;
-}
-
-ul#user_journeys_in_process {
-  list-style: none;
-  padding-left: 0;
-}
-
-ul#user_journeys_in_process .user_journey_body {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-ul#user_journeys_in_process .user_journey_body > p {
-  display: inline-block;
-  flex: 1 1 30%; 
-  padding-left: 0.2em;
-  padding-right: 0.2em;
-}

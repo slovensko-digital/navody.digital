@@ -1,23 +1,21 @@
 <%= content_for(:headerline, 'Moje životné situácie') %>
-<h1 class="govuk-heading-l">Rozpracované životné situácie</h1>
 
-<% if @user_journeys.any? %>
-    <ul id="user_journeys_in_process">
-        <% @user_journeys.each do |user_journey|%>
-            <li class="sdn-thumbnail">
-                <div class="sdn-thumbnail-caption">
-                    <h2 class="govuk-heading-m"><%= user_journey.journey.title %></h2>
-                    <div class="govuk-body user_journey_body">
-                        <p>Vytvorené: <%= user_journey.started_at.strftime("%d.%m %Y") %></p>
-                        <p><%= t('views.steps_done', :count => user_journey.user_steps.completed.count) %> <%= t('views.steps_all', :count => user_journey.journey.steps.count) %></p>
-                    </div>
-                </div>
-                <div class="sdn-thumbnail-btn">
-                    <%= link_to 'Pokračovať', journey_url(user_journey.journey.slug), class: 'govuk-button govuk-button--start no-arrow buton_continue' %>
-                </div>
-            </li>
-        <% end %>
-    </ul>
-<% else %>
-    <p>Nemáte žiadne rozpracované životné situácie.</p>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @user_journeys.any? %>
+      <h1 class="govuk-heading-l">Rozpracované životné situácie</h1>
+      <p class="govuk-body">Momentálne máte rozpracované tieto životné situácie.</p>
+      <% @user_journeys.each do |user_journey| %>
+        <div style="padding: 2em; margin-bottom: 2em; background-color: #f4f4f4;">
+          <h2 class="govuk-heading-m"><%= link_to user_journey.journey.title, user_journey.journey %> <span class="govuk-!-font-weight-regular">(začaté <%= l(user_journey.started_at.to_date) %>)</span></h2>
+          <p class="govuk-body" style="margin-bottom: 0"><%= t('views.steps_done', :count => user_journey.user_steps.completed.count) %> <%= t('views.steps_all', :count => user_journey.journey.steps.count) %>. Naposledy ste vybavovali krok <%= link_to user_journey.last_changed_step.title, [user_journey.journey, user_journey.last_changed_step] %>.</p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="govuk-body-l"><strong>Momentálne nemáte žiadne rozpracované životné situácie.</strong> Začať vybavovať
+        životnú situáciu môžete tak, že označíte nejaký krok <%= link_to 'v&nbsp;návodoch'.html_safe, root_path %> ako
+        vybavený.</p>
+      <%= link_to 'Zobraziť všetky návody', root_path, class: 'govuk-button govuk-button--large' %>
+    <% end %>
+  </div>
+</div>
