@@ -8,7 +8,7 @@ class UserJourney < ApplicationRecord
   before_create {self.started_at = DateTime.current}
 
   def last_changed_step
-    user_steps.joins(:step).order('user_steps.updated_at DESC').first.step
+    user_steps.joins(:step).order('user_steps.updated_at DESC').first.&step
   end
 
   def complete_task!(task)
