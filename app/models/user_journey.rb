@@ -7,6 +7,10 @@ class UserJourney < ApplicationRecord
 
   before_create {self.started_at = DateTime.current}
 
+  def last_changed_step
+    user_steps.joins(:step).order('user_steps.updated_at DESC').first.step
+  end
+
   def complete_task!(task)
     user_step = user_steps.create_with(status: 'started').find_or_initialize_by(step: task.step)
     user_task = user_step.user_tasks.find_or_initialize_by(task: task)
