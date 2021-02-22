@@ -56,7 +56,7 @@ RSpec.feature "Journeys", type: :feature do
     sign_in(user)
     visit user_journeys_path
 
-    expect(page).to have_content('Momentálne nemáte žiadne rozpracované životné situácie')
+    expect(page).to have_content('Nemáte žiadne aktuálne životné situácie')
     expect(page).to have_content('Moje životné situácie')
   end
 
@@ -164,7 +164,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content('Označiť ako vybavené')
 
     visit user_journeys_path
-    expect(page).to have_content('Momentálne nemáte žiadne rozpracované životné situácie')
+    expect(page).to have_content('Nemáte žiadne aktuálne životné situácie')
   end
 
   scenario 'As a logged in user I want to mark a task as done and check my journeys in process' do
