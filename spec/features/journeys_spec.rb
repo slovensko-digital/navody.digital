@@ -56,7 +56,7 @@ RSpec.feature "Journeys", type: :feature do
     sign_in(user)
     visit user_journeys_path
 
-    expect(page).to have_content('Rozpracované životné situácie')
+    expect(page).to have_content('Momentálne nemáte žiadne rozpracované životné situácie')
     expect(page).to have_content('Moje životné situácie')
   end
 
@@ -136,7 +136,6 @@ RSpec.feature "Journeys", type: :feature do
 
     visit user_journeys_path
     expect(page).to have_content(journey.title)
-    expect(page).to have_content('Pokračovať')
   end
 
   scenario 'As a logged in user I want mark a step as not done and check my journeys in process' do
@@ -151,7 +150,6 @@ RSpec.feature "Journeys", type: :feature do
 
     visit user_journeys_path
     expect(page).to have_content(journey.title)
-    expect(page).to have_content('Pokračovať')
   end
 
   scenario 'As a logged in user I want restart a journey and check my journeys in process' do
@@ -166,7 +164,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content('Označiť ako vybavené')
 
     visit user_journeys_path
-    expect(page).to have_content('Nemáte žiadne rozpracované životné situácie.')
+    expect(page).to have_content('Momentálne nemáte žiadne rozpracované životné situácie')
   end
 
   scenario 'As a logged in user I want to mark a task as done and check my journeys in process' do
@@ -184,7 +182,6 @@ RSpec.feature "Journeys", type: :feature do
 
     visit user_journeys_path
     expect(page).to have_content(journey.title)
-    expect(page).to have_content('Pokračovať')
   end
 
   scenario 'As a logged in user I want to mark a done task as undone and check my journeys in process' do
@@ -206,9 +203,8 @@ RSpec.feature "Journeys", type: :feature do
 
     visit user_journeys_path
     expect(page).to have_content(journey.title)
-    expect(page).to have_content('Pokračovať')
   end
-  
+
   scenario 'As an anonymous user I want to check if blank journey displays correctly' do
     visit journey_path(blank_journey)
 
