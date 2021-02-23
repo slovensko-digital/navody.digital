@@ -70,6 +70,7 @@ group :development, :test do
   gem 'rspec-rails', '4.0.0.beta4'
   gem 'rspec_junit_formatter'
   gem 'faker'
+  gem 'rest-client'
 end
 
 group :development do
@@ -90,6 +91,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
+  gem 'httparty'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

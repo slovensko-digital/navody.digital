@@ -13,11 +13,11 @@ class SubscribeSendinblueJob < ApplicationJob
   private
 
   def find_list(name)
-    NewsletterService.find_list(name)
+    EmailService.find_list(name)
   end
 
   def create_contact(email, list_id)
-    NewsletterService.create_contact(
+    EmailService.create_contact(
       email: email,
       listIds: [list_id],
       updateEnabled: true,

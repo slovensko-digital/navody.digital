@@ -1,0 +1,30 @@
+<%= content_for :title, build_page_title(@submission_title) %>
+<% content_for :before_content do %>
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+    </ol>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body sdn-content">
+      <p>Gratulujeme, úspešne ste si vytvorili podklady pre <%= @submission_title %> v aplikácii Priznanie.Digital!</p>
+
+      <p>Súbor s Vašimi údajmi si môžete stiahnuť tu:</p>
+      <p><%= link_to 'Stiahnuť XML súbor', download_submission_path(file: @attachment) %></p>
+
+      <p>Vaše údaje sú pripravené na to, aby ste ich odoslali na Finančnú správu.</p>
+
+        <% if current_user.logged_in? && current_user.email == @email %>
+        <p>Ste prihlásený ako používateľ s rovnakým emailom, ako bolo uvedené pri vypĺňaní údajov. Pri odsúhlasení notifikácií Vám budú rovno aktivované, bez nutnosti ďalšieho potvrdenia.</p>
+        <% else %>
+        <p>Nie ste prihlásený, na potrvrdenie odberu notifikácií bude potrebné kliknúť na odkaz v emaile, ktorý Vám pošleme.</p>
+        <% end %>
+
+        <%= render_notification_subscription_component_temp(@subscription_types)  %>
+
+      <p># Tretia moznost - odoslat na INY email pre logged_in usera - domysliet a dorobit podporu (JS show/hide, ...) </p>
+    </div>
+  </div>
+</div>

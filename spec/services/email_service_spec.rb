@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NewsletterService, type: :service do
+RSpec.describe EmailService, type: :service do
   describe '#create_contact' do
     it 'calls API' do
       expect(SibApiV3Sdk::ContactsApi).to receive_message_chain(:new, :create_contact)

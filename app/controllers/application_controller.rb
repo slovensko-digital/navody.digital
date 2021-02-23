@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  def log_out
+    session[:user_id] = nil
+    @__current_user = nil
+  end
+
   def require_user
     unless current_user.logged_in?
       redirect_to new_session_path
