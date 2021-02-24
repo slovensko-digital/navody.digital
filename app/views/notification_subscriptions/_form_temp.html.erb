@@ -5,14 +5,14 @@
     <% end %>
 
     <% if form.subscription_types.count == 1 %>
-      <%= hidden_field_tag 'notification_subscription_group[subscriptions][]', form.subscription_types.first %>
+      <%= hidden_field_tag 'submission[subscription_types][]', form.subscription_types.first %>
     <% else %>
       <div class="govuk-checkboxes">
         <% form.subscription_types.each_with_index do |type, index| %>
           <% subscription = NotificationSubscription::TYPES[type] %>
           <% next unless subscription %>
           <div class="govuk-checkboxes__item">
-            <%= check_box_tag 'notification_subscription_group[subscriptions][]', type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
+            <%= check_box_tag 'submission[subscription_types][]', type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
             <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s' %>
             <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
           </div>

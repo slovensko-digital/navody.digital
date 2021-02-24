@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # TODO
+  # resources :submissions, path: '/podanie'
+
   post '/submission', to: 'submissions#submission', as: :submission
   post '/finish', to: 'submissions#finish', as: :finish_submission
   get '/submission/download', to: 'submissions#download', as: :download_submission

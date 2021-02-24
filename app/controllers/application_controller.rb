@@ -18,6 +18,14 @@ class ApplicationController < ActionController::Base
     @__current_user = nil
   end
 
+  def get_or_init_uuid
+    session['_uuid'] ||= SecureRandom.uuid
+  end
+
+  def uuid
+    session['_uuid']
+  end
+
   def require_user
     unless current_user.logged_in?
       redirect_to new_session_path
