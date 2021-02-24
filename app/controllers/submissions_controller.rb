@@ -16,13 +16,13 @@ class SubmissionsController < ApplicationController
     resolve_subscription_types
     parse_attachments
 
-    render 'submissions/submission' #, alert:
+    render 'submissions/submission'
   end
 
   def create
     submission_args = submission_params
     @group = NotificationSubscriptionGroup.new
-    @group.email = submission_args[:user_email]
+    @group.email = submission_args[:email]
     @group.subscriptions = submission_args[:notification_subscription_types]
     @group.user = current_user
 
@@ -90,9 +90,6 @@ class SubmissionsController < ApplicationController
 
   # TODO analogous with AnonymousUser[User].create. consider refactor as that methods have many responsibilities
   def create_subscriptions(params)
-    puts '-------------------'
-    puts params
-    puts '====================='
     params[:subscriptions].map do |type|
       user = (current_user if current_user.logged_in?) || nil
       subscription = NotificationSubscription.find_or_initialize_by(type: type, email: params[:email], user: user)
