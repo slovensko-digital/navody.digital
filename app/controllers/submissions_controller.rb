@@ -43,6 +43,10 @@ class SubmissionsController < ApplicationController
     send_data attachments_temp[:content], filename: attachments_temp[:filename], type: attachments_temp[:content_type]
   end
 
+  def test
+
+  end
+
   private
 
   def resolve_subscription_types

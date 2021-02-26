@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post '/submission', to: 'submissions#submission', as: :submission
   post '/finish', to: 'submissions#finish', as: :finish_submission
   get '/submission/download', to: 'submissions#download', as: :download_submission
-
+  get '/submission/test', to: 'submissions#test'
 
   get :health, to: 'health#index'
 

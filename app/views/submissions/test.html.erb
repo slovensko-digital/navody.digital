@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style type="text/css">
+      form {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+      }
+
+      input {
+        padding: 8px;
+        margin: 5px;
+      }
+
+      .container {
+        max-width: 600px;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form method="POST" action="http://localhost:3000/submission" enctype="multipart/form-data">
+        <label for="type">Submission type:</label>
+        <input type="text" name="submission[type]" value="EmailMeSubscription" id="type"/>
+
+        <label for="email">User email:</label>
+        <input type="text" name="submission[user_email]" value="jozef.testovaci@gmail.com" id="email"/>
+
+        <label for="recipient">Recipient name:</label>
+        <input type="text" name="submission[recipient_name]" value="Jozef Testovací" id="recipient"/>
+
+        <label for="attachment_filename">Attachment filename:</label>
+        <input type="text" name="submission[attachments][][filename]" value="odklad-danoveho-priznania.xml" id="attachment_filename" />
+
+        <label for="attachment_content">Attachment content:</label>
+        <input type="file" name="submission[attachments][][uploaded_file]" id="attachment_content" />
+
+        <label for="template_id">Template id:</label>
+        <input type="text" name="submission[email_template][id]" value="166" id="template_id" />
+
+        <label for="recipient_again">email_template.params.recipient_name (nevalidujeme presence): </label>
+        <input type="text" name="submission[email_template][params][recipient_name]" value="Jozef Testovací" id="recipient_again" />
+
+        <label for="deadline">email_template.params.deadline (nevalidujeme presence):</label>
+        <input type="text" name="submission[email_template][params][deadline]" value="30.6.2021" id="deadline" />
+
+        <label for="newsletter">email_template.params.newsletter (nevalidujeme presence):</label>
+        <input type="text" name="submission[email_template][params][newsletter]" value="true" id="newsletter" />
+
+        <label for="notif_subs">Notification subscription types: (zatial iba 1)</label>
+        <input type="text" name="notification_subscription_types[]" value="TaxReturnSubscription" id="notif_subs" />
+
+        <input type="submit" value="submit"/>
+      </form>
+    </div>
+  </body>
+</html>
