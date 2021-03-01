@@ -32,7 +32,7 @@ jobs:
       - run: bundle exec rspec
 
   deploy:
-    needs: test
+    needs: test 
     if: ${{github.ref == 'refs/heads/master'}}
 
     runs-on: ubuntu-latest
