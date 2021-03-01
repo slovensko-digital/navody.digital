@@ -28,6 +28,7 @@ jobs:
         with:
           bundler-cache: true
 
+      - run: yarn install
       - run: bundle exec rails db:create db:structure:load --trace
 
       - name: Setup Code Climate test-reporter
