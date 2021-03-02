@@ -1,7 +1,6 @@
 class SubmissionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :submission
-  #TODO
-  before_action :log_out, unless: :current_user_email_matches?
+  before_action :log_out, except: :test, unless: :current_user_email_matches?
 
   # TODO prerobit na resources style [POST na submissions#create, nie na submit]
   # TODO extendnut notification subscription group a zjednotit to pod ActiveModel Submission, pripadne zjednotit, nech cele navody riesia notification subscriptions cez jedno miesto (pouzit Sendinblue?)
@@ -16,13 +15,18 @@ class SubmissionsController < ApplicationController
     resolve_subscription_types
     parse_attachments
 
+    @callback_url = submission_params[:callback][:url]
+    @callback_options = submission_params[:callback][:params]
+    @email = submission_params[:user_email]
+
     render 'submissions/submission'
   end
 
   def create
-    submission_args = submission_params
+    submission_args = submission_param
+
     @group = NotificationSubscriptionGroup.new
-    @group.email = submission_args[:email]
+    @group.email = submission_args[:user_email]
     @group.subscriptions = submission_args[:notification_subscription_types]
     @group.user = current_user
 
@@ -33,7 +37,7 @@ class SubmissionsController < ApplicationController
       SendEmailFromTemplateJob.perform_later(submission_args)
 
       format.html { redirect_to finish_submission_path }
-      format.js
+      format.js { redirect_to finish_submission_path }
     end
   end
 
@@ -51,10 +55,12 @@ class SubmissionsController < ApplicationController
 
   def resolve_subscription_types
     requested = ['NewsletterSubscription', *submission_params[:notification_subscription_types]].uniq
-    permitted = @subscription_types = requested & NotificationSubscription::TYPES.keys
+    permitted = requested & NotificationSubscription::TYPES.keys
     forbidden = requested - permitted
 
     Rollbar.error(ArgumentError, forbidden) if forbidden.size > 0
+
+    @subscription_types = permitted
   end
 
   def parse_attachments
@@ -66,12 +72,14 @@ class SubmissionsController < ApplicationController
       ]
     end
 
+    #TODO extract to superclass method together with uuid - unnecessary implementation detail
     Rails.cache.write([get_or_init_uuid, :attachments], attachments, expires_in: 48.hours)
   end
 
   def get_attachments
     Rollbar.error(RuntimeError, 'UUID not present in session') and return unless uuid
 
+    #TODO extract to superclass method together with uuid - unnecessary implementation detail
     @attachments ||= Rails.cache.read([uuid, :attachments])
   end
 
@@ -83,11 +91,12 @@ class SubmissionsController < ApplicationController
       attachments: [:filename, :uploaded_file],
       email_template: [:id, params: {}],
       notification_subscription_types: [],
+      callback: [:url, params: {}],
     )
   end
 
   def current_user_email_matches?
-    current_user.logged_in? && current_user.email == submission_params[:email]
+    current_user.logged_in? && current_user.email == submission_params[:user_email]
   end
 
   helper_method :current_user_email_matches?

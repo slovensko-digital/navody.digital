@@ -1,0 +1,9 @@
+  <div class="govuk-radios__conditional<% if form.errors[:email].any? %> govuk-form-group--error<% end %>"<%= "#{ "id=#{id}" if local_assigns.has_key? :id }"%>>
+  <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
+  <% form.errors[:email].each do |error| %>
+    <span class="govuk-error-message">
+      <%= error %>
+    </span>
+  <% end %>
+  <%= f.email_field :email, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if form.errors[:email].any?}", autocomplete: :email %>
+</div>

@@ -9,12 +9,13 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
-      <p>Gratulujeme, úspešne ste si vytvorili podklady pre <%= @submission_title %> v aplikácii Priznanie.Digital!</p>
+      <h2>Výborne!</h2>
+      <p>Vaše podklady pre podanie daňového priznania za rok 2020 z aplikácie Priznanie.Digital sú hotové.</p>
 
-      <p>Súbor s Vašimi údajmi si môžete stiahnuť tu:</p>
-      <p><%= link_to 'Stiahnuť XML súbor', download_submission_path %></p>
+      <p>Súbor vo formáte XML si môžete stiahnuť tu:</p>
+      <p><%= link_to 'Stiahnuť podklady', download_submission_path, class: 'govuk-button', role: 'button', draggable: false %></p>
 
-      <p>Vaše údaje sú pripravené na to, aby ste ich odoslali na Finančnú správu.</p>
+      <p>Vaše údaje sú už pripravené na to, aby ste ich odoslali na Finančnú správu.</p>
 
         <% if current_user_email_matches? %>
         <p>Ste prihlásený ako používateľ s rovnakým emailom, ako bolo uvedené pri vypĺňaní údajov. Pri odsúhlasení notifikácií Vám budú rovno aktivované, bez nutnosti ďalšieho potvrdenia.</p>
@@ -24,7 +25,6 @@
 
         <%= render_notification_subscription_component_temp(@subscription_types)  %>
 
-      <p># Tretia moznost - odoslat na INY email pre logged_in usera - domysliet a dorobit podporu (JS show/hide, ...) </p>
     </div>
   </div>
 </div>

@@ -1,7 +1,54 @@
-<%= form_with model: form, id: 'new_subscription_notification_group', html: {novalidate: true} do |f| %>
-  <div class="govuk-form-group <% if form.errors[:subscriptions].any? %> govuk-form-group--error<% end %>">
-    <% form.errors[:subscriptions].each do |error| %>
-      <span class="govuk-error-message"><%= error %></span>
+<%= form_with model: form, id: 'new_subscription_notification_group', html: { novalidate: false } do |f| %>
+  <% if current_user.logged_in? %>
+    <div class="govuk-radios govuk-radios--conditional submission-email-radios" data-module="radios">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h3 class="heading-small govuk-!-margin-top-0">
+            Kam chcete poslať email?
+          </h3>
+        </legend>
+
+        <div class="govuk-radios__item">
+          <%= radio_button_tag 'email-source', 'logged-email', true, { class: 'govuk-radios__input ', id: 'logged-email', 'data-aria-controls': 'conditional-logged-email' } %>
+          <%= label_tag 'logged-email', "Odoslať na prihlásený email (#{current_user.email})", class: 'govuk-label govuk-radios__label' %>
+        </div>
+
+        <div class="govuk-radios__conditional" id="conditional-logged-email"></div>
+
+        <div class="govuk-radios__item">
+          <%= radio_button_tag 'email-source', 'custom-email', false, { class: 'govuk-radios__input', id: 'custom-email', 'data-aria-controls': 'conditional-custom-email' } %>
+          <%= label_tag 'custom-email', 'Odoslať na iný email', class: 'govuk-label govuk-radios__label' %>
+        </div>
+
+        <div class="govuk-radios__conditional<% if form.errors[:email].any? %> govuk-form-group--error<% end %>" id="conditional-custom-email" data-aria-controls="conditional-custom-email">
+          <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
+          <% form.errors[:email].each do |error| %>
+            <span class="govuk-error-message">
+              <%= error %>
+            </span>
+          <% end %>
+
+          <%= f.email_field :email, class: "govuk-input govuk-input--width-20#{ ' govuk-input--error' if form.errors[:email].any? }", autocomplete: :email %>
+        </div>
+      </fieldset>
+    </div>
+  <% else %>
+    <div class="govuk-form-group<% if form.errors[:email].any? %> govuk-form-group--error<% end %>">
+      <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
+      <% form.errors[:email].each do |error| %>
+    <span class="govuk-error-message">
+      <%= error %>
+    </span>
+      <% end %>
+      <%= f.email_field :email, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if form.errors[:email].any?}", autocomplete: :email %>
+    </div>
+  <% end %>
+
+  <div class="govuk-form-group
+    <% if form.errors[:subscriptions].any? %> govuk-form-group--error
+    <% end %>" xmlns="">
+
+    <% form.errors[:subscriptions].each do |error| %><span class="govuk-error-message"><%= error %></span>
     <% end %>
 
     <% if form.subscription_types.count == 1 %>
@@ -12,7 +59,7 @@
           <% subscription = NotificationSubscription::TYPES[type] %>
           <% next unless subscription %>
           <div class="govuk-checkboxes__item">
-            <%= check_box_tag 'notification_subscription_group[subscriptions][]', type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
+            <%= check_box_tag 'notification_subscription_group[subscriptions][]', type, form.subscriptions.include?(type), { class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}" } %>
             <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s' %>
             <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
           </div>
@@ -20,22 +67,6 @@
       </div>
     <% end %>
   </div>
-
-  <% unless current_user.logged_in? %>
-    <div class="govuk-form-group
-      <% if form.errors[:email].any? %> govuk-form-group--error
-      <% end %>">
-      <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
-      <% form.errors[:email].each do |error| %>
-        <span class="govuk-error-message"><%= error %></span>
-      <% end %>
-      <% if form.errors[:email].any? %>
-        <%= f.email_field :email, class: 'govuk-input govuk-input--width-20 govuk-input--error', autocomplete: :email %>
-      <% else %>
-        <%= f.email_field :email, class: 'govuk-input govuk-input--width-20', autocomplete: :email %>
-      <% end %>
-    </div>
-  <% end %>
 
   <div class="govuk-form-group">
     <% if !form.journey.nil? and form.journey.blank? %>

@@ -36,6 +36,12 @@
         <label for="attachment_content">Attachment content:</label>
         <input type="file" name="submission[attachments][][uploaded_file]" id="attachment_content" />
 
+        <label for="attachment_filename2">Attachment 2 filename:</label>
+        <input type="text" name="submission[attachments][][filename]" value="odklad-danoveho-priznania.xml" id="attachment_filename2" />
+
+        <label for="attachment_content2">Attachment 2 content:</label>
+        <input type="file" name="submission[attachments][][uploaded_file]" id="attachment_content2" />
+
         <label for="template_id">Template id:</label>
         <input type="text" name="submission[email_template][id]" value="166" id="template_id" />
 
@@ -49,7 +55,13 @@
         <input type="text" name="submission[email_template][params][newsletter]" value="true" id="newsletter" />
 
         <label for="notif_subs">Notification subscription types: (zatial iba 1)</label>
-        <input type="text" name="notification_subscription_types[]" value="TaxReturnSubscription" id="notif_subs" />
+        <input type="text" name="submission[notification_subscription_types][]" value="TaxReturnSubscription" id="notif_subs" />
+
+        <label for="callback.url">callback.url</label>
+        <input type="text" name="submission[callback][url]" value="/zivotne-situacie/elektronicke-podanie-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu" id="callback.url" />
+
+        <label for="callback.params.message">callback.params.message</label>
+        <input type="text" name="submission[callback][params][message]" value="=== CUSTOM CALLBACK MESSAGE ===" id="callback.params.message" />
 
         <input type="submit" value="submit"/>
       </form>
