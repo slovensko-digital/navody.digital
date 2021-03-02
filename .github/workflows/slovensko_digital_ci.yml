@@ -39,7 +39,9 @@ jobs:
       - name: Build and test with RSpec
         run: bundle exec rspec
       - name: Publish code coverage
-        run: ./test-reporter after-build --coverage-input-type simplecov --exit-code $?
+        run: |
+          export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+          ./test-reporter after-build -r ${{secrets.CC_TEST_REPORTER_ID}}
 
   deploy:
     needs: test
