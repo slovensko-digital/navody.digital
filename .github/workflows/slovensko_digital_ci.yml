@@ -27,21 +27,12 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-
+     
       - run: yarn install
       - run: bundle exec rails db:create db:structure:load --trace
 
-      - name: Setup Code Climate test-reporter
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./test-reporter
-          chmod +x ./test-reporter
-          ./test-reporter before-build
       - name: Build and test with RSpec
         run: bundle exec rspec
-      - name: Publish code coverage
-        run: |
-          export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
-          ./test-reporter after-build -r ${{secrets.CC_TEST_REPORTER_ID}}
 
   deploy:
     needs: test
