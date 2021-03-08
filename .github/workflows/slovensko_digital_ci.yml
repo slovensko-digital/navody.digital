@@ -31,8 +31,9 @@ jobs:
       - run: yarn install
       - run: bundle exec rails db:create db:structure:load --trace
 
-      # TODO setup CC around this
-      - run: bundle exec rspec
+      - uses: paambaati/codeclimate-action@v2.7.5
+        with:
+          coverageCommand: bundle exec rspec
 
   deploy:
     needs: test
