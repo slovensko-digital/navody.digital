@@ -1,6 +1,4 @@
 class Task < ApplicationRecord
-  self.inheritance_column = 'type2' # TODO: remove this when all STI types are defined
-
   belongs_to :step
 
   validates :title, presence: true
@@ -10,3 +8,6 @@ class Task < ApplicationRecord
     order(position: :asc, id: :asc)
   end
 end
+
+require_dependency "simple_task"
+require_dependency "external_link_task"
