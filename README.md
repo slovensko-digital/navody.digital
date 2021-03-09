@@ -22,10 +22,9 @@ Master ide automaticky na [staging.navody.digital](https://staging.navody.digita
 
 #### Test
 
- - `bin/rails db:create`
  - `bin/rails db:setup`
  - `bin/rake`
 
 ### Neprogramátorské úlohy
 
-- [Wishlist ďalších návodov na spracovanie a editovanie, eventy a ďalší progress](https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital).
+- [Wishlist ďalších návodov na spracovanie a úpravu, eventy a ďalší progress](https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital)
