@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -308,7 +309,8 @@ CREATE TABLE public.journeys (
     description text,
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
-    custom_title character varying
+    custom_title character varying,
+    last_check date
 );
 
 
@@ -1324,6 +1326,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191209121011'),
 ('20200316102804'),
 ('20200316104715'),
-('20200919092214');
+('20200919092214'),
+('20210221222555');
 
 

@@ -23,6 +23,8 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step2) { create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep') }
   let!(:task) { create(:task, step: step1) }
   let!(:blank_journey) { create(:journey, published_status: "BLANK", description: nil) }
+  let!(:checked_journey) { create(:journey, last_check: Date.new(2020, 01, 23)) }
+  let!(:checked_journey_step) { create(:step, journey: checked_journey) }
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
@@ -33,7 +35,6 @@ RSpec.feature "Journeys", type: :feature do
   scenario 'As an anonymous user I want to read a journey' do
     visit journey_path(journey)
     expect(page).to have_content('Aby ste na nič nezabudli')
-    expect(page).to have_content(/Aktualizované: \d\d.\d\d.\d{4}/)
 
     click_link 'Ďalší krok'
     expect(page).to have_content(step1.title)
@@ -124,6 +125,20 @@ RSpec.feature "Journeys", type: :feature do
 
     expect(page).to have_content('Na tomto návode ešte len pracujeme')
     expect(page).to have_content(blank_journey.title)
+  end
+
+  scenario 'As an anonymous user I want to check if last_check date is shown' do
+    visit journey_path(journey)
+    expect(page).to_not have_content('Platné ku dňu')
+
+    visit journey_step_path(journey, step1)
+    expect(page).to_not have_content('Platné ku dňu')
+
+    visit journey_path(checked_journey)
+    expect(page).to have_content('Platné ku dňu')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).to have_content('Platné ku dňu')
   end
 
 end
