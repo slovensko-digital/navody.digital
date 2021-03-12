@@ -1,0 +1,8 @@
+<div class="govuk-form-group<%= ' govuk-input--error' if form.errors[:email].any? %>">
+  <%= f.label "#{parent}[email]", 'Emailová adresa', class: 'govuk-label' %>
+  <% form.errors[:email].each do |error| %>
+    <span class="govuk-error-message"><%= error %></span>
+  <% end %>
+
+  <%= f.email_field "#{parent}[email]", class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if form.errors[:email].any?}", autocomplete: :email %>
+</div>

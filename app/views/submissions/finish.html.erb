@@ -1,16 +1,9 @@
-<%= content_for :title, build_page_title(@submission_title) %>
-<% content_for :before_content do %>
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-    </ol>
-  </div>
-<% end %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
-      <p>Gratulujeme, Vaše požiadavky boli úspešne postúpené na spracovanie!</p>
-      <p><%= link_to 'Prosím, pokračujte tadiaľto.', params[:callback][:url] %></p>
+      <h3>Skvelé!</h3>
+      <p>Gratulujeme, Vaša požiadavka bola úspešne postúpená na spracovanie!</p>
+      <p><%= link_to 'Prosím, pokračujte kliknutím sem.', submission_params[:callback][:url] %></p>
     </div>
   </div>
 </div>

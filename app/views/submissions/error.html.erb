@@ -1,0 +1,12 @@
+<% content_for :title, "Stránka sa nenašla" %>
+<% content_for :custom_error do %>
+  <h1 class="govuk-heading-xl">Niečo sa pokazilo</h1>
+  <p class="govuk-body-lead">Ospravedlňujeme sa, ale stalo sa niečo, čo sme nečakali. Naši programátori boli notifikovaní a pravdepodobne už pracujú na náprave.</p>
+  <p>Ak by chyba v dohľadnej dobe nezmizla, tak <%= mail_to 'navody@slovensko.digital', 'nám radšej napíšte' %>.</p>
+
+  <%= render partial: :attachments, locals: { attachments: load_attachments } do %>
+    <p>Našťastie sa nám podarilo zachrániť Vašu doterajšiu námahu - Vaše súbory si môžete stiahnuť tu:</p>
+  <% end %>
+<% end %>
+
+<%= render template: "layouts/errors/all" %>

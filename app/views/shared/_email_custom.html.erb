@@ -1,0 +1,27 @@
+<div class="govuk-radios govuk-radios--conditional submission-email-radios" data-module="radios">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <p class="heading-small govuk-!-margin-top-0">Kam chcete poslať email?</p>
+    </legend>
+    <div class="govuk-radios__item">
+      <%= radio_button_tag :prefer_email_input, false, true, { class: 'govuk-radios__input ', id: :prefer_email_input_false, 'data-aria-controls': 'conditional-prefer_email_input_false' } %>
+      <%= label_tag :prefer_email_input_false, "Odoslať na prihlásený email (#{current_user.email})", class: 'govuk-label govuk-radios__label' %>
+    </div>
+
+    <%= hidden_field_tag :logged_user_email, current_user.email %>
+    <div class="govuk-radios__conditional" id="conditional-prefer_email_input_false"></div>
+
+    <div class="govuk-radios__item">
+      <%= radio_button_tag :prefer_email_input, true, false, { class: 'govuk-radios__input', id: :prefer_email_input_true, 'data-aria-controls': 'conditional-prefer_email_input_true' } %>
+      <%= label_tag :prefer_email_input_true, 'Odoslať na iný email', class: 'govuk-label govuk-radios__label' %>
+    </div>
+
+    <div class="govuk-radios__conditional<% if form.errors[:email].any? %> govuk-form-group--error<% end %>" id="conditional-prefer_email_input_true" data-aria-controls="conditional-prefer_email_input_true">
+      <%= f.label :email_input, 'Emailová adresa', class: 'govuk-label' %>
+      <% form.errors[:email_input].each do |error| %>
+        <span class="govuk-error-message"><%= error %></span>
+      <% end %>
+      <%= f.email_field :email_input, class: "govuk-input govuk-input--width-20 #{ 'govuk-input--error' if form.errors[:email_input].any? }", autocomplete: :email %>
+    </div>
+  </fieldset>
+</div>

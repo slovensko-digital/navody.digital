@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SubscribeSendinblueJob, type: :job do
+RSpec.describe AddEmailToContactListJob, type: :job do
   describe '#perform_now' do
     it 'calls APIs' do
       expect(EmailService).to receive(:find_list).with('list-name').and_return(id: '34')
@@ -9,14 +9,14 @@ RSpec.describe SubscribeSendinblueJob, type: :job do
         listIds: ['34'],
         updateEnabled: true
       )
-      SubscribeSendinblueJob.perform_now('email', 'list-name')
+      AddEmailToContactListJob.perform_now('email', 'list-name')
     end
 
     context 'list not found' do
       it 'raises exception' do
         expect(EmailService).to receive(:find_list).with('list-name').and_return(nil)
         expect{
-          SubscribeSendinblueJob.perform_now('email', 'list-name')
+          AddEmailToContactListJob.perform_now('email', 'list-name')
         }.to raise_error(StandardError)
       end
     end

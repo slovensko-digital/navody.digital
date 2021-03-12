@@ -1,0 +1,8 @@
+<% unless attachments&.empty? %>
+  <%= yield %>
+  <% attachments.each_with_index do |attachment, index| %>
+    <p>
+      <%= link_to "Stiahnuť #{ (attachments.count == 1) ? 'súbor' : attachment[:filename] }", download_submission_file_path(index), method: :get, class: 'govuk-button' %>
+    </p>
+  <% end %>
+<% end %>

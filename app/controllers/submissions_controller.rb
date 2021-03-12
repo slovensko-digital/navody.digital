@@ -1,142 +1,119 @@
 class SubmissionsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :submission
-  before_action :log_out, except: :test, unless: :current_user_email_matches?
+  include Caching
 
-  # TODO prerobit na resources style [POST na submissions#create, nie na submit]
-  # TODO extendnut notification subscription group a zjednotit to pod ActiveModel Submission, pripadne zjednotit, nech cele navody riesia notification subscriptions cez jedno miesto (pouzit Sendinblue?)
-  # TODO parametrizovat nadpis a dalsie veci
+  skip_before_action :verify_authenticity_token, only: :endpoint
+  before_action :set_metadata, except: [:test, :download]
+  before_action :load_attachments, except: [:endpoint, :test]
 
+  wrap_parameters :submission, except: :test
+  # before_action :log_out, unless: :current_user_email_matches?, only: :endpoint
+  # rescue_from StandardError, with: :handle_submission_error
 
-  def submission
-    # TODO toto parametrizovat a pripadne pouzit v nazve stahovaneho suboru atd.
-    @submission_title = 'Odklad daňového priznania'
-    @metadata.og.title = "Návody.Digital: #{@submission_title}"
+  def test
+  end
 
-    resolve_subscription_types
-    parse_attachments
+  def endpoint
+    log_out if email_mismatch?
+    store_sensitive_data
 
-    @callback_url = submission_params[:callback][:url]
-    @callback_options = submission_params[:callback][:params]
-    @email = submission_params[:user_email]
+    redirect_to new_submission_path(submission: submission_params, notification_subscription_group: notification_subscription_params)
+  end
 
-    render 'submissions/submission'
+  def new
+    set_subscription_types
   end
 
   def create
-    submission_args = submission_param
-
-    @group = NotificationSubscriptionGroup.new
-    @group.email = submission_args[:user_email]
-    @group.subscriptions = submission_args[:notification_subscription_types]
-    @group.user = current_user
+    @submission = Submission.of(submission_params.merge(user: current_user, attachments: load_attachments))
+    # @group = NotificationSubscriptionGroup.of(notification_subscription_params)
 
     respond_to do |format|
-      format.js { render :new } if @group.invalid?
+      format.js { render :new } and return unless @group.valid?
 
-      create_subscriptions(submission_args)
-      SendEmailFromTemplateJob.perform_later(submission_args)
+      if @submission.valid? && @group.valid?
+        # @group.create_subscriptions
+        @submission.submit
 
-      format.html { redirect_to finish_submission_path }
-      format.js { redirect_to finish_submission_path }
+        redirect_to finish_submission_path(submission_params[:callback])
+      else
+        render :new
+      end
     end
   end
 
-  # TODO first prec ked pridame podporu viacerych priloh
-  def download
-    attachments_temp = get_attachments.first
-    send_data attachments_temp[:content], filename: attachments_temp[:filename], type: attachments_temp[:content_type]
+  def finish
   end
 
-  def test
+  def download
+    attachment = attachments[Integer(params[:id])]
 
+    send_data Base64.decode64(attachment[:encoded_file]), filename: attachment[:filename], disposition: :attachment
   end
 
   private
 
-  def resolve_subscription_types
-    requested = ['NewsletterSubscription', *submission_params[:notification_subscription_types]].uniq
-    permitted = requested & NotificationSubscription::TYPES.keys
-    forbidden = requested - permitted
+  def set_subscription_types
+    requested_types = ['NewsletterSubscription', *notification_subscription_params[:subscription_types]].uniq
+    allowed_types = requested_types & NotificationSubscription::TYPES.keys
+    @subscription_types = allowed_types
 
-    Rollbar.error(ArgumentError, forbidden) if forbidden.size > 0
-
-    @subscription_types = permitted
+    forbidden_types = requested_types - allowed_types
+    log_error(ArgumentError.new, 'Subscription types not allowed', data: forbidden_types) if forbidden_types.any?
   end
 
-  def parse_attachments
-    attachments = submission_params.fetch(:attachments).map do |a|
-      Hash[
-        filename: a[:filename],
-        content: a[:uploaded_file].read,
-        content_type: a[:uploaded_file].content_type
-      ]
-    end
+  def store_sensitive_data
+    data = params.require(:submission).permit!.slice(:attachments).to_h
 
-    #TODO extract to superclass method together with uuid - unnecessary implementation detail
-    Rails.cache.write([get_or_init_uuid, :attachments], attachments, expires_in: 48.hours)
+    save_to_cache(data)
   end
 
-  def get_attachments
-    Rollbar.error(RuntimeError, 'UUID not present in session') and return unless uuid
-
-    #TODO extract to superclass method together with uuid - unnecessary implementation detail
-    @attachments ||= Rails.cache.read([uuid, :attachments])
+  def load_attachments
+    @attachments ||= load_from_cache(:attachments)
   end
+
+  helper_method :load_attachments
 
   def submission_params
     params.require(:submission).permit(
       :type,
-      :user_email,
-      :recipient_name,
-      attachments: [:filename, :uploaded_file],
-      email_template: [:id, params: {}],
-      notification_subscription_types: [],
-      callback: [:url, params: {}],
+      :title,
+      :description,
+      target_data: {},
+      callback: [:url, options: {}],
     )
   end
 
-  def current_user_email_matches?
-    current_user.logged_in? && current_user.email == submission_params[:user_email]
+  helper_method :submission_params
+
+  # TODO maybe useless
+  def notification_subscription_params
+    filtered = params.require(:notification_subscription_group)
+
+    prefer_input = ActiveModel::Type::Boolean.new.cast(filtered.delete(:prefer_email_input))
+    logged = filtered.delete :logged_user_email
+    input = filtered.delete :email_input
+
+    filtered[:email] = (current_user.logged_in? && !prefer_input) ? logged : input
+
+    filtered.permit(
+      :email,
+      subscriptions: [],
+      subscription_types: [],
+    )
   end
 
-  helper_method :current_user_email_matches?
-
-  # TODO analogous with AnonymousUser[User].create. consider refactor as that methods have many responsibilities
-  def create_subscriptions(params)
-    params[:subscriptions].map do |type|
-      user = (current_user if current_user.logged_in?) || nil
-      subscription = NotificationSubscription.find_or_initialize_by(type: type, email: params[:email], user: user)
-      subscription.confirmation_sent_at = Time.now.utc unless user
-      subscription.save!
-      subscription
-    end
+  def email_mismatch?
+    current_user.logged_in? && current_user.email == submission_params[:email]
   end
+
+  def set_metadata
+    @metadata.og.title = submission_params[:title] || 'Návody.Digital: Podanie'
+    @metadata.og.description = submission_params[:description] || 'Aplikácia určená pre všeobecné podania.'
+  end
+
+  # def handle_submission_error(error)
+  #   log_error
+  #
+  #   render :error
+  # end
 end
-
-# # EXAMPLE (testy a vizualizacia docasne)
-# SUBMISSION_TYPES = ['EmailMeSubmission']
-#
-#
-# {
-#   submission: {
-#     type: 'EmailMeSubmission',
-#     user_email: 'test@test.com', # email z priznania, check equality s current_user na navodoch
-#     recipient_name: 'Jozef Testovaci',
-#     attachments: [
-#       {
-#         filename: 'odklad-danoveho-priznania.xml',
-#         content: '<file_content>', # html select file -> submit
-#       },
-#     ],
-#     email_template: {
-#       id: 166,
-#       params: {
-#         first_name: 'Jozef',
-#         last_name: 'Testovaci',
-#         deadline: '30.6.2021',
-#         newsletter: true,
-#       },
-#     },
-#     notification_subscriptions_types: ['TaxReturnSubscription'], # NewsletterSubscription je default
-#   }
-# }

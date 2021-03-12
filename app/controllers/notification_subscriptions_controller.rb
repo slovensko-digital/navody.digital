@@ -4,18 +4,14 @@ class NotificationSubscriptionsController < ApplicationController
   end
 
   def create
-    @group = NotificationSubscriptionGroup.new
-    @group.email = params[:notification_subscription_group][:email]
-    @group.subscriptions = params[:notification_subscription_group][:subscriptions]
-    @group.user = current_user
-    @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
+    @group = NotificationSubscriptionGroup.of(user: current_user, **params[:notification_subscription_group])
 
     respond_to do |format|
       if @group.valid?
-        confirmation_email = current_user.create_notification_subscriptions(params[:notification_subscription_group])
-        confirmation_email.deliver_later if confirmation_email
+        @group.create_subscriptions
+
         format.html { redirect_to root_path }
-        format.js
+        format.js #{ redirect_to params[:callback]}
       else
         format.js { render :new }
       end
@@ -24,8 +20,7 @@ class NotificationSubscriptionsController < ApplicationController
 
   def confirm
     @subscriptions = NotificationSubscription.where(confirmation_token: params[:id])
-    @subscriptions.each do |subscription|
-      subscription.confirm
-    end
+
+    @subscriptions.each(&:confirm)
   end
 end

@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    log_out
 
     redirect_to root_path, notice: 'Boli ste úspešne odhlásený/á.'
   end

@@ -14,4 +14,11 @@ module ApplicationHelper
   def sanitize_description(description, length: 500)
     truncate(strip_tags(description), length: length)
   end
+
+  # Accepts only single nesting
+  def hash_as_hidden_fields(hash)
+    hidden_fields = hash.to_h.map { |key, value| hidden_field_tag(key, value, :id => nil) }
+
+    hidden_fields.join("\n")
+  end
 end

@@ -1,5 +1,5 @@
 module CustomComponentsHelper
-  def raw_with_custom_components(html, journey: nil)
+  def raw_with_custom_components(html)
     fragment = Nokogiri::HTML.fragment(html)
 
     fragment.css('embedded-app').each do |elm|
@@ -8,7 +8,7 @@ module CustomComponentsHelper
 
     fragment.css('notification-subscription').each do |elm|
       subscription_types = elm[:types].split(/[,\s]+/)
-      elm.replace render_notification_subscription_component(subscription_types, journey: journey, content: elm.inner_html)
+      elm.replace render_notification_subscription_component(subscription_types, content: elm.inner_html)
     end
 
     raw(fragment.to_s)

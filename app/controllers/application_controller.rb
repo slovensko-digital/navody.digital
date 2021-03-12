@@ -14,16 +14,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def log_out
-    session[:user_id] = nil
+    reset_session
     @__current_user = nil
-  end
-
-  def get_or_init_uuid
-    session['_uuid'] ||= SecureRandom.uuid
-  end
-
-  def uuid
-    session['_uuid']
   end
 
   def require_user
@@ -64,5 +56,9 @@ class ApplicationController < ActionController::Base
     active_current_topic = CurrentTopic.active
     return if active_current_topic.blank? || cookies[:current_topic] == active_current_topic.key
     @active_current_topic = active_current_topic
+  end
+
+  def log_error(*args)
+    Rollbar.error(*args)
   end
 end

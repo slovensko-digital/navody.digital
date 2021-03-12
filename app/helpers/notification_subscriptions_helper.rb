@@ -1,17 +1,14 @@
 module NotificationSubscriptionsHelper
-  def render_notification_subscription_component(subscription_types, journey: nil, content: nil, &block)
+  def render_notification_subscription_component(subscription_types, content: nil, &block)
     content = capture(&block) if block_given?
-    group = NotificationSubscriptionGroup.new(subscription_types: subscription_types)
-    group.user = current_user
-    group.journey = journey
-    render partial: 'notification_subscriptions/component', locals: { group: group, content: content }
+    group = NotificationSubscriptionGroup.of(subscription_types: subscription_types, user: current_user)
+
+    render partial: 'notification_subscriptions/component', locals: { form: group, content: content }
   end
 
-  def render_notification_subscription_component_temp(subscription_types, journey: nil, content: nil, &block)
-    content = capture(&block) if block_given?
-    group = NotificationSubscriptionGroup.new(subscription_types: subscription_types)
-    group.user = current_user
-    group.journey = journey
-    render partial: 'notification_subscriptions/component_temp', locals: { group: group, content: content }
+  def render_notification_subscription_fields(subscription_types, **locals)
+    group = NotificationSubscriptionGroup.of(subscription_types: subscription_types, user: current_user)
+
+    render partial: 'notification_subscriptions/form', locals: locals.merge(form: group)
   end
 end
