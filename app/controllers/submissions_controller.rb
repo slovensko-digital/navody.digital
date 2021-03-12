@@ -45,7 +45,7 @@ class SubmissionsController < ApplicationController
   end
 
   def download
-    attachment = attachments[Integer(params[:id])]
+    attachment = load_attachments[Integer(params[:id])]
 
     send_data Base64.decode64(attachment[:encoded_file]), filename: attachment[:filename], disposition: :attachment
   end
