@@ -310,7 +310,7 @@ CREATE TABLE public.journeys (
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
     custom_title character varying,
-    last_check date
+    last_checked_on date
 );
 
 
@@ -1327,6 +1327,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200316102804'),
 ('20200316104715'),
 ('20200919092214'),
-('20210221222555');
+('20210314221503');
 
 

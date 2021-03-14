@@ -72,7 +72,7 @@ class Admin::JourneysController < Admin::AdminController
         :slug,
         :description,
         :position,
-        :last_check,
+        :last_checked_on,
     )
   end
 end

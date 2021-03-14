@@ -23,7 +23,7 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step2) { create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep') }
   let!(:task) { create(:task, step: step1) }
   let!(:blank_journey) { create(:journey, published_status: "BLANK", description: nil) }
-  let!(:checked_journey) { create(:journey, last_check: Date.new(2020, 01, 23)) }
+  let!(:checked_journey) { create(:journey, last_checked_on: Date.new(2020, 01, 23)) }
   let!(:checked_journey_step) { create(:step, journey: checked_journey) }
 
   before(:each) do
@@ -127,7 +127,7 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content(blank_journey.title)
   end
 
-  scenario 'As an anonymous user I want to check if last_check date is shown' do
+  scenario 'As an anonymous user I want to check if last_check date is visible' do
     visit journey_path(journey)
     expect(page).to_not have_content('Platné ku dňu')
 

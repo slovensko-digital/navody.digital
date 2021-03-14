@@ -6,7 +6,7 @@
   <% end %>
 
 
-  <% if (journey&.last_check || Date.new)  < 1.year.ago.to_date %>
+  <% if (journey&.last_checked_on || Date.new)  < 1.year.ago.to_date %>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
@@ -22,7 +22,7 @@
   <%= form.text_field :keywords %>
   <%= form.select :published_status, Journey.defined_enums['published_status'] %>
   <%= form.select :image_name, Dir.glob("app/assets/images/journeys/*").map { |path| File.basename(path) } %>
-  <%= form.date_field :last_check %>
+  <%= form.date_field :last_checked_on %>
   <%= form.number_field :position %>
   <%= form.text_area :description, size: "60x12" %>
 
