@@ -8,6 +8,8 @@ class SendEmailFromTemplateJob < ApplicationJob
   end
 
   def transform_email_params(data)
+    data.symbolize_keys!
+
     {
       templateId: Integer(data[:template_id]),
       params: data[:template_options],

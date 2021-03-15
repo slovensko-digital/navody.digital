@@ -15,10 +15,28 @@ module ApplicationHelper
     truncate(strip_tags(description), length: length)
   end
 
-  # Accepts only single nesting
-  def hash_as_hidden_fields(hash)
-    hidden_fields = hash.to_h.map { |key, value| hidden_field_tag(key, value, :id => nil) }
+  def nested_hidden_fields_for(item, root: nil)
+    if item.is_a? Hash
+      item.map { |key, value| nested_hidden_fields_for(value, root: hash_key(key, root)) }.join
 
-    hidden_fields.join("\n").html_safe
+    elsif item.is_a? Array
+      item.map { |e| nested_hidden_fields_for(e, root: "#{root}[]") }.join
+
+    else
+      hidden_field_tag(root, item, :id => nil)
+
+    end.html_safe
+  end
+
+  def hash_key(item, root)
+    return item if root.blank?
+
+    item, root = [item, root].map(&:to_s).map(&:strip)
+    first_bracket = item.index('[') || item.length
+
+    wrapped = "[#{item[0...first_bracket]}]"
+    untouched = item[first_bracket..-1] || ''
+
+    root << wrapped << untouched
   end
 end

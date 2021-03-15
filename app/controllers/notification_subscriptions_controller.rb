@@ -4,7 +4,7 @@ class NotificationSubscriptionsController < ApplicationController
   end
 
   def create
-    @group = NotificationSubscriptionGroup.of(user: current_user, **params[:notification_subscription_group])
+    @group = NotificationSubscriptionGroup.of(params[:notification_subscription_group], user: current_user)
 
     respond_to do |format|
       if @group.valid?

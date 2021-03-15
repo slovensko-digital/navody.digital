@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   # TODO !!!
   get '/submissions/test', to: 'submissions#test'
   post '/submissions/endpoint', to: 'submissions#endpoint', as: :submission_endpoint
-  resources :submissions, only: [:new, :create]
-  get '/submissions/download/:id', to: 'submissions#download', as: :download_submission_file
-  # post '/submissions/download/:id', to: 'submissions#download', as: :download_submission_file
+  resources :submissions, only: [:create]
+  post '/submissions/download', to: 'submissions#download', as: :download_submission_file
   get '/submissions/finish', to: 'submissions#finish', as: :finish_submission
 
   get :health, to: 'health#index'

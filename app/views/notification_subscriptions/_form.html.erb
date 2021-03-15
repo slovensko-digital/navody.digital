@@ -6,13 +6,13 @@
 
     <div class="govuk-checkboxes">
       <% if form.subscription_types.count == 1 %>
-        <%= hidden_field_tag '#{parent}[subscriptions][]', form.subscription_types.first %>
+        <%= hidden_field_tag hash_key('subscriptions[]', root), form.subscription_types.first %>
       <% else %>
         <% form.subscription_types.each_with_index do |type, index| %>
           <% subscription = NotificationSubscription::TYPES[type] %>
           <% next unless subscription %>
           <div class="govuk-checkboxes__item">
-            <%= check_box_tag "#{parent}[subscriptions][]", type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "#{parent}_#{index}"} %>
+            <%= check_box_tag hash_key('subscriptions[]', root), type, form.subscriptions.include?(type), {class: 'govuk-checkboxes__input', id: "#{root}_#{index}"} %>
             <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s' %>
             <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
           </div>
@@ -20,6 +20,8 @@
       <% end %>
     </div>
 
-    <%= render partial: (defined?(:email_partial) && !!email_partial ? email_partial : 'shared/email_simple'), locals: { form: form, f: f, parent: 'submission' } %>
+    <% email_partial_name = (defined?(:email_partial) && email_partial) ? email_partial : 'shared/email_simple'  %>
+
+    <%= render partial: email_partial_name, locals: { form: form, f: f, root: nil } %>
   </div>
 </div>

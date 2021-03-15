@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :user_tasks, through: :user_steps
   has_many :notification_subscriptions
 
+  # TODO false claim - needs refactor
   def logged_in?
     true
   end

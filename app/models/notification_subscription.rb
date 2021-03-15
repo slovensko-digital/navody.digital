@@ -48,7 +48,7 @@ class NotificationSubscription < ApplicationRecord
   validates :journey, presence: true, if: -> { self.type == 'BlankJourneySubscription' }
   validates :email, presence: true
   validates :confirmation_token, presence: true, if: -> { user.present? }
-  validates :confirmation_token, absence: true, if: -> { user.empty? }
+  validates :confirmation_token, absence: true, if: -> { user.nil? }
 
   belongs_to :user, optional: true
   belongs_to :journey, optional: true

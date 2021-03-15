@@ -4,43 +4,16 @@
       <h2>Výborne!</h2>
       <p>Vaše údaje sú už pripravené na pokračovanie vo Vašom podaní.</p>
 
-      <%= render layout: 'attachments', locals: { attachments: load_attachments } do %>
+      <%= render layout: 'attachments', locals: { attachments: submission_params[:attachments] } do %>
         <p>Stiahnite si, prosím, Vaše súbory:</p>
       <% end %>
 
-      <%# fields_for @group do |group_form| %>
-      <%#= render partial: 'notification_subscriptions/form', locals: { form: @group, f: f, parent: 'notification_subscription_group' } %>
-      <%= render_notification_subscription_fields(@subscription_types, f: f, parent: 'notification_subscription_group', email_partial: ('shared/email_custom' if current_user.logged_in?)) %>
-      <%# end %>
+      <%= render_notification_subscription_fields({ subscription_types: @subscription_types }, user: current_user, group: @group,  f: f, root: 'notification_subscriptions', email_partial: ('shared/email_custom' if current_user.logged_in?)) %>
 
-      <%= hidden_field_tag 'submission[type]', submission_params[:type] %>
-      <%= hidden_field_tag 'submission[title]', submission_params[:title] %>
-      <%= hidden_field_tag 'submission[description]', submission_params[:description] %>
-      <%= hidden_field_tag 'submission[callback][url]', submission_params[:callback][:url] %>
-
-      <%= hash_as_hidden_fields(submission_params[:target_data]) %>
-      <%= hash_as_hidden_fields(submission_params[:callback][:params]) %>
+      <%= nested_hidden_fields_for(submission_params, root: 'submission') %>
 
       <%= submit_tag "Odoslať súbor a #{current_user.logged_in? ? 'aktivovať zvolené notifikácie' : 'potvrdenie o odbere zvolených notifikácií'}", class: 'govuk-button' %>
     </div>
   </div>
   </div>
 <% end %>
-
-
-<%# submission_params[:callback][:params].each_pair do |key, value| %>
-<%#= hidden_field_tag "submission_params[callback][params][#{key}]", submission_params[:callback][:params][key] %>
-<%#= "tu je hidden field #{key} #{value}" %>
-<%# end %>
-
-
-
-<%#= hidden_field_tag 'submission[recipient_name]', submission_params[:recipient_name] %>
-<%#= hidden_field_tag 'submission[email]', submission_params[:email] %>
-<%#= hidden_field_tag 'submission[callback][url]', submission_params[:callback][:url] %>
-<%#= hidden_field_tag 'submission[callback][params][]', submission_params[:callback][:params] %>
-<%#= hidden_field_tag 'submission[email_template][id]', submission_params[:email_template][:id] %>
-<%#= hidden_field_tag 'submission[email_template][params][]', submission_params[:email_template][:params] %>
-<%#= hidden_field_tag 'submission[attachments][filename]', submission_params[:attachments].first[:filename] %>
-<%#= hidden_field_tag 'submission[attachments][encoded_file]', submission_params[:attachments].first[:encoded_file] %>
-<%#= hidden_field_tag 'submission[attachments][content_type]', submission_params[:attachments].first[:content_type] %>

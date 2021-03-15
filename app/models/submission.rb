@@ -6,24 +6,26 @@ class Submission
   # TODO resolve and delete before merge
   require_dependency 'email_submission'
 
-  TYPES = { email_submission: ::EmailSubmission }
+  TYPES = { email_submission: ::EmailSubmission, }
 
-  attr_accessor :type, :title, :description, :name, :email
-  attr_writer :attachments, :callback, :target_data
+  attr_accessor :type, :title, :description, :user_email, :callback_url
+  attr_writer :attachments, :target_data
 
-  attr_accessor :subscription_group
+  # TODO should accept other associated models
+  attr_accessor :associations
+  validate { associations.all?(&:valid?) }
 
-  validates :type, :title, :description, :name, :email, :callback, :attachments, presence: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :type, :title, :description, :user_email, :attachments, presence: true
+  validates :user_email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def self.of(attributes)
-    target_class = TYPES[attributes[:type].to_sym]
+    type = TYPES[attributes[:type].to_sym]
+    raise "Submission type not allowed: #{attributes[:type]}" unless type
 
-    raise "Submission type not allowed: #{attributes[:type]}" unless target_class
+    type_specific_attributes = attributes.delete :target_data
+    attributes = attributes.merge(type_specific_attributes).to_h.compact
 
-    flat_attributes = attributes.except(:target_data).merge(attributes[:target_data]).to_h.compact
-
-    target_class.new(target_attributes)
+    type.new(attributes)
   end
 
   def submit
@@ -34,8 +36,8 @@ class Submission
     @attachments || []
   end
 
-  def callback
-    @callback || {}
+  def associations
+    @associations || []
   end
 
   def email_template
