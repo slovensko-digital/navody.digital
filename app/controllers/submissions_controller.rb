@@ -1,7 +1,9 @@
 class SubmissionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :endpoint
   before_action :set_metadata, except: [:test, :download]
-  rescue_from StandardError, with: :handle_submission_error
+
+  # # commented out in development
+  # rescue_from StandardError, with: :handle_submission_error
 
   def test
   end
@@ -9,8 +11,6 @@ class SubmissionsController < ApplicationController
   def endpoint
     log_out if email_mismatch?
     @subscription_types = verified_subscription_types
-    @attachments = submission_params[:attachments]
-    raise 'aaa'
 
     render :new
   end
@@ -26,8 +26,6 @@ class SubmissionsController < ApplicationController
 
       redirect_to finish_submission_path(callback_url: @submission.callback_url)
     else
-      @attachments = submission_params[:attachments]
-
       render :new
     end
   end
@@ -84,7 +82,6 @@ class SubmissionsController < ApplicationController
 
   def handle_submission_error(*args)
     log_error(*args)
-    @attachments = submission_params[:attachments].presence
 
     render :error
   end

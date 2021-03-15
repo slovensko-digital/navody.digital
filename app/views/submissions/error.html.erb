@@ -4,7 +4,7 @@
   <p class="govuk-body-lead">Ospravedlňujeme sa, ale stalo sa niečo, čo sme nečakali. Naši programátori boli notifikovaní a pravdepodobne už pracujú na náprave.</p>
   <p>Ak by chyba v dohľadnej dobe nezmizla, tak <%= mail_to 'navody@slovensko.digital', 'nám radšej napíšte' %>.</p>
 
-  <% if @attachments %>
+  <% if submission_params[:attachments] %>
     <%= render layout: 'attachments', locals: { attachments: submission_params[:attachments] } do %>
       <p>Našťastie sa nám podarilo zachrániť Vašu prácu - Vaše súbory si môžete stiahnuť tu:</p>
     <% end %>
