@@ -91,7 +91,7 @@ RSpec.feature "Sessions" do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'Prihlásiť sa cez Google'
+    click_on 'Prihlásiť sa cez Google'
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')
@@ -113,7 +113,7 @@ RSpec.feature "Sessions" do
 
       visit journey_path(journey)
       click_link 'Chcem sa prihlásiť'
-      click_link 'Prihlásiť sa cez Google'
+      click_on 'Prihlásiť sa cez Google'
 
       expect(current_path).to eq journey_path(journey)
     end
@@ -204,7 +204,7 @@ RSpec.feature "Sessions" do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'Prihlásiť sa cez Google'
+    click_on 'Prihlásiť sa cez Google'
 
     expect(page).to have_link('Odhlásiť')
 

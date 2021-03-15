@@ -45,7 +45,12 @@ class NotificationSubscription < ApplicationRecord
       sendinblue_list_name: 'CarOwnerSubscription',
       label: 'Chcem dostávať novinky týkajúce sa majiteľov motorových vozidiel',
       hint: 'Dostávajte relevatné informácie týkajúce sa motorových vozidiel na email.'
-    }
+    },
+    'TaxReturnSubscription' => {
+      sendinblue_list_name: 'TaxReturnSubscription',
+      label: 'Chcem, aby ste mi dali vedieť, keď bude dostupná aktuálna verzia aplikácie Priznanie.Digital',
+      hint: 'Dáme Vám vedieť, keď bude dostupná aktuálna verzia aplikácie.'
+    },
   }
 
   belongs_to :user, optional: true

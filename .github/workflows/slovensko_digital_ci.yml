@@ -1,0 +1,54 @@
+name: Slovensko.Digital CI
+
+on:
+  push:
+    branches: '**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      PGHOST: localhost
+      RAILS_ENV: test
+
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_USER: runner
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - run: yarn install
+      - run: bundle exec rails db:create db:structure:load --trace
+
+      - uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: bundle exec rspec
+
+  deploy:
+    needs: test
+    if: ${{github.ref == 'refs/heads/master'}}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: dokku/github-action@master
+        with:
+          git_push_flags: '--force'
+          git_remote_url: ssh://dokku@${{secrets.STAGING_HOST}}/${{github.event.repository.name}}
+          ssh_private_key: ${{secrets.STAGING_KEY}}

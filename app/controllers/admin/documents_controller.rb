@@ -3,7 +3,7 @@ class Admin::DocumentsController < Admin::AdminController
 
   # GET /admin/documents
   def index
-    @documents = Document.featureable.includes(:searchable).order(featured_position: :asc).select(&:searchable)
+    @documents = Document.featureable.includes(:searchable).order(featured: :desc, featured_position: :asc).select(&:searchable)
   end
 
   # GET /admin/documents/1/edit
@@ -43,7 +43,7 @@ class Admin::DocumentsController < Admin::AdminController
   end
 
   def document_params
-    params.require(:pg_search_document).permit(
+    params.require(:document).permit(
       :slug,
       :featured_position,
     )
