@@ -4,15 +4,21 @@ class Submission < ApplicationRecord
   attr_accessor :subscription_types, :raw_extra
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
-  after_create :register_subscriptions
+  after_create :subscribe
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Zadajte emailovú adresu' }, unless: -> { user && user.logged_in? }, on: :subscribe
   validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, on: :subscribe
 
   scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
 
-  def register_subscriptions
+  def subscribe
     selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
+
+    NotificationSubscriptionGroup.new(
+      selected_subscription_types: selected_subscription_types,
+      email: email,
+      user: user,
+    ).save
   end
 
   def finish

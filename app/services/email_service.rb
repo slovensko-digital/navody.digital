@@ -1,5 +1,20 @@
 class EmailService
   class << self
+    def subscribe_to_newsletter(email, list_name)
+      list = find_list(list_name)
+
+      raise "Contact list not found: #{list_name}" unless list || list[:id]
+
+      create_contact(email: email, listIds: [list_id], updateEnabled: true)
+    end
+
+    def send_email(params)
+      email = SibApiV3Sdk::SendSmtpEmail.new(params)
+      transactional_emails_api.send_transac_email(email)
+    end
+
+    private
+
     def create_contact(params)
       contacts_api.create_contact(params)
     end
@@ -22,13 +37,6 @@ class EmailService
       end
     end
 
-    def send_email(params)
-      email = SibApiV3Sdk::SendSmtpEmail.new(params)
-      transactional_emails_api.send_transac_email(email)
-    end
-
-    private
-
     def contacts_api
       SibApiV3Sdk::ContactsApi.new
     end
@@ -38,3 +46,5 @@ class EmailService
     end
   end
 end
+
+

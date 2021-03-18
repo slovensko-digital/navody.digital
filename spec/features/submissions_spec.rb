@@ -67,7 +67,8 @@ RSpec.feature "Submissions feature", type: :feature do
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
     check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
 
-    expect(EmailService).to receive(:send_email)
+    expect(EmailService).to receive(:send_email).once
+    expect(EmailService).to receive(:subscribe_to_newsletter).once
 
     click_button 'Chcem takéto emaily a ísť ďalej'
 

@@ -48,8 +48,6 @@ RSpec.feature "Notification subscriptions", type: :feature do
   end
 
   scenario 'As a logged in user I want to subscribe to various notifications' do
-    expect(SubscribeToNewsletterJob).to receive(:perform_later).with('someone@example.com', 'VoteSubscription')
-
     sign_in user
     visit apps_ep_vote_app_application_forms_path
 
@@ -61,6 +59,8 @@ RSpec.feature "Notification subscriptions", type: :feature do
     check 'Chcem dostávať upozornenia k voľbám'
 
     clear_mail_deliveries
+
+    expect(EmailService).to receive(:subscribe_to_newsletter)
 
     click_button 'Chcem dostávať tieto notifikácie'
 

@@ -15,4 +15,35 @@ class NotificationSubscriptionGroup
   def selected_subscription_types
     @selected_subscription_types || []
   end
+
+  def save
+    if email.present?
+      subscribe_with_confirmation
+    else
+      subscribe_without_confirmation
+    end
+  end
+
+  private
+
+  def subscribe_with_confirmation
+    token = SecureRandom.uuid
+    selected_subscription_types.each do |type|
+      subscription = NotificationSubscription.find_or_initialize_by(type: type, email: email)
+      subscription.confirmation_token = token
+      subscription.confirmation_sent_at = Time.now.utc
+      subscription.journey = journey
+      subscription.save!
+    end
+
+    NotificationSubscriptionMailer.with(email: email, token: token).confirmation_email.deliver_later
+  end
+
+  def subscribe_without_confirmation
+    selected_subscription_types.each do |type|
+      subscription = NotificationSubscription.find_or_initialize_by(type: type, email: user.email)
+      subscription.journey = journey
+      subscription.confirm
+    end
+  end
 end
