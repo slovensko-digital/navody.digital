@@ -36,9 +36,7 @@
   </div>
 
   <% if !current_user.logged_in? || current_user.email != @submission.email %>
-    <div class="govuk-form-group
-      <% if @submission.errors[:email].any? %> govuk-form-group--error
-      <% end %>">
+    <div class="govuk-form-group<%= @submission.errors[:email].any? ? ' govuk-form-group--error' : nil %>">
       <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
       <% @submission.errors[:email].each do |error| %>
         <span class="govuk-error-message"><%= error %></span>

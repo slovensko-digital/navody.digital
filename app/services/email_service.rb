@@ -3,9 +3,9 @@ class EmailService
     def subscribe_to_newsletter(email, list_name)
       list = find_list(list_name)
 
-      raise "Contact list not found: #{list_name}" unless list || list[:id]
+      raise "Contact list not found: #{list_name}" unless list[:id]
 
-      create_contact(email: email, listIds: [list_id], updateEnabled: true)
+      create_contact(email: email, listIds: [list[:id]], updateEnabled: true)
     end
 
     def send_email(params)

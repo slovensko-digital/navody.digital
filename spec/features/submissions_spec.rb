@@ -64,6 +64,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
     expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
 
+    save_and_open_page
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
     check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
 

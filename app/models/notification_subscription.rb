@@ -55,6 +55,7 @@ class NotificationSubscription < ApplicationRecord
     'EmailMeSubmissionInstructionsEmail' => {
       label: 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie',
       hint: 'Zašleme Vám všetko potrebné na email, aby ste na nič nezabudli a mali to odložené aj na neskôr.',
+      transactional: true,
       after_subscribe_message: 'email_me_after_subscribe_instructions',
       on_submission_job: EmailMeSubmissionInstructionsEmailJob
     }

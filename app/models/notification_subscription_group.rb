@@ -29,6 +29,7 @@ class NotificationSubscriptionGroup
   def subscribe_with_confirmation
     token = SecureRandom.uuid
     selected_subscription_types.each do |type|
+      next if NotificationSubscription::TYPES[type][:transactional]
       subscription = NotificationSubscription.find_or_initialize_by(type: type, email: email)
       subscription.confirmation_token = token
       subscription.confirmation_sent_at = Time.now.utc
@@ -41,6 +42,7 @@ class NotificationSubscriptionGroup
 
   def subscribe_without_confirmation
     selected_subscription_types.each do |type|
+      next if NotificationSubscription::TYPES[type][:transactional]
       subscription = NotificationSubscription.find_or_initialize_by(type: type, email: user.email)
       subscription.journey = journey
       subscription.confirm
