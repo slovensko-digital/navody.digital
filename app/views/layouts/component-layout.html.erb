@@ -1,9 +1,0 @@
-<div class="notification-subscription-group">
-  <%= raw content %>
-  <%= form_with model: group, id: 'new_subscription_notification_group', html: { novalidate: true } do |f| %>
-
-    <%= yield %>
-
-    <%= submit_tag 'Chcem dostávať tieto notifikácie', class: 'govuk-button' %>
-  <% end %>
-</div>

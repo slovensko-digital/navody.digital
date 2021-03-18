@@ -2,17 +2,17 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
       <h2 class="govuk-heading-l">Úvodné informácie</h2>
-      <%= raw_with_custom_components @journey.description, journey: @journey%>
+      <%= raw_with_custom_components @journey.description, journey: @j %>
     </div>
 
-      <%= render 'journeys/todo_list', step: @step %>
+    <%= render 'journeys/todo_list', step: @step %>
 
-      <%= render partial: 'components/next_step', object: @next_step, locals: {journey: @journey} %>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      <%= render 'components/timeline' %>
-    </div>
+    <%= render partial: 'components/next_step', object: @next_step, locals: { journey: @journey } %>
   </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render 'components/timeline' %>
+  </div>
+</div>
 
 <% content_for :json_ld do %>
   <%== how_to_json_ld(@journey) %>

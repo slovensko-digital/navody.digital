@@ -59,7 +59,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
   scenario 'As a signed in user I can send submission instructions to my email and continue' do
     sign_in
-    save_and_open_page
+
     submit_tax_submission(email: user.email)
 
     expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
