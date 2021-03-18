@@ -1,15 +1,13 @@
 class SubmissionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :start
   before_action :set_metadata
+  before_action :build_submission, only: [:start, :create]
   before_action :load_submission, only: [:show, :finish, :download_file]
 
   def start
-    @submission = current_user.build_submission(submission_params, params[:submission][:extra])
   end
 
   def create
-    @submission = current_user.build_submission(submission_params, params[:submission][:extra])
-
     validation_context = params[:skip_subscribe] ? nil : :subscribe
     if @submission.save(context: validation_context)
       redirect_to submission_path(@submission)
@@ -58,6 +56,14 @@ class SubmissionsController < ApplicationController
 
   def set_metadata
     @metadata.og.title = params[:title] || 'Návody.Digital: Podanie' # TODO
+  end
+
+  def build_submission
+    @submission = current_user.build_submission(
+      submission_params,
+      extra: params[:submission][:extra],
+      skip_subscribe: params[:skip_subscribe]
+    )
   end
 
   def load_submission

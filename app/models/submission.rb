@@ -1,7 +1,7 @@
 class Submission < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :callback_step, class_name: 'Step', optional: true
-  attr_accessor :subscription_types, :raw_extra
+  attr_accessor :subscription_types, :raw_extra, :skip_subscribe
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   after_create :subscribe
@@ -12,6 +12,8 @@ class Submission < ApplicationRecord
   scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
 
   def subscribe
+    return if skip_subscribe
+
     selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
 
     NotificationSubscriptionGroup.new(

@@ -82,4 +82,41 @@ RSpec.feature "Submissions feature", type: :feature do
 
     expect(page.body).to include('<?xml')
   end
+
+  scenario 'As an anonymous user I want only to download files' do
+    submit_tax_submission(email: user.email)
+
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+    check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
+
+    expect(EmailService).not_to receive(:send_email)
+
+    click_button 'Súbory chcem len stiahnuť'
+
+    expect(page).to have_content('odklad-danoveho-priznania.xml')
+
+    click_link 'Stiahnuť súbor'
+
+    expect(page.body).to include('<?xml')
+  end
+
+  scenario 'As signed in user I want only to download files' do
+    sign_in(user)
+
+    submit_tax_submission(email: user.email)
+
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+    check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
+
+    expect(EmailService).not_to receive(:send_email)
+    expect(EmailService).not_to receive(:subscribe_to_newsletter)
+
+    click_button 'Súbory chcem len stiahnuť'
+
+    expect(page).to have_content('odklad-danoveho-priznania.xml')
+
+    click_link 'Stiahnuť súbor'
+
+    expect(page.body).to include('<?xml')
+  end
 end

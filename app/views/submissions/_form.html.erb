@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 
-  <div class="govuk-form-group<% if @submission.errors[:selected_subscription_types].any? %> govuk-form-group--error<% end %>">
+  <div class="govuk-form-group<% @submission.errors[:selected_subscription_types].any? ? ' govuk-form-group--error' : nil %>">
     <% @submission.errors[:selected_subscription_types].each do |error| %>
       <span class="govuk-error-message"><%= error %></span>
     <% end %>
@@ -52,6 +52,6 @@
 
   <p class="govuk-body">
     <%= f.submit 'Chcem takéto emaily a ísť ďalej', class: 'govuk-button' %>
-    <%= button_tag 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link', name: :skip_subscribe %>
+    <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link', name: :skip_subscribe %>
   </p>
 <% end %>

@@ -9,10 +9,11 @@ class AnonymousUser
     false
   end
 
-  def build_submission(params, extra)
+  def build_submission(params, extra:, skip_subscribe: )
     submission = Submission.new(params)
     submission.anonymous_user_uuid = @uuid
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
+    submission.skip_subscribe = skip_subscribe
     submission
   end
 

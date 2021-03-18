@@ -14,9 +14,10 @@ class User < ApplicationRecord
     true
   end
 
-  def build_submission(params, extra)
+  def build_submission(params, extra:, skip_subscribe:)
     submission = submissions.build(params)
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
+    submission.skip_subscribe = skip_subscribe
     submission
   end
 
