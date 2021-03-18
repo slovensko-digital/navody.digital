@@ -32,10 +32,10 @@
         <input type="text" name="submission[subscription_types][]" value="SelfEmployedSubscription" id="notif_subs" />
         <input type="text" name="submission[subscription_types][]" value="NewsletterSubscription" id="notif_subs" />
 
-        <label for="attachment_1_filename">Attachment 1 filename:</label>
+        <label for="attachment_1_filename">submission[attachments[]filename]</label>
         <input type="text" name="submission[attachments[]filename]" id="attachment_1_filename" value="odklad-danoveho-priznania.xml"  />
 
-        <label for="attachment_1_encoded_content">Attachment 1 content:</label>
+        <label for="attachment_1_encoded_content">submission[attachments[]body_base64]</label>
         <input type="text" name="submission[attachments[]body_base64]" id="attachment_1_content_encoded" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGRva3VtZW50PgogICA8aGxhdmlja2E+CiAgICAgIDxkaWM+OTAxMTE1Nzc3NTwvZGljPgogICAgICA8emFSb2s+MjAyMDwvemFSb2s+CiAgICAgIDxkb3ZvZERvcGxuZW5pYT4wPC9kb3ZvZERvcGxuZW5pYT4KICAgICAgPGZ5emlja2FPc29iYT4KICAgICAgICAgPHByaWV6dmlza28+VGVzdG92YWPDrTwvcHJpZXp2aXNrbz4KICAgICAgICAgPG1lbm8+Sm96ZWY8L21lbm8+CiAgICAgIDwvZnl6aWNrYU9zb2JhPgogICAgICA8c2lkbG8+CiAgICAgICAgIDxwc2M+ODUxMDE8L3BzYz4KICAgICAgICAgPHVsaWNhPkVpbnN0ZWlub3ZhPC91bGljYT4KICAgICAgICAgPHN1cGlzbmVPcmllbnRhY25lQ2lzbG8+ODQ2NS8xMjwvc3VwaXNuZU9yaWVudGFjbmVDaXNsbz4KICAgICAgICAgPG9iZWM+QnJhdGlzbGF2YTwvb2JlYz4KICAgICAgICAgPHN0YXQ+U2xvdmVuc2vDoSByZXB1Ymxpa2E8L3N0YXQ+CiAgICAgIDwvc2lkbG8+CiAgICAgIDxub3ZhTGVob3RhPgogICAgICAgICA8cHJlZGx6ZW5pZTQ5M2E+MTwvcHJlZGx6ZW5pZTQ5M2E+CiAgICAgICAgIDxwcmVkbHplbmllNDkzYj4wPC9wcmVkbHplbmllNDkzYj4KICAgICAgICAgPGRhdHVtTGVob3RhPjMwLjA2LjIwMjE8L2RhdHVtTGVob3RhPgogICAgICA8L25vdmFMZWhvdGE+CiAgICAgIDx2eXByYWNvdmFsPgogICAgICAgICA8ZG5hPjAyLjAyLjIwMjE8L2RuYT4KICAgICAgPC92eXByYWNvdmFsPgogICAgICA8cG9kcGlzPjE8L3BvZHBpcz4KICAgPC9obGF2aWNrYT4KPC9kb2t1bWVudD4K" />
 
 <!--        <label for="attachment_1_content_type">Attachment 1 content type:</label>-->
@@ -51,16 +51,16 @@
 <!--        <input type="text" name="submission[attachments][][content_type]" id="attachment_2_content_type" value="application/xml" />-->
 
 
-        <label for="template_id">Template id:</label>
+        <label for="template_id">submission[extra][template_id]</label>
         <input type="text" name="submission[extra][template_id]" value="139" id="template_id" />
 
-        <label for="recipient_again">submission[email_template][data][recipient_name]: </label>
+        <label for="recipient_again">submission[extra][params][recipient_name] </label>
         <input type="text" name="submission[extra][params][recipient_name]" value="Jozef Testovací" id="recipient" />
 
-        <label for="deadline">submission[email_template][data][deadline]):</label>
+        <label for="deadline">submission[extra][params][deadline]</label>
         <input type="text" name="submission[extra][params][deadline]" value="30.6.2021" id="deadline" />
 
-        <label for="newsletter">submission[email_template][data][newsletter]:</label>
+        <label for="newsletter">submission[extra][params][newsletter]</label>
         <input type="text" name="submission[extra][params][newsletter]" value="false" id="newsletter" />
 
         <input type="submit" value="Podať" />

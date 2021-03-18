@@ -9,12 +9,14 @@ class Submission < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Zadajte emailovú adresu' }, unless: -> { user && user.logged_in? }, on: :subscribe
   validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, on: :subscribe
 
+  scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
+
   def register_subscriptions
     selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
   end
 
   def finish
-    #DestroySubmissionJob.set(wait: 20.minutes).perform_later(self)
+    # TODO step status changes
   end
 
   def selected_subscription_objects
