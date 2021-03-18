@@ -1,4 +1,4 @@
-class AddEmailToContactListJob < ApplicationJob
+class SubscribeToNewsletterJob < ApplicationJob
   queue_as :default
 
   def perform(email, list_name)

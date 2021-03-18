@@ -20,65 +20,50 @@
   </head>
   <body>
     <div class="container">
-      <form method="POST" action='/submissions/endpoint' enctype="multipart/form-data">
-        <label for="type">Submission type:</label>
-        <input type="text" name="submission[type]" value="email_submission" id="type"/>
+      <form method="POST" action='/podania/nove' enctype="multipart/form-data">
+        <label for="email">email</label>
+        <input type="text" name="submission[email]" value="jan.suchal@slovensko.digital" id="email"/>
 
-        <label for="type">Submission title:</label>
-        <input type="text" name="submission[title]" value="Daňové priznanie 2020" id="type"/>
+        <label for="callback_url">callback_url</label>
+        <input type="text" name="submission[callback_url]" value="/zivotne-situacie/elektronicke-podanie-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu" id="callback_url" />
 
-        <label for="description">Submission description:</label>
-        <input type="text" name="submission[description]" value="Tu je opis danoveho priznania a nejake kecy okolo..." id="description"/>
-
-        <label for="email">User email:</label>
-        <input type="text" name="submission[user_email]" value="michal.rohacek@slovensko.digital" id="email"/>
-
-        <label for="callback.url">callback.url</label>
-        <input type="text" name="submission[callback_url]" value="/zivotne-situacie/elektronicke-podanie-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu" id="callback.url" />
-
-        <label for="notif_subs">Notification subscription email: </label>
-        <input type="text" name="notification_subscriptions[email]" value="michal.rohacek@slovensko.digital" id="notif_subs" />
-
-        <label for="notif_subs">Notification subscription types: (zatial iba 1)</label>
-        <input type="text" name="notification_subscriptions[subscription_types][]" value="TaxReturnSubscription" id="notif_subs" />
+        <label for="notif_subs">Notification subscription types: </label>
+        <input type="text" name="submission[subscription_types][]" value="EmailMeSubmissionInstructionsEmail" id="notif_subs" />
+        <input type="text" name="submission[subscription_types][]" value="SelfEmployedSubscription" id="notif_subs" />
+        <input type="text" name="submission[subscription_types][]" value="NewsletterSubscription" id="notif_subs" />
 
         <label for="attachment_1_filename">Attachment 1 filename:</label>
-        <input type="text" name="submission[attachments][][filename]" id="attachment_1_filename" value="odklad-danoveho-priznania.xml"  />
+        <input type="text" name="submission[attachments[]filename]" id="attachment_1_filename" value="odklad-danoveho-priznania.xml"  />
 
         <label for="attachment_1_encoded_content">Attachment 1 content:</label>
-        <input type="text" name="submission[attachments][][content_encoded]" id="attachment_1_content_encoded" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGRva3VtZW50PgogICA8aGxhdmlja2E+CiAgICAgIDxkaWM+OTAxMTE1Nzc3NTwvZGljPgogICAgICA8emFSb2s+MjAyMDwvemFSb2s+CiAgICAgIDxkb3ZvZERvcGxuZW5pYT4wPC9kb3ZvZERvcGxuZW5pYT4KICAgICAgPGZ5emlja2FPc29iYT4KICAgICAgICAgPHByaWV6dmlza28+VGVzdG92YWPDrTwvcHJpZXp2aXNrbz4KICAgICAgICAgPG1lbm8+Sm96ZWY8L21lbm8+CiAgICAgIDwvZnl6aWNrYU9zb2JhPgogICAgICA8c2lkbG8+CiAgICAgICAgIDxwc2M+ODUxMDE8L3BzYz4KICAgICAgICAgPHVsaWNhPkVpbnN0ZWlub3ZhPC91bGljYT4KICAgICAgICAgPHN1cGlzbmVPcmllbnRhY25lQ2lzbG8+ODQ2NS8xMjwvc3VwaXNuZU9yaWVudGFjbmVDaXNsbz4KICAgICAgICAgPG9iZWM+QnJhdGlzbGF2YTwvb2JlYz4KICAgICAgICAgPHN0YXQ+U2xvdmVuc2vDoSByZXB1Ymxpa2E8L3N0YXQ+CiAgICAgIDwvc2lkbG8+CiAgICAgIDxub3ZhTGVob3RhPgogICAgICAgICA8cHJlZGx6ZW5pZTQ5M2E+MTwvcHJlZGx6ZW5pZTQ5M2E+CiAgICAgICAgIDxwcmVkbHplbmllNDkzYj4wPC9wcmVkbHplbmllNDkzYj4KICAgICAgICAgPGRhdHVtTGVob3RhPjMwLjA2LjIwMjE8L2RhdHVtTGVob3RhPgogICAgICA8L25vdmFMZWhvdGE+CiAgICAgIDx2eXByYWNvdmFsPgogICAgICAgICA8ZG5hPjAyLjAyLjIwMjE8L2RuYT4KICAgICAgPC92eXByYWNvdmFsPgogICAgICA8cG9kcGlzPjE8L3BvZHBpcz4KICAgPC9obGF2aWNrYT4KPC9kb2t1bWVudD4K" />
+        <input type="text" name="submission[attachments[]body_base64]" id="attachment_1_content_encoded" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGRva3VtZW50PgogICA8aGxhdmlja2E+CiAgICAgIDxkaWM+OTAxMTE1Nzc3NTwvZGljPgogICAgICA8emFSb2s+MjAyMDwvemFSb2s+CiAgICAgIDxkb3ZvZERvcGxuZW5pYT4wPC9kb3ZvZERvcGxuZW5pYT4KICAgICAgPGZ5emlja2FPc29iYT4KICAgICAgICAgPHByaWV6dmlza28+VGVzdG92YWPDrTwvcHJpZXp2aXNrbz4KICAgICAgICAgPG1lbm8+Sm96ZWY8L21lbm8+CiAgICAgIDwvZnl6aWNrYU9zb2JhPgogICAgICA8c2lkbG8+CiAgICAgICAgIDxwc2M+ODUxMDE8L3BzYz4KICAgICAgICAgPHVsaWNhPkVpbnN0ZWlub3ZhPC91bGljYT4KICAgICAgICAgPHN1cGlzbmVPcmllbnRhY25lQ2lzbG8+ODQ2NS8xMjwvc3VwaXNuZU9yaWVudGFjbmVDaXNsbz4KICAgICAgICAgPG9iZWM+QnJhdGlzbGF2YTwvb2JlYz4KICAgICAgICAgPHN0YXQ+U2xvdmVuc2vDoSByZXB1Ymxpa2E8L3N0YXQ+CiAgICAgIDwvc2lkbG8+CiAgICAgIDxub3ZhTGVob3RhPgogICAgICAgICA8cHJlZGx6ZW5pZTQ5M2E+MTwvcHJlZGx6ZW5pZTQ5M2E+CiAgICAgICAgIDxwcmVkbHplbmllNDkzYj4wPC9wcmVkbHplbmllNDkzYj4KICAgICAgICAgPGRhdHVtTGVob3RhPjMwLjA2LjIwMjE8L2RhdHVtTGVob3RhPgogICAgICA8L25vdmFMZWhvdGE+CiAgICAgIDx2eXByYWNvdmFsPgogICAgICAgICA8ZG5hPjAyLjAyLjIwMjE8L2RuYT4KICAgICAgPC92eXByYWNvdmFsPgogICAgICA8cG9kcGlzPjE8L3BvZHBpcz4KICAgPC9obGF2aWNrYT4KPC9kb2t1bWVudD4K" />
 
 <!--        <label for="attachment_1_content_type">Attachment 1 content type:</label>-->
 <!--        <input type="text" name="submissionsubmission[attachments][][content_type]" id="attachment_1_content_type" value="application/xml" />-->
 
-        <label for="attachment_2_filename">Attachment 2 filename:</label>
-        <input type="text" name="submission[attachments][][filename]" id="attachment_2_filename" value="odklad-danoveho-priznania-2.xml"  />
+<!--        <label for="attachment_2_filename">Attachment 2 filename:</label>-->
+<!--        <input type="text" name="submission[attachments][]filename]" id="attachment_2_filename" value="odklad-danoveho-priznania-2.xml"  />-->
 
-        <label for="attachment_2_encoded_content">Attachment 2 content:</label>
-        <input type="text" name="submission[attachments][][content_encoded]" id="attachment_2_encoded_content" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGRva3VtZW50PgogICA8aGxhdmlja2E+CiAgICAgIDxkaWM+OTAxMTE1Nzc3NTwvZGljPgogICAgICA8emFSb2s+MjAyMDwvemFSb2s+CiAgICAgIDxkb3ZvZERvcGxuZW5pYT4wPC9kb3ZvZERvcGxuZW5pYT4KICAgICAgPGZ5emlja2FPc29iYT4KICAgICAgICAgPHByaWV6dmlza28+VGVzdG92YWPDrTwvcHJpZXp2aXNrbz4KICAgICAgICAgPG1lbm8+Sm96ZWY8L21lbm8+CiAgICAgIDwvZnl6aWNrYU9zb2JhPgogICAgICA8c2lkbG8+CiAgICAgICAgIDxwc2M+ODUxMDE8L3BzYz4KICAgICAgICAgPHVsaWNhPkVpbnN0ZWlub3ZhPC91bGljYT4KICAgICAgICAgPHN1cGlzbmVPcmllbnRhY25lQ2lzbG8+ODQ2NS8xMjwvc3VwaXNuZU9yaWVudGFjbmVDaXNsbz4KICAgICAgICAgPG9iZWM+QnJhdGlzbGF2YTwvb2JlYz4KICAgICAgICAgPHN0YXQ+U2xvdmVuc2vDoSByZXB1Ymxpa2E8L3N0YXQ+CiAgICAgIDwvc2lkbG8+CiAgICAgIDxub3ZhTGVob3RhPgogICAgICAgICA8cHJlZGx6ZW5pZTQ5M2E+MTwvcHJlZGx6ZW5pZTQ5M2E+CiAgICAgICAgIDxwcmVkbHplbmllNDkzYj4wPC9wcmVkbHplbmllNDkzYj4KICAgICAgICAgPGRhdHVtTGVob3RhPjMwLjA2LjIwMjE8L2RhdHVtTGVob3RhPgogICAgICA8L25vdmFMZWhvdGE+CiAgICAgIDx2eXByYWNvdmFsPgogICAgICAgICA8ZG5hPjAyLjAyLjIwMjE8L2RuYT4KICAgICAgPC92eXByYWNvdmFsPgogICAgICA8cG9kcGlzPjE8L3BvZHBpcz4KICAgPC9obGF2aWNrYT4KPC9kb2t1bWVudD4K" />
+<!--        <label for="attachment_2_encoded_content">Attachment 2 content:</label>-->
+<!--        <input type="text" name="submission[attachments][]content_encoded]" id="attachment_2_encoded_content" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGRva3VtZW50PgogICA8aGxhdmlja2E+CiAgICAgIDxkaWM+OTAxMTE1Nzc3NTwvZGljPgogICAgICA8emFSb2s+MjAyMDwvemFSb2s+CiAgICAgIDxkb3ZvZERvcGxuZW5pYT4wPC9kb3ZvZERvcGxuZW5pYT4KICAgICAgPGZ5emlja2FPc29iYT4KICAgICAgICAgPHByaWV6dmlza28+VGVzdG92YWPDrTwvcHJpZXp2aXNrbz4KICAgICAgICAgPG1lbm8+Sm96ZWY8L21lbm8+CiAgICAgIDwvZnl6aWNrYU9zb2JhPgogICAgICA8c2lkbG8+CiAgICAgICAgIDxwc2M+ODUxMDE8L3BzYz4KICAgICAgICAgPHVsaWNhPkVpbnN0ZWlub3ZhPC91bGljYT4KICAgICAgICAgPHN1cGlzbmVPcmllbnRhY25lQ2lzbG8+ODQ2NS8xMjwvc3VwaXNuZU9yaWVudGFjbmVDaXNsbz4KICAgICAgICAgPG9iZWM+QnJhdGlzbGF2YTwvb2JlYz4KICAgICAgICAgPHN0YXQ+U2xvdmVuc2vDoSByZXB1Ymxpa2E8L3N0YXQ+CiAgICAgIDwvc2lkbG8+CiAgICAgIDxub3ZhTGVob3RhPgogICAgICAgICA8cHJlZGx6ZW5pZTQ5M2E+MTwvcHJlZGx6ZW5pZTQ5M2E+CiAgICAgICAgIDxwcmVkbHplbmllNDkzYj4wPC9wcmVkbHplbmllNDkzYj4KICAgICAgICAgPGRhdHVtTGVob3RhPjMwLjA2LjIwMjE8L2RhdHVtTGVob3RhPgogICAgICA8L25vdmFMZWhvdGE+CiAgICAgIDx2eXByYWNvdmFsPgogICAgICAgICA8ZG5hPjAyLjAyLjIwMjE8L2RuYT4KICAgICAgPC92eXByYWNvdmFsPgogICAgICA8cG9kcGlzPjE8L3BvZHBpcz4KICAgPC9obGF2aWNrYT4KPC9kb2t1bWVudD4K" />-->
 
 <!--        <label for="attachment_2_content_type">Attachment 2 content type:</label>-->
 <!--        <input type="text" name="submission[attachments][][content_type]" id="attachment_2_content_type" value="application/xml" />-->
 
-        <label for="email">User email:</label>
-        <input type="text" name="submission[target_data][recipient_email]" value="michal.rohacek@slovensko.digital" id="email"/>
-
-        <label for="name">Recipient name:</label>
-        <input type="text" name="submission[target_data][recipient_name]" value="Jozef Testovací" id="name"/>
 
         <label for="template_id">Template id:</label>
-        <input type="text" name="submission[target_data][template_id]" value="139" id="template_id" />
+        <input type="text" name="submission[extra][template_id]" value="139" id="template_id" />
 
-        <label for="recipient_again">submission[target_data][template_options][recipient_name] (nevalidujeme presence): </label>
-        <input type="text" name="submission[target_data][template_options][recipient_name]" value="Jozef Testovací" id="recipient_again" />
+        <label for="recipient_again">submission[email_template][data][recipient_name]: </label>
+        <input type="text" name="submission[extra][params][recipient_name]" value="Jozef Testovací" id="recipient" />
 
-        <label for="deadline">submission[target_data][template_options][deadline](nevalidujeme presence):</label>
-        <input type="text" name="submission[target_data][template_options][deadline]" value="30.6.2021" id="deadline" />
+        <label for="deadline">submission[email_template][data][deadline]):</label>
+        <input type="text" name="submission[extra][params][deadline]" value="30.6.2021" id="deadline" />
 
-        <label for="newsletter">submission[target_data][template_options][newsletter] (nevalidujeme presence):</label>
-        <input type="text" name="submission[target_data][template_options][newsletter]" value="true" id="newsletter" />
+        <label for="newsletter">submission[email_template][data][newsletter]:</label>
+        <input type="text" name="submission[extra][params][newsletter]" value="false" id="newsletter" />
 
-        <input type="submit" value="submit"/>
+        <input type="submit" value="Podať" />
       </form>
     </div>
   </body>

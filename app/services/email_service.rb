@@ -23,14 +23,8 @@ class EmailService
     end
 
     def send_email(params)
-      begin
-        email = SibApiV3Sdk::SendSmtpEmail.new(params)
-        transactional_emails_api.send_transac_email(email)
-      rescue SibApiV3Sdk::ApiError => e
-        # puts e.code
-        # puts e.response_body
-        # puts e.response_headers
-      end
+      email = SibApiV3Sdk::SendSmtpEmail.new(params)
+      transactional_emails_api.send_transac_email(email)
     end
 
     private

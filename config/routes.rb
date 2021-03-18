@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-
-  # TODO !!!
-  get '/submissions/test', to: 'submissions#test'
-  post '/submissions/endpoint', to: 'submissions#endpoint', as: :submission_endpoint
-  resources :submissions, only: [:create]
-  post '/submissions/download', to: 'submissions#download', as: :download_submission_file
-  get '/submissions/finish', to: 'submissions#finish', as: :finish_submission
-
   get :health, to: 'health#index'
 
   if Rails.env.development?
@@ -110,4 +102,12 @@ Rails.application.routes.draw do
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+
+  resources :submissions, path: 'podania' do
+    post :start, path: 'nove', on: :collection # public facing API
+    get :download_file, path: 'stiahnut'
+    post :finish, path: 'dokoncit'
+
+    get :test, on: :collection if Rails.env.development? || Rails.env.test?
+  end
 end

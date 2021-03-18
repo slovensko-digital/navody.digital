@@ -7,16 +7,12 @@ class ApplicationController < ActionController::Base
     if session[:user_id]
       @__current_user ||= User.find_by(id: session[:user_id])
     else
-      AnonymousUser.new
+      session[:anonymous_user_uuid] = SecureRandom.uuid unless session[:anonymous_user_uuid] # TODO make sure this is unique
+      AnonymousUser.new(session[:anonymous_user_uuid])
     end
   end
 
   helper_method :current_user
-
-  def log_out
-    reset_session
-    @__current_user = nil
-  end
 
   def require_user
     unless current_user.logged_in?
@@ -56,9 +52,5 @@ class ApplicationController < ActionController::Base
     active_current_topic = CurrentTopic.active
     return if active_current_topic.blank? || cookies[:current_topic] == active_current_topic.key
     @active_current_topic = active_current_topic
-  end
-
-  def log_error(*args)
-    Rollbar.error(*args)
   end
 end

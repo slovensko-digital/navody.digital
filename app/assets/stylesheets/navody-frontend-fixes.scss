@@ -61,9 +61,9 @@ a.sdn-timeline-dropdown__option {
   top: -15px;
 }
 
-.submission-email-radios {
-  margin-bottom: 50px;
-  .govuk-radios__item {
-    margin-bottom: 20px;
-  }
+.govuk-button.govuk-link {
+  background: none;
+  color: #06070b;
+  font-weight: normal;
+  text-decoration: underline;
 }

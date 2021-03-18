@@ -24,9 +24,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    reset_session
 
-    redirect_to root_path, notice: 'Boli ste úspešne odhlásený/á.'
+    redirect_to root_path, notice: 'Odhlásenie bolo úspešné.'
   end
 
   protected

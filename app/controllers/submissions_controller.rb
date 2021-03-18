@@ -1,88 +1,66 @@
 class SubmissionsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :endpoint
-  before_action :set_metadata, except: [:test, :download]
+  skip_before_action :verify_authenticity_token, only: :start
+  before_action :set_metadata
+  before_action :load_submission, only: [:show, :finish, :download_file]
 
-  # # commented out in development
-  # rescue_from StandardError, with: :handle_submission_error
-
-  def test
+  def start
+    @submission = current_user.build_submission(submission_params, params[:submission][:extra])
   end
 
-  def endpoint
-    log_out if email_mismatch?
-    @subscription_types = verified_subscription_types
-
-    render :new
-  end
-
-  # TODO refactor this
   def create
-    @group = NotificationSubscriptionGroup.of(notification_subscriptions_params, user: current_user)
-    @submission = Submission.of(submission_params)
+    @submission = current_user.build_submission(submission_params, params[:submission][:extra])
 
-    if @submission.valid? && @group.valid?
-      @group.create_subscriptions
-      @submission.submit
-
-      redirect_to finish_submission_path(callback_url: @submission.callback_url)
+    validation_context = params[:skip_subscribe] ? nil : :subscribe
+    if @submission.save(context: validation_context)
+      redirect_to submission_path(@submission)
     else
-      render :new
+      render :start, status: :unprocessable_entity
     end
   end
 
-  def finish
+  def show
   end
 
-  # TODO subor taha z GET parametra
-  def download
-    send_data Base64.decode64(params[:file]), filename: params[:name], disposition: :attachment
+  def finish
+    @submission.finish
+
+    redirect_to @submission.callback_url
+  end
+
+  def download_file
+    attachment = @submission.attachments.find { |attachment| attachment['filename'] == params[:filename] }
+    if attachment
+      send_data Base64.decode64(attachment['body_base64']), filename: attachment['filename'], disposition: :attachment
+    end
+  end
+
+  def test
+    render layout: false # used only in tests
   end
 
   private
 
-  def verified_subscription_types
-    allowed_types, forbidden_types = NotificationSubscriptionGroup.resolve_types(notification_subscriptions_params[:subscription_types])
-    log_error(error: ArgumentError.new, message: 'Subscription types not allowed: ', data: forbidden_types) if forbidden_types.any?
-
-    allowed_types
-  end
-
   def submission_params
     params.require(:submission).permit(
-      :type,
-      :title,
-      :description,
-      :user_email,
-      :callback_url,
-      attachments: [:filename, :content_encoded],
-      target_data: {},
-    ).to_h
-  end
-
-  helper_method :submission_params
-
-  def notification_subscriptions_params
-    params.require(:notification_subscriptions).permit(
       :email,
-      :prefer_email_field,
-      subscriptions: [],
+      :callback_url,
+      :callback_step_id,
+      :callback_step_status,
+      :raw_extra,
       subscription_types: [],
+      selected_subscription_types: [],
+      attachments: [:filename, :body_base64],
+      extra: {},
     )
   end
 
-  def email_mismatch?
-    current_user.logged_in? && current_user.email != submission_params[:user_email]
-  end
+  private
 
   def set_metadata
-    params.permit!
-    @metadata.og.title = params[:title] || 'Návody.Digital: Podanie'
-    @metadata.og.description = params[:description] || 'Aplikácia určená pre všeobecné podania.'
+    @metadata.og.title = params[:title] || 'Návody.Digital: Podanie' # TODO
   end
 
-  def handle_submission_error(*args)
-    log_error(*args)
-
-    render :error
+  def load_submission
+    @submission = current_user.find_submission!(params[:id] || params[:submission_id])
   end
 end

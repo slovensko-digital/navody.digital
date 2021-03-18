@@ -26,7 +26,7 @@ RSpec.describe NotificationSubscription, type: :model do
     context 'type list exists in TYPES' do
       context 'user is assigned to listing' do
         it 'uses user email' do
-          expect(AddEmailToContactListJob).to receive(:perform_later).with('peter@example.com', 'NewsletterSubscription')
+          expect(SubscribeToNewsletterJob).to receive(:perform_later).with('peter@example.com', 'NewsletterSubscription')
           ns = build(:notification_subscription, type: 'NewsletterSubscription', user: create(:user, email: 'peter@example.com'))
           ns.confirm
         end
@@ -34,7 +34,7 @@ RSpec.describe NotificationSubscription, type: :model do
 
       context 'anonymous user' do
         it 'uses email' do
-          expect(AddEmailToContactListJob).to receive(:perform_later).with('andrej@example.com', 'NewsletterSubscription')
+          expect(SubscribeToNewsletterJob).to receive(:perform_later).with('andrej@example.com', 'NewsletterSubscription')
           ns = build(:notification_subscription, type: 'NewsletterSubscription', email: 'andrej@example.com')
           ns.confirm
         end

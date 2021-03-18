@@ -1,50 +1,43 @@
-class Submission
-  include ActiveModel::Model
+class Submission < ApplicationRecord
+  belongs_to :user, optional: true
+  belongs_to :callback_step, class_name: 'Step', optional: true
+  attr_accessor :subscription_types, :raw_extra
 
+  before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
+  after_create :register_subscriptions
 
-  # TODO in progress..
-  # TODO resolve and delete before merge
-  require_dependency 'email_submission'
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Zadajte emailovú adresu' }, unless: -> { user && user.logged_in? }, on: :subscribe
+  validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, on: :subscribe
 
-  TYPES = { email_submission: ::EmailSubmission, }
-
-  attr_accessor :type, :title, :description, :user_email, :callback_url
-  attr_writer :attachments, :target_data
-
-  # TODO should accept other associated models
-  attr_accessor :associations
-  validate { associations.all?(&:valid?) }
-
-  validates :type, :title, :description, :user_email, :attachments, presence: true
-  validates :user_email, format: { with: URI::MailTo::EMAIL_REGEXP }
-
-  def self.of(attributes)
-    type = TYPES[attributes[:type].to_sym]
-    raise "Submission type not allowed: #{attributes[:type]}" unless type
-
-    type_specific_attributes = attributes.delete :target_data
-    attributes = attributes.merge(type_specific_attributes).to_h.compact
-
-    type.new(attributes)
+  def register_subscriptions
+    selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
   end
 
-  def submit
-    raise NotImplementedError
+  def finish
+    #DestroySubmissionJob.set(wait: 20.minutes).perform_later(self)
+  end
+
+  def selected_subscription_objects
+    selected_subscription_types.filter_map { |type| NotificationSubscription::TYPES[type] }
+  end
+
+  def to_param
+    uuid
+  end
+
+  def raw_extra
+    extra.to_json
+  end
+
+  def after_subscribe_messages
+    selected_subscription_objects.filter_map { |s| s[:after_subscribe_message] }
   end
 
   def attachments
-    @attachments || []
+    read_attribute(:attachments) || {}
   end
 
-  def associations
-    @associations || []
-  end
-
-  def email_template
-    @email_template || {}
-  end
-
-  def target_data
-    @target_data || {}
+  def user_email
+    email.presence || user.email
   end
 end

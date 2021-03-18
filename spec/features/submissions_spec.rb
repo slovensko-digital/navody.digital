@@ -1,26 +1,16 @@
 require 'rails_helper'
-require 'httparty'
 
-RSpec.feature "Notification subscriptions", type: :feature do
-  let!(:user) { create(:user, email: 'someone@example.com') }
+RSpec.feature "Submissions feature", type: :feature do
+  let(:user) { create(:user, email: 'someone@example.com') }
 
-  let!(:submission_data) {
-    {
-      email: 'user_email@gmail.com',
-      email_subject: 'Odklad daňového priznania',
-      email_body: 'Žiadosť o odklad daňového priznania je pripravená. Stiahnite si súbor do počítača. Použijete ho neskôr na portáli Finančnej správy.',
-      file_attachment: file_fixture('odklad-danoveho-priznania.xml').read,
-      notification_subscriptions: ['TaxReturnSubscription'],
-    }
-  }
-
-  def submit_tax_return
-    path = "http://localhost:3000#{submission_path}"
-    puts path
-    HTTParty.post(path, { body: submission_data })
+  def submit_tax_submission(email: nil)
+    visit test_submissions_path
+    fill_in 'callback_url', with: root_path
+    fill_in 'email', with: email if email
+    click_button 'Podať'
   end
 
-  def sign_in(user)
+  def sign_in
     OmniAuth.config.test_mode = false
     visit new_session_path
 
@@ -33,36 +23,75 @@ RSpec.feature "Notification subscriptions", type: :feature do
     visit link_in_last_email
   end
 
-  scenario 'As a logged in user I got redirected back after finishing tax return app and want to subscribe to notifications and receive tax return submission result by email' do
-    sign_in user
+  scenario 'As an anonymous user I can send submission instructions to my email and continue' do
+    submit_tax_submission
 
-    submit_tax_return
+    expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
 
-    expect(page).to have_current_path(submission_path)
-    expect(page).to have_content('k úspešnému vyplneniu')
-    expect(page).to have_link('Stiahnuť XML súbor', href: download_submission_path)
-    expect(page).to have_content('Aktivujte si aj upozornenia na email, aby ste na nič nezabudli.')
-    expect(page).to have_content('Chcem odoberať pravidelné novinky Návody.Digital')
-    expect(page).to have_content('Chcem, aby ste mi dali vedieť, keď bude dostupná aktuálna verzia aplikácie Priznanie.Digital')
-    expect(page).to have_content('Chcem dostávať tieto notifikácie')
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+    check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
 
+    expect(EmailService).to receive(:send_email)
 
-    expec
+    click_button 'Chcem takéto emaily a ísť ďalej'
 
+    expect(page).to have_content('Na Váš email sme Vám zaslali všetky potrebné inštrukcie')
+
+    click_on 'Pokračovať na ďalšie inštrukcie'
+
+    expect(page).to have_current_path(root_path)
   end
 
+  scenario 'As an anonymous user I can send submission instructions to my email and download a file' do
+    submit_tax_submission
 
-  scenario 'As an anonymous user I got redirected after finishing tax return app and want to subscribe to notifications and receive tax return submission result by email' do
-    submit_tax_return
+    expect(EmailService).to receive(:send_email)
 
-    expect(page).to have_current_path(submission_path)
-    expect(page).to have_content('k úspešnému vyplneniu')
-    expect(page).to have_link('Stiahnuť XML súbor', href: download_submission_path)
-    expect(page).to have_content('Aktivujte si aj upozornenia na email, aby ste na nič nezabudli.')
-    expect(page).to have_content('Chcem odoberať pravidelné novinky Návody.Digital')
-    expect(page).to have_content('Chcem, aby ste mi dali vedieť, keď bude dostupná aktuálna verzia aplikácie Priznanie.Digital')
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+    click_button 'Chcem takéto emaily a ísť ďalej'
 
+    expect(page).to have_content('odklad-danoveho-priznania.xml')
 
+    click_link 'Stiahnuť súbor'
+
+    expect(page.body).to include('<?xml')
   end
 
+  scenario 'As a signed in user I can send submission instructions to my email and continue' do
+    sign_in
+    save_and_open_page
+    submit_tax_submission(email: user.email)
+
+    expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
+
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+    check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
+
+    expect(EmailService).to receive(:send_email)
+
+    click_button 'Chcem takéto emaily a ísť ďalej'
+
+    expect(page).to have_content('Na Váš email sme Vám zaslali všetky potrebné inštrukcie')
+
+    click_on 'Pokračovať na ďalšie inštrukcie'
+
+    expect(page).to have_current_path(root_path)
+  end
+
+  scenario 'As signed in user I can send submission instructions to my email and download a file' do
+    sign_in
+
+    submit_tax_submission(email: user.email)
+
+    check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
+
+    expect(EmailService).to receive(:send_email)
+    click_button 'Chcem takéto emaily a ísť ďalej'
+
+    expect(page).to have_content('odklad-danoveho-priznania.xml')
+
+    click_link 'Stiahnuť súbor'
+
+    expect(page.body).to include('<?xml')
+  end
 end

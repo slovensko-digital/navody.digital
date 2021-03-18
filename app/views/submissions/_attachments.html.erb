@@ -2,7 +2,7 @@
   <%= yield %>
   <% attachments.each do |attachment| %>
     <p>
-      <%= link_to "Stiahnuť #{ (attachments.count == 1) ? 'súbor' : attachment[:filename] }", download_submission_file_path(name: attachment[:filename], file: attachment[:content_encoded]), method: :post, class: 'govuk-button' %>
+      <%= link_to "Stiahnuť #{ (attachments.count == 1) ? 'súbor' : attachment[:filename] }", download_submissions_path(name: attachment[:filename], file: attachment[:content_encoded]), method: :post, class: 'govuk-button' %>
     </p>
   <% end %>
 <% end %>

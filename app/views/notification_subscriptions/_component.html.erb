@@ -1,8 +1,4 @@
 <div class="notification-subscription-group">
   <%= raw content %>
-
-  <%= form_with model: group, html: { novalidate: true } do |f| %>
-    <%= render partial: 'notification_subscriptions/form', object: group, locals: { root: 'notification_subscription_group' } %>
-    <%= submit_tag 'Chcem dostávať tieto notifikácie', class: 'govuk-button' %>
-  <% end %>
+  <%= render partial: 'notification_subscriptions/form', object: group %>
 </div>
