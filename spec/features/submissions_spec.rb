@@ -10,19 +10,6 @@ RSpec.feature "Submissions feature", type: :feature do
     click_button 'Podať'
   end
 
-  def sign_in
-    OmniAuth.config.test_mode = false
-    visit new_session_path
-
-    within 'form#login-email' do
-      fill_in :email, with: user.email
-    end
-
-    click_on 'Prihlásiť sa e-mailom'
-
-    visit link_in_last_email
-  end
-
   scenario 'As an anonymous user I can send submission instructions to my email and continue' do
     submit_tax_submission
 
@@ -58,13 +45,12 @@ RSpec.feature "Submissions feature", type: :feature do
   end
 
   scenario 'As a signed in user I can send submission instructions to my email and continue' do
-    sign_in
+    sign_in(user)
 
     submit_tax_submission(email: user.email)
 
     expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
 
-    save_and_open_page
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
     check 'Chcem dostávať novinky pre samostatne zárobkovo činné osoby'
 
@@ -81,7 +67,7 @@ RSpec.feature "Submissions feature", type: :feature do
   end
 
   scenario 'As signed in user I can send submission instructions to my email and download a file' do
-    sign_in
+    sign_in(user)
 
     submit_tax_submission(email: user.email)
 
