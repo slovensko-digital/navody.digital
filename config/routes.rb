@@ -108,6 +108,6 @@ Rails.application.routes.draw do
     get :download_file, path: 'stiahnut'
     post :finish, path: 'dokoncit'
 
-    get :test, on: :collection if Rails.env.development? || Rails.env.test?
+    get :test, on: :collection unless Rails.env.production?
   end
 end
