@@ -18,6 +18,7 @@ class User < ApplicationRecord
     submission = submissions.build(params)
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
     submission.skip_subscribe = skip_subscribe
+    submission.current_user = self
     submission
   end
 

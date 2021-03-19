@@ -1,25 +1,25 @@
 class Submission < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :callback_step, class_name: 'Step', optional: true
-  attr_accessor :subscription_types, :raw_extra, :skip_subscribe
+  attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
-  after_create :subscribe
+  after_create :subscribe, unless: :skip_subscribe
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Zadajte emailovú adresu' }, unless: -> { user && user.logged_in? }, on: :subscribe
-  validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, on: :subscribe
+  validates_presence_of :email, message: 'Zadajte emailovú adresu', unless: :skip_subscribe
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }, unless: :skip_subscribe
+
+  validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, unless: :skip_subscribe
 
   scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
 
   def subscribe
-    return if skip_subscribe
-
     selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
 
     NotificationSubscriptionGroup.new(
       selected_subscription_types: selected_subscription_types,
       email: email,
-      user: user,
+      user: current_user,
     ).save
   end
 
@@ -29,6 +29,10 @@ class Submission < ApplicationRecord
 
   def selected_subscription_objects
     selected_subscription_types.filter_map { |type| NotificationSubscription::TYPES[type] }
+  end
+
+  def preselect_transactional_emails
+    self.selected_subscription_types = subscription_types.filter_map { |type| type if NotificationSubscription::TYPES[type][:transactional] }
   end
 
   def to_param

@@ -5,11 +5,11 @@ class SubmissionsController < ApplicationController
   before_action :load_submission, only: [:show, :finish, :download_file]
 
   def start
+    @submission.preselect_transactional_emails
   end
 
   def create
-    validation_context = params[:skip_subscribe] ? nil : :subscribe
-    if @submission.save(context: validation_context)
+    if @submission.save
       redirect_to submission_path(@submission)
     else
       render :start, status: :unprocessable_entity

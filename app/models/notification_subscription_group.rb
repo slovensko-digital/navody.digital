@@ -17,10 +17,12 @@ class NotificationSubscriptionGroup
   end
 
   def save
-    if email.present?
-      subscribe_with_confirmation
-    else
+    return false unless valid?
+
+    if user.logged_in? && user.email == email
       subscribe_without_confirmation
+    else
+      subscribe_with_confirmation
     end
   end
 
@@ -28,7 +30,7 @@ class NotificationSubscriptionGroup
 
   def subscribe_with_confirmation
     token = SecureRandom.uuid
-    selected_subscription_types.each do |type|
+    subscriptions = selected_subscription_types.filter_map do |type|
       next if NotificationSubscription::TYPES[type][:transactional]
       subscription = NotificationSubscription.find_or_initialize_by(type: type, email: email)
       subscription.confirmation_token = token
@@ -36,6 +38,7 @@ class NotificationSubscriptionGroup
       subscription.journey = journey
       subscription.save!
     end
+    return if subscriptions.empty?
 
     NotificationSubscriptionMailer.with(email: email, token: token).confirmation_email.deliver_later
   end

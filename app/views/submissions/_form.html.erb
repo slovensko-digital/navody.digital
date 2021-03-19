@@ -47,6 +47,8 @@
         <%= f.email_field :email, class: 'govuk-input govuk-input--width-20', autocomplete: :email %>
       <% end %>
     </div>
+  <% else %>
+    <%= f.hidden_field :email %>
   <% end %>
 
 
