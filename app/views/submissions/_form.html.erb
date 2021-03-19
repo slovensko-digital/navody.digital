@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 
-  <div class="govuk-form-group<% @submission.errors[:selected_subscription_types].any? ? ' govuk-form-group--error' : nil %>">
+  <div class="govuk-form-group<%= @submission.errors[:selected_subscription_types].any? ? ' govuk-form-group--error' : nil %>">
     <% @submission.errors[:selected_subscription_types].each do |error| %>
       <span class="govuk-error-message"><%= error %></span>
     <% end %>
