@@ -25,6 +25,8 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     click_button 'Chcem dostávať tieto notifikácie'
 
+    perform_enqueued_jobs
+
     visit link_in_last_email
 
     expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
@@ -48,6 +50,8 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     click_button 'Chcem dostávať tieto notifikácie'
 
+    perform_enqueued_jobs
+
     expect(ActionMailer::Base.deliveries).to be_empty
   end
 
@@ -59,6 +63,7 @@ RSpec.feature "Notification subscriptions", type: :feature do
     fill_in 'Emailová adresa', with: 'example@email.com'
 
     click_button 'Chcem dostávať tieto notifikácie'
+    perform_enqueued_jobs
 
     visit link_in_last_email
 

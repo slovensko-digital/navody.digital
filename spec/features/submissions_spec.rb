@@ -21,6 +21,7 @@ RSpec.feature "Submissions feature", type: :feature do
     expect(EmailService).to receive(:send_email)
 
     click_button 'Chcem takéto emaily a ísť ďalej'
+    perform_enqueued_jobs
 
     expect(page).to have_content('Na Váš email sme Vám zaslali všetky potrebné inštrukcie')
 
@@ -36,6 +37,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
     click_button 'Chcem takéto emaily a ísť ďalej'
+    perform_enqueued_jobs
 
     expect(page).to have_content('odklad-danoveho-priznania.xml')
 
@@ -58,6 +60,7 @@ RSpec.feature "Submissions feature", type: :feature do
     expect(EmailService).to receive(:subscribe_to_newsletter).once
 
     click_button 'Chcem takéto emaily a ísť ďalej'
+    perform_enqueued_jobs
 
     expect(page).to have_content('Na Váš email sme Vám zaslali všetky potrebné inštrukcie')
 
@@ -73,8 +76,10 @@ RSpec.feature "Submissions feature", type: :feature do
 
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
 
-    expect(EmailService).to receive(:send_email)
     click_button 'Chcem takéto emaily a ísť ďalej'
+
+    expect(EmailService).to receive(:send_email)
+    perform_enqueued_jobs
 
     expect(page).to have_content('odklad-danoveho-priznania.xml')
 

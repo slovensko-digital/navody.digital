@@ -8,6 +8,8 @@ def sign_in(user)
 
   click_on 'Prihlásiť sa e-mailom'
 
+  perform_enqueued_jobs
+
   visit link_in_last_email
   expect(page).to have_content('Prihlásenie úspešné.')
 end
