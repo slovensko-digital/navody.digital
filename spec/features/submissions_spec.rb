@@ -43,7 +43,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
     click_link 'Stiahnuť súbor'
 
-    expect(page.body).to include('<?xml version="1.0">Kôprový prívarok s vajíčkom')
+    expect(page.body).to include('Testovací')
   end
 
   scenario 'As a signed in user I can send submission instructions to my email and continue' do
@@ -85,7 +85,8 @@ RSpec.feature "Submissions feature", type: :feature do
 
     click_link 'Stiahnuť súbor'
 
-    expect(page.body).to include('<?xml version="1.0">Kôprový prívarok s vajíčkom')
+    expect(page.body).to include('<?xml version="1.0"')
+    expect(page.body).to include('Testovací') # check if utf-8 chars work
   end
 
   scenario 'As an anonymous user I want only to download files' do
@@ -102,7 +103,8 @@ RSpec.feature "Submissions feature", type: :feature do
 
     click_link 'Stiahnuť súbor'
 
-    expect(page.body).to include('<?xml')
+    expect(page.body).to include('<?xml version="1.0"')
+    expect(page.body).to include('Testovací') # check if utf-8 chars work
   end
 
   scenario 'As signed in user I want only to download files' do
