@@ -28,7 +28,8 @@ class SubmissionsController < ApplicationController
   def download_file
     attachment = @submission.attachments.find { |attachment| attachment['filename'] == params[:filename] }
     if attachment
-      send_data Base64.decode64(attachment['body_base64']), filename: attachment['filename'], disposition: :attachment
+      data = Base64.decode64(attachment['body_base64']).force_encoding('UTF-8')
+      send_data data, filename: attachment['filename'], disposition: :attachment
     end
   end
 
