@@ -594,7 +594,7 @@ CREATE TABLE public.submissions (
     anonymous_user_uuid uuid,
     email character varying,
     callback_url character varying NOT NULL,
-    callback_step_path character varying,
+    callback_step_id bigint,
     callback_step_status character varying,
     selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
@@ -1131,10 +1131,10 @@ CREATE UNIQUE INDEX index_submissions_on_anonymous_user_uuid_and_uuid ON public.
 
 
 --
--- Name: index_submissions_on_callback_step_path; Type: INDEX; Schema: public; Owner: -
+-- Name: index_submissions_on_callback_step_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_submissions_on_callback_step_path ON public.submissions USING btree (callback_step_path);
+CREATE INDEX index_submissions_on_callback_step_id ON public.submissions USING btree (callback_step_id);
 
 
 --
@@ -1327,6 +1327,14 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
+-- Name: submissions fk_rails_8999639afc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT fk_rails_8999639afc FOREIGN KEY (callback_step_id) REFERENCES public.steps(id) ON DELETE CASCADE;
+
+
+--
 -- Name: quick_tips fk_rails_8c50350cb1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1418,6 +1426,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200316104715'),
 ('20200919092214'),
 ('20210318070336'),
-('20210321133303');
+('20210321133303'),
+('20210321172132');
 
 

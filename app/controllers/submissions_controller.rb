@@ -49,7 +49,6 @@ class SubmissionsController < ApplicationController
       subscription_types: [],
       selected_subscription_types: [],
       attachments: [:filename, :body_base64],
-      extra: {},
     )
   end
 
@@ -63,12 +62,20 @@ class SubmissionsController < ApplicationController
     @submission = current_user.build_submission(
       submission_params,
       extra: params[:submission][:extra],
-      skip_subscribe: params[:skip_subscribe]
+      skip_subscribe: params[:skip_subscribe],
+      callback_step: find_callback_step_by_path(submission_params[:callback_step_path])
     )
   end
 
   def load_submission
     @submission = current_user.find_submission!(params[:id] || params[:submission_id])
     @submission.current_user = current_user
+  end
+
+  def find_callback_step_by_path(callback_step_path)
+    route = Rails.application.routes.recognize_path(callback_step_path)
+      return nil if route < { controller: 'steps', action: 'show' }
+
+    Step.where(slug: route[:id]).joins(:journey).where(journey: { slug: route[:journey_id] }).first
   end
 end

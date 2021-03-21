@@ -1,6 +1,7 @@
 class Submission < ApplicationRecord
   belongs_to :user, optional: true
-  attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user
+  belongs_to :callback_step, optional: true, class_name: 'Step'
+  attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user, :callback_step_path
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   after_create :subscribe, unless: :skip_subscribe
@@ -23,12 +24,8 @@ class Submission < ApplicationRecord
   end
 
   def finish
-    if callback_step_path && callback_step_status && current_user.logged_in?
-      route = Rails.application.routes.recognize_path(callback_step_path)
-      if route[:controller] == 'steps' && route[:action] == 'show'
-        step = Step.where(slug: route[:id]).joins(:journey).where(journey: { slug: route[:journey_id] }).first
-        user.update_step_status(step, callback_step_status) if step
-      end
+    if current_user.logged_in? && callback_step && callback_step_status
+      current_user.update_step_status(callback_step, callback_step_status)
     end
   end
 
