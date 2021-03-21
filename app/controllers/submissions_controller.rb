@@ -74,7 +74,7 @@ class SubmissionsController < ApplicationController
 
   def find_callback_step_by_path(callback_step_path)
     route = Rails.application.routes.recognize_path(callback_step_path)
-      return nil if route < { controller: 'steps', action: 'show' }
+    return nil if route < { controller: 'steps', action: 'show' }
 
     Step.where(slug: route[:id]).joins(:journey).where(journey: { slug: route[:journey_id] }).first
   end
