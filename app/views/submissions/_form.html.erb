@@ -1,6 +1,6 @@
 <%= form_with model: @submission, id: dom_id(@submission), html: { novalidate: true } do |f| %>
   <%= f.hidden_field :callback_url %>
-  <%= f.hidden_field :callback_step_id %>
+  <%= f.hidden_field :callback_step_path %>
   <%= f.hidden_field :callback_step_status %>
   <%= f.hidden_field :raw_extra %>
 

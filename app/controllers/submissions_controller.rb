@@ -43,7 +43,7 @@ class SubmissionsController < ApplicationController
     params.require(:submission).permit(
       :email,
       :callback_url,
-      :callback_step_id,
+      :callback_step_path,
       :callback_step_status,
       :raw_extra,
       subscription_types: [],
@@ -69,5 +69,6 @@ class SubmissionsController < ApplicationController
 
   def load_submission
     @submission = current_user.find_submission!(params[:id] || params[:submission_id])
+    @submission.current_user = current_user
   end
 end

@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.feature "Submissions feature", type: :feature do
   let(:user) { create(:user, email: 'someone@example.com') }
 
-  def submit_tax_submission(email: nil)
+  def submit_tax_submission(email: nil, callback_url: root_path)
     visit test_submissions_path
-    fill_in 'callback_url', with: root_path
+    fill_in 'callback_url', with: callback_url
     fill_in 'email', with: email if email
     click_button 'Podať'
   end
@@ -125,5 +125,21 @@ RSpec.feature "Submissions feature", type: :feature do
     click_link 'Stiahnuť súbor'
 
     expect(page.body).to include('<?xml')
+  end
+
+  scenario 'As signed in user I want to finish submission and have a step marked as done' do
+    journey = create(:journey, title: 'Odklad daňového priznania')
+    create(:step, title: 'Pripraviť daňové priznanie', journey: journey)
+    create(:step, title: 'Prihlásiť sa na finančnú správu', journey: journey)
+
+    sign_in(user)
+    submit_tax_submission(
+      callback_url: '/zivotne-situacie/odklad-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu'
+    )
+    click_button 'Súbory chcem len stiahnuť'
+    click_on 'Pokračovať na ďalšie inštrukcie'
+
+    expect(current_path).to eq('/zivotne-situacie/odklad-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu')
+    expect(page).to have_css('.sdn-timeline__bullet--done')
   end
 end

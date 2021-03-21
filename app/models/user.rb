@@ -25,4 +25,10 @@ class User < ApplicationRecord
   def find_submission!(uuid)
     submissions.find_by!(uuid: uuid)
   end
+
+  def update_step_status(step, status)
+    user_journey = UserJourney.order(id: :desc).find_by(user: self, journey: step.journey) || user_journeys.create!(journey: step.journey)
+    user_step = user_journey.user_steps.find_or_initialize_by(step: step)
+    user_step.update(status: status)
+  end
 end
