@@ -43,19 +43,19 @@ RSpec.describe CustomComponentsHelper, type: :helper do
 
       it 'supports multiple occurrences' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription" /><notification-subscription types="BlankJourneySubscription" />')
-        expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[name="notification_subscription_group[selected_subscription_types][]"]').size).to eq 2
         expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 2
       end
 
       it 'supports multiple types' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription, NextVoteSubscription" />')
-        expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[name="notification_subscription_group[selected_subscription_types][]"]').size).to eq 2
         expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 1
       end
 
       it 'does not break on typos and spaces' do
         result = helper.raw_with_custom_components('<notification-subscription types="BlankJourneySubscription, NextVoteSubscription, Bogus" />')
-        expect(Nokogiri(result).css('input[name="notification_subscription_group[subscriptions][]"]').size).to eq 2
+        expect(Nokogiri(result).css('input[name="notification_subscription_group[selected_subscription_types][]"]').size).to eq 2
         expect(Nokogiri(result).css('input[value="Chcem dostávať tieto notifikácie"]').size).to eq 1
       end
 

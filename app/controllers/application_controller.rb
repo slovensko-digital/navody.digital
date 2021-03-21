@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
     if session[:user_id]
       @__current_user ||= User.find_by(id: session[:user_id])
     else
-      AnonymousUser.new
+      session[:anonymous_user_uuid] = SecureRandom.uuid unless session[:anonymous_user_uuid] # TODO make sure this is unique
+      AnonymousUser.new(session[:anonymous_user_uuid])
     end
   end
 

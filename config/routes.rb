@@ -102,4 +102,12 @@ Rails.application.routes.draw do
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+
+  resources :submissions, path: 'podania' do
+    post :start, path: 'nove', on: :collection # public facing API
+    get :download_file, path: 'stiahnut'
+    post :finish, path: 'dokoncit'
+
+    get :test, on: :collection unless Rails.env.production?
+  end
 end

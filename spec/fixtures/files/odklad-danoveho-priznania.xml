@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dokument>
+   <hlavicka>
+      <dic>9011157775</dic>
+      <zaRok>2020</zaRok>
+      <dovodDoplnenia>0</dovodDoplnenia>
+      <fyzickaOsoba>
+         <priezvisko>Testovací</priezvisko>
+         <meno>Jozef</meno>
+      </fyzickaOsoba>
+      <sidlo>
+         <psc>85101</psc>
+         <ulica>Einsteinova</ulica>
+         <supisneOrientacneCislo>8465/12</supisneOrientacneCislo>
+         <obec>Bratislava</obec>
+         <stat>Slovenská republika</stat>
+      </sidlo>
+      <novaLehota>
+         <predlzenie493a>1</predlzenie493a>
+         <predlzenie493b>0</predlzenie493b>
+         <datumLehota>30.06.2021</datumLehota>
+      </novaLehota>
+      <vypracoval>
+         <dna>02.02.2021</dna>
+      </vypracoval>
+      <podpis>1</podpis>
+   </hlavicka>
+</dokument>
