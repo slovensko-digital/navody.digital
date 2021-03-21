@@ -1331,7 +1331,7 @@ ALTER TABLE ONLY public.user_journeys
 --
 
 ALTER TABLE ONLY public.submissions
-    ADD CONSTRAINT fk_rails_8999639afc FOREIGN KEY (callback_step_id) REFERENCES public.steps(id);
+    ADD CONSTRAINT fk_rails_8999639afc FOREIGN KEY (callback_step_id) REFERENCES public.steps(id) ON DELETE SET NULL;
 
 
 --
@@ -1425,6 +1425,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200316102804'),
 ('20200316104715'),
 ('20200919092214'),
-('20210318070336');
+('20210318070336'),
+('20210321133303'),
+('20210321172132'),
+('20210321181737');
 
 

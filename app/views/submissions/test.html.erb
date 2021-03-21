@@ -25,7 +25,7 @@
         <input type="text" name="submission[email]" value="jan.suchal@slovensko.digital" id="email"/>
 
         <label for="callback_url">callback_url</label>
-        <input type="text" name="submission[callback_url]" value="/zivotne-situacie/elektronicke-podanie-danoveho-priznania/krok/prihlasit-sa-na-financnu-spravu" id="callback_url" />
+        <input type="text" name="submission[callback_url]" value="/zivotne-situacie/odklad-danoveho-priznania/krok/registrovat-sa-na-financnej-sprave" id="callback_url" />
 
         <label for="notif_subs">Notification subscription types: </label>
         <input type="text" name="submission[subscription_types][]" value="EmailMeSubmissionInstructionsEmail" id="notif_subs" />
@@ -62,6 +62,12 @@
 
         <label for="newsletter">submission[extra][params][newsletter]</label>
         <input type="text" name="submission[extra][params][newsletter]" value="false" id="newsletter" />
+
+        <label for="callback_step_url">callback_step_path</label>
+        <input type="text" name="submission[callback_step_path]" value="/zivotne-situacie/odklad-danoveho-priznania/krok/pripravit-danove-priznanie" id="callback_step_url" />
+
+        <label for="callback_step_action">callback_step_status</label>
+        <input type="text" name="submission[callback_step_status]" value="done" id="done" />
 
         <input type="submit" value="Podať" />
       </form>

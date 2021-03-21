@@ -14,15 +14,28 @@ class User < ApplicationRecord
     true
   end
 
-  def build_submission(params, extra:, skip_subscribe:)
+  def build_submission(params, extra:, skip_subscribe:, callback_step:)
     submission = submissions.build(params)
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
     submission.skip_subscribe = skip_subscribe
     submission.current_user = self
+    submission.callback_step = callback_step
     submission
   end
 
   def find_submission!(uuid)
-    submissions.find_by!(uuid: uuid)
+    submission = submissions.find_by!(uuid: uuid)
+    submission.current_user = self
+    submission
+  end
+
+  def update_step_status(step, status)
+    find_or_create_user_journey(step.journey).user_steps.find_or_initialize_by(step: step).update(status: status)
+  end
+
+  private
+
+  def find_or_create_user_journey(journey)
+    UserJourney.order(id: :desc).find_by(user: self, journey: journey) || user_journeys.create!(journey: journey)
   end
 end

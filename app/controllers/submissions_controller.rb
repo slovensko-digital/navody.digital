@@ -10,7 +10,7 @@ class SubmissionsController < ApplicationController
 
   def create
     if @submission.save
-      redirect_to submission_path(@submission)
+      redirect_to @submission
     else
       render :start, status: :unprocessable_entity
     end
@@ -43,13 +43,12 @@ class SubmissionsController < ApplicationController
     params.require(:submission).permit(
       :email,
       :callback_url,
-      :callback_step_id,
+      :callback_step_path,
       :callback_step_status,
       :raw_extra,
       subscription_types: [],
       selected_subscription_types: [],
       attachments: [:filename, :body_base64],
-      extra: {},
     )
   end
 
@@ -63,11 +62,19 @@ class SubmissionsController < ApplicationController
     @submission = current_user.build_submission(
       submission_params,
       extra: params[:submission][:extra],
-      skip_subscribe: params[:skip_subscribe]
+      skip_subscribe: params[:skip_subscribe],
+      callback_step: find_callback_step_by_path(submission_params[:callback_step_path])
     )
   end
 
   def load_submission
     @submission = current_user.find_submission!(params[:id] || params[:submission_id])
+  end
+
+  def find_callback_step_by_path(callback_step_path)
+    route = Rails.application.routes.recognize_path(callback_step_path)
+    return nil if route < { controller: 'steps', action: 'show' }
+
+    Step.where(slug: route[:id]).joins(:journey).where(journey: { slug: route[:journey_id] }).first
   end
 end
