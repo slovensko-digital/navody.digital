@@ -20,6 +20,8 @@ class AnonymousUser
   end
 
   def find_submission!(uuid)
-    Submission.where(anonymous_user_uuid: self.uuid, uuid: uuid).first!
+    submission = Submission.where(anonymous_user_uuid: self.uuid, uuid: uuid).first!
+    submission.current_user = self
+    submission
   end
 end

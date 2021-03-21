@@ -69,7 +69,6 @@ class SubmissionsController < ApplicationController
 
   def load_submission
     @submission = current_user.find_submission!(params[:id] || params[:submission_id])
-    @submission.current_user = current_user
   end
 
   def find_callback_step_by_path(callback_step_path)

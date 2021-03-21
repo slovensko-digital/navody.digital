@@ -24,7 +24,9 @@ class User < ApplicationRecord
   end
 
   def find_submission!(uuid)
-    submissions.find_by!(uuid: uuid)
+    submission = submissions.find_by!(uuid: uuid)
+    submission.current_user = self
+    submission
   end
 
   def update_step_status(step, status)
