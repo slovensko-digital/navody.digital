@@ -99,6 +99,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
     click_button 'Súbory chcem len stiahnuť'
 
+    expect(page).to have_content('Všetky tieto súbory si stiahnite na bezpečné miesto.')
     expect(page).to have_content('odklad-danoveho-priznania.xml')
 
     click_link 'Stiahnuť súbor'
@@ -120,6 +121,7 @@ RSpec.feature "Submissions feature", type: :feature do
 
     click_button 'Súbory chcem len stiahnuť'
 
+    expect(page).to have_content('Všetky tieto súbory si stiahnite na bezpečné miesto.')
     expect(page).to have_content('odklad-danoveho-priznania.xml')
 
     click_link 'Stiahnuť súbor'

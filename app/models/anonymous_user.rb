@@ -16,6 +16,7 @@ class AnonymousUser
     submission.skip_subscribe = skip_subscribe
     submission.current_user = self
     submission.callback_step = callback_step
+
     submission
   end
 

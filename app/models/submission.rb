@@ -4,11 +4,11 @@ class Submission < ApplicationRecord
   attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user, :callback_step_path
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
+  before_create { self.selected_subscription_types = [] if skip_subscribe }
   after_create :subscribe, unless: :skip_subscribe
 
   validates_presence_of :email, message: 'Zadajte emailovú adresu', unless: :skip_subscribe
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }, unless: :skip_subscribe
-
   validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, unless: :skip_subscribe
 
   scope :expired, -> { where('created_at < ?', 20.minutes.ago) }

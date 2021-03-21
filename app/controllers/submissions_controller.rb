@@ -10,7 +10,7 @@ class SubmissionsController < ApplicationController
 
   def create
     if @submission.save
-      redirect_to submission_path(@submission)
+      redirect_to @submission
     else
       render :start, status: :unprocessable_entity
     end
