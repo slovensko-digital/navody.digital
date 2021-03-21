@@ -15,7 +15,7 @@ class AnonymousUser
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
     submission.skip_subscribe = skip_subscribe
     submission.current_user = self
-    submission.callback_step = callback_step if callback_step
+    submission.callback_step = callback_step
     submission
   end
 
