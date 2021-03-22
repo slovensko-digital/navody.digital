@@ -15,7 +15,7 @@ class AdminFormBuilder < ActionView::Helpers::FormBuilder
     @template.content_tag(:div, class: 'govuk-form-group' + (has_errors ? ' govuk-form-group--error' : '')) do
       @template.label(:label, method, class: 'govuk-label') +
         (has_errors ? @template.content_tag(:span, @object.errors.full_messages_for(method).join(''), class: 'govuk-error-message') : '') +
-        super(method, options.merge({class: 'govuk-input govuk-!-width-one-half' + (has_errors ? ' govuk-input--error' : '')}))
+        super(method, options.merge({class: 'govuk-input govuk-input--width-10' + (has_errors ? ' govuk-input--error' : '')}))
     end
   end
 

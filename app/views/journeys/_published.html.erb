@@ -1,10 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
-      <h2 class="govuk-heading-l">Úvodné informácie</h2>
-      <% if @journey.last_checked_on  %>
-        <p class="govuk-body-s">Platné ku dňu: <%= @journey.last_checked_on.strftime('%d.%m.%Y') %></p>
-      <%  end %>
+      <%= render partial: 'shared/title_with_last_checked_on', locals: { title: 'Úvodné informácie', last_checked_on: @journey.last_checked_on } %>
       <%= raw_with_custom_components @journey.description, journey: @journey %>
     </div>
 

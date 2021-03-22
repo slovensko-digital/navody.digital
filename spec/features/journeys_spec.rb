@@ -7,8 +7,6 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step2) { create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep') }
   let!(:task) { create(:task, step: step1) }
   let!(:blank_journey) { create(:journey, published_status: "BLANK", description: nil) }
-  let!(:checked_journey) { create(:journey, last_checked_on: Date.new(2020, 01, 23)) }
-  let!(:checked_journey_step) { create(:step, journey: checked_journey) }
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
@@ -206,18 +204,31 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content(blank_journey.title)
   end
 
-  scenario 'As an anonymous user I want to check if last_check date is visible' do
+  scenario 'As user I want to check if last_check date is visible if old enough' do
+    checked_journey = create(:journey, last_checked_on: Date.new(2020, 01, 23))
+    checked_journey_step = create(:step, journey: checked_journey)
+
     visit journey_path(journey)
-    expect(page).to_not have_content('Platné ku dňu')
+    expect(page).to_not have_content('Aktualizované')
 
     visit journey_step_path(journey, step1)
-    expect(page).to_not have_content('Platné ku dňu')
+    expect(page).to_not have_content('Aktualizované')
 
     visit journey_path(checked_journey)
-    expect(page).to have_content('Platné ku dňu')
+    expect(page).to have_content('Aktualizované')
 
     visit journey_step_path(checked_journey, checked_journey_step)
-    expect(page).to have_content('Platné ku dňu')
+    expect(page).to have_content('Aktualizované')
   end
 
+  scenario 'As user I do not want to see last_check still fresh' do
+    checked_journey = create(:journey, last_checked_on: 2.months.ago)
+    checked_journey_step = create(:step, journey: checked_journey)
+
+    visit journey_path(checked_journey)
+    expect(page).not_to have_content('Aktualizované')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).not_to have_content('Aktualizované')
+  end
 end

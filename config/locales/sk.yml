@@ -19,3 +19,20 @@ sk:
       one: z 1 kroku
       few: z %{count} krokov
       other: z %{count} krokov
+  date:
+    formats:
+      dmrg: "%e. %B %Y"
+    month_names:
+      -
+      - januára
+      - februára
+      - marca
+      - apríla
+      - mája
+      - júna
+      - júla
+      - augusta
+      - septembra
+      - októbra
+      - novembra
+      - decembra
