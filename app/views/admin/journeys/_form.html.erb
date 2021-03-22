@@ -6,12 +6,12 @@
   <% end %>
 
 
-  <% if (journey&.last_checked_on || Date.new)  < 1.year.ago.to_date %>
+  <% if journey.last_checked_on && journey.last_checked_on < 3.months.ago %>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        Last check should be no more than one year old
+        Last check should be no more than 3 months old
       </strong>
     </div>
   <% end %>
