@@ -8,7 +8,7 @@ class Submission < ApplicationRecord
   after_create :subscribe, unless: :skip_subscribe
 
   validates_presence_of :email, message: 'Zadajte emailovú adresu', unless: :skip_subscribe
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }, unless: :skip_subscribe
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }, if: -> { email.present? }, unless: :skip_subscribe
   validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, unless: :skip_subscribe
 
   scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
