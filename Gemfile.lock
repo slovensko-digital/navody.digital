@@ -364,6 +364,9 @@ GEM
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    validate_url (1.0.13)
+      activemodel (>= 3.0.0)
+      public_suffix
     web-console (4.1.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -432,6 +435,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier
+  validate_url
   wdm (~> 0.1.0)
   web-console
   webdrivers

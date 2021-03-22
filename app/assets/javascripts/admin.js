@@ -14,3 +14,4 @@
 //= require jquery
 //= require activestorage
 //= require turbolinks
+//= require tasks
