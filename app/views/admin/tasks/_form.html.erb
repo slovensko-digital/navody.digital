@@ -1,5 +1,4 @@
-
-<%= form_with(model: [:admin, task.step.journey, task.step, task], local: true, builder: AdminFormBuilder) do |form| %>
+<%= form_with(model: [:admin, task.step.journey, task.step, task], scope: :task, url: [:admin, task.step.journey, task.step, task.becomes(Task)], local: true, builder: AdminFormBuilder) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -8,14 +7,15 @@
 
   <%= form.number_field :position %>
   <%= form.text_field :title %>
-  <%= form.select :type, options_for_select(Task.subclasses.map{|task| task.name}, :selected => task.type)%>
-  <%= form.text_field :url %>
-  <%= form.text_field :url_title %>
-
+  <%= form.select :type, options_for_select(Task::TYPES, selected: task.type) %>
+  <div id="external_link_fields">
+    <%= form.text_field :url %>
+    <%= form.text_field :url_title %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>
-  
+
   <%= javascript_include_tag 'tasks' %>
 
 <% end %>

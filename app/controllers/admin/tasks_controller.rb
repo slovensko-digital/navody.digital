@@ -30,13 +30,10 @@ class Admin::TasksController < Admin::AdminController
 
   # PATCH/PUT /tasks/1
   def update
-    task_class = task_params[:type]
-    raise unless task_class.in?(Task.subclasses.map(&:name))
-	  @task = @task.becomes!(task_class.constantize)
     if @task.update(task_params)
       redirect_to admin_journey_step_tasks_url(@task.step.journey, @task.step), notice: 'Task was successfully updated.'
     else
-	  render :edit
+      render :edit
     end
   end
 
