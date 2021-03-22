@@ -59,6 +59,8 @@ gem 'premailer-rails'
 gem 'clockwork'
 gem 'sitemap_generator'
 
+gem 'validate_url'
+
 # sendinblue V3
 gem 'sib-api-v3-sdk'
 gem 'recaptcha'
@@ -97,4 +99,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'hirb'
 
-gem "validate_url"
