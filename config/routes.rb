@@ -97,9 +97,17 @@ Rails.application.routes.draw do
   get '/auth/magiclink/info', to: 'sessions#magic_link_info'
   get '/auth/failure', to: 'sessions#failure'
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
-  get '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
+  post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+
+  resources :submissions, path: 'podania' do
+    post :start, path: 'nove', on: :collection # public facing API
+    get :download_file, path: 'stiahnut'
+    post :finish, path: 'dokoncit'
+
+    get :test, on: :collection unless Rails.env.production?
+  end
 end

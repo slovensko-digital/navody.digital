@@ -11,7 +11,7 @@
 
     <%= render 'journeys/todo_list', step: @current_step %>
 
-    <%= render partial: 'components/next_step', object: @current_step.next_step, locals: {journey: @journey} %>
+    <%= render partial: 'components/next_step', object: @current_step.next_step, locals: { journey: @journey } %>
   </div>
   <div class="govuk-grid-column-one-third">
     <%= render 'components/timeline' %>

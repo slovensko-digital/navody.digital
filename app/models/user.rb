@@ -8,19 +8,35 @@ class User < ApplicationRecord
   has_many :user_steps, through: :user_journeys
   has_many :user_tasks, through: :user_steps
   has_many :notification_subscriptions
+  has_many :submissions
 
   def logged_in?
     true
   end
 
-  def create_notification_subscriptions(params)
-    params[:subscriptions].each do |type|
-      subscription = notification_subscriptions.find_or_initialize_by(type: type)
-      subscription.journey = Journey.find(params[:journey_id]) if params[:journey_id].present?
-      subscription.confirm
-      subscription
-    end
+  def build_submission(params, extra:, skip_subscribe:, callback_step:)
+    submission = submissions.build(params)
+    submission.email = email if submission.email.blank?
+    submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
+    submission.skip_subscribe = skip_subscribe
+    submission.current_user = self
+    submission.callback_step = callback_step
+    submission
+  end
 
-    nil # no email action
+  def find_submission!(uuid)
+    submission = submissions.find_by!(uuid: uuid)
+    submission.current_user = self
+    submission
+  end
+
+  def update_step_status(step, status)
+    find_or_create_user_journey(step.journey).user_steps.find_or_initialize_by(step: step).update(status: status)
+  end
+
+  private
+
+  def find_or_create_user_journey(journey)
+    UserJourney.order(id: :desc).find_by(user: self, journey: journey) || user_journeys.create!(journey: journey)
   end
 end

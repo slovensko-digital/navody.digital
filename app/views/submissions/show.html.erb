@@ -1,0 +1,30 @@
+<div class="govuk-grid-column-two-thirds" id="submission-container">
+  <h1 class="govuk-heading-l">Podanie</h1>
+
+  <% if @submission.after_subscribe_messages.any? %>
+    <% @submission.after_subscribe_messages.each do |message_partial| %>
+      <%= render partial: message_partial, object: @submission %>
+    <% end %>
+  <% else %>
+    <p class="govuk-body-l">Podanie obsahuje súbory, ktoré budete potrebovať pre úspešné odoslanie.</p>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Dôležité</span>
+        Všetky tieto súbory si stiahnite na bezpečné miesto.
+      </strong>
+    </div>
+  <% end %>
+
+  <% if @submission.attachments.any? %>
+    <ul class="govuk-list">
+      <% @submission.attachments.each do |attachment| %>
+        <li><%= attachment['filename'] %> &mdash; <%= link_to 'Stiahnuť súbor', submission_download_file_path(@submission, filename: attachment['filename']), data: { turbolinks: false }, class: 'govuk-link' %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <p class="govuk-body">V ďaľšom kroku budete presmerovaný na stránku, kde sa dozviete ďalšie dôležité informácie potrebné pre dokončenie tohto podania.</p>
+  <p class="govuk-body"><%= link_to 'Pokračovať na ďalšie inštrukcie', [@submission, :finish], method: :post, class: 'govuk-button' %></p>
+</div>
+
