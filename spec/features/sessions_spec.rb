@@ -29,6 +29,8 @@ RSpec.feature "Sessions" do
 
     click_on 'Prihlásiť sa e-mailom'
 
+    perform_enqueued_jobs
+
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
     magic_link = link_in_last_email
@@ -60,6 +62,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -91,7 +94,7 @@ RSpec.feature "Sessions" do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'Prihlásiť sa cez Google'
+    click_on 'Prihlásiť sa cez Google'
 
     within '.user-info' do
       expect(page).to have_text('foo@bar.com')
@@ -113,7 +116,7 @@ RSpec.feature "Sessions" do
 
       visit journey_path(journey)
       click_link 'Chcem sa prihlásiť'
-      click_link 'Prihlásiť sa cez Google'
+      click_on 'Prihlásiť sa cez Google'
 
       expect(current_path).to eq journey_path(journey)
     end
@@ -132,6 +135,7 @@ RSpec.feature "Sessions" do
       clear_mail_deliveries
 
       click_on 'Prihlásiť sa e-mailom'
+      perform_enqueued_jobs
 
       expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -156,6 +160,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -183,6 +188,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -204,7 +210,7 @@ RSpec.feature "Sessions" do
 
     visit root_path
     click_link 'Prihlásiť'
-    click_link 'Prihlásiť sa cez Google'
+    click_on 'Prihlásiť sa cez Google'
 
     expect(page).to have_link('Odhlásiť')
 

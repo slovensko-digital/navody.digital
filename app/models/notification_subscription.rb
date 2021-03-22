@@ -1,6 +1,7 @@
 class NotificationSubscription < ApplicationRecord
   self.inheritance_column = 'type2' # change
   validates :journey, presence: true, if: -> {self.type == 'BlankJourneySubscription' }
+
   TYPES = {
     'EpApplicationFormSubscription' => {
       sendinblue_list_name: 'EpApplicationFormSubscription',
@@ -51,6 +52,13 @@ class NotificationSubscription < ApplicationRecord
       label: 'Chcem, aby ste mi dali vedieť, keď bude dostupná aktuálna verzia aplikácie Priznanie.Digital',
       hint: 'Dáme Vám vedieť, keď bude dostupná aktuálna verzia aplikácie.'
     },
+    'EmailMeSubmissionInstructionsEmail' => {
+      label: 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie',
+      hint: 'Zašleme Vám všetko potrebné na email, aby ste na nič nezabudli a mali to odložené aj na neskôr.',
+      transactional: true,
+      after_subscribe_message: 'email_me_after_subscribe_instructions',
+      on_submission_job: EmailMeSubmissionInstructionsEmailJob
+    }
   }
 
   belongs_to :user, optional: true
@@ -65,12 +73,9 @@ class NotificationSubscription < ApplicationRecord
   def add_email_to_list
     list_name = TYPES.dig(type, :sendinblue_list_name)
     if list_name.present?
-      SubscribeSendinblueJob.perform_later(find_email_for_newsletter, list_name)
+      email_for_newsletter = user ? user.email : email
+      SubscribeToNewsletterJob.perform_later(email_for_newsletter, list_name)
     end
-  end
-
-  def find_email_for_newsletter
-    user ? user.email : email
   end
 end
 

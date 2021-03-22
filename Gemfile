@@ -41,6 +41,7 @@ gem 'bootsnap', require: false
 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 
 gem 'pry-rails'
 
@@ -57,6 +58,8 @@ gem 'exception_handler'
 gem 'premailer-rails'
 gem 'clockwork'
 gem 'sitemap_generator'
+
+gem 'validate_url'
 
 # sendinblue V3
 gem 'sib-api-v3-sdk'

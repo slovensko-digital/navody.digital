@@ -1,2 +1,0 @@
-class ExternalLinkTask < Task
-end

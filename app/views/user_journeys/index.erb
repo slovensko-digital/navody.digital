@@ -1,0 +1,21 @@
+<%= content_for(:headerline, 'Moje životné situácie') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @user_journeys.any? %>
+      <h1 class="govuk-heading-l">Aktuálne životné situácie</h1>
+      <p class="govuk-body">Máte rozpracované tieto životné situácie.</p>
+      <% @user_journeys.each do |user_journey| %>
+        <div style="padding: 2em; margin-bottom: 2em; background-color: #f4f4f4;">
+          <h2 class="govuk-heading-m"><%= link_to user_journey.journey.title, user_journey.journey %> <span class="govuk-!-font-weight-regular">(začaté <%= l(user_journey.started_at.to_date) %>)</span></h2>
+          <p class="govuk-body" style="margin-bottom: 0"><%= t('views.steps_done', :count => user_journey.user_steps.completed.count) %> <%= t('views.steps_all', :count => user_journey.journey.steps.count) %>.<% if user_journey.last_changed_step %> Naposledy ste vybavovali krok <%= link_to user_journey.last_changed_step.title, [user_journey.journey, user_journey.last_changed_step] %>.<% end %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="govuk-body-l"><strong>Nemáte žiadne aktuálne životné situácie.</strong> Začať vybavovať
+        životnú situáciu môžete tak, že označíte nejaký krok <%= link_to 'v&nbsp;návodoch'.html_safe, root_path %> ako
+        vybavený.</p>
+      <%= link_to 'Zobraziť všetky návody', root_path, class: 'govuk-button govuk-button--large' %>
+    <% end %>
+  </div>
+</div>

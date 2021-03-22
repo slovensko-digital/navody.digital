@@ -1,22 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature "Journeys", type: :feature do
-
-  def sign_in(user)
-    OmniAuth.config.test_mode = false
-    visit new_session_path
-
-    within 'form#login-email' do
-      fill_in :email, with: user.email
-    end
-
-    clear_mail_deliveries
-
-    click_on 'Prihlásiť sa e-mailom'
-
-    visit link_in_last_email
-  end
-
   let!(:user) { create(:user, email: 'someone@example.com') }
   let!(:journey) { create(:journey) }
   let!(:step1) { create(:step, journey: journey) }
@@ -45,6 +29,21 @@ RSpec.feature "Journeys", type: :feature do
 
     click_link 'Požiadať elektronicky'
     expect(page.current_url).to eq(faqs_url)
+  end
+
+  scenario 'As an anonymous user I cannot see my journeys in process' do
+    visit user_journeys_path
+
+    expect(page).to have_content('Prihláste sa do svojho účtu')
+    expect(page.current_url).to eq(new_session_url)
+  end
+
+  scenario 'As a logged in user I want to check my journeys in process' do
+    sign_in(user)
+    visit user_journeys_path
+
+    expect(page).to have_content('Nemáte žiadne aktuálne životné situácie')
+    expect(page).to have_content('Moje životné situácie')
   end
 
   scenario 'As a logged in user I want mark a step as done' do
@@ -110,6 +109,86 @@ RSpec.feature "Journeys", type: :feature do
     page.submit(element)
 
     expect(page).not_to have_checked_field(task.title)
+  end
+
+  scenario 'As a logged in user I want mark a step as done and check my journeys in process' do
+    sign_in(user)
+    visit journey_path(journey)
+
+    click_link 'Ďalší krok'
+    click_link 'Označiť ako vybavené'
+
+    expect(page).to have_content('Vybavené!')
+
+    visit user_journeys_path
+    expect(page).to have_content(journey.title)
+  end
+
+  scenario 'As a logged in user I want mark a step as not done and check my journeys in process' do
+    sign_in(user)
+    visit journey_path(journey)
+
+    click_link 'Ďalší krok'
+    click_link 'Označiť ako vybavené'
+    click_link 'označiť ako nevybavený'
+
+    expect(page).to have_content('Označiť ako vybavené')
+
+    visit user_journeys_path
+    expect(page).to have_content(journey.title)
+  end
+
+  scenario 'As a logged in user I want restart a journey and check my journeys in process' do
+    sign_in(user)
+    visit journey_step_path(journey, step1)
+
+    click_link 'Označiť ako vybavené'
+    click_link 'Začať celý návod odznovu'
+    expect(page).not_to have_content('Začať celý návod odznovu')
+
+    click_link 'Ďalší krok'
+    expect(page).to have_content('Označiť ako vybavené')
+
+    visit user_journeys_path
+    expect(page).to have_content('Nemáte žiadne aktuálne životné situácie')
+  end
+
+  scenario 'As a logged in user I want to mark a task as done and check my journeys in process' do
+    sign_in(user)
+    visit journey_path(journey)
+
+    click_link 'Ďalší krok'
+    check task.title
+    element = find "#form_task_#{task.id}"
+    page.submit(element)
+
+    visit journey_step_path(journey, step1)
+
+    expect(page).to have_checked_field(task.title)
+
+    visit user_journeys_path
+    expect(page).to have_content(journey.title)
+  end
+
+  scenario 'As a logged in user I want to mark a done task as undone and check my journeys in process' do
+    sign_in(user)
+    visit journey_path(journey)
+
+    click_link 'Ďalší krok'
+    check task.title
+    element = find "#form_task_#{task.id}"
+    page.submit(element)
+
+    visit journey_step_path(journey, step1)
+
+    uncheck task.title
+    element = find "#form_task_#{task.id}"
+    page.submit(element)
+
+    expect(page).not_to have_checked_field(task.title)
+
+    visit user_journeys_path
+    expect(page).to have_content(journey.title)
   end
 
   scenario 'As an anonymous user I want to check if blank journey displays correctly' do
