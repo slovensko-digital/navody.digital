@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   def build_submission(params, extra:, skip_subscribe:, callback_step:)
     submission = submissions.build(params)
+    submission.email = email if submission.email.blank?
     submission.extra = params[:raw_extra] ? JSON.parse(params[:raw_extra]) : extra
     submission.skip_subscribe = skip_subscribe
     submission.current_user = self

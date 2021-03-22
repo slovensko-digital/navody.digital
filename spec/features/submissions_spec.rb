@@ -49,8 +49,9 @@ RSpec.feature "Submissions feature", type: :feature do
   scenario 'As a signed in user I can send submission instructions to my email and continue' do
     sign_in(user)
 
-    submit_tax_submission(email: user.email)
+    submit_tax_submission(email: '')
 
+    expect(page).not_to have_content('Emailová adresa')
     expect(page).to have_content('Podanie, ktoré ste pripravili je potrebné ešte odoslať.')
 
     check 'Chcem, aby ste mi poslali inštrukcie ako odoslať toto podanie'
