@@ -7,7 +7,7 @@
 
   <%= form.number_field :position %>
   <%= form.text_field :title %>
-  <%= form.select :type, options_for_select(Task::TYPES, selected: task.type) %>
+  <%= form.collection_select :type, Task::TYPES, :to_s, :to_s %>
   <div id="external_link_fields">
     <%= form.text_field :url %>
     <%= form.text_field :url_title %>

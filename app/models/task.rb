@@ -6,7 +6,6 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :type, presence: true, inclusion: Task::TYPES
-
   validates :url, url: true, if: -> { type == 'ExternalLinkTask' }
 
   default_scope do
