@@ -45,6 +45,10 @@ class Submission < ApplicationRecord
     extra.to_json
   end
 
+  def download_only?
+    after_subscribe_messages.none? # TODO refactor this
+  end
+
   def after_subscribe_messages
     selected_subscription_objects.filter_map { |s| s[:after_subscribe_message] }
   end

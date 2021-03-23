@@ -13,7 +13,7 @@
 // or the `imagePath` JavaScript helper below.
 //
 import '../application.sass'
-
+import 'controllers'
 import { initAll } from 'navody-digital-frontend'
 
 document.addEventListener('turbolinks:load', function () {

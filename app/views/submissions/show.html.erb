@@ -1,4 +1,4 @@
-<div class="govuk-grid-column-two-thirds" id="submission-container">
+<%= content_tag :div, class: "govuk-grid-column-two-thirds", id: "submission-container", data: { controller: @submission.download_only? ? :submission : nil } do %>
   <h1 class="govuk-heading-l">Podanie</h1>
 
   <% if @submission.after_subscribe_messages.any? %>
@@ -19,12 +19,12 @@
   <% if @submission.attachments.any? %>
     <ul class="govuk-list">
       <% @submission.attachments.each do |attachment| %>
-        <li><%= attachment['filename'] %> &mdash; <%= link_to 'Stiahnuť súbor', submission_download_file_path(@submission, filename: attachment['filename']), data: { turbolinks: false }, class: 'govuk-link' %></li>
+        <li><%= attachment['filename'] %> &mdash; <%= link_to 'Stiahnuť súbor', submission_download_file_path(@submission, filename: attachment['filename']), data: { turbolinks: false, action: 'submission#downloadFile', 'submission-target': :file }, class: 'govuk-link' %></li>
       <% end %>
     </ul>
   <% end %>
 
-  <p class="govuk-body">V ďaľšom kroku budete presmerovaný na stránku, kde sa dozviete ďalšie dôležité informácie potrebné pre dokončenie tohto podania.</p>
-  <p class="govuk-body"><%= link_to 'Pokračovať na ďalšie inštrukcie', [@submission, :finish], method: :post, class: 'govuk-button' %></p>
-</div>
-
+  <p class="govuk-body">V ďaľšom kroku budete presmerovaný na stránku, kde sa dozviete ďalšie dôležité informácie
+    potrebné pre dokončenie tohto podania.</p>
+  <p class="govuk-body"><%= link_to 'Pokračovať na ďalšie inštrukcie', [@submission, :finish], method: :post, class: 'govuk-button', data: { action: 'submission#checkDownloads', 'confirm-message': 'Vyzerá to tak, že ste nestiahli všetky potrebné súbory. Chcete naozaj pokračovať?' } %></p>
+<% end %>
