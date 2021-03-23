@@ -204,4 +204,31 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content(blank_journey.title)
   end
 
+  scenario 'As user I want to check if last_check date is visible if old enough' do
+    checked_journey = create(:journey, last_checked_on: Date.new(2020, 01, 23))
+    checked_journey_step = create(:step, journey: checked_journey)
+
+    visit journey_path(journey)
+    expect(page).to_not have_content('Aktualizované')
+
+    visit journey_step_path(journey, step1)
+    expect(page).to_not have_content('Aktualizované')
+
+    visit journey_path(checked_journey)
+    expect(page).to have_content('Aktualizované')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).to have_content('Aktualizované')
+  end
+
+  scenario 'As user I do not want to see last_check still fresh' do
+    checked_journey = create(:journey, last_checked_on: 2.months.ago)
+    checked_journey_step = create(:step, journey: checked_journey)
+
+    visit journey_path(checked_journey)
+    expect(page).not_to have_content('Aktualizované')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).not_to have_content('Aktualizované')
+  end
 end

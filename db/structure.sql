@@ -309,7 +309,8 @@ CREATE TABLE public.journeys (
     description text,
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
-    custom_title character varying
+    custom_title character varying,
+    last_checked_on date
 );
 
 
@@ -596,11 +597,11 @@ CREATE TABLE public.submissions (
     callback_url character varying NOT NULL,
     callback_step_id bigint,
     callback_step_status character varying,
-    selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    selected_subscription_types character varying[]
 );
 
 
@@ -1425,6 +1426,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200316102804'),
 ('20200316104715'),
 ('20200919092214'),
+('20210314221503'),
 ('20210318070336'),
 ('20210321133303'),
 ('20210321172132'),
