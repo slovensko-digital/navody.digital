@@ -24,7 +24,6 @@
     </ul>
   <% end %>
 
-  <p class="govuk-body">V ďaľšom kroku budete presmerovaný na stránku, kde sa dozviete ďalšie dôležité informácie
-    potrebné pre dokončenie tohto podania.</p>
+  <p class="govuk-body">V ďaľšom kroku budete presmerovaný na stránku, kde sa dozviete ďalšie dôležité informácie potrebné pre dokončenie tohto podania.</p>
   <p class="govuk-body"><%= link_to 'Pokračovať na ďalšie inštrukcie', [@submission, :finish], method: :post, class: 'govuk-button', data: { action: 'submission#checkDownloads', 'confirm-message': 'Vyzerá to tak, že ste nestiahli všetky potrebné súbory. Chcete naozaj pokračovať?' } %></p>
 <% end %>
