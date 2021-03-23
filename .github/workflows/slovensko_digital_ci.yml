@@ -1,8 +1,6 @@
 name: Slovensko.Digital CI
 
-on:
-  push:
-    branches: '**'
+on: [push, pull_request]
 
 jobs:
   test:
