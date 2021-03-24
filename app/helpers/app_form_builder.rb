@@ -97,7 +97,7 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def submit(value = nil, options = {})
-    super(value, objectify_options(options.merge({class: ['govuk-button', options[:class]]})))
+    super(value, options.merge({class: ['govuk-button', options[:class]]}))
   end
 
   def error_message(method)
