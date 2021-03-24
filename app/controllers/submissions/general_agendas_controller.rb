@@ -24,6 +24,7 @@ class Submissions::GeneralAgendasController < ApplicationController
   end
 
   def login_callback
+    session[:eid_token] = params[:token]
     @general_agenda = Submissions::GeneralAgenda.new
     @general_agenda.token = params[:token]
 
@@ -34,6 +35,7 @@ class Submissions::GeneralAgendasController < ApplicationController
 
   def load_general_agenda
     @general_agenda = Submissions::GeneralAgenda.new(general_agenda_params)
+    @general_agenda.token = session[:eid_token] if @general_agenda.token.blank? && session[:eid_token]
   end
 
   def general_agenda_params
