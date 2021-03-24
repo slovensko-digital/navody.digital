@@ -85,15 +85,6 @@ Rails.application.routes.draw do
   end
   resources :apps, path: 'aplikacie' # faux route
 
-  namespace :submissions, path: 'podania' do
-    resources :general_agendas, path: 'vseobecne-podanie', path_names: { new: '' }, only: [:new, :create] do
-      member do
-        get :submit
-      end
-      get :login_callback, on: :collection, path: 'prihlas'
-    end
-  end
-
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
   end
@@ -111,6 +102,15 @@ Rails.application.routes.draw do
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+
+  namespace :submissions, path: 'podania' do
+    resource :general_agenda, path: 'vseobecna-agenda', path_names: { new: '' }, only: [:new, :create] do
+      get :login_callback
+      get :switch_account_callback
+      post :continue, path: 'pokracovat'
+      get :finish, path: 'hotovo'
+    end
+  end
 
   resources :submissions, path: 'podania' do
     post :start, path: 'nove', on: :collection # public facing API

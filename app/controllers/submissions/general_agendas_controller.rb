@@ -1,37 +1,42 @@
-class Submissions::GeneralAgendasController < SubmissionsController
-  before_action :load_general_agenda, only: [:new, :create]
+class Submissions::GeneralAgendasController < ApplicationController
+  before_action :load_general_agenda, only: [:new, :create, :continue]
 
   def new
   end
 
   def create
-    if @general_agenda.expired?
-      render :new
+    if @general_agenda.save
+      if @general_agenda.callback_url.present?
+        render action: :continue
+      else
+        redirect_to action: :finish
+      end
     else
-      # TODO validate & call sktalk receive api
+      render :new, status: :unprocessable_entity
     end
   end
 
-  def submit
-    render partial: 'submit'
+  def continue
+    redirect_to @general_agenda.callback_url
+  end
+
+  def finish
   end
 
   def login_callback
-    @token, _ = JWT.decode(params[:token], nil, false)
+    @general_agenda = Submissions::GeneralAgenda.new
+    @general_agenda.token = params[:token]
+
     render layout: false # TODO show something nice
   end
 
   private
 
-  def general_agenda_params
-    params.require(:submissions_general_agenda).permit(:recipient_uri, :subject, :body, :attachments) if params.key?(:submissions_general_agenda)
-  end
-
   def load_general_agenda
     @general_agenda = Submissions::GeneralAgenda.new(general_agenda_params)
   end
 
-  def obo_token_request_id
-    params.require(:id)
+  def general_agenda_params
+    params.require(:submissions_general_agenda).permit(:recipient_uri, :subject, :body, :attachments, :token) if params.key?(:submissions_general_agenda)
   end
 end
