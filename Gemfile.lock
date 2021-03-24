@@ -291,7 +291,6 @@ GEM
     recaptcha (5.7.0)
       json
     regexp_parser (2.1.1)
-    render_async (2.1.10)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -423,7 +422,6 @@ DEPENDENCIES
   rails (~> 6.0)
   rails-i18n
   recaptcha
-  render_async
   rollbar
   rspec-rails (= 4.0.0.beta4)
   rspec_junit_formatter
