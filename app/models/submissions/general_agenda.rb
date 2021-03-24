@@ -6,6 +6,7 @@ class Submissions::GeneralAgenda
   attr_accessor :subject
   attr_accessor :body
   attr_accessor :attachments
+  attr_accessor :token
 
   validates_presence_of :recipient_uri, message: 'Vyplňte príjemcu podania'
   validates_presence_of :subject, message: 'Vyplňte predmet podania'

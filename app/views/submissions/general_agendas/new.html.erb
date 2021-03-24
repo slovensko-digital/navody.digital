@@ -11,7 +11,11 @@
       <%= f.text_field :recipient_uri, label: 'Príjemca' %>
       <%= f.text_field :subject, label: 'Predmet' %>
       <%= f.text_area :body, label: 'Obsah', rows: 10 %>
-      <%= render_async submit_submissions_general_agenda_path(@general_agenda), interval: 5.seconds.in_milliseconds, error_message: content_tag(:div, content_tag(:span, 'Niečo sa pokazilo', class: 'govuk-error-message'), class: 'govuk-form-group govuk-form-group--error') %>
+
+      <%= f.text_field :token, label: 'Token' %>
+      <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login?callback=#{callback_submissions_obo_tokens_url}") %>
+      <%= f.button 'Prihlásiť sa pomocou eID', onclick: "window.open('#{url}'); return false;", id: 'ben', class: 'govuk-button' %>
+
     <% end %>
   </div>
 </div>

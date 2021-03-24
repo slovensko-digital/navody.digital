@@ -12,6 +12,11 @@ class Submissions::OboTokensController < SubmissionsController
     # TODO render js to close tab
   end
 
+  def callback
+    @token, _ = JWT.decode(params[:token], nil, false)
+    render layout: false
+  end
+
   private
 
   def obo_token_request_id

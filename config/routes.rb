@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     end
 
     resources :obo_tokens, path: 'prihlasenie', only: [] do
+      get :callback, on: :collection
       member do
         post :new, path: ''
         get :create, path: ''
