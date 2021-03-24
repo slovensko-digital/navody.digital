@@ -13,8 +13,8 @@
       <%= f.text_area :body, label: 'Obsah', rows: 10 %>
 
       <%= f.text_field :token, label: 'Token' %>
-      <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login?callback=#{callback_submissions_obo_tokens_url}") %>
-      <%= f.button 'Prihlásiť sa pomocou eID', onclick: "window.open('#{url}'); return false;", id: 'ben', class: 'govuk-button' %>
+      <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login?callback=#{login_callback_submissions_general_agendas_url}") %>
+      <%= f.button 'Prihlásiť sa pomocou eID', onclick: "return !window.open('#{url}')", id: 'ben', class: 'govuk-button' %>
 
     <% end %>
   </div>

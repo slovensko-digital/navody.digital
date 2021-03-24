@@ -16,6 +16,11 @@ class Submissions::GeneralAgendasController < SubmissionsController
     render partial: 'submit'
   end
 
+  def login_callback
+    @token, _ = JWT.decode(params[:token], nil, false)
+    render layout: false # TODO show something nice
+  end
+
   private
 
   def general_agenda_params
