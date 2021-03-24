@@ -1,7 +1,7 @@
 Page.create!(
   title: 'Kontaktné informácie',
   content: 'Tu raz urcite budu nejake informacie o tom, ako kontaktovat ludi, ktori su za touto strankou',
-  slug: 'contact-info',
+  slug: 'kontakt',
   is_faq: false
 )
 
