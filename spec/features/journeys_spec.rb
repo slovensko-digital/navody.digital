@@ -1,22 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature "Journeys", type: :feature do
-
-  def sign_in(user)
-    OmniAuth.config.test_mode = false
-    visit new_session_path
-
-    within 'form#login-email' do
-      fill_in :email, with: user.email
-    end
-
-    clear_mail_deliveries
-
-    click_on 'Prihlásiť sa e-mailom'
-
-    visit link_in_last_email
-  end
-
   let!(:user) { create(:user, email: 'someone@example.com') }
   let!(:journey) { create(:journey) }
   let!(:step1) { create(:step, journey: journey) }
@@ -220,4 +204,31 @@ RSpec.feature "Journeys", type: :feature do
     expect(page).to have_content(blank_journey.title)
   end
 
+  scenario 'As user I want to check if last_check date is visible if old enough' do
+    checked_journey = create(:journey, last_checked_on: Date.new(2020, 01, 23))
+    checked_journey_step = create(:step, journey: checked_journey)
+
+    visit journey_path(journey)
+    expect(page).to_not have_content('Aktualizované')
+
+    visit journey_step_path(journey, step1)
+    expect(page).to_not have_content('Aktualizované')
+
+    visit journey_path(checked_journey)
+    expect(page).to have_content('Aktualizované')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).to have_content('Aktualizované')
+  end
+
+  scenario 'As user I do not want to see last_check still fresh' do
+    checked_journey = create(:journey, last_checked_on: 2.months.ago)
+    checked_journey_step = create(:step, journey: checked_journey)
+
+    visit journey_path(checked_journey)
+    expect(page).not_to have_content('Aktualizované')
+
+    visit journey_step_path(checked_journey, checked_journey_step)
+    expect(page).not_to have_content('Aktualizované')
+  end
 end

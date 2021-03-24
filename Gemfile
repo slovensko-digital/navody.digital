@@ -61,6 +61,8 @@ gem 'premailer-rails'
 gem 'clockwork'
 gem 'sitemap_generator'
 
+gem 'validate_url'
+
 # sendinblue V3
 gem 'sib-api-v3-sdk'
 gem 'recaptcha'

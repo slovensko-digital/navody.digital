@@ -1,0 +1,3 @@
+<% show_last_chacked_on = last_checked_on && last_checked_on < 3.months.ago  %>
+<h2 class="govuk-heading-l<%= show_last_chacked_on ? ' govuk-!-margin-bottom-1' : nil %>"><%= title %></h2>
+<% if show_last_chacked_on %><p class="govuk-!-font-size-14" style="color: #b1b4b6;">Aktualizované <%= l(last_checked_on, format: :dmrg) %></p><% end %>

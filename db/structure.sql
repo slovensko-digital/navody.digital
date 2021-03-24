@@ -4,6 +4,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -25,7 +26,7 @@ $$;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
@@ -307,7 +308,8 @@ CREATE TABLE public.journeys (
     description text,
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
-    custom_title character varying
+    custom_title character varying,
+    last_checked_on date
 );
 
 
@@ -582,6 +584,46 @@ ALTER SEQUENCE public.steps_id_seq OWNED BY public.steps.id;
 
 
 --
+-- Name: submissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.submissions (
+    id bigint NOT NULL,
+    uuid uuid NOT NULL,
+    user_id bigint,
+    anonymous_user_uuid uuid,
+    email character varying,
+    callback_url character varying NOT NULL,
+    callback_step_id bigint,
+    callback_step_status character varying,
+    attachments jsonb,
+    extra jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    selected_subscription_types character varying[]
+);
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.submissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.submissions_id_seq OWNED BY public.submissions.id;
+
+
+--
 -- Name: tasks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -811,6 +853,13 @@ ALTER TABLE ONLY public.steps ALTER COLUMN id SET DEFAULT nextval('public.steps_
 
 
 --
+-- Name: submissions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions ALTER COLUMN id SET DEFAULT nextval('public.submissions_id_seq'::regclass);
+
+
+--
 -- Name: tasks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -950,6 +999,14 @@ ALTER TABLE ONLY public.steps
 
 
 --
+-- Name: submissions submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT submissions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1067,6 +1124,34 @@ CREATE INDEX index_steps_on_journey_id ON public.steps USING btree (journey_id);
 
 
 --
+-- Name: index_submissions_on_anonymous_user_uuid_and_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_submissions_on_anonymous_user_uuid_and_uuid ON public.submissions USING btree (anonymous_user_uuid, uuid);
+
+
+--
+-- Name: index_submissions_on_callback_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_submissions_on_callback_step_id ON public.submissions USING btree (callback_step_id);
+
+
+--
+-- Name: index_submissions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_submissions_on_user_id ON public.submissions USING btree (user_id);
+
+
+--
+-- Name: index_submissions_on_user_id_and_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_submissions_on_user_id_and_uuid ON public.submissions USING btree (user_id, uuid);
+
+
+--
 -- Name: index_tasks_on_step_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1154,35 +1239,35 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
 
 
 --
 -- Name: pg_search_documents tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
+CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
 
 
 --
 -- Name: pg_search_documents tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
+CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
 
 
 --
 -- Name: pg_search_documents tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
 
 
 --
@@ -1242,11 +1327,27 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
+-- Name: submissions fk_rails_8999639afc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT fk_rails_8999639afc FOREIGN KEY (callback_step_id) REFERENCES public.steps(id) ON DELETE SET NULL;
+
+
+--
 -- Name: quick_tips fk_rails_8c50350cb1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.quick_tips
     ADD CONSTRAINT fk_rails_8c50350cb1 FOREIGN KEY (step_id) REFERENCES public.steps(id);
+
+
+--
+-- Name: submissions fk_rails_8d85741475; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT fk_rails_8d85741475 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -1323,6 +1424,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191209121011'),
 ('20200316102804'),
 ('20200316104715'),
-('20200919092214');
+('20200919092214'),
+('20210314221503'),
+('20210318070336'),
+('20210321133303'),
+('20210321172132'),
+('20210321181737');
 
 

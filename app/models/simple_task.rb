@@ -1,2 +1,0 @@
-class SimpleTask < Task
-end

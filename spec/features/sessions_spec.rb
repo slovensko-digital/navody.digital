@@ -29,6 +29,8 @@ RSpec.feature "Sessions" do
 
     click_on 'Prihlásiť sa e-mailom'
 
+    perform_enqueued_jobs
+
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
     magic_link = link_in_last_email
@@ -60,6 +62,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -132,6 +135,7 @@ RSpec.feature "Sessions" do
       clear_mail_deliveries
 
       click_on 'Prihlásiť sa e-mailom'
+      perform_enqueued_jobs
 
       expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -156,6 +160,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
@@ -183,6 +188,7 @@ RSpec.feature "Sessions" do
     clear_mail_deliveries
 
     click_on 'Prihlásiť sa e-mailom'
+    perform_enqueued_jobs
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
 
