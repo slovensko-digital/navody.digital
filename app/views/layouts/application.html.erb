@@ -29,6 +29,7 @@
 
 <body class="govuk-template__body">
 <div class="navody-template__content">
+  <%= content_for :render_async %>
   <%= javascript_include_tag 'iframe', 'data-turbolinks-track': 'reload' %>
   <script>
     document.body.classList.add('js-enabled');

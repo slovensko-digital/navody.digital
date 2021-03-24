@@ -1,0 +1,17 @@
+<% content_for :title, build_page_title('Všeobecné podanie', 'Podania') %>
+<% content_for :description, sanitize_description('Všeobecné podanie pomocou prihlásenia cez eID') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Všeobecné podanie</h1>
+    <p class="govuk-body-m">Formulár umožňuje odoslať všeobecné podanie pomocou prihlásenia cez eID.</p>
+    <%= form_for @general_agenda, builder: AppFormBuilder do |f| %>
+      <%= render 'components/error_summary', form: @general_agenda %>
+      <%= f.hidden_field :uuid %>
+      <%= f.text_field :recipient_uri, label: 'Príjemca' %>
+      <%= f.text_field :subject, label: 'Predmet' %>
+      <%= f.text_area :body, label: 'Obsah', rows: 10 %>
+      <%= render_async submit_submissions_general_agenda_path(@general_agenda), interval: 5.seconds.in_milliseconds, error_message: content_tag(:div, content_tag(:span, 'Niečo sa pokazilo', class: 'govuk-error-message'), class: 'govuk-form-group govuk-form-group--error') %>
+    <% end %>
+  </div>
+</div>

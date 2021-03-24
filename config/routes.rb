@@ -85,6 +85,21 @@ Rails.application.routes.draw do
   end
   resources :apps, path: 'aplikacie' # faux route
 
+  namespace :submissions, path: 'podania' do
+    resources :general_agendas, path: 'vseobecne-podanie', path_names: { new: '' }, only: [:new, :create] do
+      member do
+        get :submit
+      end
+    end
+
+    resources :obo_tokens, path: 'prihlasenie', only: [] do
+      member do
+        post :new, path: ''
+        get :create, path: ''
+      end
+    end
+  end
+
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
   end
