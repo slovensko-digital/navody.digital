@@ -5,5 +5,5 @@
   </div>
 </div>
 <div>
-  <%= link_to task.url_title || 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "snd-todo-list__link" %>
+  <%= link_to task.url_title.presence || 'Prejsť na službu', task.url, target: "_blank", draggable: false, class: "snd-todo-list__link" %>
 </div>
