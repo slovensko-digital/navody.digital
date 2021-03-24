@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  # legacy redirects
+  get '/contact-info', to: redirect('/kontakt')
+  get '/disclaimer', to: redirect('/podmienky-pouzivania')
+
   namespace :admin do
     root to: redirect('admin/pages')
 
