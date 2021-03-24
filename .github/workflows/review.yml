@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2        
         with:
-          ref: ${{ github.event.inputs.branch }}"
+          ref: ${{ github.event.inputs.branch }}
           fetch-depth: 0
           
       - name: Register deployment
