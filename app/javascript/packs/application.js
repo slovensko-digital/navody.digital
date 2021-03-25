@@ -28,10 +28,8 @@ function debounce(fn, delay) {
     };
 }
 
-document.addEventListener('turbolinks:load', function () {
-    // Initialize GovUK/Navody-frontend Javascript
-    initAll();
-
+function initAU() {
+    document.getElementById('submissions_general_agenda_recipient_name').parentElement.remove();
 
     accessibleAutocomplete({
         element: document.getElementById('recipient-name-container'),
@@ -60,4 +58,13 @@ document.addEventListener('turbolinks:load', function () {
         defaultValue: document.getElementById('recipient_name_default').value,
         tNoResults: () => 'Žiadne výsledky',
     })
+}
+
+document.addEventListener('turbolinks:load', function () {
+    // Initialize GovUK/Navody-frontend Javascript
+    initAll();
+
+    initAU();
 });
+
+window.initAU = initAU;

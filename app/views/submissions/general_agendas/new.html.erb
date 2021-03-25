@@ -1,24 +1,8 @@
 <% content_for :title, build_page_title('Všeobecná agenda', 'Podania') %>
 <% content_for :description, sanitize_description('Všeobecné podanie pomocou prihlásenia cez eID') %>
 
-
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= form_for @general_agenda, url: submissions_general_agenda_path, builder: AppFormBuilder do |f| %>
-      <h1 class="govuk-heading-l">Podanie: Všeobecná agenda</h1>
-      <p class="govuk-body-l">Pomocou tejto služby môžete zasielať správy orgánom verejnej moci.</p>
-      <%= render 'components/error_summary', form: @general_agenda %>
-      <div class="govuk-form-group">
-        <%= f.label :recipient_name, 'Príjimateľ', class: 'govuk-label' %>
-        <div id="recipient-name-container"></div>
-        <%= hidden_field_tag :recipient_name_default, @general_agenda.recipient_name %>
-      </div>
-
-      <%= f.hidden_field :recipient_uri %>
-      <%= f.text_field :subject, label: 'Predmet správy' %>
-      <%= f.text_area :body, label: 'Obsah', rows: 10 %>
-      <%= render partial: 'actions' %>
-    <% end %>
+    <%= render partial: 'form' %>
   </div>
 </div>

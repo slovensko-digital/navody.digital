@@ -107,6 +107,9 @@ Rails.application.routes.draw do
     resource :general_agenda, path: 'vseobecna-agenda', path_names: { new: '' }, only: [:new, :create] do
       get :login_callback
       get :switch_account_callback
+      post :new, path: ''
+      post :sign, path: 'podpisat'
+      post :submit, path: 'odoslat'
       post :continue, path: 'pokracovat'
       get :finish, path: 'hotovo'
     end

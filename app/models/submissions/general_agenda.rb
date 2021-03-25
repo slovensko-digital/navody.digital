@@ -7,8 +7,10 @@ class Submissions::GeneralAgenda
   attr_accessor :attachments
   attr_accessor :token
   attr_accessor :callback_url
+  attr_accessor :signed_form_base64
+  attr_accessor :require_signed_form
 
-  validates_presence_of :recipient_uri, message: 'Vyplňte príjemcu podania'
+  validates_presence_of :recipient_name, message: 'Vyplňte príjemcu podania', unless: -> { validation_context == :sign }
   validates_presence_of :subject, message: 'Vyplňte predmet podania'
   validates_presence_of :body, message: 'Vyplňte obsah podania'
   # TODO validate token using public key & expirity
@@ -27,6 +29,19 @@ class Submissions::GeneralAgenda
 
   def recipient_name
     @recipient_name ||= Datahub::Upvs::PublicAuthorityEdesk.where(uri: recipient_uri).pluck(:name).first
+  end
+
+  def form_signed?
+    !!signed_form
+  end
+
+  def signed_form
+    return nil unless @signed_form_base64.present?
+    @signed_form ||= Submissions::SignedForm.parse(@signed_form_base64)
+  end
+
+  def requires_signed_form?
+    true # TODO
   end
 
   private
