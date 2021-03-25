@@ -1,9 +1,9 @@
 <div id="submission-actions">
   <% if @general_agenda.token.present? %>
     <%= hidden_field_tag 'submissions_general_agenda[token]', @general_agenda.token %>
-    <%= submit_tag "Odoslať zo schránky #{@general_agenda.token_payload['name']}", class: 'govuk-button' %>
+    <%= submit_tag "Odoslať ako #{@general_agenda.token_payload['name']}", class: 'govuk-button' %>
     <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?callback=#{switch_account_callback_submissions_general_agenda_url}&token=#{@general_agenda.token}").to_s %>
-    <%= link_to 'Prihlásiť sa ako iný subjekt', url, target: :login, class: 'govuk-button govuk-link' %>
+    <%= link_to 'Prihlásiť sa ako iný subjekt', switch_account_callback_submissions_general_agenda_path, target: :login, class: 'govuk-button govuk-link' %>
   <% else %>
     <div class="govuk-inset-text">Aby ste mohli odoslať takéto podanie, <strong>musíte sa prihlásiť pomocou elektronického občianskeho preukazu (eID)</strong>. Ak neviete eID používať, prečítajte si <%= link_to 'návod na jeho aktiváciu', journey_path('aktivacia-eid') %>.</div>
     <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login?callback=#{login_callback_submissions_general_agenda_url}").to_s %>

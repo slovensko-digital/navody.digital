@@ -31,6 +31,12 @@ class Submissions::GeneralAgendasController < ApplicationController
     render layout: false # TODO show something nice
   end
 
+  def switch_account_callback
+    session.delete(:eid_token)
+    @general_agenda = Submissions::GeneralAgenda.new
+    render action: :login_callback, layout: false # TODO run logout/login flow
+  end
+
   private
 
   def load_general_agenda

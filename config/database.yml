@@ -6,13 +6,31 @@ default: &default
   pool: <%= ENV['RAILS_MAX_THREADS'] || 5 %>
 
 development:
-  <<: *default
-  database: navody_slovensko_digital_development
+  primary:
+    <<: *default
+    host: localhost
+    username: postgres
+    database: navody_slovensko_digital_development
+  datahub:
+    <<: *default
+    url: <%= ENV['DATAHUB_DATABASE_URL'] %>
 
 test:
-  <<: *default
-  database: navody_slovensko_digital_test
+  primary:
+    <<: *default
+    host: localhost
+    username: postgres
+    database: navody_slovensko_digital_test
+  datahub:
+    <<: *default
+    host: localhost
+    username: postgres
+    database: datahub_test
 
 production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  primary:
+    <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
+  datahub:
+    <<: *default
+    url: <%= ENV['DATAHUB_DATABASE_URL'] %>
