@@ -41,7 +41,7 @@ class Submissions::GeneralAgenda
   end
 
   def requires_signed_form?
-    true # TODO
+    @require_signed_form
   end
 
   private

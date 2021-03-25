@@ -1,4 +1,5 @@
 class Submissions::GeneralAgendasController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:new]
   before_action :load_general_agenda, only: [:new, :sign, :create, :submit, :continue]
 
   def new
@@ -66,6 +67,7 @@ class Submissions::GeneralAgendasController < ApplicationController
       :attachments,
       :token,
       :signed_form_base64,
+      :require_signed_form,
     ) if params.key?(:submissions_general_agenda)
   end
 end

@@ -1,4 +1,5 @@
 <%= form_with model: @general_agenda, url: submissions_general_agenda_path, id: :new_message, builder: AppFormBuilder do |f| %>
+  <%= f.hidden_field :token %>
   <h1 class="govuk-heading-l">Podanie: Všeobecná agenda</h1>
   <p class="govuk-body-l">Pomocou tejto služby môžete zasielať správy orgánom verejnej moci.</p>
   <%= render 'components/error_summary', form: @general_agenda %>
@@ -21,7 +22,7 @@
             <h2 class="govuk-heading-m">Podpísaná správa&nbsp;&#128271;</h2>
             <p class="govuk-hint"><strong>Podpísané správy sa nedajú jednoducho upravovať.</strong> Ak správu chcete upraviť, musíte <%= link_to 'odstrániť všetky podpisy', nil, { class: 'govuk-link', data: { controller: :eid, action: 'click->eid#confirmRemoveSignatures', 'eid-confirm-value': 'Chcete podpisy odstrániť?' } } %>, správu zmeniť a&nbsp;potom ju opäť podpísať.</p>
             <%= f.text_field :subject, label: 'Predmet', class: 'govuk-input--disabled', autocomplete: :off, data: { controller: :eid, action: 'click->eid#confirmRemoveSignatures' } %>
-            <%= f.text_area :body, label: 'Obsah', rows: 10, class: 'govuk-input--disabled', autocomplete: :off, data: { controller: :eid, action: 'click->eid#confirmRemoveSignatures' } %>
+            <%= f.text_area :body, label: 'Obsah', rows: 6, class: 'govuk-input--disabled', autocomplete: :off, data: { controller: :eid, action: 'click->eid#confirmRemoveSignatures' } %>
           </div>
         </div>
         <% @general_agenda.signed_form.signatures.each do |signature| %>
@@ -35,7 +36,7 @@
     <div class="govuk-form-group">
       <h2 class="govuk-heading-m">Správa</h2>
       <%= f.text_field :subject, label: 'Predmet' %>
-      <%= f.text_area :body, label: 'Obsah', rows: 10 %>
+      <%= f.text_area :body, label: 'Obsah', rows: 6 %>
     </div>
   <% end %>
 
