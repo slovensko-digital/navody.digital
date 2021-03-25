@@ -8,8 +8,6 @@ default: &default
 development:
   primary:
     <<: *default
-    host: localhost
-    username: postgres
     database: navody_slovensko_digital_development
   datahub:
     <<: *default
@@ -18,13 +16,9 @@ development:
 test:
   primary:
     <<: *default
-    host: localhost
-    username: postgres
     database: navody_slovensko_digital_test
   datahub:
     <<: *default
-    host: localhost
-    username: postgres
     database: datahub_test
 
 production:
