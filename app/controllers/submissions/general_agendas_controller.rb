@@ -45,7 +45,7 @@ class Submissions::GeneralAgendasController < ApplicationController
 
   def switch_account_callback
     session.delete(:eid_token)
-    @general_agenda = Submissions::GeneralAgenda.new
+    @token = nil
     render action: :login_callback, layout: false # TODO run logout/login flow
   end
 
