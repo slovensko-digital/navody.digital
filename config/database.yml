@@ -12,6 +12,7 @@ development:
   datahub:
     <<: *default
     url: <%= ENV['DATAHUB_DATABASE_URL'] %>
+    replica: true
 
 test:
   primary:
@@ -20,6 +21,7 @@ test:
   datahub:
     <<: *default
     database: datahub_test
+    replica: true
 
 staging:
   primary:
@@ -28,6 +30,7 @@ staging:
   datahub:
     <<: *default
     url: <%= ENV['DATAHUB_DATABASE_URL'] %>
+    replica: true
 
 production:
   primary:
@@ -36,3 +39,4 @@ production:
   datahub:
     <<: *default
     url: <%= ENV['DATAHUB_DATABASE_URL'] %>
+    replica: true
