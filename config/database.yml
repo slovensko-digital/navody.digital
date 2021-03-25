@@ -21,6 +21,14 @@ test:
     <<: *default
     database: datahub_test
 
+staging:
+  primary:
+    <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
+  datahub:
+    <<: *default
+    url: <%= ENV['DATAHUB_DATABASE_URL'] %>
+
 production:
   primary:
     <<: *default
