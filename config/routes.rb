@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get :health, to: 'health#index'
+  get 'robots.:format', to: 'robots#index'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

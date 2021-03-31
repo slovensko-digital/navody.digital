@@ -13,6 +13,6 @@ module Clockwork
     Rake::Task[name].invoke
   end
 
-  every(1.week, 'sitemap:refresh', at: 'Monday 9:00')
+  every(1.week, 'sitemap:refresh', at: 'Monday 9:00') if Rails.env.production?
   every(20.minutes, 'navody:cleanup')
 end
