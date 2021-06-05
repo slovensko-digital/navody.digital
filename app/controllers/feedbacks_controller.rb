@@ -2,6 +2,7 @@ require "uri"
 require "net/http"
 
 class FeedbacksController < ApplicationController
+  
   def create
     respond_to do |format|
       if verify_recaptcha
@@ -13,6 +14,7 @@ class FeedbacksController < ApplicationController
           'entry.1623207670': params[:bug_what_were_you_doing],
           'entry.480582804': params[:bug_what_went_wrong],
         })
+        ReportFeedbackLepsieSluzbyJob.perform_later(feedback_params)
         @message = 'Váš podnet bol odoslaný. Ďakujeme.'
       else
         @message = 'Prosím, potvrďte, že nie ste robot.'
@@ -20,4 +22,11 @@ class FeedbacksController < ApplicationController
       format.js
     end
   end
+
+  private
+  
+  def feedback_params
+    params.permit(:current_path, :feedback_type, :email, :bug_what_were_you_doing, :bug_what_went_wrong)
+  end
+
 end
