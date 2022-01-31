@@ -14,10 +14,30 @@
 //= require jquery
 //= require activestorage
 //= require turbolinks
+//= require cookieconsent.min
 //= require newsletter_sign_up
 //= require jscookie
 
 $(document).on("turbolinks:load", function () {
+  // Initialize Cookie Bar
+  window.cookieconsent.initialise({
+    palette: {
+      popup: {
+        background: "#1d1e21",
+      },
+      button: {
+        background: "#4cae18",
+      },
+    },
+    theme: "classic",
+    content: {
+      message:
+        "Tento web používa súbory cookie na poskytovanie služieb. Súhlasím.",
+      dismiss: "OK",
+    },
+    showLink: false,
+  });
+
   var activeTopicClose = document.querySelector(".js__active-topic-close");
   if (activeTopicClose) {
     activeTopicClose.addEventListener("click", function (e) {
