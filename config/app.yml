@@ -5,7 +5,6 @@ default: &default
   admin:
     username: <%= ENV.fetch('ADMIN_USERNAME', 'admin') %>
     password: <%= ENV.fetch('ADMIN_PASSWORD', 'admin') %>
-  google_analytics_id: <%= ENV.fetch('GOOGLE_ANALYTICS_ID', '') %>
 
 development:
   <<: *default
