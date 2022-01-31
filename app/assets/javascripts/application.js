@@ -32,8 +32,8 @@ $(document).on("turbolinks:load", function () {
     theme: "classic",
     content: {
       message:
-        "Tento web používa súbory cookie na poskytovanie služieb. Súhlasím.",
-      dismiss: "OK",
+        "Tento web používa súbory cookie na poskytovanie služieb.",
+      dismiss: "Súhlasím",
     },
     showLink: false,
   });
