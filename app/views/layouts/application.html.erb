@@ -4,7 +4,6 @@
   <title><%= content_for?(:title) ? yield(:title) : 'Návody.Digital' %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= render partial: 'shared/gtm_head' %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0c0c"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -21,10 +20,10 @@
   <%= stylesheet_pack_tag 'application' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script defer data-domain="navody.digital" src="https://plausible.io/js/plausible.js"></script>
 </head>
 
 <body class="govuk-template__body">
-<%= render partial: 'shared/gtm_body' %>
 <div class="navody-template__content">
   <%= javascript_include_tag 'iframe', 'data-turbolinks-track': 'reload' %>
   <script>
@@ -65,7 +64,6 @@
 <div class="navody-template__footer">
   <%= render 'components/footer' %>
 </div>
-<%= render 'shared/google_analytics' %>
 
 <% if content_for?(:json_ld) %>
   <script type="application/ld+json">

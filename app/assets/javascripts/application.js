@@ -16,7 +16,6 @@
 //= require turbolinks
 //= require cookieconsent.min
 //= require newsletter_sign_up
-//= require google_analytics
 //= require jscookie
 
 $(document).on("turbolinks:load", function () {
@@ -33,8 +32,8 @@ $(document).on("turbolinks:load", function () {
     theme: "classic",
     content: {
       message:
-        "Tento web používa súbory cookie na poskytovanie služieb a analýzu webu. Používaním tohto webu vyjadrujete svoj súhlas s používaním súborov cookie.",
-      dismiss: "OK",
+        "Tento web používa súbory cookie na poskytovanie služieb.",
+      dismiss: "Súhlasím",
     },
     showLink: false,
   });
