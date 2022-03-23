@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'Images' %>
+
+<p>Images are stored and served on <a href="<%= ActiveStorage::Blob.service.bucket.url %>">this Amazon S3<a>.</p>
+
+<%= link_to 'Upload New Image', new_admin_image_path, class: 'govuk-button' %>
