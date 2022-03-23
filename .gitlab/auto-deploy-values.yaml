@@ -3,11 +3,11 @@ service:
   internalPort: 3000
 livenessProbe.initialDelaySeconds: 20
 readinessProbe.initialDelaySeconds: 20 
-application.migrateCommand: ["rake", "db:migrate"]
+application.migrateCommand: ["bundle", "exec", "rails", "assets:precompile", "db:migrate"]
 workers:
   clock:
     replicaCount: "1"
-    command: ["bundle", "exec", "rails", "assets:precompile", "db:migrate"]
+    command: ["bundle", "exec", "clockwork", "config/clock.rb"]
     terminationGracePeriodSeconds:  60
     livenessProbe:
       initialDelaySeconds: 5
