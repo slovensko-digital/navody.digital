@@ -1,0 +1,39 @@
+service:
+  externalPort: 3000
+  internalPort: 3000
+livenessProbe.initialDelaySeconds: 20
+readinessProbe.initialDelaySeconds: 20 
+application.migrateCommand: ["rake", "db:migrate"]
+workers:
+  clock:
+    replicaCount: "1"
+    command: ["bundle", "exec", "rails", "assets:precompile", "db:migrate"]
+    terminationGracePeriodSeconds:  60
+    livenessProbe:
+      initialDelaySeconds: 5
+      timeoutSeconds: 10
+      probeType: "exec"
+      command:
+        - "pgrep"
+        - "bundle"
+    readinessProbe:
+      probeType: "exec"
+      command:
+        - "pgrep"
+        - "bundle"
+  worker:
+    replicaCount: "1"
+    command: ["bundle", "exec", "que", "-w1", "./config/environment.rb"]
+    terminationGracePeriodSeconds:  60
+    livenessProbe:
+      initialDelaySeconds: 5
+      timeoutSeconds: 10
+      probeType: "exec"
+      command:
+        - "pgrep"
+        - "bundle"
+    readinessProbe:
+      probeType: "exec"
+      command:
+        - "pgrep"
+        - "bundle"
