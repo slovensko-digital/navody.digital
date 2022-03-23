@@ -3,7 +3,7 @@ service:
   internalPort: 3000
 livenessProbe.initialDelaySeconds: 20
 readinessProbe.initialDelaySeconds: 20 
-application.migrateCommand: ["bundle", "exec", "rails", "assets:precompile", "db:migrate"]
+application.migrateCommand: ["bundle", "exec", "rails", "db:migrate"]
 workers:
   clock:
     replicaCount: "1"
