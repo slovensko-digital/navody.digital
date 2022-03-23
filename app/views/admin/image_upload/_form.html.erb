@@ -1,0 +1,8 @@
+<%= form_with(url: "/admin/image_upload", multipart: false, builder: AdminFormBuilder) do |form| %>
+  <%= form.file_field :picture %>
+  <%= form.text_field :picture_name %>
+  
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

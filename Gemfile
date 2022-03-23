@@ -30,6 +30,7 @@ gem 'jbuilder'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+gem "image_processing", ">= 1.2"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -46,6 +47,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pry-rails'
 
 gem 'aws-sdk-rails'
+gem "aws-sdk-s3", require: false
 
 gem 'rollbar'
 gem 'oj' # needed by rollbar

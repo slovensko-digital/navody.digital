@@ -57,6 +57,10 @@
             <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'UserJourneys', admin_user_journeys_path, class: 'govuk-header__link' %>
             </li>
+            <% klass = current_page?(admin_image_upload_index_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
+              <%= link_to 'ImageUpload', admin_image_upload_index_path, class: 'govuk-header__link' %>
+            </li>
             <% klass = request.fullpath.include?(admin_current_topics_path) ? '--active' : '' %>
             <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'CurrentTopics', admin_current_topics_path, class: 'govuk-header__link' %>
