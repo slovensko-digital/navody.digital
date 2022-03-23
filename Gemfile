@@ -35,7 +35,7 @@ gem "image_processing", ">= 1.2"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'que', github: 'chanks/que' # https://github.com/chanks/que/issues/253
+gem 'que'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
