@@ -1,0 +1,15 @@
+<div class="govuk-form-group">
+<%= form_with(url: "/admin/uploads", multipart: false) do |form| %>
+  <label class="govuk-label" for="event-name">File</label>
+  <%= form.file_field :file, class: 'govuk-file-upload govuk-form-group' %>
+  
+  <label class="govuk-label" for="event-name">Filename</label>
+  <% if notice.present? then %>
+    <%= form.text_field :file_name, class: 'govuk-input govuk-form-group govuk-input--error' %>
+  <% else %>
+    <%= form.text_field :file_name, class: 'govuk-input govuk-form-group' %>
+  <% end %>
+  
+  <%= form.submit 'Upload File', class: 'govuk-button govuk-form-group' %>
+<% end %>
+</div>
