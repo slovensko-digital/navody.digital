@@ -1,8 +1,10 @@
-<%= form_with(url: "/admin/images", multipart: false, builder: AdminFormBuilder) do |form| %>
-  <%= form.file_field :picture %>
-  <%= form.text_field :picture_name %>
+<%= form_with(url: "/admin/images", multipart: false) do |form| %>
+  <%= form.file_field :picture, class: 'govuk-file-upload govuk-form-group' %>
+  <% if notice.present? then %>
+    <%= form.text_field :picture_name, class: 'govuk-input govuk-form-group govuk-input--error' %>
+  <% else %>
+    <%= form.text_field :picture_name, class: 'govuk-input govuk-form-group' %>
+  <% end %>
   
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit 'Upload', class: 'govuk-button govuk-form-group' %>
 <% end %>

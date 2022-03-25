@@ -1,6 +1,6 @@
 class AdminFormBuilder < ActionView::Helpers::FormBuilder
   def text_field(method, options = {})
-    # has_errors = @object.errors[method].any?
+    has_errors = @object.errors[method].any?
     has_errors = false
 
     @template.content_tag(:div, class: 'govuk-form-group' + (has_errors ? ' govuk-form-group--error' : '')) do
@@ -57,17 +57,6 @@ class AdminFormBuilder < ActionView::Helpers::FormBuilder
       @template.label(:label, method, class: 'govuk-label') +
         (has_errors ? @template.content_tag(:span, @object.errors.full_messages_for(method).join(''), class: 'govuk-error-message') : '') +
         super(method, options.merge({ class: 'govuk-input' + (has_errors ? ' govuk-input--error' : '') }))
-    end
-  end
-
-  def file_field(method, options = {})
-    # has_errors = @object.errors[method].any?
-    has_errors = false
-
-    @template.content_tag(:div, class: 'govuk-form-group' + (has_errors ? ' govuk-form-group--error' : '')) do
-      @template.label(:label, method, class: 'govuk-label') +
-        (has_errors ? @template.content_tag(:span, @object.errors.full_messages_for(method).join(''), class: 'govuk-error-message') : '') +
-        super(method, options.merge({ class: 'govuk-button' + (has_errors ? ' govuk-input--error' : '') }))
     end
   end
 
