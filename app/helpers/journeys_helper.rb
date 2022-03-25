@@ -4,7 +4,7 @@ module JourneysHelper
       '@context' => 'http://schema.org',
       '@type' => 'HowTo',
       'description' => sanitize_description(journey.description).to_str,
-      'image' => image_url("journeys/#{@journey.image_name.presence || "placeholder.png" }"),
+      'image' => journey.image_name,
       'name' => journey.title,
       'step' => journey.steps.map.with_index(1) do |step, idx|
         {

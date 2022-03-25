@@ -8,7 +8,7 @@ class JourneysController < ApplicationController
 
     load_newest_user_journey(current_user, @journey)
 
-    @metadata.og.image = "journeys/#{@journey.image_name.presence || "placeholder.png" }"
+    @metadata.og.image = @journey.image_name
   end
 
   private def redirect_inactive_eu_application

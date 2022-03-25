@@ -15,7 +15,7 @@
   <meta property="og:url" content="<%= request.original_url %>"/>
   <meta property="og:title" content="<%= @metadata.og.title.presence || yield(:title) %>"/>
   <meta property="og:description" content="<%= @metadata.og.description.presence || yield(:description) %>"/>
-  <meta property="og:image" content="<%= @metadata.og.image.present? ? image_url(@metadata.og.image) : image_url('og-navody.png') %>"/>
+  <meta property="og:image" content="<%= @metadata.og.image %>"/>
   <%= javascript_pack_tag 'application' %>
   <%= stylesheet_pack_tag 'application' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
