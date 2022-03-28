@@ -25,7 +25,7 @@ RUN bundle install
 # Cache everything
 COPY . .
 
-RUN bundle exec rake assets:precompile
+RUN SECRET_KEY_BASE=NONE RAILS_ENV=production rails assets:precompile
 
 # Run application by default
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
