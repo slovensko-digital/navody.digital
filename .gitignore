@@ -36,6 +36,7 @@
 
 # Ignore IDE metadata
 /.idea
+.vscode/
 
 # Ignore coverage
 /coverage
