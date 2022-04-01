@@ -1,7 +1,7 @@
 Webdrivers::Chromedriver.update
 
 Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(options: { args: %w(headless disable-gpu disable-logging) })
+  options = Selenium::WebDriver::Chrome::Options.new(options: { args: %w(headless disable-gpu disable-logging no-sandbox) })
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
