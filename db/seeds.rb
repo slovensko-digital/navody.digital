@@ -69,7 +69,7 @@ step = journey.steps.create!(
 step.tasks.create!(
   title: "Vyplňte formulár",
   type: "ExternalLinkTask",
-  url: "https://navody.digital.sk"
+  url: "https://navody.digital.sk/seeded-fill-form-link"
 )
 
 step.tasks.create!(
@@ -104,8 +104,8 @@ step.tasks.create!(
   type: "SimpleTask",
 )
 
-# CurrentTopic.create!(
-#   key: 'Brexit',
-#   value: 'A Brexit deal has been agreed but needs to be ratified',
-#   enabled: true
-# )
+CurrentTopic.create!(
+  # key: 'Brexit',
+  body: 'A Brexit deal has been agreed but needs to be ratified',
+  enabled: true
+)
