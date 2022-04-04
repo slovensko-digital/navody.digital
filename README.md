@@ -8,9 +8,11 @@
 
 Master ide automaticky na [staging.navody.digital](https://staging.navody.digital)
 
-### Setup
+### Neprogramátorské úlohy
 
-#### OSX (homebrew)
+- [Wishlist ďalších návodov na spracovanie a úpravu, eventy a ďalší progress](https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital)
+
+### Setup OSX (homebrew)
 
  - `brew install postgresql`
  - `brew services start postgresql`
@@ -18,13 +20,37 @@ Master ide automaticky na [staging.navody.digital](https://staging.navody.digita
  - `yarn install`
  - `cp .env.sample .env`
  - `bin/setup`
- - `bin/rails s`
 
-#### Test
+### Setup vo VS Code Remote Containers
 
- - `bin/rails db:setup`
- - `bin/rake`
+_Najjednoduchší spôsob rozbehania projektu. Úplne rovnako potom funguje v GitHub Codespace. [Link na ich docs](https://code.visualstudio.com/docs/remote/containers)_
 
-### Neprogramátorské úlohy
+#### Prerekvizity:
 
-- [Wishlist ďalších návodov na spracovanie a úpravu, eventy a ďalší progress](https://trello.com/b/4tkVI6vr/n%C3%A1vodydigital)
+- `Linux` -> `docker` a `docker-compose 1.21+`.
+- `Windows/MacOS` -> `Docker Desktop 2.0+`
+- Visual Studio Code
+- Vo VS Code rozšírenie [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+#### Setup
+
+- Otvoriť projekt vo VS Code
+- `View -> Command Palette`
+- vyhľadať a vybrať `>Remote-Containers: Open in Container`
+
+Prvýkrát sa musí postaviť docker image a vytvoriť docker kontajner, takže to môže s inštaláciou balíčkov trvať aj 5 minút. Ďalšie spustenia už potom trvajú rádovo pár sekúnd.
+
+Vo VS Code je možné používať klasiký linuxový terminál vo vnútri kontajnera alebo si vytvoriť `Run and Debug` konfiguráciu pre rails server, ktorá umožní používanie debugera,
+
+### Spustenie:
+
+- `bin/rails s`
+
+_Stránka rovnako dostupná na http://localhost:3000_
+
+### Test:
+
+- `bin/rails db:setup`
+- `bin/rake`
+
+_Ten db:setup stačí zavolať iba raz. Pri opakovaných testoch stačí už iba `bin/rake`._
