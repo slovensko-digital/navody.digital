@@ -13,7 +13,7 @@
             <div class="sdn-tiles">
               <% @documents.each do |searchable| %>
                 <%= link_to searchable, class: 'sdn-tiles__item sdn-tile' do %>
-                  <%= image_tag searchable.image_name, :onerror => "this.src='assets/journeys/placeholder.png'", class: 'sdn-tile__image' %>
+                  <%= image_tag(searchable.image_name, :onerror => "this.src='assets/placeholder.png'", class: 'sdn-tile__image') rescue image_tag('placeholder.png', class: 'sdn-tile__image') %>
                   <span class="sdn-tile__content sdn-tile-content-text-block">
                     <span class="sdn-tile-content-text-block__item"><%= searchable.title %></span>
                   </span>

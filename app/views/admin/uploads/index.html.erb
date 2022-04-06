@@ -23,7 +23,7 @@
     <% @files.each do |file| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= file.key %></td>
-        <td class="govuk-table__cell"><%= link_to 'Link to file', local_storage? ? url_for(file) : file.public_url %></td>
+        <td class="govuk-table__cell"><%= link_to 'Link to file', UploadsService.get_url(file) %></td>
         <td class="govuk-table__cell"><%= link_to 'Delete', admin_upload_path(file.key), method: :delete, data: { confirm: 'Are you sure you want to delete file: ' + file.key + '?' } %></td>
       </tr>
     <% end %>

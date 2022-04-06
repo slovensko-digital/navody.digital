@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
     end
     resources :user_journeys
-    resources :uploads, except: [:show]
+    resources :uploads, except: [:show, :update, :edit]
   end
 
   root to: 'pages#index'
