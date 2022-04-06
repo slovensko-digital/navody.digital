@@ -11,7 +11,7 @@ class UploadsService
           ActiveStorage::Blob.service.bucket.objects(prefix: prefix)
       end
     end
-    
+
     def get_url(file)
       if local_storage? then
         Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)

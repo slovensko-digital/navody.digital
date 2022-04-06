@@ -1,11 +1,7 @@
 class Admin::UploadsController < Admin::AdminController
   # GET /admin/uploads
   def index
-    if params[:prefix].present?
-      @files = UploadsService.get_files(prefix: params[:prefix])
-    else
-      @files = UploadsService.get_files()
-    end
+    @files = UploadsService.get_files(prefix: params[:prefix])
   end
 
   # POST /admin/uploads

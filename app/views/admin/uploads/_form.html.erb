@@ -2,11 +2,11 @@
 <%= form_with(url: "/admin/uploads", multipart: false) do |form| %>
   <label class="govuk-label" for="event-name">File</label>
   <%= form.file_field :file, class: 'govuk-file-upload govuk-form-group' %>
-  
+
   <label class="govuk-label" for="event-name">Filename</label>
   <div id="event-name-hint" class="govuk-hint">If blank, original filename is used</div>
   <%= form.text_field :file_name, class: notice.present? ? 'govuk-input govuk-form-group govuk-input--error' : 'govuk-input govuk-form-group' %>
-  
+
   <%= form.submit 'Upload File', class: 'govuk-button govuk-form-group' %>
 <% end %>
 </div>
