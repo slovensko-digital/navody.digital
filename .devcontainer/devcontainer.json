@@ -1,0 +1,29 @@
+{
+	"name": "Ruby on Rails & Postgres",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { },
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"rebornix.Ruby",
+		"ckolkman.vscode-postgres"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or the host.
+	"forwardPorts": [3000],
+	// No automatic port forwarding
+	"otherPortsAttributes": {
+		"onAutoForward": "ignore"
+	},
+
+	"postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
+	"postStartCommand": "sudo service postgresql start",
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
