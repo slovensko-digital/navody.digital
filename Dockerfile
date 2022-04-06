@@ -1,4 +1,4 @@
-FROM ruby:2.7.4
+FROM ruby:2.7.5
 
 # Install packages
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
