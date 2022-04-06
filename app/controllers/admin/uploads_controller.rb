@@ -11,7 +11,7 @@ class Admin::UploadsController < Admin::AdminController
   # POST /admin/uploads
   def create
     file = params[:file]
-    file_name = params[:file_name].blank? ? file.original_filename : params[:file_name]
+    file_name = params[:file_name].presence || file.original_filename
     file_name.gsub!(/[.](?=.*[.])/, '_')
 
     if ActiveStorage::Blob.service.exist?(file_name) then

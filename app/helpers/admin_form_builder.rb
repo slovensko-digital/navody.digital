@@ -1,7 +1,6 @@
 class AdminFormBuilder < ActionView::Helpers::FormBuilder
   def text_field(method, options = {})
     has_errors = @object.errors[method].any?
-    has_errors = false
 
     @template.content_tag(:div, class: 'govuk-form-group' + (has_errors ? ' govuk-form-group--error' : '')) do
       @template.label(:label, method, class: 'govuk-label') +

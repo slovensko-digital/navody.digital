@@ -14,8 +14,4 @@ module ApplicationHelper
   def sanitize_description(description, length: 500)
     truncate(strip_tags(description), length: length)
   end
-
-  def local_storage?
-    not ActiveStorage::Blob.service.respond_to? :bucket
-  end
 end
