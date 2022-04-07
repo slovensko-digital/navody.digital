@@ -1,7 +1,7 @@
 class Admin::UploadsController < Admin::AdminController
   # GET /admin/uploads
   def index
-    @files = UploadsService.get_files(prefix: params[:prefix])
+    @files = UploadsService.find_files(prefix: params[:prefix])
   end
 
   # POST /admin/uploads
