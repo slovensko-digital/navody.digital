@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'CalendarNotifications' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="col">Name</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @calendar_notifications.each do |calendar_notification| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= calendar_notification.name %></td>
+      <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_calendar_notification_path(calendar_notification) %></td>
+      <td class="govuk-table__cell"><%= link_to 'Destroy', admin_calendar_notification_path(calendar_notification), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New CalendarNotification', new_admin_calendar_notification_path, class: 'govuk-button' %>

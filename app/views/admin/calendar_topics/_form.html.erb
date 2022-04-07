@@ -1,0 +1,13 @@
+<%= form_with(model: [:admin, calendar_topic], local: true, builder: AdminFormBuilder) do |form| %>
+  <%# if notification_template.errors.any? %>
+<!--    <div id="error_explanation">-->
+<!--      <h2><%#= pluralize(notification_template.errors.count, "error") %> prohibited this notification template from being saved</h2>-->
+<!--    </div>-->
+  <%# end %>
+
+  <%= form.text_field :name %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

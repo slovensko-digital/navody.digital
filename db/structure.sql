@@ -307,7 +307,7 @@ ALTER SEQUENCE public.calendar_entries_id_seq OWNED BY public.calendar_entries.i
 CREATE TABLE public.calendar_notifications (
     id bigint NOT NULL,
     calendar_topic_id bigint NOT NULL,
-    step_id bigint NOT NULL,
+    step_id bigint,
     name character varying NOT NULL,
     description character varying,
     type character varying NOT NULL,

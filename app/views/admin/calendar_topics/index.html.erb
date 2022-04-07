@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'CalendarTopics' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+  <tr class="govuk-table__row">
+    <th class="govuk-table__header" scope="col">Name</th>
+  </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+  <% @calendar_topics.each do |calendar_topic| %>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= calendar_topic.name %></td>
+      <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_calendar_topic_path(calendar_topic) %></td>
+      <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, calendar_topic], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New CalendarTopic', new_admin_calendar_topic_path, class: 'govuk-button' %>

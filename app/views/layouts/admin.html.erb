@@ -61,6 +61,14 @@
             <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'CurrentTopics', admin_current_topics_path, class: 'govuk-header__link' %>
             </li>
+            <% klass = request.fullpath.include?(admin_calendar_notifications_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
+              <%= link_to 'CalendarNotifications', admin_calendar_notifications_path, class: 'govuk-header__link' %>
+            </li>
+            <% klass = request.fullpath.include?(admin_calendar_topics_path) ? '--active' : '' %>
+            <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
+              <%= link_to 'CalendarTopics', admin_calendar_topics_path, class: 'govuk-header__link' %>
+            </li>
           </ul>
         </nav>
       </div>
