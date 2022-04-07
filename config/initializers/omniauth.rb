@@ -14,6 +14,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       UserMailer.with(email: email, token: token).magic_link.deliver_later
     }
   }
-  provider :eid
+  provider :eid, {
+    url: Rails.application.config_for(:auth).dig(:eid, :url),
+    public_key: Rails.application.config_for(:auth).dig(:eid, :public_key),
+  }
 end
 
