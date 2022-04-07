@@ -10,9 +10,11 @@ module OmniAuth
 
       option :fields, [:sub]
       option :uid_field, :sub
+      option :auth_url
+      option :public_key
 
       def request_phase
-        redirect 'https://slovensko-sk-api.ekosystem.slovensko.digital/login'
+        redirect auth_url
       end
 
       def callback_phase
@@ -42,9 +44,17 @@ module OmniAuth
       private
 
       def parse_token(token)
-        # TODO: enable verification back
-        JWT.decode(token, nil, false, algorithms: ['RS256'])
+        JWT
+          .decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
           &.first
+      end
+
+      def auth_url
+        options[:url]
+      end
+
+      def public_key
+        options[:public_key]
       end
     end
   end
