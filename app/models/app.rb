@@ -2,6 +2,9 @@ class App < ApplicationRecord
   include Enums
   include Searchable
 
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   scope :published, -> { where(published_status: 'PUBLISHED')}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
@@ -32,6 +35,10 @@ class App < ApplicationRecord
 
   def description_search
     join_search([html_to_search_str(description)])
+  end
+
+  def should_generate_new_friendly_id?
+    slug.blank? && !title.blank?
   end
 
   private

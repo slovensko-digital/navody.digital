@@ -2,6 +2,9 @@ class Journey < ApplicationRecord
   include Enums
   include Searchable
 
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   before_save :update_steps_search
 
   scope :published, -> { where(published_status: 'PUBLISHED')}
@@ -67,6 +70,10 @@ class Journey < ApplicationRecord
       step.position = index + 1
       step.save
     end
+  end
+
+  def should_generate_new_friendly_id?
+    slug.blank? && !title.blank?
   end
 
   private
