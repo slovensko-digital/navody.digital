@@ -772,7 +772,8 @@ CREATE TABLE public.users (
     id bigint NOT NULL,
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    eid_sub character varying
 );
 
 
@@ -1207,6 +1208,13 @@ CREATE INDEX index_user_tasks_on_user_step_id ON public.user_tasks USING btree (
 
 
 --
+-- Name: index_users_on_eid_sub; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_eid_sub ON public.users USING btree (eid_sub);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1444,6 +1452,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321133303'),
 ('20210321172132'),
 ('20210321181737'),
-('20220322180237');
+('20220322180237'),
+('20220407131258');
 
 
