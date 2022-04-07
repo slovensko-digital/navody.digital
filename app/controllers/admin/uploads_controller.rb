@@ -10,7 +10,7 @@ class Admin::UploadsController < Admin::AdminController
     file_name = params[:file_name].presence || file.original_filename
     file_name.gsub!(/[.](?=.*[.])/, '_')
 
-    if ActiveStorage::Blob.service.exist?(file_name) then
+    if ActiveStorage::Blob.service.exist?(file_name)
       redirect_to new_admin_upload_path, notice: 'Upload failed. File with name: ' + file_name + ' already exists.'
     else
       blob = ActiveStorage::Blob.create_and_upload!(io: file, key: file_name, filename: file_name)
@@ -23,7 +23,7 @@ class Admin::UploadsController < Admin::AdminController
   def destroy
     filename = params[:format] ? params[:id] + '.' +  params[:format] : params[:id]
 
-    if ActiveStorage::Blob.service.exist?(filename) then
+    if ActiveStorage::Blob.service.exist?(filename)
       UploadsService.delete_file(filename)
       redirect_to admin_uploads_path, notice: 'File was successfully deleted.'
     else

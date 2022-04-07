@@ -5,15 +5,17 @@ class UploadsService
     end
 
     def get_files(prefix: nil)
-      if local_storage? then
-          ActiveStorage::Blob.all
+      if local_storage?
+        scope = ActiveStorage::Blob
+        scope = scope.where('key ILIKE ?', "#{prefix}%") if prefix
+        scope.all
       else
           ActiveStorage::Blob.service.bucket.objects(prefix: prefix)
       end
     end
 
     def get_url(file)
-      if local_storage? then
+      if local_storage?
         Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)
       else
         file.public_url
@@ -21,7 +23,7 @@ class UploadsService
     end
 
     def get_url_for_blob(blob)
-      if local_storage? then
+      if local_storage?
         Rails.application.routes.url_helpers.rails_blob_path(blob, only_path: true)
       else
         blob.service.bucket.url + '/' + blob.key
@@ -29,7 +31,7 @@ class UploadsService
     end
 
     def delete_file(filename)
-      if local_storage? then
+      if local_storage?
         ActiveStorage::Blob.find_by(key: filename).purge
       else
         temp = ActiveStorage::Blob.find_by(key: filename)
