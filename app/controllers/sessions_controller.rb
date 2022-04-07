@@ -6,6 +6,12 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if auth_hash.provider == "eid" && auth_hash.info['email'].nil?
+      session[:eid_uid] = auth_hash.uid
+      redirect_to new_eid_onboarding_path
+      return
+    end
+
     redirect_to new_session_path, alert: 'Prosím zadajte e-mail' and return unless auth_email.present?
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
