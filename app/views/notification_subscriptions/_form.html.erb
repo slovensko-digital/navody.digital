@@ -46,7 +46,7 @@
     <%= submit_tag 'Chcem dostávať tieto notifikácie', class: 'govuk-button' %>
   </div>
 
-  <% if current_user %>
+  <% if current_user.logged_in? %>
     <p>
       <%= link_to 'Odkaz na kalendár vo formáte iCal', calendar_url(format: 'ics', cal_id: current_user.signed_id(purpose: :calendar)) %>
     </p>
