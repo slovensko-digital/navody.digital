@@ -12,7 +12,7 @@ echo "Bundle install..."
 bundle install
 echo "Done."
 
-echo "Installing JavaScript dependencies..."
+echo "Yarn install..."
 yarn install
 echo "Done."
 

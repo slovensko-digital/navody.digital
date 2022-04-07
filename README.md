@@ -34,6 +34,7 @@ _Najjednoduchší spôsob rozbehania projektu. Úplne rovnako potom funguje v Gi
 
 #### Setup
 
+- `cp .env.sample .env`
 - Otvoriť projekt vo VS Code
 - `View -> Command Palette`
 - vyhľadať a vybrať `>Remote-Containers: Reopen in Container`
