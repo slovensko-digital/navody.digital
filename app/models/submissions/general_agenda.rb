@@ -2,8 +2,8 @@ class Submissions::GeneralAgenda
   include ActiveModel::Model
 
   attr_accessor :recipient_uri
-  attr_accessor :subject
-  attr_accessor :body
+  attr_accessor :content
+  attr_accessor :identifier
   attr_accessor :attachments
   attr_accessor :token
   attr_accessor :callback_url
@@ -11,8 +11,8 @@ class Submissions::GeneralAgenda
   attr_accessor :require_signed_form
 
   validates_presence_of :recipient_name, message: 'Vyplňte príjemcu podania', unless: -> { validation_context == :sign }
-  validates_presence_of :subject, message: 'Vyplňte predmet podania'
-  validates_presence_of :body, message: 'Vyplňte obsah podania'
+  validates_presence_of :content, message: 'Vyplňte obsah podania'
+  validates_presence_of :identifier, message: 'Vyplňte identifikátor podania'
   # TODO validate token using public key & expirity
   validate :recipient_uri_allowed, if: -> { recipient_uri.present? }
 
@@ -42,6 +42,20 @@ class Submissions::GeneralAgenda
 
   def requires_signed_form?
     @require_signed_form
+  end
+
+  def schema
+
+  end
+
+  def transformation
+
+  end
+
+  def filename
+    basename = URI(identifier).path.split('/')[-2]
+
+    "#{basename}.xml"
   end
 
   private
