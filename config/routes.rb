@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get :calendar, to: 'calendar#show', path: 'moj-kalendar'
   get :health, to: 'health#index'
   get 'robots.:format', to: 'robots#index'
 
