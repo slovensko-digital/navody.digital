@@ -12,6 +12,7 @@ module OmniAuth
       option :uid_field, :sub
 
       def request_phase
+        # TODO read from ENV
         redirect 'https://slovensko-sk-api.ekosystem.slovensko.digital/login'
       end
 
@@ -43,6 +44,7 @@ module OmniAuth
 
       def parse_token(token)
         # TODO: enable verification back
+        # TODO: read public ssh key from ENV
         JWT.decode(token, nil, false, algorithms: ['RS256'])
           &.first
       end
