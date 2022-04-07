@@ -109,3 +109,30 @@ CurrentTopic.create!(
   body: 'A Brexit deal has been agreed but needs to be ratified',
   enabled: true
 )
+
+user = User.create!(
+  email: "jozef@digital.sk"
+)
+
+calendar_topic = CalendarTopic.create!(
+  name: 'Dane'
+)
+
+calendar_notification = GeneralCalendarNotification.create!(
+  calendar_topic: calendar_topic,
+  name: "Danove priznanie",
+  description: "Nezabudnite podat danove priznanie.",
+  dates: ['03-31']
+)
+
+calendar_notification_subscription = CalendarSubscription.create!(
+  user: user,
+  calendar_notification: calendar_notification
+)
+
+calendar_entry = CalendarEntry.create!(
+  user: user,
+  calendar_notification: calendar_notification,
+  event_date: '2022-03-31',
+  notification_date: '2022-03-17'
+)
