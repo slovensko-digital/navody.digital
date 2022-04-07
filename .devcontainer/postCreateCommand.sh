@@ -12,6 +12,10 @@ echo "Bundle install..."
 bundle install
 echo "Done."
 
+echo "Installing JavaScript dependencies..."
+yarn install
+echo "Done."
+
 echo "rake db:setup..."
 rake db:setup
 echo "Done."
