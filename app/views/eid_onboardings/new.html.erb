@@ -1,0 +1,27 @@
+<% content_for :title, build_page_title('Zadajte email k svojmu účtu') %>
+
+<div class="govuk-grid-row govuk-!-padding-top-9">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Predtým, než začnete...</span>
+    <h1 class="govuk-heading-l">Prihláste sa do svojho účtu</h1>
+    <p class="govuk-body">Vďaka prihláseniu sa budete môcť vrátiť k rozpracovaným návodom.</p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
+      <fieldset class="govuk-fieldset">
+        <div class="govuk-form-group">
+          <span class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m">alebo e-mailom</label>
+          </span>
+          <span class="govuk-hint">
+            Pošleme Vám jednoduchý odkaz na prihlásenie sa.
+          </span>
+          <%= email_field_tag :email, nil, class: 'govuk-input', required: true %>
+        </div>
+        <%= submit_tag 'Dokončiť založenie účtu', class: 'govuk-button' %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
