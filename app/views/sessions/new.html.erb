@@ -9,6 +9,10 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
+    <%= form_tag(auth_path(:eid), method: :post, id: 'login-email') do %>
+      <%= submit_tag 'Prihlásiť sa cez EID', class: 'govuk-button' %>
+    <% end %>
+
     <%= form_tag(auth_path(:google_oauth2), method: :post, class: 'govuk-body govuk-!-margin-bottom-8') do %>
       <%= image_submit_tag 'google/btn_google_signin_dark_normal.svg', class: 'govuk-link', title: 'Prihlásiť sa cez Google', alt: 'Prihlásiť sa cez Google', style: 'max-width: 300px' %>
     <% end %>

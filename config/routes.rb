@@ -103,6 +103,9 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
+  namespace :eid, path: '/' do # TODO: add constraint for origin check
+    get 'login', to: '/sessions#create', as: :auth_callback
+  end
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
