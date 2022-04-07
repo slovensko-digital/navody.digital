@@ -1,0 +1,3 @@
+class GeneralCalendarNotification < CalendarNotification
+
+end

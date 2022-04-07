@@ -1,0 +1,3 @@
+class PersonalCalendarNotification < CalendarNotification
+
+end
