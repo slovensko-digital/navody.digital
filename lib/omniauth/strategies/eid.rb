@@ -24,7 +24,7 @@ module OmniAuth
           token: token,
         }.deep_stringify_keys
 
-        return fail!(:invalid_credentials) unless payload[:token]
+        return fail!(:invalid_credentials) unless payload['token']
 
         super
       end
