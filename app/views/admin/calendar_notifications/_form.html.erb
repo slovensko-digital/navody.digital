@@ -1,4 +1,7 @@
-<%= form_with(model: [:admin, calendar_notification], local: true, builder: AdminFormBuilder) do |form| %>
+<%= form_with(
+      model: [:admin, calendar_notification.becomes(CalendarNotification)],
+      local: true,
+      builder: AdminFormBuilder) do |form| %>
   <%# if notification_template.errors.any? %>
 <!--    <div id="error_explanation">-->
 <!--      <h2><%#= pluralize(notification_template.errors.count, "error") %> prohibited this notification template from being saved</h2>-->

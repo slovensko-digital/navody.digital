@@ -1,4 +1,5 @@
 class Admin::CalendarNotificationsController < Admin::AdminController
+
   def index
     @calendar_notifications = CalendarNotification.all
   end
@@ -15,8 +16,13 @@ class Admin::CalendarNotificationsController < Admin::AdminController
 
   def create
     @calendar_notification = CalendarNotification.new(calendar_notification_params)
-    @calendar_notification.save!
-    redirect_to admin_calendar_notifications_url
+    @calendar_topics = CalendarTopic.all
+
+    if @calendar_notification.save
+      redirect_to admin_calendar_notifications_url
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -27,6 +33,8 @@ class Admin::CalendarNotificationsController < Admin::AdminController
 
   def update
     @calendar_notification = CalendarNotification.find_by!(id: params[:id])
+    @calendar_topics = CalendarTopic.all
+
     if @calendar_notification.update(calendar_notification_params)
       redirect_to admin_calendar_notifications_url, notice: 'Calendar notification was successfully updated.'
     else
