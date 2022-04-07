@@ -7,6 +7,7 @@ class Step < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :user_steps, dependent: :destroy
   has_many :user_tasks, through: :user_steps
+  has_many :calendar_notifications, dependent: :destroy
 
 
   after_commit :update_journey_search

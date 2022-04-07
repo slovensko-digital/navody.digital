@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :user_tasks, through: :user_steps
   has_many :notification_subscriptions
   has_many :submissions
+  has_many :calendar_subscriptions, dependent: :destroy
+  has_many :calendar_entries, dependent: :destroy
 
   def logged_in?
     true

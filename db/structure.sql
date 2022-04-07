@@ -267,6 +267,139 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: calendar_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.calendar_entries (
+    id bigint NOT NULL,
+    calendar_notification_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    event_date date NOT NULL,
+    notification_date date NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: calendar_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.calendar_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: calendar_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.calendar_entries_id_seq OWNED BY public.calendar_entries.id;
+
+
+--
+-- Name: calendar_notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.calendar_notifications (
+    id bigint NOT NULL,
+    calendar_topic_id bigint NOT NULL,
+    step_id bigint NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    type character varying NOT NULL,
+    dates text[] DEFAULT '{}'::text[],
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: calendar_notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.calendar_notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: calendar_notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.calendar_notifications_id_seq OWNED BY public.calendar_notifications.id;
+
+
+--
+-- Name: calendar_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.calendar_subscriptions (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    calendar_notification_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: calendar_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.calendar_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: calendar_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.calendar_subscriptions_id_seq OWNED BY public.calendar_subscriptions.id;
+
+
+--
+-- Name: calendar_topics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.calendar_topics (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: calendar_topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.calendar_topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: calendar_topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.calendar_topics_id_seq OWNED BY public.calendar_topics.id;
+
+
+--
 -- Name: current_topics; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -803,6 +936,34 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 
 
 --
+-- Name: calendar_entries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_entries ALTER COLUMN id SET DEFAULT nextval('public.calendar_entries_id_seq'::regclass);
+
+
+--
+-- Name: calendar_notifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_notifications ALTER COLUMN id SET DEFAULT nextval('public.calendar_notifications_id_seq'::regclass);
+
+
+--
+-- Name: calendar_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.calendar_subscriptions_id_seq'::regclass);
+
+
+--
+-- Name: calendar_topics id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_topics ALTER COLUMN id SET DEFAULT nextval('public.calendar_topics_id_seq'::regclass);
+
+
+--
 -- Name: current_topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -914,6 +1075,38 @@ ALTER TABLE ONLY public.apps
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: calendar_entries calendar_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_entries
+    ADD CONSTRAINT calendar_entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: calendar_notifications calendar_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_notifications
+    ADD CONSTRAINT calendar_notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: calendar_subscriptions calendar_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_subscriptions
+    ADD CONSTRAINT calendar_subscriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: calendar_topics calendar_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_topics
+    ADD CONSTRAINT calendar_topics_pkey PRIMARY KEY (id);
 
 
 --
@@ -1050,6 +1243,48 @@ ALTER TABLE ONLY public.user_tasks
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_calendar_entries_on_calendar_notification_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_entries_on_calendar_notification_id ON public.calendar_entries USING btree (calendar_notification_id);
+
+
+--
+-- Name: index_calendar_entries_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_entries_on_user_id ON public.calendar_entries USING btree (user_id);
+
+
+--
+-- Name: index_calendar_notifications_on_calendar_topic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_notifications_on_calendar_topic_id ON public.calendar_notifications USING btree (calendar_topic_id);
+
+
+--
+-- Name: index_calendar_notifications_on_step_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_notifications_on_step_id ON public.calendar_notifications USING btree (step_id);
+
+
+--
+-- Name: index_calendar_subscriptions_on_calendar_notification_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_subscriptions_on_calendar_notification_id ON public.calendar_subscriptions USING btree (calendar_notification_id);
+
+
+--
+-- Name: index_calendar_subscriptions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_calendar_subscriptions_on_user_id ON public.calendar_subscriptions USING btree (user_id);
 
 
 --
@@ -1300,6 +1535,14 @@ ALTER TABLE ONLY public.user_steps
 
 
 --
+-- Name: calendar_subscriptions fk_rails_2bd225c37c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_subscriptions
+    ADD CONSTRAINT fk_rails_2bd225c37c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: notification_subscriptions fk_rails_2bf71acda7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1364,6 +1607,14 @@ ALTER TABLE ONLY public.submissions
 
 
 --
+-- Name: calendar_entries fk_rails_aaa2234577; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_entries
+    ADD CONSTRAINT fk_rails_aaa2234577 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: tasks fk_rails_bed40c4f02; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1372,11 +1623,43 @@ ALTER TABLE ONLY public.tasks
 
 
 --
+-- Name: calendar_notifications fk_rails_c447e0bd3d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_notifications
+    ADD CONSTRAINT fk_rails_c447e0bd3d FOREIGN KEY (step_id) REFERENCES public.steps(id);
+
+
+--
+-- Name: calendar_notifications fk_rails_dffc1b7b3b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_notifications
+    ADD CONSTRAINT fk_rails_dffc1b7b3b FOREIGN KEY (calendar_topic_id) REFERENCES public.calendar_topics(id);
+
+
+--
+-- Name: calendar_subscriptions fk_rails_e04bb7aa39; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_subscriptions
+    ADD CONSTRAINT fk_rails_e04bb7aa39 FOREIGN KEY (calendar_notification_id) REFERENCES public.calendar_notifications(id);
+
+
+--
 -- Name: user_tasks fk_rails_eef61d1fdc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_tasks
     ADD CONSTRAINT fk_rails_eef61d1fdc FOREIGN KEY (user_step_id) REFERENCES public.user_steps(id);
+
+
+--
+-- Name: calendar_entries fk_rails_f97a67511d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.calendar_entries
+    ADD CONSTRAINT fk_rails_f97a67511d FOREIGN KEY (calendar_notification_id) REFERENCES public.calendar_notifications(id);
 
 
 --
@@ -1444,6 +1727,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321133303'),
 ('20210321172132'),
 ('20210321181737'),
-('20220322180237');
+('20220322180237'),
+('20220407130752'),
+('20220407131432'),
+('20220407132213'),
+('20220407132423');
 
 
