@@ -104,10 +104,10 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
 
-  namespace :eid, path: '/' do # TODO: add constraint for origin check
-    get 'login', to: '/sessions#create', as: :auth_callback
+  get 'login', to: 'sessions#create', as: :eid_auth_callback  # TODO: add constraint for origin check
+  namespace :eid do
+    resources :onboarding, only: [:new, :create]
   end
-  resource :eid_onboarding, only: [:new, :create] # TODO move under namespace
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'

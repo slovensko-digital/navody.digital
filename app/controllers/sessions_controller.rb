@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if auth_hash.provider == "eid" && auth_hash.info['email'].nil?
+    if auth_hash.provider == "eid" && auth_hash.info['email'].blank?
       session[:eid_uid] = auth_hash.uid
       redirect_to new_eid_onboarding_path
       return
