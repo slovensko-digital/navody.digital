@@ -16,6 +16,6 @@ echo "Yarn install..."
 yarn install
 echo "Done."
 
-echo "rake db:setup..."
-rake db:setup
+echo "bin/setup..."
+bin/setup
 echo "Done."
