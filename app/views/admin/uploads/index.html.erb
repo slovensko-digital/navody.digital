@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [], current: 'Uploads' %>
+
+<br>
+
+<%= link_to 'New Upload', new_admin_upload_path, class: 'govuk-button' %>
+
+<%= form_tag(admin_uploads_path, method: :get, builder: AdminFormBuilder) do %>
+  <%= text_field_tag :prefix, '', class: 'govuk-input', style: 'width: 50%;' %>
+  <%= submit_tag "Filter by prefix", name: "", class: 'govuk-button' %>
+<% end %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Filename</th>
+      <th class="govuk-table__header" scope="col">Url</th>
+      <th class="govuk-table__header" scope="col"></th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @files.each do |file| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= file.key %></td>
+        <td class="govuk-table__cell"><%= link_to 'Link to file', UploadsService.get_url(file) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Delete', admin_upload_path(file.key), method: :delete, data: { confirm: 'Are you sure you want to delete file: ' + file.key + '?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
