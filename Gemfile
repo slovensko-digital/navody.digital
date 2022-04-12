@@ -46,6 +46,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pry-rails'
 
 gem 'aws-sdk-rails'
+gem "aws-sdk-s3", require: false
 
 gem 'rollbar'
 gem 'oj' # needed by rollbar
