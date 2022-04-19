@@ -1,5 +1,11 @@
-# [Choice] Ruby version (use -bullseye variants on local arm64/Apple Silicon): 3, 3.1, 3.0, 2, 2.7, 2.6, 3-bullseye, 3.1-bullseye, 3.0-bullseye, 2-bullseye, 2.7-bullseye, 2.6-bullseye, 3-buster, 3.1-buster, 3.0-buster, 2-buster, 2.7-buster, 2.6-buster
-FROM mcr.microsoft.com/vscode/devcontainers/ruby:2.7-bullseye
+# Start with base vscode image and install ruby and rails into it
+FROM mcr.microsoft.com/vscode/devcontainers/base:bullseye
+
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    yarn
 
 # Install Postgresql 12
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -10,13 +16,16 @@ RUN apt install -y postgresql-12 postgresql-client-12
 # Install chromium-driver
 RUN apt install -y chromium-driver
 
+# Install ruby (compiling takes some time)
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+RUN curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+RUN curl -sSL https://get.rvm.io | bash -s
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 2.7.5"
+
 # Install Rails
-RUN gem install rails webdrivers 
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && gem install rails webdrivers"
+RUN chown -R vscode /usr/local/rvm
 
 # Default value to allow debug server to serve content over GitHub Codespace's port forwarding service
 # The value is a comma-separated list of allowed domains 
 ENV RAILS_DEVELOPMENT_HOSTS=".githubpreview.dev"
-
-# [Choice] Node.js version: lts/*, 16, 14, 12, 10
-ARG NODE_VERSION="lts/*"
-RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"
