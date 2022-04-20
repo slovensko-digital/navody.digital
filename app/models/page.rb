@@ -1,5 +1,9 @@
 class Page < ApplicationRecord
   include Searchable
+
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   scope :faq, -> { where(is_faq: true) }
 
   validates :title, presence: true
@@ -34,5 +38,9 @@ class Page < ApplicationRecord
 
   def keywords_search
     to_search_str keywords
+  end
+
+  def should_generate_new_friendly_id?
+    slug.blank? && !title.blank?
   end
 end
