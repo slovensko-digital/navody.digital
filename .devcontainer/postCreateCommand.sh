@@ -20,10 +20,6 @@ echo "bin/setup..."
 bin/setup
 echo "Done."
 
-echo "setup db..."
-bin/rails db:setup
-echo "Done."
-
 echo "set node to development..."
 export NODE_ENV=development
 echo "Done."

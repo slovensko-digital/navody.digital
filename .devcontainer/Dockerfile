@@ -5,7 +5,9 @@ RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
     build-essential \
     libpq-dev \
     nodejs \
-    yarn
+    npm
+
+RUN npm install -g yarn
 
 # Install Postgresql 12
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
