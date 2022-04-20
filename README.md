@@ -37,7 +37,7 @@ Master ide automaticky na [staging.navody.digital](https://staging.navody.digita
 - vyhľadať a vybrať `>Remote-Containers: Reopen in Container`
 - `cp .env.sample .env`
 
-Prvýkrát sa musí postaviť docker image a vytvoriť docker kontajner, takže to môže s inštaláciou balíčkov trvať aj 5 minút. Ďalšie spustenia už potom trvajú rádovo pár sekúnd.
+Prvýkrát sa musí postaviť docker image a vytvoriť docker kontajner, takže to môže s kompilovaním Ruby a inštaláciou balíčkov trvať aj 10 minút. Ďalšie spustenia už potom trvajú rádovo pár sekúnd.
 
 Vo VS Code je možné používať klasický linuxový terminál vo vnútri kontajnera alebo si vytvoriť `Run and Debug` konfiguráciu pre rails server, ktorá umožní používanie debugera,
 
