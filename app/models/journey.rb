@@ -41,7 +41,7 @@ class Journey < ApplicationRecord
   end
 
   def searchable?
-    published?
+    published? || blank?
   end
 
   def to_param
