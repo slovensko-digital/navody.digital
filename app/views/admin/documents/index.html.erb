@@ -24,7 +24,7 @@
           <% end %>
         </td>
         <td class="govuk-table__cell"><%= link_to document.searchable.slug, document.searchable %></td>
-        <% if document.searchable_type == 'Journey' and !document.published? %>
+        <% if document.searchable_type == 'Journey' && !document.published? %>
           <td class="govuk-table__cell" style="color: #d4351c;"><%= document.searchable_type %><%= ' (BLANK)' %></td>
         <% else %>
           <td class="govuk-table__cell"><%= document.searchable_type %></td>
