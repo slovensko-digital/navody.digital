@@ -5,8 +5,7 @@ module OmniAuth
     class Eid
       include OmniAuth::Strategy
 
-      attr_reader :eid_sub
-      attr_reader :decoded_token
+      attr_reader :eid_token
       attr_reader :payload
 
       option :fields, [:eid_sub]
@@ -21,17 +20,16 @@ module OmniAuth
       def callback_phase
         encoded_token = request[:token]
 
-        @eid_sub = parse_eid_sub(encoded_token)
+        @eid_token = EidToken.new(encoded_token, public_key: public_key)
 
-        return fail!(:invalid_credentials) unless @eid_sub
+        return fail!(:invalid_credentials) unless eid_sub
 
-        email = User.find_by(eid_sub: @eid_sub)&.email
+        email = User.find_by(eid_sub: eid_sub)&.email
 
         session[:eid_encoded_token] = encoded_token
-        session[:eid_token_expires_at] = parse_eid_expires_at(encoded_token)
 
         @payload = {
-          'eid_sub' => @eid_sub,
+          'eid_sub' => eid_sub,
           'email' => email
         }
 
@@ -52,16 +50,8 @@ module OmniAuth
 
       private
 
-      def parse_eid_sub(token)
-        parse_eid_token(token)&.first&.fetch('sub')
-      end
-
-      def parse_eid_expires_at(token)
-        Time.zone.at(parse_eid_token(token)&.first&.fetch('exp'))
-      end
-
-      def parse_eid_token(token)
-        JWT.decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
+      def eid_sub
+        eid_token.sub
       end
 
       def auth_url
