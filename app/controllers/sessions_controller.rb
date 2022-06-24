@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
     if params[:callback].present?
       redirect_to params[:callback]
     else
-      after_logout
+      redirect_to root_path, notice: 'Odhlásenie bolo úspešné.'
     end
   end
 
@@ -63,13 +63,7 @@ class SessionsController < ApplicationController
       redirect_to "#{logout_url}?token=#{logout_token}"
     else
       logout
-
-      after_logout
     end
-  end
-
-  def after_logout
-    redirect_to root_path, notice: 'Odhlásenie bolo úspešné.'
   end
 
   protected
