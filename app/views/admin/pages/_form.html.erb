@@ -11,7 +11,7 @@
   <%= form.check_box :is_searchable %>
   <%= form.text_field :keywords %>
   <%= form.number_field :position %>
-  <%= form.select :image_name, Dir.glob("app/assets/images/journeys/*").map { |path| File.basename(path) }, include_blank: true %>
+  <%= form.text_field :image_name %>
   <%= form.text_area :content, size: '60x20' %>
 
   <div class="actions">

@@ -46,6 +46,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pry-rails'
 
 gem 'aws-sdk-rails'
+gem "aws-sdk-s3", require: false
 
 gem 'rollbar'
 gem 'oj' # needed by rollbar
@@ -65,6 +66,7 @@ gem 'validate_url'
 gem 'sib-api-v3-sdk'
 gem 'recaptcha'
 gem 'jwt'
+gem 'friendly_id'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

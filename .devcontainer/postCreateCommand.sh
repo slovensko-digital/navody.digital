@@ -12,6 +12,14 @@ echo "Bundle install..."
 bundle install
 echo "Done."
 
-echo "rake db:setup..."
-rake db:setup
+echo "Yarn install..."
+yarn install
+echo "Done."
+
+echo "bin/setup..."
+bin/setup
+echo "Done."
+
+echo "set node to development..."
+export NODE_ENV=development
 echo "Done."

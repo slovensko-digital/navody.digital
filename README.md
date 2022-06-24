@@ -21,9 +21,7 @@ Master ide automaticky na [staging.navody.digital](https://staging.navody.digita
  - `cp .env.sample .env`
  - `bin/setup`
 
-### Setup VS Code Remote Containers
-
-_Najjednoduchší spôsob rozbehania projektu. Úplne rovnako potom funguje v GitHub Codespace. [Link na ich docs](https://code.visualstudio.com/docs/remote/containers)_
+### Setup VS Code [Remote Containers](https://code.visualstudio.com/docs/remote/containers)
 
 #### Prerekvizity:
 
@@ -37,8 +35,9 @@ _Najjednoduchší spôsob rozbehania projektu. Úplne rovnako potom funguje v Gi
 - Otvoriť projekt vo VS Code
 - `View -> Command Palette`
 - vyhľadať a vybrať `>Remote-Containers: Reopen in Container`
+- `cp .env.sample .env`
 
-Prvýkrát sa musí postaviť docker image a vytvoriť docker kontajner, takže to môže s inštaláciou balíčkov trvať aj 5 minút. Ďalšie spustenia už potom trvajú rádovo pár sekúnd.
+Prvýkrát sa musí postaviť docker image a vytvoriť docker kontajner, takže to môže s kompilovaním Ruby a inštaláciou balíčkov trvať aj 10 minút. Ďalšie spustenia už potom trvajú rádovo pár sekúnd.
 
 Vo VS Code je možné používať klasický linuxový terminál vo vnútri kontajnera alebo si vytvoriť `Run and Debug` konfiguráciu pre rails server, ktorá umožní používanie debugera,
 
@@ -46,11 +45,7 @@ Vo VS Code je možné používať klasický linuxový terminál vo vnútri konta
 
 - `bin/rails s`
 
-_Stránka dostupná na http://localhost:3000_
-
 ### Test:
 
-- `bin/rails db:setup`
 - `bin/rake`
 
-_Ten db:setup stačí zavolať iba raz. Pri opakovaných testoch stačí už iba `bin/rake`._
