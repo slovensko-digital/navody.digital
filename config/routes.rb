@@ -88,6 +88,12 @@ Rails.application.routes.draw do
     namespace :child_birth_app, path: 'narodenie-dietata' do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
+
+    namespace :business_register_app, path: 'obchodny-register' do
+      get :acts_submissions, to: 'acts_submissions#index', path: 'listiny'
+      get :search_business, to: 'acts_submissions#search_business'
+      get :search_acts, to: 'acts_submissions#search_acts'
+    end
   end
   resources :apps, path: 'aplikacie' # faux route
 
