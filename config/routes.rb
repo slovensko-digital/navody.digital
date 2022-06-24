@@ -93,6 +93,7 @@ Rails.application.routes.draw do
       get :acts_submissions, to: 'acts_submissions#index', path: 'listiny'
       get :search_business, to: 'acts_submissions#search_business'
       get :search_acts, to: 'acts_submissions#search_acts'
+      get :callback, to: 'acts_submissions#callback'
     end
   end
   resources :apps, path: 'aplikacie' # faux route

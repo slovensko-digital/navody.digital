@@ -9,12 +9,12 @@ module UpvsSubmissions
         delegate :uuid, to: SecureRandom
       end
 
-      def initialize(recipient_uri: nil, sender_uri: nil, sender_business_reference: nil, recipient_business_reference: nil, form_params:)
+      def initialize(recipient_uri: nil, sender_uri: nil, sender_business_reference: nil, recipient_business_reference: nil, form_params: nil)
         @sender_uri = sender_uri
-        @recipient_uri = recipient_uri
+        @recipient_uri = recipient_uri || default_recipient_uri
         @sender_business_reference = sender_business_reference
         @recipient_business_reference = recipient_business_reference
-        @form = build_form(form_params)
+        @form = form_params ? build_form(form_params) : nil
         @attachments = []
       end
 
@@ -32,6 +32,10 @@ module UpvsSubmissions
 
       def message_subject
         "Požiadanie o vyhotovenie kópie listiny uloženej v zbierke zákonom ustanovených listín obchodného registra"
+      end
+
+      def default_recipient_uri
+        'ico://sk/00166073_10006'
       end
 
       def message_id

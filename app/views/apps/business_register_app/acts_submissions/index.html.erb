@@ -1,3 +1,13 @@
-<%= form_for :submission do |f| %>
-  <%= f.text_field :business %>
+<% # todo "external URL" for preview of the form before submitting %>
+<%= form_for @form, url: nil do |f| %>
+
+  <%#  todo this will be appended XML by JS %>
+  <%= f.hidden_field :form, value: nil %>
+  <%= f.hidden_field :callback_url, apps_business_register_app_callback_url %>
+
+  <%= f.hidden_field :recipient_uri %>
+  <%= f.hidden_field :posp_version %>
+  <%= f.hidden_field :posp_id %>
+  <%= f.hidden_field :message_type %>
+  <%= f.hidden_field :message_subject %>
 <% end %>
