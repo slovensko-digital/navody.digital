@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
-    if auth_hash.info['eid_uid'].present?
+    if eid_identity_approval?
       user.update!(eid_sub: auth_hash.info['eid_uid'])
       session.delete(:eid_uid)
     end
@@ -80,6 +80,10 @@ class SessionsController < ApplicationController
 
   def new_eid_identity?
     auth_hash.provider == "eid" && auth_hash.info['email'].blank?
+  end
+
+  def eid_identity_approval?
+    auth_hash.provider == "magiclink" && auth_hash.info['eid_uid'].present?
   end
 
   def after_login_redirect_path
