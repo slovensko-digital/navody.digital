@@ -18,7 +18,13 @@ module OmniAuth
         return fail!(:empty_email) unless email.present?
         return fail!(:invalid_email) unless email.match? URI::MailTo::EMAIL_REGEXP
 
-        token = generate_magic_code(email, session.id)
+        params = {}
+
+        if session[:eid_uid].present?
+          params[:eid_uid] = session[:eid_uid]
+        end
+
+        token = generate_magic_code(email, session.id, params)
 
         options[:on_send_link]&.call(email, token)
 
@@ -57,10 +63,10 @@ module OmniAuth
         false
       end
 
-      def generate_magic_code(email, session_id)
+      def generate_magic_code(email, session_id, params = {})
         verifier
           .generate(
-            verifier_payload(email, session_id),
+            verifier_payload(email, session_id, params),
             expires_in: options[:code_lifetime],
             purpose: :magic_link
           )
@@ -78,8 +84,10 @@ module OmniAuth
         Rails.application.secrets.secret_key_base
       end
 
-      def verifier_payload(email, session_id)
-        { email: email, session_id: session_id }
+      def verifier_payload(email, session_id, params = {})
+        {}
+          .merge(params)
+          .merge(email: email, session_id: session_id)
       end
 
       def verifier

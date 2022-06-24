@@ -16,6 +16,11 @@ class SessionsController < ApplicationController
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
+    if auth_hash.info['eid_uid'].present?
+      user.update!(eid_sub: auth_hash.info['eid_uid'])
+      session.delete(:eid_uid)
+    end
+
     session[:user_id] = user.id
     redirect_to after_login_redirect_path, notice: 'Prihlásenie úspešné. Vitajte!'
   end

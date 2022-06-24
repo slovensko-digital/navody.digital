@@ -22,7 +22,7 @@ module OmniAuth
 
         return fail!(:invalid_credentials) unless @eid_sub
 
-        email = User.find_by(eid_sub: @eid_sub)&.eid_sub
+        email = User.find_by(eid_sub: @eid_sub)&.email
 
         @payload = {
           'eid_sub' => @eid_sub,
@@ -47,7 +47,15 @@ module OmniAuth
       private
 
       def parse_eid_sub(token)
-        JWT.decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])&.first&.fetch('sub')
+        parse_eid_token(token)&.first&.fetch('sub')
+      end
+
+      def parse_eid_token(token)
+        if Rails.env.development?
+          JWT.decode(token, nil, false)
+        else
+          JWT.decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
+        end
       end
 
       def auth_url
