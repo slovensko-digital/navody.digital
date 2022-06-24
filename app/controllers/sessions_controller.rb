@@ -34,10 +34,32 @@ class SessionsController < ApplicationController
     @strategy = params[:strategy]
   end
 
-  def destroy
+  def logout
     reset_session
 
     redirect_to root_path, notice: 'Odhlásenie bolo úspešné.'
+  end
+
+  def destroy
+    eid_encoded_token = session[:eid_encoded_token]
+    eid_token_expires_at = session[:eid_token_expires_at].present? ? Time.zone.parse(session[:eid_token_expires_at]) : nil
+
+    if eid_encoded_token.present? && eid_token_expires_at&.future?
+      eid_config = Rails.application.config_for(:auth)[:eid]
+
+      eid_encoded_token = eid_encoded_token
+      logout_url = "#{eid_config[:base_url]}/logout"
+      private_key = OpenSSL::PKey::RSA.new(eid_config[:private_key])
+      logout_token = JWT.encode({
+                                  "exp": (Time.zone.now + 5.minutes).to_i,
+                                  "jti": SecureRandom.uuid,
+                                  "obo": eid_encoded_token,
+                                }, private_key, 'RS256', { cty: 'JWT' })
+
+      redirect_to "#{logout_url}?token=#{logout_token}"
+    else
+      logout
+    end
   end
 
   protected

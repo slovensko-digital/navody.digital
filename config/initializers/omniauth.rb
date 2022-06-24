@@ -15,7 +15,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     }
   }
   provider :eid, {
-    url: Rails.application.config_for(:auth).dig(:eid, :url),
+    base_url: Rails.application.config_for(:auth).dig(:eid, :base_url),
     public_key: Rails.application.config_for(:auth).dig(:eid, :public_key),
   }
 end

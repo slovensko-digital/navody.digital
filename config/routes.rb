@@ -105,6 +105,7 @@ Rails.application.routes.draw do
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
 
   get 'login', to: 'sessions#create', as: :eid_auth_callback  # TODO: add constraint for origin check
+  get 'logout', to: 'sessions#logout', as: :eid_deauth_callback  # TODO: add constraint for origin check
   namespace :eid do
     resources :onboarding, only: [:new, :create]
   end
