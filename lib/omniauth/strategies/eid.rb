@@ -61,11 +61,7 @@ module OmniAuth
       end
 
       def parse_eid_token(token)
-        if Rails.env.development?
-          JWT.decode(token, nil, false)
-        else
-          JWT.decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
-        end
+        JWT.decode(token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
       end
 
       def auth_url
