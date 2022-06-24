@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if auth_hash.provider == "eid" && auth_hash.info['email'].blank?
+    if new_eid_identity?
       session[:eid_uid] = auth_hash.uid
       redirect_to new_eid_onboarding_path
       return
@@ -77,6 +77,10 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def new_eid_identity?
+    auth_hash.provider == "eid" && auth_hash.info['email'].blank?
+  end
 
   def after_login_redirect_path
     return session[:after_login_callback] if session[:after_login_callback]&.start_with?("/") # Only allow local redirects
