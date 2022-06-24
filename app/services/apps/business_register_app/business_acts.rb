@@ -9,6 +9,7 @@ module Apps
   module BusinessRegisterApp
     class BusinessActs
       def search_business(query)
+        return [] unless query.present?
         res = client.get('/orsr.webapiforms/search', s: query)
 
         if res.success?
@@ -21,6 +22,10 @@ module Apps
       end
 
       def search_acts(business)
+        if !business || business.oddiel.blank? || business.sud.blank? || business.vlozka.blank?
+          return []
+        end
+
         res = client.get(
           '/orsr.webapiforms/search/listina',
           oddiel: business.oddiel,
@@ -28,7 +33,7 @@ module Apps
           sud: business.sud,
         )
         if res.success?
-          res.body
+          Act.array_from_json(res.body)
         else
           Rails.logger.error res.body
           raise "Api fail"
