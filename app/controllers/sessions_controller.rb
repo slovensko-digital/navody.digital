@@ -6,11 +6,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session[:eid_encoded_token] = eid_encoded_token_from_auth
-
     if new_eid_identity?
       render :new_eid_identity, locals: { eid_token: eid_token }
       return
+    end
+
+    if should_put_eid_token_in_session?
+      session[:eid_encoded_token] = eid_encoded_token_from_auth
     end
 
     unless auth_email.present?
@@ -81,6 +83,10 @@ class SessionsController < ApplicationController
 
   def should_keep_eid_token_in_session?(user_eid_sub)
     eid_encoded_token_from_session.present? && EidToken.new(eid_encoded_token_from_session, config: eid_config).sub == user_eid_sub
+  end
+
+  def should_put_eid_token_in_session?
+    auth_hash.provider == "eid" && eid_encoded_token_from_auth.present?
   end
 
   def after_login_redirect_path
