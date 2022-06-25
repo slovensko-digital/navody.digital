@@ -1,0 +1,6 @@
+<% unless feed_entry.done? %>
+  <p class="govuk-body"><%= feed_entry.deadline_at&.strftime("%-d.%-m.") %> &mdash; Pre firmu <strong><%= feed_entry.thing.name %></strong> je potrebné doplniť identifikačné údaje pre <strong><%= feed_entry.custom_fields['missing'].join(', ') %></strong>.<br><small>&mdash; Kontrola stavu prebehla <%= feed_entry.last_checked_at.strftime("%-d.%-m.%Y") %>&nbsp;o&nbsp;<%= feed_entry.last_checked_at.strftime('%H:%M') %>.</small></p>
+  <p><%= link_to feed_entry.journey.title, feed_entry.journey, class: 'govuk-button govuk-button--start' %></p>
+<% else %>
+  <p class="govuk-body">Pre firmu <strong><%= feed_entry.thing.name %></strong> boli doplnené všetky identifikačné čísla. Posledná zmena bola <%= feed_entry.updated_at.strftime("%-d.%-m.%Y.") %>&nbsp;o&nbsp;<%= feed_entry.updated_at.strftime('%H:%M') %>.</p>
+<% end %>

@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :submissions
 
   has_many :things, :class_name => 'My::Thing'
+  has_many :feed_entries, :class_name => 'My::UserFeedEntry'
 
   def logged_in?
     true

@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module My
   module CompanyRegisterStakeholderIdCheck
-    class ORSRRecordChecker
+    class OrsrRecordChecker
       def self.call(ico)
         final_urls = retrieve_entity_urls(ico)
         final_urls.map do |final_url|

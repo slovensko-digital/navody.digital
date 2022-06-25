@@ -17,5 +17,22 @@
         vybavený.</p>
       <%= link_to 'Zobraziť všetky návody', root_path, class: 'govuk-button govuk-button--large' %>
     <% end %>
+
+    <h1 class="govuk-heading-l">Povinnosti</h1>
+    <% if current_user.feed_entries.recently_done.any? %>
+      <h2 class="govuk-heading-m">Nedávno vybavené</h2>
+      <%= render current_user.feed_entries.recently_done %>
+    <% end %>
+
+    <% if current_user.feed_entries.pending.any? %>
+      <h2 class="govuk-heading-m">Ešte nevybavené</h2>
+      <% current_user.feed_entries.pending.group_by {|entry| entry.deadline_at&.strftime("%B %Y") }.each do |group, entries| %>
+        <h3 class="govuk-heading-s" <%== group.nil? ? 'style="color: #d4351c"' : nil %>><%= group || 'ASAP' %></h3>
+        <%= render entries %>
+      <% end %>
+    <% else %>
+      <p class="govuk-body-l"><strong>Nemáte žiadne aktuálne povinnosti.</strong></p>
+      <%= link_to 'Zobraziť všetky návody', root_path, class: 'govuk-button govuk-button--large' %>
+    <% end %>
   </div>
 </div>
