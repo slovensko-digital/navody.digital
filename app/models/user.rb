@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :notification_subscriptions
   has_many :submissions
 
+  has_many :things, :class_name => 'My::Thing'
+
   def logged_in?
     true
   end

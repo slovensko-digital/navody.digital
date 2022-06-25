@@ -437,6 +437,112 @@ ALTER SEQUENCE public.journeys_id_seq OWNED BY public.journeys.id;
 
 
 --
+-- Name: my_feed_entry_generators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.my_feed_entry_generators (
+    id bigint NOT NULL,
+    journey_id bigint,
+    type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: my_feed_entry_generators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.my_feed_entry_generators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: my_feed_entry_generators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.my_feed_entry_generators_id_seq OWNED BY public.my_feed_entry_generators.id;
+
+
+--
+-- Name: my_things; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.my_things (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    name character varying NOT NULL,
+    identifier character varying NOT NULL,
+    custom_fields jsonb,
+    type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: my_things_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.my_things_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: my_things_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.my_things_id_seq OWNED BY public.my_things.id;
+
+
+--
+-- Name: my_user_feed_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.my_user_feed_entries (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    my_thing_id bigint NOT NULL,
+    identifier character varying NOT NULL,
+    status character varying NOT NULL,
+    deadline_at timestamp without time zone,
+    custom_fields jsonb,
+    journey_id bigint,
+    last_checked_at timestamp without time zone,
+    type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: my_user_feed_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.my_user_feed_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: my_user_feed_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.my_user_feed_entries_id_seq OWNED BY public.my_user_feed_entries.id;
+
+
+--
 -- Name: notification_subscriptions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -937,6 +1043,27 @@ ALTER TABLE ONLY public.journeys ALTER COLUMN id SET DEFAULT nextval('public.jou
 
 
 --
+-- Name: my_feed_entry_generators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_feed_entry_generators ALTER COLUMN id SET DEFAULT nextval('public.my_feed_entry_generators_id_seq'::regclass);
+
+
+--
+-- Name: my_things id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_things ALTER COLUMN id SET DEFAULT nextval('public.my_things_id_seq'::regclass);
+
+
+--
+-- Name: my_user_feed_entries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_user_feed_entries ALTER COLUMN id SET DEFAULT nextval('public.my_user_feed_entries_id_seq'::regclass);
+
+
+--
 -- Name: notification_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1074,6 +1201,30 @@ ALTER TABLE ONLY public.current_topics
 
 ALTER TABLE ONLY public.journeys
     ADD CONSTRAINT journeys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: my_feed_entry_generators my_feed_entry_generators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_feed_entry_generators
+    ADD CONSTRAINT my_feed_entry_generators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: my_things my_things_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_things
+    ADD CONSTRAINT my_things_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: my_user_feed_entries my_user_feed_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_user_feed_entries
+    ADD CONSTRAINT my_user_feed_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -1222,6 +1373,55 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_my_feed_entry_generators_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_my_feed_entry_generators_on_journey_id ON public.my_feed_entry_generators USING btree (journey_id);
+
+
+--
+-- Name: index_my_things_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_my_things_on_identifier ON public.my_things USING btree (identifier);
+
+
+--
+-- Name: index_my_things_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_my_things_on_user_id ON public.my_things USING btree (user_id);
+
+
+--
+-- Name: index_my_user_feed_entries_on_identifier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_my_user_feed_entries_on_identifier ON public.my_user_feed_entries USING btree (identifier);
+
+
+--
+-- Name: index_my_user_feed_entries_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_my_user_feed_entries_on_journey_id ON public.my_user_feed_entries USING btree (journey_id);
+
+
+--
+-- Name: index_my_user_feed_entries_on_my_thing_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_my_user_feed_entries_on_my_thing_id ON public.my_user_feed_entries USING btree (my_thing_id);
+
+
+--
+-- Name: index_my_user_feed_entries_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_my_user_feed_entries_on_user_id ON public.my_user_feed_entries USING btree (user_id);
 
 
 --
@@ -1512,6 +1712,14 @@ ALTER TABLE ONLY public.user_journeys
 
 
 --
+-- Name: my_feed_entry_generators fk_rails_7707bcd904; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_feed_entry_generators
+    ADD CONSTRAINT fk_rails_7707bcd904 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: submissions fk_rails_8999639afc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1544,6 +1752,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
+-- Name: my_user_feed_entries fk_rails_aeb58e4bb9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_user_feed_entries
+    ADD CONSTRAINT fk_rails_aeb58e4bb9 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: tasks fk_rails_bed40c4f02; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1557,6 +1773,30 @@ ALTER TABLE ONLY public.tasks
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: my_user_feed_entries fk_rails_c3e1638f3a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_user_feed_entries
+    ADD CONSTRAINT fk_rails_c3e1638f3a FOREIGN KEY (my_thing_id) REFERENCES public.my_things(id);
+
+
+--
+-- Name: my_things fk_rails_ccd6e72038; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_things
+    ADD CONSTRAINT fk_rails_ccd6e72038 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: my_user_feed_entries fk_rails_cfcde2d3f6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.my_user_feed_entries
+    ADD CONSTRAINT fk_rails_cfcde2d3f6 FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1633,6 +1873,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321172132'),
 ('20210321181737'),
 ('20220322180237'),
-('20220323214831');
+('20220323214831'),
+('20220625134521'),
+('20220625134745'),
+('20220625135648');
 
 
