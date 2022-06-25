@@ -4,12 +4,12 @@
 <%= render partial: 'sender' %>
 <div class="govuk-form-group">
   <%= label :recipient_name, 'Príjimateľ správy', class: 'govuk-label' %>
-  <%= text_field :recipient_name, @upvs_submission.recipient_name %>
+  <%= p @upvs_submission.recipient_name %>
 </div>
 
 <div class="govuk-form-group">
   <h2 class="govuk-heading-m">Podanie</h2>
-  <p>TODO vizualizacia</p>
+  <%= raw(@upvs_submission.visualisation) %>
 </div>
 
 <%= render partial: 'actions' %>

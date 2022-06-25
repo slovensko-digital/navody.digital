@@ -1,6 +1,3 @@
 <script type="text/javascript">
-  window.opener.document.getElementById('submissions_general_agenda_token').value = '<%=j @token %>';
-  const form = window.opener.document.getElementById('new_message');
-  window.opener.Rails.fire(form, 'submit');
   window.close();
 </script>

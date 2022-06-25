@@ -50,8 +50,8 @@ class Upvs::Submission
 
   end
 
-  def transformation
-
+  def visualisation
+    transformation
   end
 
   def filename
@@ -66,6 +66,16 @@ class Upvs::Submission
     unless EgovApplicationAllowRule.exists?(recipient_uri: @recipient_uri, posp_id: @posp_id, posp_version: @posp_version, message_type: @message_type)
       # TODO raise
     end
+  end
+
+  def transformation
+    # TODO get template
+    template = Nokogiri::XSLT(File.read("#{Rails.root}/template.xslt"))
+    # document = Nokogiri::XML(@form)
+    # TODO uncomment previous and delete next line
+    document = Nokogiri::XML(File.read("#{Rails.root}/form.xml"))
+
+    template.transform(document).to_s
   end
 
   def recipient_uri_allowed

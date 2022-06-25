@@ -29,6 +29,8 @@ class Upvs::SubmissionsController < ApplicationController
 
   def submit
     if @upvs_submission.save
+      submit_to_sk_api
+
       if @upvs_submission.callback_url.present?
         render action: :continue
       else
@@ -40,6 +42,23 @@ class Upvs::SubmissionsController < ApplicationController
   end
 
   private
+
+  def submit_to_sk_api
+    sktalk_message = UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission)
+
+    headers =  {
+      "Content-Type": "application/json"
+    }
+
+    data =  {
+      message: sktalk_message
+    }.to_json
+
+    # TODO get API+OBO token
+    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{api_token}"
+
+    Faraday.post(url, data, headers)
+  end
 
   def load_upvs_submission
     @upvs_submission = Upvs::Submission.new(application_params)
