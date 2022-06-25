@@ -62,6 +62,8 @@ gem 'sitemap_generator'
 
 gem 'validate_url'
 
+gem 'http'
+
 # sendinblue V3
 gem 'sib-api-v3-sdk'
 gem 'recaptcha'
