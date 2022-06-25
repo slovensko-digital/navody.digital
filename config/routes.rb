@@ -112,6 +112,9 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
 
+  get 'login', to: 'sessions#create', as: :eid_auth_callback  # TODO: add constraint for origin check
+  get 'logout', to: 'sessions#logout', as: :eid_deauth_callback  # TODO: add constraint for origin check
+
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'

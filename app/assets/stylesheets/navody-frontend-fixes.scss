@@ -72,9 +72,9 @@ a.sdn-timeline-dropdown__option {
   border-color: #6f777b;
 }
 
-.button-back ,
-.button-back:hover ,
-.button-back:focus ,
+.button-back,
+.button-back:hover,
+.button-back:focus,
 .button-back:active {
   border: none;
   background: none;
@@ -92,4 +92,8 @@ a.sdn-timeline-dropdown__option {
   color: #06070b;
   font-weight: normal;
   text-decoration: underline;
+}
+
+.govuk-cancel-link {
+  color: #d4351c !important;
 }
