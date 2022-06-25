@@ -15,6 +15,10 @@ module My
           entry.journey = journey
         end
 
+        return if entry.new_record? && check_result[:missing].empty?
+
+        return if entry.done? && check_result[:missing].empty?
+
         entry.last_checked_at = Time.now
         entry.custom_fields = check_result
         entry.status = check_result[:missing].any? ? :pending : :done
