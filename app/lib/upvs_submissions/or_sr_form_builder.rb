@@ -39,7 +39,7 @@ class UpvsSubmissions::OrSrFormBuilder
               end
             end
 
-            params[:acts].map do |act|
+            params[:acts].each do |_key, act|
               m.Document do
                 m.MakeCopy act[:make_copy]
                 m.Code act[:code]
