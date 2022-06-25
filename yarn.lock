@@ -4826,7 +4826,7 @@ nanomatch@^1.2.9:
 
 "navody-digital-frontend@https://github.com/alhafoudh/navody-frontend#upstream-sync":
   version "0.1.8-upstream-sync"
-  resolved "https://github.com/alhafoudh/navody-frontend#4487fed185f2230ba98bad23e39ba85f7a32402f"
+  resolved "https://github.com/alhafoudh/navody-frontend#34c25a04946c836aa1cf49dae24412e02d7b4d49"
   dependencies:
     accessible-autocomplete "^1.6.2"
     express-writer "0.0.4"
