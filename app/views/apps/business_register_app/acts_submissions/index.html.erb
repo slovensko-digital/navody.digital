@@ -1,6 +1,6 @@
 <%= form_for :acts_submission, url: apps_business_register_app_acts_submissions_path do |f| %>
   <p>
-    <%= f.label :email %> <br>
+    <%= f.label :email, value: current_user.logged_in? ? current_user.email : nil %> <br>
     <%= f.text_field :email %>
   </p>
 
@@ -8,7 +8,7 @@
 
   <p>
     <%= f.label :business %> <br>
-    <%= f.text_field :business %>
+    <div id="acts_submission_business_results"></div>
   </p>
   <%# JS fetch of businesses - http://localhost:3000/aplikacie/obchodny-register/search_business?q=<business-name> %>
 
@@ -58,3 +58,66 @@
   <%= f.hidden_field :message_subject %>
   <%= f.submit 'Submit' %>
 <% end %>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+
+<script type="text/javascript" charset="utf-8">
+
+  <!-- todo reuse existing function -->
+  function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+      let context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
+  function initAll() {
+    accessibleAutocomplete({
+      element: document.getElementById('acts_submission_business_results'),
+      id: 'acts_submission_business', // To match it to the existing <label>.
+      source: debounce(async (query, populateResults) => {
+        const res = await fetch(`/aplikacie/obchodny-register/search_business?q=${encodeURIComponent(query)}`);
+        const data = (await res.json()).result;
+
+        populateResults(data);
+      }),
+      onConfirm: async (result) => {
+        document.getElementById('acts_submission_business_name').value = result?.name;
+        document.getElementById('acts_submission_business_ico').value = result?.ico;
+        document.getElementById('acts_submission_business_address').value = result?.address;
+
+        const res = await fetch('/aplikacie/obchodny-register/search_acts?' + new URLSearchParams({
+          oddiel: encodeURIComponent(result?.oddiel),
+          vlozka: encodeURIComponent(result?.vlozka),
+          sud: encodeURIComponent(result?.sud),
+        }));
+        const data = (await res.json()).result;
+
+        console.log(data);
+        // populate all acts
+      },
+      minLength: 3,
+      templates: {
+        inputValue: (result) => {
+          return result?.name;
+        },
+        suggestion: (result) => {
+          return `<strong>${result?.name}</strong>`
+        }
+      },
+      confirmOnBlur: false,
+      showNoOptionsFound: false,
+      displayMenu: 'overlay',
+      tNoResults: () => 'Žiadne výsledky',
+    })
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    initAll();
+  });
+
+</script>
