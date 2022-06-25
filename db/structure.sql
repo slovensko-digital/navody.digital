@@ -27,8 +27,6 @@ $$;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 --
 -- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
 --
@@ -735,11 +733,11 @@ CREATE TABLE public.submissions (
     callback_url character varying NOT NULL,
     callback_step_id bigint,
     callback_step_status character varying,
+    selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    selected_subscription_types character varying[]
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1488,35 +1486,35 @@ CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_state_notify();
 
 
 --
 -- Name: pg_search_documents tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
+CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
 
 
 --
 -- Name: pg_search_documents tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
+CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
 
 
 --
 -- Name: pg_search_documents tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
 
 
 --
@@ -1700,3 +1698,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220323214831'),
 ('20220407131258'),
 ('20220624185928');
+
+

@@ -1,4 +1,89 @@
-<%= render 'form' %>
+
+<fieldset class="govuk-fieldset">
+  <div class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-padding-bottom-6">
+    <h3 class="govuk-fieldset__heading govuk-!-padding-bottom-1">
+      Žiadosť o vyhotovenie kópie listiny uloženej v zbierke listín
+    </h3>
+  </div>
+</fieldset>
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend">
+      Pre ktorý subjekt (zapísanú osobu) žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
+    </legend>
+    <div class="govuk-form-group">
+      </h1>
+
+      <p class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
+        Obchodné meno/IČO/Spisová značka
+      </label>
+      </p>
+      <div id="acts_submission_business_results"></div>
+
+      <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Sídlo</p>
+      <input class="govuk-input " id="company-address" name="company-address" type="text" readonly>
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+
+        <div id="acts_box">
+          <template id="t-acts-header">
+            <p class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+              Pre ktorú listinu/listiny požadujete vyhotovenie kópie?
+            </p>
+          </template>
+
+          <template id="t-acts-item">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="__company_id__" name="__company_id__" type="checkbox" value="__value__">
+              <label class="govuk-label govuk-checkboxes__label" for="__company_id__">
+                __title__
+              </label>
+            </div>
+          </template>
+        </div>
+
+        <!-- TODO -->
+        <!-- <ul class="autocomplete__menu autocomplete__menu--overlay autocomplete__menu--visible" id="acts_submission_business__listbox" role="listbox">
+             <li class="autocomplete__option" id="acts_submission_business__option--0" role="option" tabindex="-1">
+             <span>100FREE s.r.o. (IČO: 50706071, spisová značka: Sro/117401/B)</span>
+             </li> -->
+        <!-- <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--1" role="option" tabindex="-1">
+             <strong>2 be free, s.r.o. (IČO: 46754857, spisová značka: Sro/104446/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--2" role="option" tabindex="-1">
+             <strong>AGROFREE s.r.o. (IČO: 44429282, spisová značka: Sro/23584/N)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--3" role="option" tabindex="-1">
+             <strong>AVE.FREEWAY SK spol. s.r.o. (IČO: 36813192, spisová značka: Sro/47231/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--4" role="option" tabindex="-1">
+             <strong>be FREE s.r.o. (IČO: 36732681, spisová značka: Sro/12606/S)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--5" role="option" tabindex="-1">
+             <strong>Be Free Tours, s.r.o. (IČO: 46817743, spisová značka: Sro/84224/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--6" role="option" tabindex="-1">
+             <strong>BeFree Energy s.r.o. (IČO: 52043223, spisová značka: Sro/46984/N)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--7" role="option" tabindex="-1">
+             <strong>BeFree family s. r. o. (IČO: 51089050, spisová značka: Sro/122994/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--8" role="option" tabindex="-1">
+             <strong>BeFree s. r. o. (IČO: 53022505, spisová značka: Sro/74439/L)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--9" role="option" tabindex="-1">
+             <strong>BeFree World Education Community s. r. o. (IČO: 50913549, spisová značka: Sro/154723/B)</strong>
+             </li> -->
+        <!-- </ul> -->
+
+      </div>
+
+      <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
+    </div>
+  </fieldset>
+</div>
 
 <%= form_for @submission_form, url: upvs_submissions_new_path do |f| %>
 
@@ -33,7 +118,7 @@
   function initAll() {
     accessibleAutocomplete({
       element: document.getElementById('acts_submission_business_results'),
-      id: 'acts_submission_business', // To match it to the existing <label>.
+      id: 'subject-search', // To match it to the existing <label>.
       source: debounce(async (query, populateResults) => {
         const res = await fetch(`/aplikacie/obchodny-register/search_business?q=${encodeURIComponent(query)}`);
         const data = (await res.json()).result;
@@ -41,23 +126,24 @@
         populateResults(data);
       }),
       onConfirm: async (result) => {
-        document.getElementById('acts_submission_business_name').value = result?.name;
-        document.getElementById('acts_submission_business_ico').value = result?.ico;
-        document.getElementById('acts_submission_business_address').value = result?.address;
+        document.getElementById('company-address').value = result?.address;
 
         const res = await fetch('/aplikacie/obchodny-register/search_acts?' + new URLSearchParams({
           oddiel: encodeURIComponent(result?.oddiel),
           vlozka: encodeURIComponent(result?.vlozka),
           sud: encodeURIComponent(result?.sud),
         }));
-        const data = (await res.json()).result;
+        const acts = (await res.json()).result;
 
-        const form = document.getElementById('acts_submission_form')
+        console.log(acts)
+        const box = document.getElementById('acts_box')
+        const tActsHeader = document.getElementById('t-acts-header').innerHTML
+        const tItem = document.getElementById('t-acts-item').innerHTML
+        const arrItems = acts.map(mapArtsToTemplates(tItem)).join(`\n`)
+        box.innerHTML = `${tActsHeader}
+${arrItems}
+`
 
-        form.outerHTML = data;
-
-        console.log(data);
-        // populate all acts
       },
       minLength: 3,
       templates: {
@@ -65,7 +151,7 @@
           return result?.name;
         },
         suggestion: (result) => {
-          return `<strong>${result?.name}</strong>`
+          return `${result?.name}`
         }
       },
       confirmOnBlur: false,
@@ -78,4 +164,88 @@
   document.addEventListener('turbolinks:load', function () {
     initAll();
   });
+</script>
+
+
+<script type="text/javascript" charset="utf-8">
+  const post = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    return response.json()
+  }
+
+  const get = async (url) => {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+    return response.json() // parses JSON response into native JavaScript objects
+  }
+
+  const mapArtsToTemplates = (template) => (it) => {
+    let t = template
+    t = t.replaceAll('__company_id__', `company_${it.serial_number}`) // TODO check if there isn't better id, instead of using serial number
+
+    t = t.replace('__value__', it.serial_number)
+
+    const delivery_date = it.delivery_date ? `, dátum doručenia: ${
+      it.delivery_date.substring(0, 10)
+    }` : ''
+    const title = `<span class="govuk-!-font-weight-bold">${
+      it.name
+    }</span>, typ: ${it.type}${delivery_date}, poradové číslo: ${it.serial_number}, počet listov: ${
+      it.raw.pageCount || 0
+    }`
+    t = t.replace('__title__', title)
+    return t
+  }
+
+  const continueEventHandlerOnClick = async (event) => {
+    if (!event.target.matches('[data-submit="true"]')) return
+    event.preventDefault()
+
+    // TODO add error validation and validate required elements and return error what is missing etc.
+    //
+    // TODO test, if you select company, select items,
+    // then change the company and select new items, what will happen, if the
+    // Make sure that the company list selected items resets with the change of the company.
+
+    const subject = document.getElementById('udaje-subject')
+    const signTaker = document.getElementById('udaje-sign-taker')
+    const signSender = document.getElementById('udaje-sign-sender')
+    const company = document.getElementById('subject-search')
+    const compnayAddress = document.getElementById('company-address')
+    const actsBox = document.getElementById('acts_box')
+    const actsSelectedElems = actsBox.querySelectorAll(
+      '.govuk-checkboxes__input:checked'
+    )
+    const actsSelected = Array.from(actsSelectedElems).map((it) => {
+      return it.value
+    })
+    // TODO make request to get xml
+    console.log(actsSelected)
+  }
+
+  const main = async () => {
+    document.addEventListener(
+      'click',
+      function (event) {
+        continueEventHandlerOnClick(event)
+      },
+      false
+    )
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    main().catch(console.log)
+  })
 </script>
