@@ -1,51 +1,6 @@
-<%= form_for :acts_submission, url: apps_business_register_app_acts_submissions_path do |f| %>
-  <p>
-    <%= f.label :email, value: current_user.logged_in? ? current_user.email : nil %> <br>
-    <%= f.text_field :email %>
-  </p>
+<%= render 'form' %>
 
-  <br>
-
-  <p>
-    <%= f.label :business %> <br>
-    <div id="acts_submission_business_results"></div>
-  </p>
-  <%# JS fetch of businesses - http://localhost:3000/aplikacie/obchodny-register/search_business?q=<business-name> %>
-
-  <%= f.hidden_field :business_name %>
-  <%= f.hidden_field :business_ico %>
-  <%= f.hidden_field :business_address %>
-
-  <h4>Listiny:</h4>
-
-  <%# JS fetch of acts for business - http://localhost:3000/aplikacie/obchodny-register/search_acts?ico=46792511 %>
-  <% [
-       OpenStruct.new({ id: 1, make_copy: true, code: '1', name: 'Listina 1' }),
-       OpenStruct.new({ id: 2, make_copy: false, code: '2', name: 'Listina 2' }),
-].each do |act| %>
-    <%= f.fields_for 'acts[]', act do |ff| %>
-      <hr>
-      <p>
-        <%= ff.label :name %>
-        <%= ff.text_field :name, readonly: true %>
-        <%= ff.label :code %>
-        <%= ff.text_field :code, readonly: true %>
-      </p>
-      <p>
-        <%= ff.label :make_copy %>
-        <%= ff.check_box :make_copy %>
-      </p>
-      <hr>
-    <% end %>
-
-  <% end %>
-
-  <%= f.submit 'Submit XML' %>
-<% end %>
-
-
-<%# todo "external URL" for preview of the form before submitting %>
-<%= form_for @form, url: upvs_submissions_new_path do |f| %>
+<%= form_for @submission_form, url: upvs_submissions_new_path do |f| %>
 
   <%#  todo this will be appended XML by JS %>
   <%= f.hidden_field :form, value: nil %>
@@ -97,6 +52,10 @@
         }));
         const data = (await res.json()).result;
 
+        const form = document.getElementById('acts_submission_form')
+
+        form.outerHTML = data;
+
         console.log(data);
         // populate all acts
       },
@@ -119,5 +78,4 @@
   document.addEventListener('turbolinks:load', function () {
     initAll();
   });
-
 </script>
