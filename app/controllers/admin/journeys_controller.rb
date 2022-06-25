@@ -73,6 +73,7 @@ class Admin::JourneysController < Admin::AdminController
         :description,
         :position,
         :last_checked_on,
+        category_ids: []
     )
   end
 end

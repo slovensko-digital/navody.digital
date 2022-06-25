@@ -55,7 +55,8 @@ class Admin::AppsController < Admin::AdminController
       :image_name,
       :published_status,
       :slug,
-      :description
+      :description,
+      category_ids: []
     )
   end
 end

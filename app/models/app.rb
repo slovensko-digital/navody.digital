@@ -9,6 +9,8 @@ class App < ApplicationRecord
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
 
+  has_and_belongs_to_many :categories
+
   enumerates :published_status, with: %w{DRAFT PUBLISHED}
 
   validates :title, presence: true

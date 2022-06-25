@@ -10,6 +10,7 @@
   <%= form.check_box :is_faq %>
   <%= form.check_box :is_searchable %>
   <%= form.text_field :keywords %>
+  <%= form.collection_check_boxes :category_ids, Category.all, :id, :name, checked: page.categories.pluck(:id) %>
   <%= form.number_field :position %>
   <%= form.text_field :image_name %>
   <%= form.text_area :content, size: '60x20' %>

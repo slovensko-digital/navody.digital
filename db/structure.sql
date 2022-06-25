@@ -335,6 +335,16 @@ CREATE TABLE public.apps (
 
 
 --
+-- Name: apps_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apps_categories (
+    app_id bigint NOT NULL,
+    category_id bigint NOT NULL
+);
+
+
+--
 -- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -362,6 +372,58 @@ CREATE TABLE public.ar_internal_metadata (
     value character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories (
+    id bigint NOT NULL,
+    name character varying,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- Name: categories_journeys; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories_journeys (
+    journey_id bigint NOT NULL,
+    category_id bigint NOT NULL
+);
+
+
+--
+-- Name: categories_pages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories_pages (
+    page_id bigint NOT NULL,
+    category_id bigint NOT NULL
 );
 
 
@@ -701,11 +763,11 @@ CREATE TABLE public.submissions (
     callback_url character varying NOT NULL,
     callback_step_id bigint,
     callback_step_status character varying,
+    selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    selected_subscription_types character varying[]
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -923,6 +985,13 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 
 
 --
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
 -- Name: current_topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1058,6 +1127,14 @@ ALTER TABLE ONLY public.apps
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1633,6 +1710,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321172132'),
 ('20210321181737'),
 ('20220322180237'),
-('20220323214831');
+('20220323214831'),
+('20220624204655'),
+('20220624204819'),
+('20220624204833'),
+('20220624204843');
 
 
