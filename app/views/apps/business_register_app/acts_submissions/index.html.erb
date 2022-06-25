@@ -1,5 +1,5 @@
 <%# todo "external URL" for preview of the form before submitting %>
-<%= form_for @form, url: root_path do |f| %>
+<%= form_for @form, url: upvs_submissions_new_path do |f| %>
 
   <%#  todo this will be appended XML by JS %>
   <%= f.hidden_field :form, value: nil %>
