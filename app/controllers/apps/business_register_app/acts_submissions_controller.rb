@@ -2,7 +2,8 @@ module Apps
   module BusinessRegisterApp
     class ActsSubmissionsController < ApplicationController
       def index
-        @form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
+        @submission_form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
+        @form = ActsSubmissionForm.new
       end
 
       def search_business
@@ -27,7 +28,8 @@ module Apps
 
       # generates XML to be submitted
       def create
-        xml_form = UpvsSubmissions::OrSrFormBuilder.new.application_for_document_copy(acts_submission_params)
+        @form = ActsSubmissionForm.new(acts_submission_params)
+        xml_form = UpvsSubmissions::OrSrFormBuilder.new.application_for_document_copy(@form)
         render xml: xml_form.to_xml
       end
 

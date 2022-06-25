@@ -1,5 +1,5 @@
 class UpvsSubmissions::OrSrFormBuilder
-  def application_for_document_copy(params)
+  def application_for_document_copy(form)
     Nokogiri::XML::Builder.new(encoding: 'utf-8') do |m|
       m.ApplicationForDocumentCopy do
         m.parent['xmlns:e'] = 'http://schemas.gov.sk/form/00166073.MSSR_ORSR_Poziadanie_o_vyhotovenie_kopie_listiny_ulozenej_v_zbierke_listin.sk/1.53'
@@ -22,12 +22,12 @@ class UpvsSubmissions::OrSrFormBuilder
             m.Codelist do
               m.CodelistCode 'MSSR-ORSR-LegalPerson'
               m.CodelistItem do
-                m.ItemCode params[:business_ico]
-                m.ItemName params[:business_name] do
+                m.ItemCode form.business_ico
+                m.ItemName form.business_name do
                   m.parent['Language'] = 'sk'
                 end
                 # not actually used
-                m.Note params[:note] do
+                m.Note form.note do
                   m.parent['Language'] = 'sk'
                 end
               end
@@ -35,15 +35,15 @@ class UpvsSubmissions::OrSrFormBuilder
 
             m.PersonData do
               m.PhysicalAddress do
-                m.AddressLine params[:business_address]
+                m.AddressLine form.business_address
               end
             end
 
-            params[:acts].each do |_key, act|
+            (form.acts || []).each do |act|
               m.Document do
-                m.MakeCopy act[:make_copy]
-                m.Code act[:code]
-                m.Name act[:name]
+                m.MakeCopy act.make_copy
+                m.Code act.code
+                m.Name act.name
               end
             end
           end
@@ -52,7 +52,7 @@ class UpvsSubmissions::OrSrFormBuilder
         m.Applicant do
           m.PersonData do
             m.ElectronicAddress do
-              m.InternetAddress params[:email]
+              m.InternetAddress form.email
             end
           end
         end
