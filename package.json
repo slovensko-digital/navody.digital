@@ -3,11 +3,12 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "^5.4.3",
-    "navody-digital-frontend": "0.1.7",
+    "navody-digital-frontend": "https://github.com/alhafoudh/navody-frontend#upstream-sync",
     "resolve-url-loader": "^3.1.0",
     "stimulus": "^2.0.0"
   },
   "devDependencies": {
+    "@webpack-cli/serve": "^1.7.0",
     "webpack-dev-server": "^4.7.3"
   }
 }
