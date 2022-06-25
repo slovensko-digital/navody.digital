@@ -18,6 +18,8 @@ module My
         entry.last_checked_at = Time.now
         entry.custom_fields = check_result
         entry.status = check_result[:missing].any? ? 'bad' : 'ok'
+
+        entry.save
       end
     end
   end
