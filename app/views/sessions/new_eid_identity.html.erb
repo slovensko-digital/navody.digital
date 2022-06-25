@@ -8,7 +8,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
     <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
-      <%= hidden_field_tag(:eid_encoded_token, eid_token.encoded_token) %>
+      <%= hidden_field_tag(:eid_sub, eid_token.sub) %>
       <fieldset class="govuk-fieldset">
         <div class="govuk-form-group">
           <div class="govuk-!-padding-bottom-5">
@@ -23,7 +23,7 @@
         </div>
         <%= submit_tag 'Dokončiť založenie účtu', class: 'govuk-button' %>
         alebo
-        <%= link_to 'Nechcem pokračovať, chcem sa odhlásiť', session_path(eid_encoded_token: eid_token.encoded_token), method: :delete, class: 'govuk-link govuk-cancel-link' %>
+        <%= link_to 'Nechcem pokračovať, chcem sa odhlásiť', session_path, method: :delete, class: 'govuk-link govuk-cancel-link' %>
       </fieldset>
     <% end %>
   </div>
