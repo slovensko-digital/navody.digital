@@ -26,10 +26,9 @@ module OmniAuth
 
         email = User.find_by(eid_sub: eid_sub)&.email
 
-        session[:eid_encoded_token] = encoded_token
-
         @payload = {
           'eid_sub' => eid_sub,
+          'eid_encoded_token' => encoded_token,
           'email' => email
         }
 

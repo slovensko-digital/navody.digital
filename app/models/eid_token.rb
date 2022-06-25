@@ -9,14 +9,25 @@ class EidToken
 
   def decoded_token
     @decoded_token ||= JWT.decode(encoded_token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
+  rescue JWT::ExpiredSignature
+    nil
   end
 
   def sub
-    decoded_token.first.fetch('sub')
+    decoded_token&.first&.fetch('sub')
+  end
+
+  def name
+    decoded_token&.first&.fetch('name')
   end
 
   def expires_at
-    Time.zone.at(decoded_token.first.fetch('exp'))
+    exp = decoded_token&.first&.fetch('exp')
+    if exp.present?
+      Time.zone.at(exp)
+    else
+      nil
+    end
   end
 
   def expired?

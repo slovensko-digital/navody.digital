@@ -1,0 +1,30 @@
+<% content_for :title, build_page_title('Zadajte email k svojmu účtu') %>
+
+<div class="govuk-grid-row govuk-!-padding-top-9">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Vitaj <%= eid_token.name %>,<br/>prihlásenie cez EID bolo úspešné.</h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
+      <%= hidden_field_tag(:eid_encoded_token, eid_token.encoded_token) %>
+      <fieldset class="govuk-fieldset">
+        <div class="govuk-form-group">
+          <div class="govuk-!-padding-bottom-5">
+            <span class="govuk-label-wrapper">
+              <span class="govuk-caption-l">Aby sme mohli pokračovať, zadaj ešte tvoj e-mail, kde ti pošleme email na jednorázové overenie.</span>
+            </span>
+          </div>
+          <span class="govuk-hint">
+            Napríklad: janko@mirri.gov.sk
+          </span>
+          <%= email_field_tag :email, nil, class: 'govuk-input', required: true %>
+        </div>
+        <%= submit_tag 'Dokončiť založenie účtu', class: 'govuk-button' %>
+        alebo
+        <%= link_to 'Nechcem pokračovať, chcem sa odhlásiť', session_path(eid_encoded_token: eid_token.encoded_token), method: :delete, class: 'govuk-link govuk-cancel-link' %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

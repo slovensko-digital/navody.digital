@@ -20,8 +20,9 @@ module OmniAuth
 
         params = {}
 
-        if session[:eid_uid].present?
-          params[:eid_uid] = session[:eid_uid]
+        eid_encoded_token = request.params['eid_encoded_token']
+        if eid_encoded_token.present?
+          params[:eid_encoded_token] = eid_encoded_token
         end
 
         token = generate_magic_code(email, session.id, params)

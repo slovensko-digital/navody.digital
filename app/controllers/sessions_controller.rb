@@ -7,22 +7,24 @@ class SessionsController < ApplicationController
 
   def create
     if new_eid_identity?
-      session[:eid_uid] = auth_hash.uid
-      redirect_to new_eid_onboarding_path
+      render :new_eid_identity, locals: { eid_token: EidToken.new(eid_encoded_token_from_auth, public_key: eid_public_key) }
       return
     end
 
-    redirect_to new_session_path, alert: 'Prosím zadajte e-mail' and return unless auth_email.present?
+    unless auth_email.present?
+      redirect_to new_session_path, alert: 'Prosím zadajte e-mail'
+      return
+    end
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
     if eid_identity_approval?
-      user.update!(eid_sub: auth_hash.info['eid_uid'])
+      user.update!(eid_sub: eid_token.sub)
       session.delete(:eid_uid)
     end
 
-    if eid_token_sub_mismatch?(user.eid_sub)
-      session.delete(:eid_encoded_token)
+    if eid_token_present_in_auth?(user.eid_sub)
+      session[:eid_encoded_token] = eid_encoded_token_from_auth
     end
 
     session[:user_id] = user.id
@@ -57,7 +59,7 @@ class SessionsController < ApplicationController
       logout_token = JWT.encode({
                                   exp: (Time.zone.now + 5.minutes).to_i,
                                   jti: SecureRandom.uuid,
-                                  obo: session[:eid_encoded_token],
+                                  obo: eid_token.encoded_token,
                                 }, private_key, 'RS256', { cty: 'JWT' })
 
       redirect_to "#{logout_url}?token=#{logout_token}"
@@ -87,15 +89,34 @@ class SessionsController < ApplicationController
   end
 
   def eid_identity_approval?
-    auth_hash.provider == "magiclink" && auth_hash.info['eid_uid'].present?
+    auth_hash.provider == "magiclink" && eid_encoded_token_from_auth.present?
   end
 
-  def eid_token_sub_mismatch?(user_eid_sub)
-    session[:eid_encoded_token].present? && eid_token.sub != user_eid_sub
+  def eid_token_present_in_auth?(user_eid_sub)
+    eid_encoded_token_from_auth.present? && EidToken.new(eid_encoded_token_from_auth, public_key: eid_public_key).sub == user_eid_sub
   end
 
   def eid_token
-    EidToken.new(session[:eid_encoded_token], public_key: Rails.application.config_for(:auth).dig(:eid, :public_key))
+    eid_encoded_token = eid_encoded_token_from_session || eid_encoded_token_from_params || eid_encoded_token_from_auth
+    return unless eid_encoded_token.present?
+    EidToken.new(eid_encoded_token, public_key: eid_public_key)
+  end
+
+  def eid_encoded_token_from_session
+    session[:eid_encoded_token]
+  end
+
+  def eid_encoded_token_from_params
+    params[:eid_encoded_token]
+  end
+
+  def eid_encoded_token_from_auth
+    return unless auth_hash&.info.present?
+    auth_hash.info['eid_encoded_token']
+  end
+
+  def eid_public_key
+    Rails.application.config_for(:auth).dig(:eid, :public_key)
   end
 
   def after_login_redirect_path

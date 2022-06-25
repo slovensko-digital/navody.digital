@@ -107,9 +107,6 @@ Rails.application.routes.draw do
 
   get 'login', to: 'sessions#create', as: :eid_auth_callback  # TODO: add constraint for origin check
   get 'logout', to: 'sessions#logout', as: :eid_deauth_callback  # TODO: add constraint for origin check
-  namespace :eid do
-    resources :onboarding, only: [:new, :create]
-  end
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
