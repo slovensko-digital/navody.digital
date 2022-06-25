@@ -90,11 +90,10 @@ Rails.application.routes.draw do
     end
 
     namespace :business_register_app, path: 'obchodny-register' do
-      get :acts_submissions, to: 'acts_submissions#index', path: 'listiny'
-      get :search_business, to: 'acts_submissions#search_business'
-      get :search_acts, to: 'acts_submissions#search_acts'
+      resources :acts_submissions, only: [:index, :create], path: 'listiny'
+      get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }
+      get :search_acts, to: 'acts_submissions#search_acts', defaults: { format: :json }
       get :callback, to: 'acts_submissions#callback'
-      resources :acts_submissions, only: :create
     end
   end
   resources :apps, path: 'aplikacie' # faux route

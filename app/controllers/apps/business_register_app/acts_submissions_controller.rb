@@ -28,7 +28,7 @@ module Apps
       # generates XML to be submitted
       def create
         xml_form = UpvsSubmissions::OrSrFormBuilder.new.application_for_document_copy(acts_submission_params)
-        xml_form.to_xml
+        render xml: xml_form.to_xml
       end
 
       def callback
@@ -42,7 +42,7 @@ module Apps
           :business_name,
           :business_address,
           :email,
-          acts: [:make_copy, :code, :name],
+          acts: {},
         )
       end
     end
