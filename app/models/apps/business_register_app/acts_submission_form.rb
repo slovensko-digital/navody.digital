@@ -13,8 +13,8 @@ module Apps
         :business_address,
       )
 
-      def acts=(hash)
-        @acts = hash.map do |_key, act|
+      def acts=(array)
+        @acts = array.map do |act|
           Act.new(act)
         end
       end

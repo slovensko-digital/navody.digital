@@ -74,6 +74,6 @@ $govuk-focus-colour: #ffdd00;
   background-color:  $govuk-focus-colour;
 }
 
-.autocomplete__menu--hidden {
+.autocomplete__menu--hidden, .hidden {
   display: none;
 }

@@ -44,7 +44,7 @@ module Apps
           :business_name,
           :business_address,
           :email,
-          acts: {},
+          acts: [:id, :code, :name, :make_copy],
         )
       end
     end
