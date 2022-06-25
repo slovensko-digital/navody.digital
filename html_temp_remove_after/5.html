@@ -1,0 +1,174 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Home – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-padding-bottom-9">
+    <h2 class="govuk-fieldset__heading govuk-!-padding-bottom-1">
+      Adresát
+    </h2>
+    <div id="with-hint-hint" class="govuk-hint">
+      Obchodný register
+    </div>
+  </legend>
+
+  <div class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-padding-bottom-6">
+    <h3 class="govuk-fieldset__heading govuk-!-padding-bottom-1">
+      Údaje o správe
+    </h3>
+    <div id="with-hint-hint" class="govuk-hint">
+      Vyplňte údaje označujúce správu.
+    </div>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="udaje-subject">
+      Predmet
+    </label>
+    <input class="govuk-input" id="udaje-subject" name="u-subject" type="text" autocomplete="u-subject">
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="udaje-sign-taker">
+      Značka prijímateľa <span class="">(nepovinné)</span>
+    </label>
+    <input class="govuk-input" id="udaje-sign-taker" name="u-sign-taker" type="text" autocomplete="u-sign-taker">
+  </div>
+
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="udaje-sign-sender">
+      Značka odosielateľa <span class="">(nepovinné)</span>
+    </label>
+    <input class="govuk-input" id="udaje-sign-sender" name="u-sign-sender" type="text" autocomplete="u-sign-sender">
+  </div>
+
+  <div class="govuk-!-padding-bottom-6">
+  </div>
+
+
+
+  <div class="govuk-fieldset__legend govuk-fieldset__legend--l govuk-!-padding-bottom-6">
+    <h3 class="govuk-fieldset__heading govuk-!-padding-bottom-1">
+      Elektronický dokument
+    </h3>
+    <div id="with-hint-hint" class="govuk-hint">
+      Žiadosť o vyhotovenie kópie listiny uloženej v zbierke listín
+    </div>
+
+    <p class="govuk-hint-steps govuk-body-s">
+      Otázka 2 / 5
+    </p>
+
+  </div>
+</fieldset>
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <legend class="govuk-fieldset__legend">
+      Pre ktorý subjekt (zapísanú osobu) žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
+    </legend>
+    <div class="govuk-form-group">
+  </h1>
+
+        <p class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
+         Obchodné meno/IČO/Spisová značka
+        </label>
+        </p>
+        <p class="govuk-hint">Uveďte obchodné meno (zadajte obchodné meno, časť obchodného mena, alebo aspoň štyri začiatočné písmená obchodného mena), IČO (v celom znení) alebo spisovú značku v tvare: oddiel/vložka/súd (napr.: Sro/0000/B). Následne vyberte správnu hodnotu z číselníka v tvare napr.: ALFA, s.r.o. (IČO: 10000000, spisová značka: Sro/0000/B).</p>
+        <input class="govuk-input" id="subject-search" name="subject-search" type="text">
+
+        <!-- TODO  -->
+      <ul class="autocomplete__menu autocomplete__menu--overlay autocomplete__menu--visible" id="acts_submission_business__listbox" role="listbox">
+        <li class="autocomplete__option" id="acts_submission_business__option--0" role="option" tabindex="-1">
+          100FREE s.r.o. (IČO: 50706071, spisová značka: Sro/117401/B)
+        </li>
+
+        <li class="autocomplete__option" id="acts_submission_business__option--1" role="option" tabindex="-1">
+          100FREE s.r.o. (IČO: 50706071, spisová značka: Sro/117401/B)
+        </li>
+      </ul>
+
+        <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Sídlo</p>
+        <input class="govuk-input " id="company-address" name="company-address" type="text">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+
+      <!-- TODO from -->
+          <div id="acts_box">
+            <template id="t-acts-header">
+            <p class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+              Pre ktorú listinu/listiny požadujete vyhotovenie kópie?
+            </p>
+            </template>
+
+            <template id="t-acts-item">
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="__company_id__" name="__company_id__" type="checkbox" value="__value__">
+              <label class="govuk-label govuk-checkboxes__label" for="__company_id__">
+                __title__
+              </label>
+            </div>
+            </template>
+          </div>
+
+      <!-- TODO -->
+      <!-- <ul class="autocomplete__menu autocomplete__menu--overlay autocomplete__menu--visible" id="acts_submission_business__listbox" role="listbox">
+           <li class="autocomplete__option" id="acts_submission_business__option--0" role="option" tabindex="-1">
+           <span>100FREE s.r.o. (IČO: 50706071, spisová značka: Sro/117401/B)</span>
+           </li> -->
+        <!-- <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--1" role="option" tabindex="-1">
+             <strong>2 be free, s.r.o. (IČO: 46754857, spisová značka: Sro/104446/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--2" role="option" tabindex="-1">
+             <strong>AGROFREE s.r.o. (IČO: 44429282, spisová značka: Sro/23584/N)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--3" role="option" tabindex="-1">
+             <strong>AVE.FREEWAY SK spol. s.r.o. (IČO: 36813192, spisová značka: Sro/47231/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--4" role="option" tabindex="-1">
+             <strong>be FREE s.r.o. (IČO: 36732681, spisová značka: Sro/12606/S)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--5" role="option" tabindex="-1">
+             <strong>Be Free Tours, s.r.o. (IČO: 46817743, spisová značka: Sro/84224/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--6" role="option" tabindex="-1">
+             <strong>BeFree Energy s.r.o. (IČO: 52043223, spisová značka: Sro/46984/N)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--7" role="option" tabindex="-1">
+             <strong>BeFree family s. r. o. (IČO: 51089050, spisová značka: Sro/122994/B)</strong>
+             </li>
+             <li class="autocomplete__option" id="acts_submission_business__option--8" role="option" tabindex="-1">
+             <strong>BeFree s. r. o. (IČO: 53022505, spisová značka: Sro/74439/L)</strong>
+             </li>
+             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--9" role="option" tabindex="-1">
+             <strong>BeFree World Education Community s. r. o. (IČO: 50913549, spisová značka: Sro/154723/B)</strong>
+             </li> -->
+      <!-- </ul> -->
+
+
+
+    </div>
+
+
+
+    <button class="govuk-button govuk-button--secondary govuk-!-margin-top-6" data-module="govuk-button">
+      Späť
+    </button>
+    <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+
+  </fieldset>
+</div>
+
+
+
+
+
+{% endblock %}
