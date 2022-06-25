@@ -1,14 +1,14 @@
 class EidToken
   attr_reader :encoded_token
-  attr_reader :public_key
+  attr_reader :config
 
-  def initialize(encoded_token, public_key:)
+  def initialize(encoded_token, config:)
     @encoded_token = encoded_token
-    @public_key = public_key
+    @config = config
   end
 
   def decoded_token
-    @decoded_token ||= JWT.decode(encoded_token, OpenSSL::PKey::RSA.new(public_key), true, algorithms: ['RS256'])
+    @decoded_token ||= JWT.decode(encoded_token, public_key, true, algorithms: ['RS256'])
   rescue JWT::ExpiredSignature
     nil
   end
@@ -32,5 +32,29 @@ class EidToken
 
   def expired?
     expires_at.past?
+  end
+
+  def generate_logout_url(expires_in:)
+    logout_token = JWT.encode({
+                                exp: (Time.zone.now + expires_in).to_i,
+                                jti: SecureRandom.uuid,
+                                obo: encoded_token,
+                              }, private_key, 'RS256', { cty: 'JWT' })
+
+    (base_url + URI("/logout?token=#{logout_token}")).to_s
+  end
+
+  private
+
+  def base_url
+    URI(config[:base_url])
+  end
+
+  def public_key
+    OpenSSL::PKey::RSA.new(config[:public_key])
+  end
+
+  def private_key
+    OpenSSL::PKey::RSA.new(config[:private_key])
   end
 end

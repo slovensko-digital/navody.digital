@@ -52,17 +52,7 @@ class SessionsController < ApplicationController
 
   def destroy
     if should_perform_eid_logout?
-      eid_config = Rails.application.config_for(:auth)[:eid]
-
-      logout_url = "#{eid_config[:base_url]}/logout"
-      private_key = OpenSSL::PKey::RSA.new(eid_config[:private_key])
-      logout_token = JWT.encode({
-                                  exp: (Time.zone.now + 5.minutes).to_i,
-                                  jti: SecureRandom.uuid,
-                                  obo: eid_token.encoded_token,
-                                }, private_key, 'RS256', { cty: 'JWT' })
-
-      redirect_to "#{logout_url}?token=#{logout_token}"
+      redirect_to eid_token.generate_logout_url(expires_in: 5.minutes)
     else
       logout
     end
@@ -93,13 +83,13 @@ class SessionsController < ApplicationController
   end
 
   def should_keep_eid_token_in_session?(user_eid_sub)
-    eid_encoded_token_from_session.present? && EidToken.new(eid_encoded_token_from_session, public_key: eid_public_key).sub == user_eid_sub
+    eid_encoded_token_from_session.present? && EidToken.new(eid_encoded_token_from_session, config: eid_config).sub == user_eid_sub
   end
 
   def eid_token
     eid_encoded_token = eid_encoded_token_from_session || eid_encoded_token_from_auth
     return unless eid_encoded_token.present?
-    EidToken.new(eid_encoded_token, public_key: eid_public_key)
+    EidToken.new(eid_encoded_token, config: eid_config)
   end
 
   def eid_encoded_token_from_session
@@ -116,8 +106,8 @@ class SessionsController < ApplicationController
     auth_hash.info['eid_sub']
   end
 
-  def eid_public_key
-    Rails.application.config_for(:auth).dig(:eid, :public_key)
+  def eid_config
+    Rails.application.config_for(:auth).fetch(:eid)
   end
 
   def after_login_redirect_path

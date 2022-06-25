@@ -11,7 +11,7 @@ module OmniAuth
       option :fields, [:eid_sub]
       option :uid_field, :eid_sub
       option :auth_url
-      option :public_key
+      option :config
 
       def request_phase
         redirect auth_url
@@ -20,7 +20,7 @@ module OmniAuth
       def callback_phase
         encoded_token = request[:token]
 
-        @eid_token = EidToken.new(encoded_token, public_key: public_key)
+        @eid_token = EidToken.new(encoded_token, config: config)
 
         return fail!(:invalid_credentials) unless eid_sub
 
@@ -54,11 +54,11 @@ module OmniAuth
       end
 
       def auth_url
-        "#{options[:base_url]}/login"
+        "#{config[:base_url]}/login"
       end
 
-      def public_key
-        options[:public_key]
+      def config
+        options[:config]
       end
     end
   end
