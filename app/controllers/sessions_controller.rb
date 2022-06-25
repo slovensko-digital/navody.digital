@@ -6,8 +6,9 @@ class SessionsController < ApplicationController
   end
 
   def create
+    session[:eid_encoded_token] = eid_encoded_token_from_auth
+
     if new_eid_identity?
-      session[:eid_encoded_token] = eid_encoded_token_from_auth
       render :new_eid_identity, locals: { eid_token: eid_token }
       return
     end
@@ -64,10 +65,6 @@ class SessionsController < ApplicationController
     auth_hash.dig('info', 'email')
   end
 
-  def auth_hash
-    request.env['omniauth.auth']
-  end
-
   private
 
   def should_perform_eid_logout?
@@ -84,30 +81,6 @@ class SessionsController < ApplicationController
 
   def should_keep_eid_token_in_session?(user_eid_sub)
     eid_encoded_token_from_session.present? && EidToken.new(eid_encoded_token_from_session, config: eid_config).sub == user_eid_sub
-  end
-
-  def eid_token
-    eid_encoded_token = eid_encoded_token_from_session || eid_encoded_token_from_auth
-    return unless eid_encoded_token.present?
-    EidToken.new(eid_encoded_token, config: eid_config)
-  end
-
-  def eid_encoded_token_from_session
-    session[:eid_encoded_token]
-  end
-
-  def eid_encoded_token_from_auth
-    return unless auth_hash&.info.present?
-    auth_hash.info['eid_encoded_token']
-  end
-
-  def eid_sub_from_auth
-    return unless auth_hash&.info.present?
-    auth_hash.info['eid_sub']
-  end
-
-  def eid_config
-    Rails.application.config_for(:auth).fetch(:eid)
   end
 
   def after_login_redirect_path
