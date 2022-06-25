@@ -92,7 +92,7 @@
   </fieldset>
 </div>
 
-<%= form_for @submission_form, url: upvs_submissions_new_path do |f| %>
+<%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: '', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
 
   <%#  todo this will be appended XML by JS %>
   <%= f.hidden_field :form, value: nil %>
@@ -103,7 +103,6 @@
   <%= f.hidden_field :posp_id %>
   <%= f.hidden_field :message_type %>
   <%= f.hidden_field :message_subject %>
-  <%= f.submit 'Submit' %>
 <% end %>
 
 <%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
@@ -259,7 +258,11 @@ ${arrItems}
         }
       }
     ).then(res => res.text())
+
     console.log(res);
+
+    document.getElementById('form').value = res
+    document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
   }
 
   const main = async () => {
