@@ -5,6 +5,7 @@ class PagesController < ApplicationController
 
     @faqs = Page.faq.all # TODO: fetch top FAQs here
     @journeys = Journey.published
+    @categories = Category.all
     @documents = Document.featured.includes(:searchable).order(featured_position: :asc).map(&:searchable).compact # we do not have FK constraints here, compact eliminates any possible documents hanging without searchable counterpart, which was deleted
   end
 
