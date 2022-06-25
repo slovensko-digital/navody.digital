@@ -27,7 +27,7 @@
                 <a href="#" data-turbolinks="false" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown">
                   <span class="sdn-header__fixed-width-text">
                     <%= current_user.email %>
-                    <% if eid_token.valid? %>
+                    <% if eid_token&.valid? %>
                     <sup>EID</sup>
                   <% end %>
                   </span>
