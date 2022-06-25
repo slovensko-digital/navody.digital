@@ -23,9 +23,8 @@ class Upvs::Submission
     return true
   end
 
-  def token_payload
-    @token_payload, _ = JWT.decode(@token, nil, false) unless @token_payload && @token
-    @token_payload
+  def token_payload(token)
+    JWT.decode(token, nil, false)
   end
 
   def recipient_name

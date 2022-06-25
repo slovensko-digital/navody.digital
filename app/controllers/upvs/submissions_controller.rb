@@ -44,6 +44,8 @@ class Upvs::SubmissionsController < ApplicationController
   private
 
   def submit_to_sk_api
+    @token = session[:eid_token]
+
     sktalk_message = UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission)
 
     headers =  {
@@ -55,9 +57,13 @@ class Upvs::SubmissionsController < ApplicationController
     }.to_json
 
     # TODO get API+OBO token
-    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{api_token}"
+    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{api_token(@token)}"
 
     Faraday.post(url, data, headers)
+  end
+
+  def api_token(obo_token, expires_in: 4.minutes.from_now.to_i)
+    JWT.encode({exp: (Time.zone.now + expires_in).to_i, jti: SecureRandom.uuid, obo: obo_token}, private_key, 'RS256', { cty: 'JWT' })
   end
 
   def load_upvs_submission
