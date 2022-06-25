@@ -6,13 +6,13 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if should_put_eid_token_in_session?
+      session[:eid_encoded_token] = eid_encoded_token_from_auth
+    end
+
     if new_eid_identity?
       render :new_eid_identity, locals: { eid_token: eid_token }
       return
-    end
-
-    if should_put_eid_token_in_session?
-      session[:eid_encoded_token] = eid_encoded_token_from_auth
     end
 
     unless auth_email.present?
