@@ -13,7 +13,7 @@
         <div class="govuk-form-group">
           <div class="govuk-!-padding-bottom-5">
             <span class="govuk-label-wrapper">
-              <span class="govuk-caption-l">Aby sme mohli pokračovať, zadaj ešte tvoj e-mail, kde ti pošleme email na jednorázové overenie.</span>
+              <span class="govuk-caption-l">Aby sme mohli pokračovať, potrebujeme ešte tvoj e-mail, kde ti pošleme odkaz na jednorázové overenie.</span>
             </span>
           </div>
           <span class="govuk-hint">
@@ -21,9 +21,13 @@
           </span>
           <%= email_field_tag :email, nil, class: 'govuk-input', required: true %>
         </div>
-        <%= submit_tag 'Dokončiť založenie účtu', class: 'govuk-button' %>
-        alebo
-        <%= link_to 'Nechcem pokračovať, chcem sa odhlásiť', session_path, method: :delete, class: 'govuk-link govuk-cancel-link' %>
+        <div class="govuk-button-group">
+          <%= submit_tag 'Dokončiť založenie účtu', class: 'govuk-button' %>
+          <span>
+            <span class="govuk-body">alebo</span>
+            <%= link_to 'odhlásiť sa', session_path, method: :delete, class: 'govuk-link govuk-cancel-link' %>
+          </span>
+        </div>
       </fieldset>
     <% end %>
   </div>
