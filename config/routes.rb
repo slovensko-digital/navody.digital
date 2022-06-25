@@ -122,4 +122,16 @@ Rails.application.routes.draw do
 
     get :test, on: :collection unless Rails.env.production?
   end
+
+  namespace :upvs  do
+    namespace :submissions, path: 'podania' do
+      get :login_callback
+      get :switch_account_callback
+      post :new, path: ''
+      post :sign, path: 'podpisat'
+      post :submit, path: 'odoslat'
+      post :continue, path: 'pokracovat'
+      get :finish, path: 'hotovo'
+    end
+  end
 end

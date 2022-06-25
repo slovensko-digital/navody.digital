@@ -1,0 +1,15 @@
+<h1 class="govuk-heading-l">Podanie</h1>
+<p class="govuk-body-l">Pomocou tejto služby môžete zasielať správy orgánom verejnej moci.</p>
+<%#= render 'components/error_summary', form: @upvs_submission %>
+<%= render partial: 'sender' %>
+<div class="govuk-form-group">
+  <%= label :recipient_name, 'Príjimateľ správy', class: 'govuk-label' %>
+  <%= text_field :recipient_name, @upvs_submission.recipient_name %>
+</div>
+
+<div class="govuk-form-group">
+  <h2 class="govuk-heading-m">Podanie</h2>
+  <p>TODO vizualizacia</p>
+</div>
+
+<%= render partial: 'actions' %>

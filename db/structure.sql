@@ -398,6 +398,40 @@ ALTER SEQUENCE public.current_topics_id_seq OWNED BY public.current_topics.id;
 
 
 --
+-- Name: egov_application_allow_rules; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.egov_application_allow_rules (
+    id bigint NOT NULL,
+    recipient_uri character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.egov_application_allow_rules_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.egov_application_allow_rules_id_seq OWNED BY public.egov_application_allow_rules.id;
+
+
+--
 -- Name: journeys; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -930,6 +964,13 @@ ALTER TABLE ONLY public.current_topics ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('public.egov_application_allow_rules_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1066,6 +1107,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.current_topics
     ADD CONSTRAINT current_topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.egov_application_allow_rules
+    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
 
 
 --
@@ -1222,6 +1271,13 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_egov_application_allow_rules_on_recipient_uri; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_egov_application_allow_rules_on_recipient_uri ON public.egov_application_allow_rules USING btree (recipient_uri);
 
 
 --
@@ -1633,6 +1689,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321172132'),
 ('20210321181737'),
 ('20220322180237'),
-('20220323214831');
+('20220323214831'),
+('20220624185928');
 
 
