@@ -31,7 +31,11 @@ class EidToken
   end
 
   def expired?
-    expires_at.past?
+    expires_at.nil? ? true : expires_at.past?
+  end
+
+  def valid?
+    !expired?
   end
 
   def generate_logout_url(expires_in:)
