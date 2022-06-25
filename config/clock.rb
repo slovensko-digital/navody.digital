@@ -14,5 +14,6 @@ module Clockwork
   end
 
   every(1.week, 'sitemap:refresh', at: 'Monday 9:00') if Rails.env.production?
+  every(1.day, 'navody:userfeeds:generate')
   every(20.minutes, 'navody:cleanup')
 end
