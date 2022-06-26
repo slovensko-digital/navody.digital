@@ -1,0 +1,39 @@
+<% content_for :title, 'Návody.Digital: Jednoduché návody na slovenské úrady' %>
+
+<% content_for(:before_main_wrapper) do %>
+  <%= render 'searches/search_box' %>
+  <%= render 'components/active_topic' if @active_current_topic.present? %>
+
+  <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-0" role="main">
+    <div class="govuk-!-padding-top-5 govuk-!-padding-bottom-9">
+      <div class="govuk-width-container">
+        <%= render 'components/breadcrumbs' , crumbs: [], current: @category.name %>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">
+              <%= @category.name %>
+            </h2>
+            <% @documents.each do |searchable| %>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-!-margin-top-5">
+                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                    <%= link_to searchable.title, searchable %>
+                  </h3>
+                  <p class="govuk-body-s">
+                    <% if searchable.is_a? Page %>
+                      <% description = searchable.content %>
+                    <% else %>
+                      <% description = searchable.description %>
+                    <% end %>
+                    <%= truncate description.squish, :length => 400, :separator => /\w/ %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<% end %>

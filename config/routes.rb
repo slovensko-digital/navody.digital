@@ -109,6 +109,7 @@ Rails.application.routes.draw do
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+  resources :categories, only: [:show]
 
   resources :submissions, path: 'podania' do
     post :start, path: 'nove', on: :collection # public facing API

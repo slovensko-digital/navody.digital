@@ -18,9 +18,7 @@
                 <div class="govuk-!-margin-top-5">
                   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
                   <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                    <a class="govuk-link" style="color: #3a67e8;" href="path_to_category">
-                      <%= category.name %>
-                    </a>
+                    <%= link_to category.name, category %>
                   </h3>
                   <p class="govuk-body-s">
                     <%= category.description %>
@@ -33,7 +31,7 @@
       </div>
     </div>
 
-    <div class="govuk-!-padding-top-9 govuk-!-padding-bottom-9">
+    <div class="featured-journeys govuk-!-padding-top-9 govuk-!-padding-bottom-9">
       <div class="govuk-width-container">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
@@ -45,12 +43,10 @@
                 <div class="govuk-!-margin-top-5">
                   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
                   <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                    <a class="govuk-link" style="color: #3a67e8;" href="path_to_category">
-                      <%= journey.title %>
-                    </a>
+                    <%= link_to journey.title, journey %>
                   </h3>
                   <p class="govuk-body-s">
-                    <%= journey.description %>
+                    <%= truncate journey.description.squish, :length => 400, :separator => /\w/ %>
                   </p>
                 </div>
               </div>
