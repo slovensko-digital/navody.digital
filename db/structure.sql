@@ -384,7 +384,8 @@ CREATE TABLE public.categories (
     name character varying,
     description text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    featured boolean DEFAULT true
 );
 
 
@@ -1714,6 +1715,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220624204655'),
 ('20220624204819'),
 ('20220624204833'),
-('20220624204843');
+('20220624204843'),
+('20220625112822');
 
 

@@ -1,0 +1,15 @@
+<%= form_with(model: [:admin, category], local: true, builder: AdminFormBuilder) do |form| %>
+  <% if category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+    </div>
+  <% end %>
+
+  <%= form.text_field :name %>
+  <%= form.check_box :featured %>
+  <%= form.text_field :description %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
