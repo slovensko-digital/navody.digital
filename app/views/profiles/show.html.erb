@@ -1,0 +1,7 @@
+<%= content_for(:headerline, 'Profil užívateľa (' + @user_email + ')')  %>
+
+<%= link_to 'Zrušiť profil', profile_path,
+    method: "delete",
+    data: { confirm: "Skutočne chcete odstrániť Váš profil?" },
+    class: 'govuk-button govuk-button--large',
+    style: 'background-color:#aa2a16' %>
