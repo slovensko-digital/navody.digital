@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA upvs;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -26,6 +33,8 @@ $$;
 
 
 SET default_tablespace = '';
+
+SET default_table_access_method = heap;
 
 --
 -- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
@@ -396,40 +405,6 @@ ALTER SEQUENCE public.current_topics_id_seq OWNED BY public.current_topics.id;
 
 
 --
--- Name: egov_application_allow_rules; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.egov_application_allow_rules (
-    id bigint NOT NULL,
-    recipient_uri character varying NOT NULL,
-    posp_id character varying NOT NULL,
-    posp_version character varying NOT NULL,
-    message_type character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.egov_application_allow_rules_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.egov_application_allow_rules_id_seq OWNED BY public.egov_application_allow_rules.id;
-
-
---
 -- Name: journeys; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -733,11 +708,11 @@ CREATE TABLE public.submissions (
     callback_url character varying NOT NULL,
     callback_step_id bigint,
     callback_step_status character varying,
-    selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    selected_subscription_types character varying[]
 );
 
 
@@ -928,6 +903,75 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: egov_application_allow_rules; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.egov_application_allow_rules (
+    id bigint NOT NULL,
+    recipient_uri character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.egov_application_allow_rules_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.egov_application_allow_rules_id_seq OWNED BY upvs.egov_application_allow_rules.id;
+
+
+--
+-- Name: form_template_related_documents; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.form_template_related_documents (
+    id bigint NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    xsd_schema text,
+    xslt_transformation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.form_template_related_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -960,13 +1004,6 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 --
 
 ALTER TABLE ONLY public.current_topics ALTER COLUMN id SET DEFAULT nextval('public.current_topics_id_seq'::regclass);
-
-
---
--- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('public.egov_application_allow_rules_id_seq'::regclass);
 
 
 --
@@ -1061,6 +1098,20 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('upvs.egov_application_allow_rules_id_seq'::regclass);
+
+
+--
+-- Name: form_template_related_documents id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments active_storage_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1106,14 +1157,6 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.current_topics
     ADD CONSTRAINT current_topics_pkey PRIMARY KEY (id);
-
-
---
--- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.egov_application_allow_rules
-    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
 
 
 --
@@ -1245,6 +1288,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules
+    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: form_template_related_documents form_template_related_documents_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents
+    ADD CONSTRAINT form_template_related_documents_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1270,13 +1329,6 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
-
-
---
--- Name: index_egov_application_allow_rules_on_recipient_uri; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_egov_application_allow_rules_on_recipient_uri ON public.egov_application_allow_rules USING btree (recipient_uri);
 
 
 --
@@ -1486,35 +1538,35 @@ CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
 
 
 --
 -- Name: pg_search_documents tsv_keywords_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
+CREATE TRIGGER tsv_keywords_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_keywords', 'pg_catalog.simple', 'keywords');
 
 
 --
 -- Name: pg_search_documents tsv_title_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
+CREATE TRIGGER tsv_title_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_title', 'pg_catalog.simple', 'title');
 
 
 --
 -- Name: pg_search_documents tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv_content', 'pg_catalog.simple', 'content');
 
 
 --
@@ -1697,6 +1749,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220322180237'),
 ('20220323214831'),
 ('20220407131258'),
-('20220624185928');
+('20220623200232'),
+('20220624185928'),
+('20220715194212');
 
 

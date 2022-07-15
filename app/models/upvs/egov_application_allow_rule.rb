@@ -15,5 +15,5 @@
 #  index_upvs.egov_application_rules_on_recipient_uri    (recipient_uri)
 #
 
-class EgovApplicationAllowRule < ApplicationRecord
+class Upvs::EgovApplicationAllowRule < ApplicationRecord
 end
