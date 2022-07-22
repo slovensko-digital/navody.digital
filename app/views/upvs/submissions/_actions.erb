@@ -1,8 +1,8 @@
 <div id="submission-actions">
-  <% if session[:eid_token].present? %>
-    <%= submit_tag "Odoslať" , formaction: upvs_submissions_submit_path, class: 'govuk-button' %>
-    <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?token=#{@upvs_submission.token}").to_s %>
-    <%= link_to 'Prihlásiť sa ako iný subjekt', upvs_submissions_switch_account_callback_path, target: :login, class: 'govuk-button govuk-link' %>
+  <% if @upvs_submission.token&.valid? %>
+    <%= submit_tag "Odoslať ako #{@upvs_submission.token&.name}", formaction: upvs_submissions_submit_path, class: 'govuk-button' %>
+    <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?token=#{@upvs_submission.token&.api_token}").to_s %>
+    <%= link_to 'Prihlásiť sa ako iný subjekt', url, target: :login, class: 'govuk-button govuk-link' %>
   <% else %>
     <div class="govuk-inset-text">Aby ste mohli odoslať takéto podanie, <strong>musíte sa prihlásiť pomocou elektronického občianskeho preukazu (eID)</strong>. Ak neviete eID používať, prečítajte si <%= link_to 'návod na jeho aktiváciu', journey_path('aktivacia-eid') %>.</div>
     <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login").to_s %>

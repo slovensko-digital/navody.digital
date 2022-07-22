@@ -92,11 +92,10 @@
   </fieldset>
 </div>
 
-<%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: '', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
+<%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
 
-  <%#  todo this will be appended XML by JS %>
   <%= f.hidden_field :form, value: nil %>
-  <%= f.hidden_field :callback_url, value: apps_business_register_app_callback_url %>
+  <%#= f.hidden_field :callback_url, value: apps_business_register_app_callback_url %>
 
   <%= f.hidden_field :recipient_uri %>
   <%= f.hidden_field :posp_version %>
@@ -223,10 +222,6 @@ ${arrItems}
     event.preventDefault()
 
     // TODO add error validation and validate required elements and return error what is missing etc.
-    //
-    // TODO test, if you select company, select items,
-    // then change the company and select new items, what will happen, if the
-    // Make sure that the company list selected items resets with the change of the company.
 
     const company = document.getElementById('subject-search').value
     const companyAddress = document.getElementById('company-address').value
@@ -241,8 +236,6 @@ ${arrItems}
 
       return { id: obj.serial_number, name: obj.name, code: obj.serial_number, make_copy: it.checked }
     })
-    // TODO make request to get xml
-    console.log(acts)
 
     let at = document.getElementById('authenticity-token').getAttribute('content')
 
@@ -259,9 +252,7 @@ ${arrItems}
       }
     ).then(res => res.text())
 
-    console.log(res);
-
-    document.getElementById('form').value = res
+    document.getElementById('upvs_submission_form').value = res
     document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
   }
 

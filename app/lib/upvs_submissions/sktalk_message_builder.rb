@@ -46,8 +46,7 @@ class UpvsSubmissions::SktalkMessageBuilder
   end
 
   def build_form_object(form)
-    format_xml_form(form) if form[:encoding] == 'XML'
-    build_object(form.merge({:object_class => 'FORM'}))
+    build_object(content: format_xml_form(form), object_class: 'FORM')
   end
 
   def build_attachment_objects(attachments = [])
@@ -55,12 +54,12 @@ class UpvsSubmissions::SktalkMessageBuilder
     (separator + attachments.map { |attachment| build_object(attachment) }.join(separator)) if attachments.present?
   end
 
-  def build_object(id: nil, name: nil, description: nil, signed: nil, mime_type: nil, encoding: 'Base64', content: nil, object_class: 'ATTACHMENT')
+  def build_object(id: uuid, name: 'Formulár', description: nil, signed: false, mime_type: 'application/x-eform-xml', encoding: 'XML', content: nil, object_class: 'ATTACHMENT')
     %Q{<Object Id="#{id}"#{%Q{ Name="#{sanitize(name)}"} if name.present?}#{%Q{ Description="#{sanitize(description)}"} if description.present?} Class="#{object_class}"#{%Q{ IsSigned="#{signed}"} unless signed.nil?} MimeType="#{mime_type}" Encoding="#{encoding}">#{content}</Object>}
   end
 
   def format_xml_form(form)
-    form[:content] = "\n        " + form[:content].gsub("\n", "\n        ") + "\n      "
+    "\n        " + form.gsub("\n", "\n        ") + "\n      " if form
   end
 
   def sanitize(s)

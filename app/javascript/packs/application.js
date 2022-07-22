@@ -33,11 +33,11 @@ function debounce(fn, delay) {
 }
 
 function initAU() {
-    document.getElementById('submissions_general_agenda_recipient_name').parentElement.remove();
+    document.getElementById('upvs_submission_recipient_name').parentElement.remove();
 
     accessibleAutocomplete({
         element: document.getElementById('recipient-name-container'),
-        id: 'submissions_general_agenda_recipient_name', // To match it to the existing <label>.
+        id: 'upvs_submission_recipient_name', // To match it to the existing <label>.
         source: debounce(async (query, populateResults) => {
             const res = await fetch(`/datahub/upvs/public_authority_edesks/search?q=${encodeURIComponent(query)}`);
             const data = await res.json();
@@ -45,7 +45,7 @@ function initAU() {
             populateResults(data);
         }),
         onConfirm: (result) => {
-            document.getElementById('submissions_general_agenda_recipient_uri').value = result?.uri;
+            document.getElementById('upvs_submission_recipient_uri').value = result?.uri;
         },
         minLength: 3,
         templates: {

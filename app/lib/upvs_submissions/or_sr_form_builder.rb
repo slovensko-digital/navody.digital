@@ -1,6 +1,6 @@
 class UpvsSubmissions::OrSrFormBuilder
   def application_for_document_copy(form)
-    Nokogiri::XML::Builder.new(encoding: 'utf-8') do |m|
+    xml_form = Nokogiri::XML::Builder.new do |m|
       m.ApplicationForDocumentCopy do
         m.parent['xmlns:e'] = 'http://schemas.gov.sk/form/00166073.MSSR_ORSR_Poziadanie_o_vyhotovenie_kopie_listiny_ulozenej_v_zbierke_listin.sk/1.53'
         m.parent['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance'
@@ -58,5 +58,7 @@ class UpvsSubmissions::OrSrFormBuilder
         end
       end
     end
+
+    xml_form.doc.root
   end
 end

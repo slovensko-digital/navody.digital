@@ -18,11 +18,11 @@ module UpvsSubmissions
         @attachments = []
       end
 
-      def posp_version
+      def posp_id
         "00166073.MSSR_ORSR_Poziadanie_o_vyhotovenie_kopie_listiny_ulozenej_v_zbierke_listin.sk"
       end
 
-      def posp_id
+      def posp_version
         "1.53"
       end
 
@@ -35,7 +35,7 @@ module UpvsSubmissions
       end
 
       def default_recipient_uri
-        'ico://sk/00166073_10006'
+        Rails.env.production? ? 'ico://sk/00166073_10006' : 'ico://sk/83369507'
       end
 
       def message_id

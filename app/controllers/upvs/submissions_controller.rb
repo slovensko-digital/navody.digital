@@ -11,20 +11,18 @@ class Upvs::SubmissionsController < ApplicationController
     end
   end
 
-  def finish
-  end
-
   def login_callback
-    session[:eid_token] = params[:token]
+    session[:eid_encoded_token] = params[:token]
     @token = params[:token]
 
-    render layout: false # TODO show something nice
+    render layout: false
   end
 
   def switch_account_callback
-    session.delete(:eid_token)
+    session.delete(:eid_encoded_token)
     @token = nil
-    render action: :login_callback, layout: false # TODO run logout/login flow
+
+    render action: :login_callback, layout: false
   end
 
   def submit
@@ -41,37 +39,30 @@ class Upvs::SubmissionsController < ApplicationController
     end
   end
 
-  private
-
-  def submit_to_sk_api
-    @token = session[:eid_token]
-
-    sktalk_message = UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission)
-
-    headers =  {
-      "Content-Type": "application/json"
-    }
-
-    data =  {
-      message: sktalk_message
-    }.to_json
-
-    # TODO get API+OBO token
-    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{api_token(@token)}"
-
-    Faraday.post(url, data, headers)
+  def continue
   end
 
-  def api_token(obo_token, expires_in: 4.minutes.from_now.to_i)
-    JWT.encode({exp: (Time.zone.now + expires_in).to_i, jti: SecureRandom.uuid, obo: obo_token}, private_key, 'RS256', { cty: 'JWT' })
+  def finish
+  end
+
+  private
+
+  def submit_to_sk_api(client: Faraday)
+    headers =  { "Content-Type": "application/json" }
+    data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission) }.to_json
+    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{@upvs_submission.token.api_token}"
+
+    client.post(url, data, headers)
   end
 
   def load_upvs_submission
     @upvs_submission = Upvs::Submission.new(application_params)
+    @upvs_submission.token = eid_token
   end
 
   def application_params
     params.require(:upvs_submission).permit(
+      :authenticity_token,
       :posp_id,
       :posp_version,
       :message_type,
@@ -80,7 +71,9 @@ class Upvs::SubmissionsController < ApplicationController
       :recipient_business_reference,
       :message_subject,
       :form,
-      :attachments
-    ) if params.key?(:upvs_submission)
+      :attachments,
+      :token,
+      :callback_url
+    ).except(:authenticity_token)
   end
 end

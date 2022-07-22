@@ -38,14 +38,12 @@ class EidToken
     !expired?
   end
 
-  def generate_logout_url(expires_in:)
-    logout_token = JWT.encode({
-                                exp: (Time.zone.now + expires_in).to_i,
-                                jti: SecureRandom.uuid,
-                                obo: encoded_token,
-                              }, private_key, 'RS256', { cty: 'JWT' })
+  def api_token(expires_in: 3.minutes)
+    JWT.encode({ exp: (Time.zone.now + expires_in).to_i, jti: SecureRandom.uuid, obo: encoded_token }, private_key, 'RS256', { cty: 'JWT' })
+  end
 
-    (base_url + URI("/logout?token=#{logout_token}")).to_s
+  def generate_logout_url(expires_in: 3.minutes)
+    (base_url + URI("/logout?token=#{api_token(expires_in: expires_in)}")).to_s
   end
 
   private
