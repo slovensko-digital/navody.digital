@@ -129,7 +129,7 @@
         const data = (await res.json()).result;
 
         populateResults(data);
-      }),
+      }, 500),
       onConfirm: async (result) => {
         document.getElementById('company-address').value = result?.address;
         document.getElementById('company-ico').value = result?.ico;
