@@ -4824,15 +4824,10 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-"navody-digital-frontend@https://github.com/alhafoudh/navody-frontend#upstream-sync":
-  version "0.1.8-upstream-sync"
-  resolved "https://github.com/alhafoudh/navody-frontend#670132cd4851a0a9e94740915eb593ab0643b17a"
-  dependencies:
-    accessible-autocomplete "^1.6.2"
-    express-writer "0.0.4"
-    popper.js "^1.14.6"
-  optionalDependencies:
-    fsevents "*"
+navody-digital-frontend@0.1.7:
+  version "0.1.7"
+  resolved "https://registry.npmjs.org/navody-digital-frontend/-/navody-digital-frontend-0.1.7.tgz"
+  integrity sha512-b1kTB/kn3nX1R4heDAeaOzGNEKom4Dt0cUeTBdTMp3BAhLozcldfhlDkinGMcF5odTMGMHmTxKw5SOtTUYLb7A==
 
 negotiator@0.6.2:
   version "0.6.2"
