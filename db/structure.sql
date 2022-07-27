@@ -335,16 +335,6 @@ CREATE TABLE public.apps (
 
 
 --
--- Name: apps_categories; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.apps_categories (
-    app_id bigint NOT NULL,
-    category_id bigint NOT NULL
-);
-
-
---
 -- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -383,9 +373,19 @@ CREATE TABLE public.categories (
     id bigint NOT NULL,
     name character varying,
     description text,
+    featured boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    featured boolean DEFAULT true
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: categories_categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories_categorizations (
+    category_id bigint,
+    categorization_id bigint
 );
 
 
@@ -409,23 +409,33 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 
 --
--- Name: categories_journeys; Type: TABLE; Schema: public; Owner: -
+-- Name: categorizations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.categories_journeys (
-    journey_id bigint NOT NULL,
-    category_id bigint NOT NULL
+CREATE TABLE public.categorizations (
+    id bigint NOT NULL,
+    categorizationable_type character varying,
+    categorizationable_id bigint
 );
 
 
 --
--- Name: categories_pages; Type: TABLE; Schema: public; Owner: -
+-- Name: categorizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.categories_pages (
-    page_id bigint NOT NULL,
-    category_id bigint NOT NULL
-);
+CREATE SEQUENCE public.categorizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categorizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categorizations_id_seq OWNED BY public.categorizations.id;
 
 
 --
@@ -993,6 +1003,13 @@ ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
+-- Name: categorizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations ALTER COLUMN id SET DEFAULT nextval('public.categorizations_id_seq'::regclass);
+
+
+--
 -- Name: current_topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1136,6 +1153,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categorizations categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations
+    ADD CONSTRAINT categorizations_pkey PRIMARY KEY (id);
 
 
 --
@@ -1300,6 +1325,27 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_categories_categorizations_on_categorization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categories_categorizations_on_categorization_id ON public.categories_categorizations USING btree (categorization_id);
+
+
+--
+-- Name: index_categories_categorizations_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categories_categorizations_on_category_id ON public.categories_categorizations USING btree (category_id);
+
+
+--
+-- Name: index_categorizations_on_categorizationable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categorizations_on_categorizationable ON public.categorizations USING btree (categorizationable_type, categorizationable_id);
 
 
 --
@@ -1713,9 +1759,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220322180237'),
 ('20220323214831'),
 ('20220624204655'),
-('20220624204819'),
-('20220624204833'),
-('20220624204843'),
-('20220625112822');
+('20220727160233'),
+('20220727161042');
 
 

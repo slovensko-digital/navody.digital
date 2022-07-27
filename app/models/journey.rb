@@ -15,11 +15,10 @@ class Journey < ApplicationRecord
   has_many :tasks, through: :steps
   has_many :user_journeys
   
-  has_and_belongs_to_many :categories
-
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
+  has_one :categorization, :as => :categorizationable
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true

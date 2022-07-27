@@ -3,6 +3,7 @@ class CreateCategories < ActiveRecord::Migration[6.1]
     create_table :categories do |t|
       t.string :name
       t.text :description
+      t.boolean :featured, default: true
 
       t.timestamps
     end
