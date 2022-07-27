@@ -1,13 +1,10 @@
 class Upvs::SubmissionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:new]
-  before_action :load_upvs_submission, only: [:new, :sign, :create, :submit, :continue]
+  before_action :load_upvs_submission, only: [:new, :submit, :continue]
 
   def new
-  end
-
-  def create
     unless @upvs_submission.valid?
-      render :new, status: :unprocessable_entity
+      # error
     end
   end
 
@@ -25,14 +22,28 @@ class Upvs::SubmissionsController < ApplicationController
     render action: :login_callback, layout: false
   end
 
-  def submit
-    if @upvs_submission.save
-      submit_to_sk_api
+  def resubmit_without_token
+    session.delete(:eid_encoded_token)
 
-      if @upvs_submission.callback_url.present?
-        render action: :continue
+    render action: :resubmit_without_token, layout: false
+  end
+
+  def submit
+    return resubmit_without_token unless @upvs_submission.token&.valid? # If token expires meanwhile
+
+    if @upvs_submission.save
+      response = submit_to_sk_api
+
+      if successful_sk_api_submission?(response)
+        if @upvs_submission.callback_url.present?
+          render action: :continue
+        else
+          redirect_to action: :finish
+        end
       else
-        redirect_to action: :finish
+        # TODO notify in Slack devops
+        redirect_to action: :submit_error
+
       end
     else
       render :new, status: :unprocessable_entity
@@ -53,6 +64,13 @@ class Upvs::SubmissionsController < ApplicationController
     url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{@upvs_submission.token.api_token}"
 
     client.post(url, data, headers)
+  end
+
+  def successful_sk_api_submission?(response)
+    json_body = JSON.parse(response.body)
+
+    return true if (response.status == 200 && json_body["receive_result"] == 0 && json_body["save_to_outbox_result"] == 0)
+    false
   end
 
   def load_upvs_submission

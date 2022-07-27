@@ -131,9 +131,11 @@ Rails.application.routes.draw do
     namespace :submissions, path: 'podania' do
       get :login_callback
       get :switch_account_callback
+      get :resubmit_without_token
       post :new, path: ''
       post :sign, path: 'podpisat'
       post :submit, path: 'odoslat'
+      get :submit_error, path: 'chyba'
       post :continue, path: 'pokracovat'
       get :finish, path: 'hotovo'
     end
