@@ -9,6 +9,7 @@ class App < ApplicationRecord
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
   has_one :categorization, :as => :categorizationable
+  accepts_nested_attributes_for :categorization
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED}
 

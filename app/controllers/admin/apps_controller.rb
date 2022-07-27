@@ -56,7 +56,7 @@ class Admin::AppsController < Admin::AdminController
       :published_status,
       :slug,
       :description,
-      category_ids: []
+      categorization_attributes: [:id, category_ids: []]
     )
   end
 end

@@ -2,6 +2,7 @@ class Page < ApplicationRecord
   include Searchable
 
   has_one :categorization, :as => :categorizationable
+  accepts_nested_attributes_for :categorization
 
   extend FriendlyId
   friendly_id :title, use: :slugged

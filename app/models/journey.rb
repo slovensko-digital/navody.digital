@@ -19,6 +19,7 @@ class Journey < ApplicationRecord
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
   has_one :categorization, :as => :categorizationable
+  accepts_nested_attributes_for :categorization
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
