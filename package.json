@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "^5.4.3",
-    "navody-digital-frontend": "https://github.com/alhafoudh/navody-frontend#upstream-sync",
+    "navody-digital-frontend": "0.1.7",
     "resolve-url-loader": "^3.1.0",
     "stimulus": "^2.0.0"
   },
