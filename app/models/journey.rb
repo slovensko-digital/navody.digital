@@ -14,7 +14,7 @@ class Journey < ApplicationRecord
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
-  
+
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
