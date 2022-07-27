@@ -9,26 +9,19 @@
 </fieldset>
 
 <div class="govuk-form-group">
-  <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+  <fieldset id="acts-fieldset" class="govuk-fieldset" aria-describedby="waste-hint">
     <legend class="govuk-fieldset__legend">
       Pre ktorý subjekt (zapísanú osobu) žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
     </legend>
     <div class="govuk-form-group">
-      </h1>
-
       <p class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
         Obchodné meno/IČO/Spisová značka
       </label>
       </p>
       <div id="acts_submission_business_results"></div>
 
-      <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Sídlo</p>
-      <input class="govuk-input " id="company-address" name="company-address" type="text" readonly>
+      <input class="govuk-input hidden" id="company-address" name="company-address" type="text" readonly required="true">
       <input class="govuk-input hidden" id="company-ico" name="company-ico" type="text">
-
-
-      <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Na akú e-mail adresu?</p>
-      <input class="govuk-input " id="email" name="email" type="email" value="<%= current_user.logged_in? ? current_user.email : nil %>">
 
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
 
@@ -41,51 +34,19 @@
         </template>
 
         <template id="t-acts-item">
-          <div class="govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item" >
             <input class="govuk-checkboxes__input" id="__company_id__" name="__company_id__" type="checkbox" value="__value__">
             <label class="govuk-label govuk-checkboxes__label" for="__company_id__">
               __title__
             </label>
           </div>
         </template>
-
-        <!-- TODO -->
-        <!-- <ul class="autocomplete__menu autocomplete__menu--overlay autocomplete__menu--visible" id="acts_submission_business__listbox" role="listbox">
-             <li class="autocomplete__option" id="acts_submission_business__option--0" role="option" tabindex="-1">
-             <span>100FREE s.r.o. (IČO: 50706071, spisová značka: Sro/117401/B)</span>
-             </li> -->
-        <!-- <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--1" role="option" tabindex="-1">
-             <strong>2 be free, s.r.o. (IČO: 46754857, spisová značka: Sro/104446/B)</strong>
-             </li>
-             <li class="autocomplete__option" id="acts_submission_business__option--2" role="option" tabindex="-1">
-             <strong>AGROFREE s.r.o. (IČO: 44429282, spisová značka: Sro/23584/N)</strong>
-             </li>
-             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--3" role="option" tabindex="-1">
-             <strong>AVE.FREEWAY SK spol. s.r.o. (IČO: 36813192, spisová značka: Sro/47231/B)</strong>
-             </li>
-             <li class="autocomplete__option" id="acts_submission_business__option--4" role="option" tabindex="-1">
-             <strong>be FREE s.r.o. (IČO: 36732681, spisová značka: Sro/12606/S)</strong>
-             </li>
-             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--5" role="option" tabindex="-1">
-             <strong>Be Free Tours, s.r.o. (IČO: 46817743, spisová značka: Sro/84224/B)</strong>
-             </li>
-             <li class="autocomplete__option" id="acts_submission_business__option--6" role="option" tabindex="-1">
-             <strong>BeFree Energy s.r.o. (IČO: 52043223, spisová značka: Sro/46984/N)</strong>
-             </li>
-             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--7" role="option" tabindex="-1">
-             <strong>BeFree family s. r. o. (IČO: 51089050, spisová značka: Sro/122994/B)</strong>
-             </li>
-             <li class="autocomplete__option" id="acts_submission_business__option--8" role="option" tabindex="-1">
-             <strong>BeFree s. r. o. (IČO: 53022505, spisová značka: Sro/74439/L)</strong>
-             </li>
-             <li class="autocomplete__option autocomplete__option--odd" id="acts_submission_business__option--9" role="option" tabindex="-1">
-             <strong>BeFree World Education Community s. r. o. (IČO: 50913549, spisová značka: Sro/154723/B)</strong>
-             </li> -->
-        <!-- </ul> -->
-
       </div>
 
-      <button class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+      <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Kontaktný e-mail pre posielanie notifikácií z OR SR</p>
+      <input class="govuk-input " id="email" name="email" type="email" value="<%= current_user.logged_in? ? current_user.email : nil %>" required="true">
+
+      <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
         Pokračovať ❯
       </button>
     </div>
@@ -223,37 +184,54 @@ ${arrItems}
 
     // TODO add error validation and validate required elements and return error what is missing etc.
 
-    const company = document.getElementById('subject-search').value
-    const companyAddress = document.getElementById('company-address').value
-    const companyIco = document.getElementById('company-ico').value
-    const email = document.getElementById('email').value
-    const actsBox = document.getElementById('acts_box')
-    const actsElems = actsBox.querySelectorAll(
-      '.govuk-checkboxes__input'
-    )
-    const acts = Array.from(actsElems).map((it) => {
-      const obj = ACTS_ARRAY.find(curr => curr.serial_number ===  it.value)
+    if (validForm()) {
+      const company = document.getElementById('subject-search').value
+      const companyAddress = document.getElementById('company-address').value
+      const companyIco = document.getElementById('company-ico').value
+      const email = document.getElementById('email').value
+      const actsBox = document.getElementById('acts_box')
+      const actsElems = actsBox.querySelectorAll(
+        '.govuk-checkboxes__input'
+      )
+      const acts = Array.from(actsElems).map((it) => {
+        const obj = ACTS_ARRAY.find(curr => curr.serial_number ===  it.value)
 
-      return { id: obj.serial_number, name: obj.name, code: obj.serial_number, make_copy: it.checked }
+        return { id: obj.serial_number, name: obj.name, code: obj.serial_number, make_copy: it.checked }
+      })
+
+      let at = document.getElementById('authenticity-token').getAttribute('content')
+
+      res = await post('/aplikacie/obchodny-register/listiny',
+        {
+          authenticity_token: at,
+          acts_submission: {
+            business_ico: companyIco,
+            business_name: company,
+            business_address: companyAddress,
+            email: email,
+            acts: acts,
+          }
+        }
+      ).then(res => res.text())
+
+      document.getElementById('upvs_submission_form').value = res
+      document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
+    }
+    else {
+    //  Show errors
+    }
+  }
+
+  const validForm = () => {
+    let allAreFilled = true;
+
+    document.getElementById("acts-fieldset").querySelectorAll("[required]").forEach(function(i) {
+      if (!i.value) allAreFilled = false;
     })
 
-    let at = document.getElementById('authenticity-token').getAttribute('content')
+    if (document.getElementById("acts-fieldset").querySelectorAll("input[type=checkbox]:checked").length < 1) allAreFilled = false;
 
-    res = await post('/aplikacie/obchodny-register/listiny',
-      {
-        authenticity_token: at,
-        acts_submission: {
-          business_ico: companyIco,
-          business_name: company,
-          business_address: companyAddress,
-          email: email,
-          acts: acts,
-        }
-      }
-    ).then(res => res.text())
-
-    document.getElementById('upvs_submission_form').value = res
-    document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
+    return allAreFilled
   }
 
   const main = async () => {

@@ -14,6 +14,7 @@
   <h1 class="govuk-heading-l">Podanie</h1>
   <p class="govuk-body-l">Pomocou tejto služby môžete zasielať správy orgánom verejnej moci.</p>
 
+  <%= render 'components/error_summary', form: @upvs_submission %>
   <%= render partial: 'sender' %>
 
   <div class="govuk-form-group">
