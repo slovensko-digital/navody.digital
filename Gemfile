@@ -66,7 +66,6 @@ gem 'validate_url'
 # sendinblue V3
 gem 'sib-api-v3-sdk'
 gem 'recaptcha'
-gem 'jwt'
 gem 'friendly_id'
 
 group :development, :test do
