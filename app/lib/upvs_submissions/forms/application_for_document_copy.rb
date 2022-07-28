@@ -35,7 +35,8 @@ module UpvsSubmissions
       end
 
       def default_recipient_uri
-        Rails.env.production? ? 'ico://sk/00166073_10006' : 'ico://sk/83369507'
+        "ico://sk/00166073_10006"
+        # Rails.env.production? ? "ico://sk/00166073_10006" : "ico://sk/83369507"
       end
 
       def message_id
@@ -50,7 +51,7 @@ module UpvsSubmissions
 
       def build_form(form_params, builder: UpvsSubmissions::OrSrFormBuilder.new)
         {
-          :encoding => 'XML',
+          :encoding => "XML",
           :content => builder.application_for_document_copy(form_params)
         }
       end
