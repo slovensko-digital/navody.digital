@@ -140,4 +140,13 @@ Rails.application.routes.draw do
       get :finish, path: 'hotovo'
     end
   end
+
+  # data utils
+  namespace :datahub do
+    namespace :upvs do
+      resources :public_authority_edesks do
+        get :search, on: :collection
+      end
+    end
+  end
 end
