@@ -22,12 +22,11 @@ class UpvsSubmissions::OrSrFormBuilder
             m.Codelist do
               m.CodelistCode 'MSSR-ORSR-LegalPerson'
               m.CodelistItem do
-                m.ItemCode form.business_ico
+                m.ItemCode form.business_cin
                 m.ItemName form.business_name do
                   m.parent['Language'] = 'sk'
                 end
-                # not actually used
-                m.Note form.note do
+                m.Note form.encoded_note do
                   m.parent['Language'] = 'sk'
                 end
               end

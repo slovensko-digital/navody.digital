@@ -40,9 +40,12 @@ module Apps
 
       def acts_submission_params
         params.require(:acts_submission).permit(
-          :business_ico,
+          :business_cin,
           :business_name,
           :business_address,
+          :business_section,
+          :business_insertion,
+          :business_court,
           :email,
           acts: [:id, :code, :name, :make_copy],
         )

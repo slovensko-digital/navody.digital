@@ -21,7 +21,10 @@
       <div id="acts_submission_business_results"></div>
 
       <input class="govuk-input hidden" id="company-address" name="company-address" type="text" readonly required="true">
-      <input class="govuk-input hidden" id="company-ico" name="company-ico" type="text">
+      <input class="govuk-input hidden" id="company-cin" name="company-cin" type="text" required>
+      <input class="govuk-input hidden" id="company-section" name="company-section" type="text">
+      <input class="govuk-input hidden" id="company-insertion" name="company-insertion" type="text">
+      <input class="govuk-input hidden" id="company-court" name="company-court" type="text">
 
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
 
@@ -93,7 +96,10 @@
       }, 500),
       onConfirm: async (result) => {
         document.getElementById('company-address').value = result?.address;
-        document.getElementById('company-ico').value = result?.ico;
+        document.getElementById('company-cin').value = result?.ico;
+        document.getElementById('company-section').value = result?.oddiel;
+        document.getElementById('company-insertion').value = result?.vlozka;
+        document.getElementById('company-court').value = result?.sud;
 
         const res = await fetch('/aplikacie/obchodny-register/search_acts?' + new URLSearchParams({
           oddiel: encodeURIComponent(result?.oddiel),
@@ -187,11 +193,14 @@ ${arrItems}
     if (validForm()) {
       const company = document.getElementById('subject-search').value
       const companyAddress = document.getElementById('company-address').value
-      const companyIco = document.getElementById('company-ico').value
+      const companyCin = document.getElementById('company-cin').value
+      const companySection = document.getElementById('company-section').value
+      const companyInsertion = document.getElementById('company-insertion').value
+      const companyCourt = document.getElementById('company-court').value
       const email = document.getElementById('email').value
       const actsBox = document.getElementById('acts_box')
       const actsElems = actsBox.querySelectorAll(
-        '.govuk-checkboxes__input'
+        '.govuk-checkboxes__input:checked'
       )
       const acts = Array.from(actsElems).map((it) => {
         const obj = ACTS_ARRAY.find(curr => curr.serial_number ===  it.value)
@@ -205,9 +214,12 @@ ${arrItems}
         {
           authenticity_token: at,
           acts_submission: {
-            business_ico: companyIco,
+            business_cin: companyCin,
             business_name: company,
             business_address: companyAddress,
+            business_section: companySection,
+            business_insertion: companyInsertion,
+            business_court: companyCourt,
             email: email,
             acts: acts,
           }

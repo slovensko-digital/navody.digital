@@ -56,6 +56,9 @@ class Upvs::SubmissionsController < ApplicationController
   def finish
   end
 
+  def submit_error
+  end
+
   private
 
   def submit_to_sk_api(client: Faraday)

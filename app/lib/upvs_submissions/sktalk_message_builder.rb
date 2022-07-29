@@ -54,7 +54,7 @@ class UpvsSubmissions::SktalkMessageBuilder
     (separator + attachments.map { |attachment| build_object(attachment) }.join(separator)) if attachments.present?
   end
 
-  def build_object(id: uuid, name: 'Formulár', description: nil, signed: false, mime_type: 'application/x-eform-xml', encoding: 'XML', content: nil, object_class: 'ATTACHMENT')
+  def build_object(id: uuid, name: 'Formulár.xml', description: nil, signed: false, mime_type: 'application/x-eform-xml', encoding: 'XML', content: nil, object_class: 'ATTACHMENT')
     %Q{<Object Id="#{id}"#{%Q{ Name="#{sanitize(name)}"} if name.present?}#{%Q{ Description="#{sanitize(description)}"} if description.present?} Class="#{object_class}"#{%Q{ IsSigned="#{signed}"} unless signed.nil?} MimeType="#{mime_type}" Encoding="#{encoding}">#{content}</Object>}
   end
 
