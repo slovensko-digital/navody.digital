@@ -9,6 +9,7 @@ class Admin::AppsController < Admin::AdminController
   # GET /apps/new
   def new
     @app = App.new
+    @app.categorization = Categorization.new(categorizable: @app)
   end
 
   # GET /apps/1/edit

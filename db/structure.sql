@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA upvs;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -371,8 +378,8 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.categories (
     id bigint NOT NULL,
-    name character varying,
-    description text,
+    name character varying NOT NULL,
+    description text NOT NULL,
     featured boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -414,8 +421,8 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 CREATE TABLE public.categorizations (
     id bigint NOT NULL,
-    categorizationable_type character varying,
-    categorizationable_id bigint
+    categorizable_type character varying,
+    categorizable_id bigint
 );
 
 
@@ -944,7 +951,8 @@ CREATE TABLE public.users (
     id bigint NOT NULL,
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    eid_sub character varying
 );
 
 
@@ -965,6 +973,75 @@ CREATE SEQUENCE public.users_id_seq
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: egov_application_allow_rules; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.egov_application_allow_rules (
+    id bigint NOT NULL,
+    recipient_uri character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.egov_application_allow_rules_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.egov_application_allow_rules_id_seq OWNED BY upvs.egov_application_allow_rules.id;
+
+
+--
+-- Name: form_template_related_documents; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.form_template_related_documents (
+    id bigint NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    xsd_schema text,
+    xslt_transformation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.form_template_related_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
 
 
 --
@@ -1105,6 +1182,20 @@ ALTER TABLE ONLY public.user_tasks ALTER COLUMN id SET DEFAULT nextval('public.u
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('upvs.egov_application_allow_rules_id_seq'::regclass);
+
+
+--
+-- Name: form_template_related_documents id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
 
 
 --
@@ -1300,6 +1391,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules
+    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: form_template_related_documents form_template_related_documents_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents
+    ADD CONSTRAINT form_template_related_documents_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1342,10 +1449,10 @@ CREATE INDEX index_categories_categorizations_on_category_id ON public.categorie
 
 
 --
--- Name: index_categorizations_on_categorizationable; Type: INDEX; Schema: public; Owner: -
+-- Name: index_categorizations_on_categorizable; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_categorizations_on_categorizationable ON public.categorizations USING btree (categorizationable_type, categorizationable_id);
+CREATE INDEX index_categorizations_on_categorizable ON public.categorizations USING btree (categorizable_type, categorizable_id);
 
 
 --
@@ -1503,6 +1610,13 @@ CREATE INDEX index_user_tasks_on_user_step_id ON public.user_tasks USING btree (
 
 
 --
+-- Name: index_users_on_eid_sub; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_eid_sub ON public.users USING btree (eid_sub);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1588,6 +1702,14 @@ ALTER TABLE ONLY public.quick_tips
 
 
 --
+-- Name: categories_categorizations fk_rails_1023b4719e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories_categorizations
+    ADD CONSTRAINT fk_rails_1023b4719e FOREIGN KEY (categorization_id) REFERENCES public.categorizations(id);
+
+
+--
 -- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1665,6 +1787,14 @@ ALTER TABLE ONLY public.submissions
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: categories_categorizations fk_rails_bbd4e5abe8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories_categorizations
+    ADD CONSTRAINT fk_rails_bbd4e5abe8 FOREIGN KEY (category_id) REFERENCES public.categories(id);
 
 
 --
@@ -1758,8 +1888,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321181737'),
 ('20220322180237'),
 ('20220323214831'),
+('20220407131258'),
+('20220623200232'),
+('20220624185928'),
 ('20220624204655'),
-('20220727160233'),
-('20220727161042');
+('20220727160233');
 
 

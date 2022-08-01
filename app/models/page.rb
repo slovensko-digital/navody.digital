@@ -1,7 +1,7 @@
 class Page < ApplicationRecord
   include Searchable
 
-  has_one :categorization, :as => :categorizationable
+  has_one :categorization, :as => :categorizable, dependent: :destroy
   accepts_nested_attributes_for :categorization
 
   extend FriendlyId

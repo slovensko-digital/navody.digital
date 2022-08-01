@@ -13,6 +13,7 @@ class Admin::JourneysController < Admin::AdminController
   # GET /admin/journeys/new
   def new
     @journey = Journey.new
+    @journey.categorization = Categorization.new(categorizable: @journey)
   end
 
   # GET /admin/journeys/1/edit

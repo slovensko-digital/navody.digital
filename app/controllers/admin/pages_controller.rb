@@ -13,6 +13,7 @@ class Admin::PagesController < Admin::AdminController
   # GET /pages/new
   def new
     @page = Page.new
+    @page.categorization = Categorization.new(categorizable: @page)
   end
 
   # GET /pages/1/edit

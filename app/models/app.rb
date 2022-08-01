@@ -8,7 +8,7 @@ class App < ApplicationRecord
   scope :published, -> { where(published_status: 'PUBLISHED')}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
-  has_one :categorization, :as => :categorizationable
+  has_one :categorization, :as => :categorizable, dependent: :destroy
   accepts_nested_attributes_for :categorization
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED}

@@ -18,7 +18,7 @@ class Journey < ApplicationRecord
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
-  has_one :categorization, :as => :categorizationable
+  has_one :categorization, :as => :categorizable, dependent: :destroy
   accepts_nested_attributes_for :categorization
 
   validates :title, presence: true
