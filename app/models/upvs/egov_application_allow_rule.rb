@@ -16,4 +16,5 @@
 #
 
 class Upvs::EgovApplicationAllowRule < ApplicationRecord
+  self.table_name = "upvs.egov_application_allow_rules"
 end
