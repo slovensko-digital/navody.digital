@@ -36,7 +36,7 @@ class Upvs::SubmissionsController < ApplicationController
 
       if successful_sk_api_submission?(response)
         if @upvs_submission.callback_url.present?
-          render action: :continue
+          redirect_to @upvs_submission.callback_url
         else
           redirect_to action: :finish
         end
