@@ -1,6 +1,6 @@
 <div id="submission-actions">
   <% if @upvs_submission.token&.valid? %>
-    <%= submit_tag "Odoslať ako #{@upvs_submission.token&.name}", formaction: upvs_submissions_submit_path, class: 'govuk-button' %>
+    <%= submit_tag "Odoslať ako #{@upvs_submission.token&.subject_name}", formaction: upvs_submissions_submit_path, class: 'govuk-button' %>
     <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?token=#{@upvs_submission.token&.api_token}").to_s %>
     <%= link_to 'Prihlásiť sa ako iný subjekt', url, target: :login, class: 'govuk-button govuk-link' %>
   <% else %>

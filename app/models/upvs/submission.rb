@@ -24,7 +24,7 @@ class Upvs::Submission
   end
 
   def sender_uri
-    token&.sub
+    token&.subject_sub
   end
 
   def recipient_name

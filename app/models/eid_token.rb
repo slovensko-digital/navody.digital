@@ -21,6 +21,14 @@ class EidToken
     decoded_token&.first&.fetch('actor').fetch('name')
   end
 
+  def subject_sub
+    decoded_token&.first&.fetch('sub')
+  end
+
+  def subject_name
+    decoded_token&.first&.fetch('name')
+  end
+
   def expires_at
     exp = decoded_token&.first&.fetch('exp')
     if exp.present?
