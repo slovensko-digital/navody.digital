@@ -1,0 +1,81 @@
+<%= render partial: 'form_header' %>
+
+<div class="govuk-form-group">
+  <%= form_tag apps_business_register_app_acts_submissions_form_step2_path do %>
+    <p>
+      Pre ktorý subjekt (zapísanú osobu) žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
+    </p>
+
+    <div class="govuk-form-group">
+      <p class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
+        Obchodné meno/IČO/Spisová značka
+      </label>
+      </p>
+      <div id="acts_submission_business_results"></div>
+
+      <%= hidden_field_tag :company_address %>
+      <%= hidden_field_tag :company_cin %>
+      <%= hidden_field_tag :company_section %>
+      <%= hidden_field_tag :company_insertion %>
+      <%= hidden_field_tag :company_court %>
+
+      <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
+    </div>
+  <% end %>
+</div>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+
+<script type="text/javascript" charset="utf-8">
+  function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+      let context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
+  function initAll() {
+    accessibleAutocomplete({
+      element: document.getElementById('acts_submission_business_results'),
+      id: 'subject-search', // To match it to the existing <label>.
+      source: debounce(async (query, populateResults) => {
+        const res = await fetch(`/aplikacie/obchodny-register/search_business?q=${encodeURIComponent(query)}`);
+        const data = (await res.json()).result;
+
+        populateResults(data);
+      }, 500),
+      onConfirm: async (result) => {
+        document.getElementById('company_address').value = result?.address;
+        document.getElementById('company_cin').value = result?.ico;
+        document.getElementById('company_section').value = result?.oddiel;
+        document.getElementById('company_insertion').value = result?.vlozka;
+        document.getElementById('company_court').value = result?.sud;
+      },
+      minLength: 3,
+      templates: {
+        inputValue: (result) => {
+          return result?.name;
+        },
+        suggestion: (result) => {
+          return `${result?.name}`
+        }
+      },
+      confirmOnBlur: false,
+      showNoOptionsFound: false,
+      displayMenu: 'overlay',
+      tNoResults: () => 'Žiadne výsledky',
+    })
+
+    document.getElementById('subject-search').classList.add('govuk-input--width-30');
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    initAll();
+  });
+</script>

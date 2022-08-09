@@ -1,0 +1,28 @@
+<%= render partial: 'form_header' %>
+
+<div class="govuk-form-group">
+  <%= form_tag apps_business_register_app_acts_submissions_form_step3_path do %>
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      <div id="acts_box">
+        <p class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+          Pre ktoré listiny požadujete vyhotovenie kópie?
+        </p>
+
+        <% @acts.each do |act| %>
+          <div class="govuk-checkboxes__item" >
+            <input class="govuk-checkboxes__input" name="acts[<%= act.serial_number %>]" id="company_<%= act.serial_number %>" type="checkbox" value="<%= act.json_value %>">
+            <label class="govuk-label govuk-checkboxes__label" for="company_<%= act.serial_number %>">
+              <span class="govuk-!-font-weight-bold"><%= act.name %></span>, typ: <%= act.type %>, <%= act.delivery_date.present? ? "dátum doručenia: #{Date.parse(act.delivery_date.slice(0..9)).strftime('%d.%m.%Y')}" : "" %>, poradové číslo: <%= act.serial_number %>, počet listov: <%= act.raw["pageCount"] || 0 %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render partial: 'hidden_fields_from_step1' %>
+
+    <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+  <% end %>
+</div>

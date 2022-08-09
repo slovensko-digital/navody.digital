@@ -1,29 +1,9 @@
 module Apps
   module BusinessRegisterApp
     class ActsSubmissionsController < ApplicationController
-      def index
-        @submission_form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
-        @form = ActsSubmissionForm.new
-      end
-
       def search_business
         businesses = BusinessActs.new.search_business(params[:q])
         render json: { result: businesses }
-      end
-
-      def search_acts
-        if params[:ico].present?
-          business = BusinessActs.new.search_business(params[:ico])&.first
-        else
-          business = BusinessActs::Business.new(
-            oddiel: params[:oddiel],
-            vlozka: params[:vlozka],
-            sud: params[:sud],
-          )
-        end
-
-        acts = BusinessActs.new.search_acts(business)
-        render json: { result: acts }
       end
 
       # generates XML to be submitted
@@ -31,6 +11,20 @@ module Apps
         @form = ActsSubmissionForm.new(acts_submission_params)
         xml_form = UpvsSubmissions::OrSrFormBuilder.new.application_for_document_copy(@form)
         render xml: xml_form.to_xml
+      end
+
+      def form_step1
+      end
+
+      def form_step2
+        business = BusinessActs.new.search_business(params[:company_cin])&.first
+        @acts = BusinessActs.new.search_acts(business)
+      end
+
+      def form_step3
+        @acts = params[:acts].values.map { |a| JSON.parse(a) }.to_json
+        @submission_form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
+        @form = ActsSubmissionForm.new
       end
 
       def callback

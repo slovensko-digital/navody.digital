@@ -91,9 +91,15 @@ Rails.application.routes.draw do
 
     namespace :business_register_app, path: 'obchodny-register' do
       resources :acts_submissions, only: [:index, :create], path: 'listiny'
+      namespace :acts_submissions, path: 'listiny' do
+        get :index
+        get :create
+        get :form_step1, path: 'subjekt'
+        post :form_step2, path: 'vyber'
+        post :form_step3, path: 'email'
+        get :callback, path: 'odoslane'
+      end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }
-      get :search_acts, to: 'acts_submissions#search_acts', defaults: { format: :json }
-      get :callback, to: 'acts_submissions#callback', path: 'odoslane'
     end
   end
   resources :apps, path: 'aplikacie' # faux route

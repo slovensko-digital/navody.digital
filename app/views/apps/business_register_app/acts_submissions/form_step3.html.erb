@@ -1,0 +1,90 @@
+<%= render partial: 'form_header' %>
+
+<div class="govuk-form-group">
+  <fieldset id="acts-fieldset" class="govuk-fieldset" aria-describedby="waste-hint">
+    <p class="govuk-!-margin-bottom-1 govuk-!-margin-top-4">Kontaktný e-mail pre posielanie notifikácií z OR SR</p>
+    <input class="govuk-input govuk-input--width-20" id="email" name="email" type="email" value="<%= current_user.logged_in? ? current_user.email : nil %>" required>
+    <br>
+
+    <%= render partial: 'hidden_fields_from_step2' %>
+
+    <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+  </fieldset>
+</div>
+
+<%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
+  <%= f.hidden_field :form, value: nil %>
+  <%= f.hidden_field :callback_url, value: apps_business_register_app_acts_submissions_callback_url %>
+  <%= f.hidden_field :recipient_uri %>
+  <%= f.hidden_field :posp_version %>
+  <%= f.hidden_field :posp_id %>
+  <%= f.hidden_field :message_type %>
+  <%= f.hidden_field :message_subject %>
+<% end %>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+
+<script type="text/javascript" charset="utf-8">
+  const continueEventHandlerOnClick = async (event) => {
+    if (!event.target.matches('[data-submit="true"]')) return
+    event.preventDefault()
+
+    const company = document.getElementById('company').value
+    const companyAddress = document.getElementById('company_address').value
+    const companyCin = document.getElementById('company_cin').value
+    const companySection = document.getElementById('company_section').value
+    const companyInsertion = document.getElementById('company_insertion').value
+    const companyCourt = document.getElementById('company_court').value
+    const email = document.getElementById('email').value
+    const acts = JSON.parse(document.getElementById('acts').value)
+
+    let at = document.getElementById('authenticity-token').getAttribute('content')
+
+    res = await post('/aplikacie/obchodny-register/listiny',
+      {
+        authenticity_token: at,
+        acts_submission: {
+          business_cin: companyCin,
+          business_name: company,
+          business_address: companyAddress,
+          business_section: companySection,
+          business_insertion: companyInsertion,
+          business_court: companyCourt,
+          email: email,
+          acts: acts,
+        }
+      }
+    ).then(res => res.text())
+
+    document.getElementById('upvs_submission_form').value = res
+    document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
+  }
+
+  const post = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/xml',
+      },
+      body: JSON.stringify(data),
+    })
+    return response
+  }
+
+  const main = async () => {
+    document.addEventListener(
+      'click',
+      function (event) {
+        continueEventHandlerOnClick(event)
+      },
+      false
+    )
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    main().catch(console.log)
+  })
+</script>

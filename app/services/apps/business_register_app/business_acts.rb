@@ -78,7 +78,7 @@ module Apps
 
       class Act
         include ActiveModel::Model
-        attr_accessor(:raw, :name, :formatted_name, :type, :delivery_date, :serial_number, :page_count)
+        attr_accessor(:raw, :name, :formatted_name, :type, :delivery_date, :serial_number, :page_count, :json_value)
 
         def self.array_from_json(json)
           json['data'].map do |act|
@@ -90,6 +90,12 @@ module Apps
               serial_number: act['serialNumber'],
               page_count: act['page_count'],
               raw: act,
+              json_value: {
+                "id" => act['serialNumber'],
+                "name" => act['name'],
+                "code" => act['serialNumber'],
+                "make_copy" => true
+              }.to_json
             )
           end
         end
