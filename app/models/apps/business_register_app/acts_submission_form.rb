@@ -4,6 +4,12 @@ module Apps
       include ActiveModel::Model
       include ActiveModel::Validations
 
+      validates :business_cin, :presence => true
+      validates :email, :presence => true
+      validates :email, if: -> { email.present? },
+                format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }
+      validates :acts, :presence => true
+
       attr_accessor(
         :email,
         :acts,

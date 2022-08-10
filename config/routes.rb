@@ -94,9 +94,9 @@ Rails.application.routes.draw do
       namespace :acts_submissions, path: 'listiny' do
         get :index
         get :create
-        get :form_step1, path: 'subjekt'
-        post :form_step2, path: 'vyber'
-        post :form_step3, path: 'email'
+        get :step1, path: 'subjekt'
+        post :step2, path: 'vyber'
+        post :step3, path: 'email'
         get :callback, path: 'odoslane'
       end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }

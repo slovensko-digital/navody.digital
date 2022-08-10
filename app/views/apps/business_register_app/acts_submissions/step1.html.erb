@@ -1,9 +1,9 @@
-<%= render partial: 'form_header' %>
+<%= render partial: 'header' %>
 
-<div class="govuk-form-group">
-  <%= form_tag apps_business_register_app_acts_submissions_form_step2_path do %>
+<div id="acts_submission_form" class="govuk-form-group">
+  <%= form_tag apps_business_register_app_acts_submissions_step2_path do %>
     <p>
-      Pre ktorý subjekt (zapísanú osobu) žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
+      Pre ktorý subjekt žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
     </p>
 
     <div class="govuk-form-group">
@@ -13,11 +13,11 @@
       </p>
       <div id="acts_submission_business_results"></div>
 
-      <%= hidden_field_tag :company_address %>
-      <%= hidden_field_tag :company_cin %>
-      <%= hidden_field_tag :company_section %>
-      <%= hidden_field_tag :company_insertion %>
-      <%= hidden_field_tag :company_court %>
+      <%= hidden_field_tag 'acts_submission[business_address]' %>
+      <%= hidden_field_tag 'acts_submission[business_cin]' %>
+      <%= hidden_field_tag 'acts_submission[business_section]' %>
+      <%= hidden_field_tag 'acts_submission[business_insertion]' %>
+      <%= hidden_field_tag 'acts_submission[business_court]' %>
 
       <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
         Pokračovať ❯
@@ -51,11 +51,11 @@
         populateResults(data);
       }, 500),
       onConfirm: async (result) => {
-        document.getElementById('company_address').value = result?.address;
-        document.getElementById('company_cin').value = result?.ico;
-        document.getElementById('company_section').value = result?.oddiel;
-        document.getElementById('company_insertion').value = result?.vlozka;
-        document.getElementById('company_court').value = result?.sud;
+        document.getElementById('acts_submission_business_address').value = result?.address;
+        document.getElementById('acts_submission_business_cin').value = result?.ico;
+        document.getElementById('acts_submission_business_section').value = result?.oddiel;
+        document.getElementById('acts_submission_business_insertion').value = result?.vlozka;
+        document.getElementById('acts_submission_business_court').value = result?.sud;
       },
       minLength: 3,
       templates: {
