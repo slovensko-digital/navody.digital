@@ -10,6 +10,12 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA code_list;
+
+
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -217,6 +223,140 @@ CREATE FUNCTION public.que_state_notify() RETURNS trigger
     RETURN null;
   END
 $$;
+
+
+--
+-- Name: countries; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.countries (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.countries_id_seq OWNED BY code_list.countries.id;
+
+
+--
+-- Name: courts; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.courts (
+    id bigint NOT NULL,
+    name character varying,
+    street character varying,
+    number character varying,
+    postal_code character varying,
+    municipality character varying,
+    identifier integer,
+    code character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: courts_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.courts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: courts_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.courts_id_seq OWNED BY code_list.courts.id;
+
+
+--
+-- Name: currencies; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.currencies (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    code character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: currencies_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.currencies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: currencies_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.currencies_id_seq OWNED BY code_list.currencies.id;
+
+
+--
+-- Name: municipalities; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.municipalities (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: municipalities_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.municipalities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: municipalities_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.municipalities_id_seq OWNED BY code_list.municipalities.id;
 
 
 --
@@ -895,6 +1035,36 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.countries ALTER COLUMN id SET DEFAULT nextval('code_list.countries_id_seq'::regclass);
+
+
+--
+-- Name: courts id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.courts ALTER COLUMN id SET DEFAULT nextval('code_list.courts_id_seq'::regclass);
+
+
+--
+-- Name: currencies id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.currencies ALTER COLUMN id SET DEFAULT nextval('code_list.currencies_id_seq'::regclass);
+
+
+--
+-- Name: municipalities id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.municipalities ALTER COLUMN id SET DEFAULT nextval('code_list.municipalities_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1018,6 +1188,36 @@ ALTER TABLE ONLY public.user_tasks ALTER COLUMN id SET DEFAULT nextval('public.u
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+
+ALTER TABLE ONLY code_list.countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courts courts_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.courts
+    ADD CONSTRAINT courts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: currencies currencies_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.currencies
+    ADD CONSTRAINT currencies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: municipalities municipalities_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.municipalities
+    ADD CONSTRAINT municipalities_pkey PRIMARY KEY (id);
 
 
 --
@@ -1633,6 +1833,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321172132'),
 ('20210321181737'),
 ('20220322180237'),
-('20220323214831');
+('20220323214831'),
+('20220815153512'),
+('20220815153557'),
+('20220815155429'),
+('20220815155542'),
+('20220815211829');
 
 
