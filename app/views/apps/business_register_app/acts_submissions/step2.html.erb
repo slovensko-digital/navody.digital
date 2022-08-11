@@ -1,13 +1,13 @@
 <%= render partial: 'header' %>
 
-<div class="govuk-form-group">
+<div id="acts_submission_form" class="govuk-form-group">
   <%= form_tag apps_business_register_app_acts_submissions_step3_path do %>
-    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-      <div id="acts_box">
-        <p class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-          Pre ktoré listiny požadujete vyhotovenie kópie?
-        </p>
+    <p>
+      Pre ktoré listiny požadujete vyhotovenie kópie?
+    </p>
 
+    <div class="govuk-form-group govuk-checkboxes" data-module="govuk-checkboxes">
+      <div id="acts_box">
         <% @acts.each do |act| %>
           <div class="govuk-checkboxes__item" >
             <input class="govuk-checkboxes__input" name="acts[<%= act.serial_number %>]" id="company_<%= act.serial_number %>" type="checkbox" value="<%= act.json_value %>">

@@ -26,6 +26,7 @@ $govuk-focus-colour: #ffdd00;
 }
 
 .autocomplete__menu {
+  position: relative;
   padding: 0;
   margin: 0;
   // margin-top: -2px;
@@ -72,4 +73,32 @@ $govuk-focus-colour: #ffdd00;
 
 .autocomplete__menu--hidden, .hidden {
   display: none;
+}
+
+.autocomplete__menu--loading {
+  display: block;
+  min-height: 40px;
+}
+
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  animation: spinner .6s linear infinite;
 }

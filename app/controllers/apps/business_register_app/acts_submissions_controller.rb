@@ -31,10 +31,6 @@ module Apps
         @submission_form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
       end
 
-      def submit
-
-      end
-
       def callback
       end
 

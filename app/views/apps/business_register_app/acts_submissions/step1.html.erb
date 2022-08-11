@@ -1,30 +1,30 @@
 <%= render partial: 'header' %>
 
-<div id="acts_submission_form" class="govuk-form-group">
-  <%= form_tag apps_business_register_app_acts_submissions_step2_path do %>
-    <p>
-      Pre ktorý subjekt žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
-    </p>
+<%= form_tag apps_business_register_app_acts_submissions_step2_path, id: "acts_submission_form" do %>
+  <p>
+    Pre ktorý subjekt žiadate o vyhotovenie kópie listiny uloženej v zbierke listín?
+  </p>
 
-    <div class="govuk-form-group">
-      <p class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="event-name">
+  <div class="govuk-form-group">
+    <p class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--m" for="event-name">
         Obchodné meno/IČO/Spisová značka
       </label>
-      </p>
-      <div id="acts_submission_business_results"></div>
+    </p>
 
-      <%= hidden_field_tag 'acts_submission[business_address]' %>
-      <%= hidden_field_tag 'acts_submission[business_cin]' %>
-      <%= hidden_field_tag 'acts_submission[business_section]' %>
-      <%= hidden_field_tag 'acts_submission[business_insertion]' %>
-      <%= hidden_field_tag 'acts_submission[business_court]' %>
+    <div id="acts_submission_business_results"></div>
 
-      <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-        Pokračovať ❯
-      </button>
-    </div>
-  <% end %>
-</div>
+    <%= hidden_field_tag 'acts_submission[business_address]' %>
+    <%= hidden_field_tag 'acts_submission[business_cin]' %>
+    <%= hidden_field_tag 'acts_submission[business_section]' %>
+    <%= hidden_field_tag 'acts_submission[business_insertion]' %>
+    <%= hidden_field_tag 'acts_submission[business_court]' %>
+
+    <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+  </div>
+<% end %>
 
 <%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
 
@@ -41,14 +41,73 @@
   }
 
   function initAll() {
+    const hiddenClass = 'autocomplete__menu--hidden';
+    const visibleClass = 'autocomplete__menu--visible';
+    const loadingClass = 'autocomplete__menu--loading';
+    const spinnerClass = 'spinner';
+
+    const createSpinner = () => {
+      const elements = document.getElementsByClassName(spinnerClass);
+
+      if (elements.length) {
+        return elements[0];
+      }
+
+      const spinner = document.createElement('div');
+      spinner.classList.add(spinnerClass);
+
+      return spinner;
+    }
+
+    const getLoadingStateHandler = () => {
+      const spinner = createSpinner();
+
+      const setOptionsVisibility = (shouldBeVisible) => {
+        const autocompleteOptions = Array.from(document.getElementsByClassName('autocomplete__option'));
+        autocompleteOptions.forEach((el) => el.style['display'] = shouldBeVisible ? 'flex' : 'none');
+      }
+
+      return (isLoading) => {
+        const autocompleteMenu = document.getElementsByClassName('autocomplete__menu')[0];
+
+        if (isLoading) {
+          // autocompleteMenu.classList.replace(hiddenClass, loadingClass);
+          autocompleteMenu.classList.add(loadingClass);
+          setOptionsVisibility(false);
+          autocompleteMenu.append(spinner);
+        } else {
+          autocompleteMenu.classList.remove(loadingClass);
+          spinner.remove();
+          setOptionsVisibility(true);
+        }
+      }
+    }
+
+    let latestQuery = 0;
+    let isLoading = false;
+
     accessibleAutocomplete({
       element: document.getElementById('acts_submission_business_results'),
       id: 'subject-search', // To match it to the existing <label>.
       source: debounce(async (query, populateResults) => {
+        let setLoadingState = getLoadingStateHandler();
+
+        if (!isLoading) {
+          isLoading = true;
+          setLoadingState(true);
+        }
+
+        const currentTime = new Date().getTime();
+        latestQuery = currentTime;
+
         const res = await fetch(`/aplikacie/obchodny-register/search_business?q=${encodeURIComponent(query)}`);
         const data = (await res.json()).result;
 
-        populateResults(data);
+        if (currentTime === latestQuery) {
+          setLoadingState(false);
+          populateResults(data);
+          isLoading = false;
+        }
       }, 500),
       onConfirm: async (result) => {
         document.getElementById('acts_submission_business_address').value = result?.address;
@@ -67,12 +126,15 @@
         }
       },
       confirmOnBlur: false,
-      showNoOptionsFound: false,
+      showNoOptionsFound: true,
       displayMenu: 'overlay',
       tNoResults: () => 'Žiadne výsledky',
     })
 
+    // TODO
     document.getElementById('subject-search').classList.add('govuk-input--width-30');
+
+    document.getElementById('subject-search').required = true;
   }
 
   document.addEventListener('turbolinks:load', function () {

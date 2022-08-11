@@ -4,8 +4,8 @@ module Apps
       include ActiveModel::Model
       include ActiveModel::Validations
 
-      validates :business_cin, :presence => true
-      validates :email, :presence => true
+      validates_presence_of :business_cin, :presence => true, message: 'Vyberte subjekt'
+      validates_presence_of :email, :presence => true, message: 'Zadajte emailovú adresu'
       validates :email, if: -> { email.present? },
                 format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }
       validates :acts, :presence => true

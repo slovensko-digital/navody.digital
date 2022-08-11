@@ -28,10 +28,8 @@ class AddUpvsFormToWhiteListJob < ApplicationJob
       :token => SkApiToken.api_token
     }
 
-    binding.pry
-
     response = client.get("#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/eform/form_template_related_document?#{params.to_query}")
 
-    JSON.parse(response.body)["document"] if response.status == 200
+    Base64.decode64(JSON.parse(response.body)["document"]) if response.status == 200
   end
 end
