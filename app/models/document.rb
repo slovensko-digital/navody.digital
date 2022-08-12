@@ -4,7 +4,7 @@ class Document < ::PgSearch::Document
   scope :featureable, -> { where(searchable_type: ['Journey', 'App', 'Page']) }
   scope :featured, -> { featureable.where(featured: true) }
 
-  scope :with_category, -> (category) {
+  scope :searchable_with_category, -> (category) {
     joins('INNER JOIN categorizations ON categorizations.categorizable_id = searchable_id AND categorizations.categorizable_type = searchable_type')
     .joins('INNER JOIN categories_categorizations ON categories_categorizations.categorization_id = categorizations.id')
     .joins('INNER JOIN categories ON categories.id = categories_categorizations.category_id')

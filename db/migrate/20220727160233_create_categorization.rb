@@ -4,10 +4,8 @@ class CreateCategorization < ActiveRecord::Migration[6.1]
       t.references :categorizable, polymorphic: true, index: true
     end
 
-    create_table :categories_categorizations, id: false do |t|
-      t.belongs_to :category, foreign_key: true
-      t.belongs_to :categorization, foreign_key: true
-    end
+    create_join_table :categories, :categorizations
+    add_index :categories_categorizations, [:category_id, :categorization_id], unique: true, name: 'index_categories_categorizations'
 
     Journey.all.each do |j|
       j.categorization = Categorization.new(categorizable: j)

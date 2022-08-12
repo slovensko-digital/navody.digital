@@ -14,7 +14,7 @@ class Admin::CategoriesController < Admin::AdminController
   # GET /admin/categories/1
   def show
     @category = Category.find_by!(id: params[:id])
-    @documents = Document.featureable.with_category(@category).order(featured: :desc, featured_position: :asc)
+    @documents = Document.featureable.searchable_with_category(@category).order(featured: :desc, featured_position: :asc)
   end
 
   # POST /admin/categories

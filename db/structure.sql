@@ -391,8 +391,8 @@ CREATE TABLE public.categories (
 --
 
 CREATE TABLE public.categories_categorizations (
-    category_id bigint,
-    categorization_id bigint
+    category_id bigint NOT NULL,
+    categorization_id bigint NOT NULL
 );
 
 
@@ -1435,17 +1435,10 @@ CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.ac
 
 
 --
--- Name: index_categories_categorizations_on_categorization_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_categories_categorizations; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_categories_categorizations_on_categorization_id ON public.categories_categorizations USING btree (categorization_id);
-
-
---
--- Name: index_categories_categorizations_on_category_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_categories_categorizations_on_category_id ON public.categories_categorizations USING btree (category_id);
+CREATE UNIQUE INDEX index_categories_categorizations ON public.categories_categorizations USING btree (category_id, categorization_id);
 
 
 --
@@ -1702,14 +1695,6 @@ ALTER TABLE ONLY public.quick_tips
 
 
 --
--- Name: categories_categorizations fk_rails_1023b4719e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.categories_categorizations
-    ADD CONSTRAINT fk_rails_1023b4719e FOREIGN KEY (categorization_id) REFERENCES public.categorizations(id);
-
-
---
 -- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1787,14 +1772,6 @@ ALTER TABLE ONLY public.submissions
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
-
-
---
--- Name: categories_categorizations fk_rails_bbd4e5abe8; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.categories_categorizations
-    ADD CONSTRAINT fk_rails_bbd4e5abe8 FOREIGN KEY (category_id) REFERENCES public.categories(id);
 
 
 --

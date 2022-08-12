@@ -10,7 +10,8 @@
     <tr class="govuk-table__row">
       <th class="govuk-table__header" scope="col">Name</th>
       <th class="govuk-table__header" scope="col">Featured on front page</th>
-      <th class="govuk-table__header" scope="col" colspan="3"></th>
+      <th class="govuk-table__header" scope="col">Searchable documents in category</th>
+      <th class="govuk-table__header" scope="col" colspan="2">Actions</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -24,7 +25,7 @@
           <%= link_to '&#10060;'.html_safe, feature_admin_category_path(category), method: :put %>
         <% end %>
       </td>
-      <td class="govuk-table__cell"><%= link_to 'Documents', admin_category_path(category) %>
+      <td class="govuk-table__cell"><%= link_to 'Searchable documents', admin_category_path(category) %>
       <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_category_path(category) %></td>
       <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, category], method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
