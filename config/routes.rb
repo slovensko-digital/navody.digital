@@ -88,6 +88,18 @@ Rails.application.routes.draw do
     namespace :child_birth_app, path: 'narodenie-dietata' do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
+
+    namespace :or_sr_app, path: 'obchodny-register' do
+      resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
+        member do
+          get :step1, path: 'spolocnost'
+          get :step2, path: 'spolocnici'
+          get :step3, path: 'sumar'
+          get :step4, path: 'hotovo'
+          get :nothing_missing, path: 'nic-nechyba'
+        end
+      end
+    end
   end
   resources :apps, path: 'aplikacie' # faux route
 
