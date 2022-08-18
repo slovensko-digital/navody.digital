@@ -33,13 +33,9 @@ $govuk-focus-colour: #ffdd00;
   border: 2px solid #0b0c0c;
 }
 
-
-
-
 .autocomplete__menu--overlay {
 
 }
-
 
 .autocomplete__option {
   list-style: none;
@@ -63,7 +59,6 @@ $govuk-focus-colour: #ffdd00;
   appearance: none;
 }
 
-
 .autocomplete__menu--visible {
 
 }
@@ -79,7 +74,6 @@ $govuk-focus-colour: #ffdd00;
   display: block;
   min-height: 40px;
 }
-
 
 @keyframes spinner {
   to {transform: rotate(360deg);}
@@ -101,4 +95,12 @@ $govuk-focus-colour: #ffdd00;
   border: 2px solid #ccc;
   border-top-color: #000;
   animation: spinner .6s linear infinite;
+}
+
+.govuk-checkboxes__label {
+  padding-top: 0;
+}
+
+.govuk-checkboxes__input {
+  padding-top: 2px;
 }

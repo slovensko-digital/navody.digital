@@ -85,14 +85,23 @@
 
     let latestQuery = 0;
     let isLoading = false;
+    let wasBlurred = false;
+
+    const handleOnBlur = () => {
+      wasBlurred = true;
+    }
 
     accessibleAutocomplete({
       element: document.getElementById('acts_submission_business_results'),
       id: 'subject-search', // To match it to the existing <label>.
       source: debounce(async (query, populateResults) => {
         let setLoadingState = getLoadingStateHandler();
+        wasBlurred = false;
+
+        const subjectSearch = document.getElementById('subject-search');
 
         if (!isLoading) {
+          subjectSearch.addEventListener('blur', handleOnBlur);
           isLoading = true;
           setLoadingState(true);
         }
@@ -105,8 +114,13 @@
 
         if (currentTime === latestQuery) {
           setLoadingState(false);
-          populateResults(data);
+
+          if (!wasBlurred) {
+            populateResults(data);
+          }
+
           isLoading = false;
+          subjectSearch.removeEventListener('blur', handleOnBlur);
         }
       }, 500),
       onConfirm: async (result) => {
