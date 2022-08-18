@@ -1,0 +1,18 @@
+<%= render partial: 'header' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        Všetko je v poriadku
+      </h1>
+      <div class="govuk-panel__body">
+        Všetky potrebné údaje už máte zapísané v Obchodnom registri. Nemusíte posielať žiadne podanie.
+      </div>
+    </div>
+
+    <%= render_notification_subscription_component(%w[CompanyNewsletterSubscription NewsletterSubscription]) do %>
+      <p class="govuk-body">Pravidelne pracujeme na zjednodušení komunikácie so štátom. Až príde ďalšia povinnosť alebo nová možnosť zjednodušenia, môžeme Vás o tom informovať.</p>
+    <% end %>
+  </div>
+</div>

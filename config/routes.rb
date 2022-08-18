@@ -92,10 +92,11 @@ Rails.application.routes.draw do
     namespace :or_sr_app, path: 'obchodny-register' do
       resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
         member do
-          get :step1, path: 'spolocnost'
-          get :step2, path: 'spolocnici'
-          get :step3, path: 'sumar'
-          get :step4, path: 'hotovo'
+          get :corporate_body_selection, path: 'spolocnost'
+          post :stakeholder_identifier, path: 'spolocnici'
+          post :data_summary, path: 'sumar'
+          post :done, path: 'hotovo'
+          get :unsupported, path: 'nepodporovany-typ-spolocnosti'
           get :nothing_missing, path: 'nic-nechyba'
         end
       end

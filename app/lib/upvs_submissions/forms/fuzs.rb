@@ -12,10 +12,24 @@ module UpvsSubmissions
         @name = corporate_body['name']
         @address = Address.new(*(address_params(corporate_body).values))
         @court = load_court(corporate_body)
+        @type = corporate_body['registration_number']&.split('/')[0]
         @registration_number = corporate_body['registration_number']&.split('/')[1]
-        @deposit_entries = OrSrRecordFetcher.get_stakeholders_deposit_entries(cin)
-        @identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(cin)
+        @orsr_document = OrSrRecordFetcher.get_document(cin)
+        @deposit_entries = OrSrRecordFetcher.get_stakeholders_deposit_entries(@orsr_document)
+        @identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(@orsr_document)
         @stakeholders = load_stakeholders(corporate_body)
+      end
+
+      def sro?
+        @type.casecmp('sro') == 0
+      end
+
+      def all_stakeholders_ok?
+        @stakeholders.all? { |stakeholder| stakeholder.identifier_ok }
+      end
+
+      def stakeholders_with_missing_identifiers
+        @stakeholders.select{ |stakeholder| !stakeholder.identifier_ok }
       end
 
       def all_stakeholders_persons?
@@ -91,17 +105,22 @@ module UpvsSubmissions
           @identifier_ok = identifier_status(identifiers_status)
         end
 
+        def name
+          return [@person_given_name, @person_family_name].join(' ') if is_person?
+          full_name
+        end
+
         def is_person?
           @person_family_name.present? && !@full_name.present?
         end
-
-        def new_address
-          @new_address || @address
-        end
-
-        def any_change?
-          !(@identifier_ok && @address == @new_address)
-        end
+        #
+        # def new_address
+        #   @new_address || @address
+        # end
+        #
+        # def any_change?
+        #   !(@identifier_ok && @address == @new_address)
+        # end
 
         def other_identifier_type_data
           case @other_identifier_type

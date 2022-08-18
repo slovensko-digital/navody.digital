@@ -1,0 +1,129 @@
+<%= render partial: 'header' %>
+
+<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+  <h2 class="govuk-fieldset__heading">Vyhľadávanie spoločnosti</h2>
+</legend>
+<br />
+
+<%= form_tag stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path(:n => 1), id: "form" do %>
+  <div class="govuk-form-group">
+    <p>Táto aplikácia Vám pomôže vyžiadať zápis chýbajúcich identifikačých údajov spoločníkov do Obchodného registra. Začnite s vyhľadaním Vašej firmy.</p>
+    <br />
+
+    <p class="govuk-label-wrapper">
+      <b>Zadajte názov spoločnosti</b>
+    </p>
+    <div id="corporate_bodies_results"></div>
+
+    <%= hidden_field_tag 'cin' %>
+
+    <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+
+<script type="text/javascript" charset="utf-8">
+  function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+      let context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
+  function initAll() {
+    const loadingClass = 'autocomplete__menu--loading';
+    const spinnerClass = 'spinner';
+
+    const createSpinner = () => {
+      const elements = document.getElementsByClassName(spinnerClass);
+
+      if (elements.length) {
+        return elements[0];
+      }
+
+      const spinner = document.createElement('div');
+      spinner.classList.add(spinnerClass);
+
+      return spinner;
+    }
+
+    const getLoadingStateHandler = () => {
+      const spinner = createSpinner();
+
+      const setOptionsVisibility = (shouldBeVisible) => {
+        const autocompleteOptions = Array.from(document.getElementsByClassName('autocomplete__option'));
+        autocompleteOptions.forEach((el) => el.style['display'] = shouldBeVisible ? 'flex' : 'none');
+      }
+
+      return (isLoading) => {
+        const autocompleteMenu = document.getElementsByClassName('autocomplete__menu')[0];
+
+        if (isLoading) {
+          autocompleteMenu.classList.add(loadingClass);
+          setOptionsVisibility(false);
+          autocompleteMenu.append(spinner);
+        } else {
+          autocompleteMenu.classList.remove(loadingClass);
+          spinner.remove();
+          setOptionsVisibility(true);
+        }
+      }
+    }
+
+    let latestQuery = 0;
+    let isLoading = false;
+
+    accessibleAutocomplete({
+      element: document.getElementById('corporate_bodies_results'),
+      id: 'subject-search', // To match it to the existing <label>.
+      source: debounce(async (query, populateResults) => {
+        let setLoadingState = getLoadingStateHandler();
+
+        if (!isLoading) {
+          isLoading = true;
+          setLoadingState(true);
+        }
+
+        const currentTime = new Date().getTime();
+        latestQuery = currentTime;
+
+        const res = await fetch(`https://autoform.ekosystem.slovensko.digital/api/corporate_bodies/search?q=name:${encodeURIComponent(query)}&private_access_token=89e56e0d966f79a2dca7d1a0f6f97799796e6cc77b616bbc4b796c086290c0acd1ab2f91dad4fb56`);
+        const data = (await res.json());
+
+        if (currentTime === latestQuery) {
+          setLoadingState(false);
+          debugger;
+          populateResults(data);
+          isLoading = false;
+        }
+      }, 500),
+      onConfirm: async (result) => {
+        document.getElementById('cin').value = result?.cin;
+      },
+      minLength: 3,
+      templates: {
+        inputValue: (result) => {
+          return `${result?.name}, IČO: ${result?.cin}`;
+        },
+        suggestion: (result) => {
+          return `${result?.name}, IČO: ${result?.cin}`;
+        }
+      },
+      confirmOnBlur: false,
+      showNoOptionsFound: true,
+      displayMenu: 'overlay',
+      tNoResults: () => 'Žiadne výsledky',
+    })
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    initAll();
+  });
+</script>

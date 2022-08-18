@@ -1,40 +1,23 @@
 class OrSrRecordFetcher
-  def self.get_stakeholders_identifiers_status(cin)
+  def self.get_document(cin)
     final_urls = retrieve_entity_urls(cin)
-    results = final_urls.map do |final_url|
-      retrieve_record_status_info(final_url)
+
+    results = final_urls.map do |url|
+      resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
+      return if resp.include?('Spis odstúpený na iný registrový súd')
+
+      Nokogiri::HTML(resp)
     end.compact
 
-    raise OrsrRecordError('Several active records found for one company id: #{cin}') if results.size > 1
+    raise OrsrRecordError.new("No active records found for company id: #{cin}") if results.size == 0
+    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if results.size > 1
 
     results.first
   end
 
-  def self.get_stakeholders_deposit_entries(cin)
-    final_urls = retrieve_entity_urls(cin)
-    results = final_urls.map do |final_url|
-      retrieve_stakeholders_deposit_entries(final_url)
-    end.compact
-
-    raise OrsrRecordError('Several active records found for one company id: #{cin}') if results.size > 1
-
-    results.first
-  end
-
-  def self.retrieve_entity_urls(cin)
-    resp = HTTP.get("https://www.orsr.sk/hladaj_ico.asp?ICO=#{cin}&SID=0", encoding: 'windows-1250').to_s.encode('utf-8')
-    doc = Nokogiri::HTML(resp)
-    doc.css('a[alt="Aktuálny výpis"]').map do |link_el|
-      "https://www.orsr.sk/#{link_el['href']}"
-    end
-  end
-
-  def self.retrieve_record_status_info(url)
-    resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
-    return if resp.include?('Spis odstúpený na iný registrový súd')
-
-    doc = Nokogiri::HTML(resp)
+  def self.get_stakeholders_identifiers_status(doc)
     stakeholders_table = nil
+
     doc.css('body > table').each do |table|
       if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
         stakeholders_table = table
@@ -62,12 +45,9 @@ class OrSrRecordFetcher
     { ok: ok, missing: missing }
   end
 
-  def self.retrieve_stakeholders_deposit_entries(url)
-    resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
-    return if resp.include?('Spis odstúpený na iný registrový súd')
-
-    doc = Nokogiri::HTML(resp)
+  def self.get_stakeholders_deposit_entries(doc)
     stakeholders_table = nil
+
     doc.css('body > table').each do |table|
       if table.css('span')&.first&.inner_text&.include?('Výška vkladu každého spoločníka:')
         stakeholders_table = table
@@ -84,7 +64,18 @@ class OrSrRecordFetcher
     deposit_entries
   end
 
+  class OrsrRecordError < StandardError
+  end
+
   private
+
+  def self.retrieve_entity_urls(cin)
+    resp = HTTP.get("https://www.orsr.sk/hladaj_ico.asp?ICO=#{cin}&SID=0", encoding: 'windows-1250').to_s.encode('utf-8')
+    doc = Nokogiri::HTML(resp)
+    doc.css('a[alt="Aktuálny výpis"]').map do |link_el|
+      "https://www.orsr.sk/#{link_el['href']}"
+    end
+  end
 
   def self.stakeholder_deposit_data(table)
     names = []
@@ -111,8 +102,5 @@ class OrSrRecordFetcher
       'paid_deposit' => deposit.third.delete('Splatené: ').delete(' ').to_i,
       'paid_deposit_currency' => deposit.fourth.strip,
     }
-  end
-
-  class OrsrRecordError < StandardError
   end
 end

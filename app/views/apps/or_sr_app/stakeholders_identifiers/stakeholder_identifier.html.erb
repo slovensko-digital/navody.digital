@@ -1,0 +1,181 @@
+<%= render partial: 'header' %>
+
+<%= form_tag @next_stakeholder_present ? stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path(:n => @stakeholder_index + 1) : data_summary_apps_or_sr_app_stakeholders_identifiers_path, id: "form" do %>
+  <div class="govuk-form-group">
+    <h4 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--m" for="event-name">
+        Dopnenie údajov (<%= @stakeholder_index %>/<%= @fuzs_data.stakeholders_with_missing_identifiers.size %>)
+      </label>
+    </h4>
+    <br />
+
+    <p>Boli <%= t('views.stakeholders_found', :count => @fuzs_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
+    <br />
+
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <p class="govuk-fieldset__heading">
+          <%= @stakeholder.name %>
+        </p>
+      </legend>
+
+      <%= hidden_field_tag :cin, params[:cin] %>
+
+      <div id="identifiers" class="govuk-form-group">
+        <label class="govuk-label" for="identifier">
+          Rodné číslo
+        </label>
+        <input class="govuk-input" id="identifier" name="identifier" type="text">
+      </div>
+
+      <div id="address">
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            Skontrolujte prosím správnosť predvyplnených údajov.
+          </strong>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="street">
+            Ulica
+          </label>
+          <input class="govuk-input" id="street" name="street" type="text">
+
+          <label class="govuk-label" for="number">
+            Súpisné/orientiačné číslo
+          </label>
+          <input class="govuk-input" id="number" name="number" type="text">
+
+          <label class="govuk-label" for="municipality">
+            Obec
+          </label>
+          <input class="govuk-input" id="municipality" name="municipality" type="text">
+
+          <label class="govuk-label" for="postal_code">
+            PSČ
+          </label>
+          <input class="govuk-input" id="postal_code" name="postal_code" type="text">
+
+          <label class="govuk-label" for="country">
+            Štát
+          </label>
+          <input class="govuk-input" id="country" name="country" type="text">
+        </div>
+      </div>
+    </fieldset>
+
+    <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+      Pokračovať ❯
+    </button>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+
+<script type="text/javascript" charset="utf-8">
+  function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+      let context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+
+  function initAll() {
+    const hiddenClass = 'autocomplete__menu--hidden';
+    const visibleClass = 'autocomplete__menu--visible';
+    const loadingClass = 'autocomplete__menu--loading';
+    const spinnerClass = 'spinner';
+
+    const createSpinner = () => {
+      const elements = document.getElementsByClassName(spinnerClass);
+
+      if (elements.length) {
+        return elements[0];
+      }
+
+      const spinner = document.createElement('div');
+      spinner.classList.add(spinnerClass);
+
+      return spinner;
+    }
+
+    const getLoadingStateHandler = () => {
+      const spinner = createSpinner();
+
+      const setOptionsVisibility = (shouldBeVisible) => {
+        const autocompleteOptions = Array.from(document.getElementsByClassName('autocomplete__option'));
+        autocompleteOptions.forEach((el) => el.style['display'] = shouldBeVisible ? 'flex' : 'none');
+      }
+
+      return (isLoading) => {
+        const autocompleteMenu = document.getElementsByClassName('autocomplete__menu')[0];
+
+        if (isLoading) {
+          // autocompleteMenu.classList.replace(hiddenClass, loadingClass);
+          autocompleteMenu.classList.add(loadingClass);
+          setOptionsVisibility(false);
+          autocompleteMenu.append(spinner);
+        } else {
+          autocompleteMenu.classList.remove(loadingClass);
+          spinner.remove();
+          setOptionsVisibility(true);
+        }
+      }
+    }
+
+    let latestQuery = 0;
+    let isLoading = false;
+
+    accessibleAutocomplete({
+      element: document.getElementById('corporate_bodies_results'),
+      id: 'subject-search', // To match it to the existing <label>.
+      source: debounce(async (query, populateResults) => {
+        let setLoadingState = getLoadingStateHandler();
+
+        if (!isLoading) {
+          isLoading = true;
+          setLoadingState(true);
+        }
+
+        const currentTime = new Date().getTime();
+        latestQuery = currentTime;
+
+        const res = await fetch(`https://autoform.ekosystem.slovensko.digital/api/corporate_bodies/search?q=name:${encodeURIComponent(query)}&private_access_token=89e56e0d966f79a2dca7d1a0f6f97799796e6cc77b616bbc4b796c086290c0acd1ab2f91dad4fb56`);
+        const data = (await res.json());
+
+        if (currentTime === latestQuery) {
+          setLoadingState(false);
+          debugger;
+          populateResults(data);
+          isLoading = false;
+        }
+      }, 500),
+      onConfirm: async (result) => {
+        document.getElementById('cin').value = result?.cin;
+      },
+      minLength: 3,
+      templates: {
+        inputValue: (result) => {
+          return `${result?.name}, IČO: ${result?.cin}`;
+        },
+        suggestion: (result) => {
+          return `${result?.name}, IČO: ${result?.cin}`;
+        }
+      },
+      confirmOnBlur: false,
+      showNoOptionsFound: true,
+      displayMenu: 'overlay',
+      tNoResults: () => 'Žiadne výsledky',
+    })
+  }
+
+  document.addEventListener('turbolinks:load', function () {
+    initAll();
+  });
+</script>
