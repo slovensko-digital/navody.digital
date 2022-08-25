@@ -5,7 +5,7 @@
 </legend>
 <br />
 
-<%= form_tag stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path(:n => 1), id: "form" do %>
+<%= form_tag stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path, id: "form" do %>
   <div class="govuk-form-group">
     <p>Táto aplikácia Vám pomôže vyžiadať zápis chýbajúcich identifikačých údajov spoločníkov do Obchodného registra. Začnite s vyhľadaním Vašej firmy.</p>
     <br />
@@ -99,7 +99,6 @@
 
         if (currentTime === latestQuery) {
           setLoadingState(false);
-          debugger;
           populateResults(data);
           isLoading = false;
         }

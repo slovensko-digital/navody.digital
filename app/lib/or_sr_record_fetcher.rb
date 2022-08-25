@@ -1,67 +1,73 @@
 class OrSrRecordFetcher
   def self.get_document(cin)
-    final_urls = retrieve_entity_urls(cin)
-
-    results = final_urls.map do |url|
-      resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
-      return if resp.include?('Spis odstúpený na iný registrový súd')
-
-      Nokogiri::HTML(resp)
-    end.compact
-
-    raise OrsrRecordError.new("No active records found for company id: #{cin}") if results.size == 0
-    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if results.size > 1
-
-    results.first
+    nil
+    # final_urls = retrieve_entity_urls(cin)
+    #
+    # results = final_urls.map do |url|
+    #   resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
+    #   return if resp.include?('Spis odstúpený na iný registrový súd')
+    #
+    #   Nokogiri::HTML(resp)
+    # end.compact
+    #
+    # raise OrsrRecordError.new("No active records found for company id: #{cin}") if results.size == 0
+    # raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if results.size > 1
+    #
+    # results.first
   end
 
   def self.get_stakeholders_identifiers_status(doc)
-    stakeholders_table = nil
-
-    doc.css('body > table').each do |table|
-      if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
-        stakeholders_table = table
-        break
-      end
-    end
-
-    ok = []
-    missing = []
-
-    stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
-      stakeholder_name = if stakeholder_table.css('.lnm').any?
-                           stakeholder_table.css('.lnm').inner_text.squeeze.strip
-                         else
-                           stakeholder_table.css('td').first.css('span').first.inner_text.squeeze.strip
-                         end
-
-      if stakeholder_table.css('a>img').first['alt'].start_with?("Osoba nemá")
-        missing << stakeholder_name
-      else
-        ok << stakeholder_name
-      end
-    end
-
-    { ok: ok, missing: missing }
+    {:ok=>[], :missing=>["Ahmed Al Hafoudh", "Matej Hlatký", "Valter Martinek"]}
+    # stakeholders_table = nil
+    #
+    # doc.css('body > table').each do |table|
+    #   if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
+    #     stakeholders_table = table
+    #     break
+    #   end
+    # end
+    #
+    # ok = []
+    # missing = []
+    #
+    # stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
+    #   stakeholder_name = if stakeholder_table.css('.lnm').any?
+    #                        stakeholder_table.css('.lnm').inner_text.squeeze.strip
+    #                      else
+    #                        stakeholder_table.css('td').first.css('span').first.inner_text.squeeze.strip
+    #                      end
+    #
+    #   if stakeholder_table.css('a>img').first['alt'].start_with?("Osoba nemá")
+    #     missing << stakeholder_name
+    #   else
+    #     ok << stakeholder_name
+    #   end
+    # end
+    #
+    # { ok: ok, missing: missing }
   end
 
   def self.get_stakeholders_deposit_entries(doc)
-    stakeholders_table = nil
+    [{"name"=>"Ahmed Al Hafoudh", "deposit"=>1700, "deposit_currency"=>"EUR", "paid_deposit"=>1700, "paid_deposit_currency"=>"EUR"},
+     {"name"=>"Ing. Matej Hlatký", "deposit"=>1700, "deposit_currency"=>"EUR", "paid_deposit"=>1700, "paid_deposit_currency"=>"EUR"},
+     {"name"=>"Ing. Valter Martinek", "deposit"=>1700, "deposit_currency"=>"EUR", "paid_deposit"=>1700, "paid_deposit_currency"=>"EUR"}]
 
-    doc.css('body > table').each do |table|
-      if table.css('span')&.first&.inner_text&.include?('Výška vkladu každého spoločníka:')
-        stakeholders_table = table
-        break
-      end
-    end
-
-    deposit_entries = []
-
-    stakeholders_table.css('table').each do |stakeholder_table|
-      deposit_entries << stakeholder_deposit_data(stakeholder_table)
-    end
-
-    deposit_entries
+    # stakeholders_table = nil
+    #
+    # doc.css('body > table').each do |table|
+    #   if table.css('span')&.first&.inner_text&.include?('Výška vkladu každého spoločníka:')
+    #     stakeholders_table = table
+    #     break
+    #   end
+    # end
+    #
+    # deposit_entries = []
+    #
+    # stakeholders_table.css('table').each do |stakeholder_table|
+    #   deposit_entries << stakeholder_deposit_data(stakeholder_table)
+    # end
+    #
+    # deposit_entries
   end
 
   class OrsrRecordError < StandardError

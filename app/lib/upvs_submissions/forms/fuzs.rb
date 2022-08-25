@@ -3,25 +3,31 @@ module UpvsSubmissions
     class Fuzs
       include ActiveModel::Model
 
-      attr_accessor(:cin, :name, :address, :court, :registration_number, :stakeholders)
+      attr_accessor(:cin, :name, :address, :court, :org_type, :registration_number, :stakeholders)
 
-      def initialize(cin)
-        corporate_body = get_datahub_corporate_body(cin)
+      def initialize(cin: nil, name: nil, address: nil, court: nil, registration_number: nil, type: nil, stakeholders: nil)
+        corporate_body = get_datahub_corporate_body(cin) unless name
 
         @cin = cin
-        @name = corporate_body['name']
-        @address = Address.new(*(address_params(corporate_body).values))
-        @court = load_court(corporate_body)
-        @type = corporate_body['registration_number']&.split('/')[0]
-        @registration_number = corporate_body['registration_number']&.split('/')[1]
-        @orsr_document = OrSrRecordFetcher.get_document(cin)
-        @deposit_entries = OrSrRecordFetcher.get_stakeholders_deposit_entries(@orsr_document)
-        @identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(@orsr_document)
-        @stakeholders = load_stakeholders(corporate_body)
+        @name = name || corporate_body['name']
+        @address = address ? load_address_from_json(address) : Address.new(*(address_params(corporate_body).values))
+        @court = court ? load_court_from_json(court) : load_court(corporate_body)
+        @org_type = type || corporate_body['registration_number']&.split('/')[0]
+        @registration_number = registration_number || corporate_body['registration_number']&.split('/')[1]
+
+        if name
+          @registration_number = registration_number
+          @stakeholders = load_stakeholders_from_json(stakeholders)
+        else
+          or_sr_document = OrSrRecordFetcher.get_document(cin)
+          @deposit_entries = OrSrRecordFetcher.get_stakeholders_deposit_entries(or_sr_document)
+          @identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(or_sr_document)
+          @stakeholders = load_stakeholders_from_cb(corporate_body)
+        end
       end
 
       def sro?
-        @type.casecmp('sro') == 0
+        @org_type&.casecmp('sro') == 0
       end
 
       def all_stakeholders_ok?
@@ -39,8 +45,6 @@ module UpvsSubmissions
       def all_stakeholders_corporate_bodies?
         @stakeholders.all? { |stakeholder| !stakeholder.is_person? }
       end
-
-      private
 
       class Address
         include ActiveModel::Model
@@ -66,13 +70,13 @@ module UpvsSubmissions
 
         def load_municipality_identifier
           # TODO what if no record?
-          municipality_code_list_object = CodeList::Municipality.where("value ilike ?", @municipality.strip).take
+          municipality_code_list_object = CodeList::Municipality.where("value ilike ?", @municipality&.strip).take
           municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
           # TODO what if no record?
-          country_code_list_object = CodeList::Country.where("value ilike ?", @country.strip).take
+          country_code_list_object = CodeList::Country.where("value ilike ?", @country&.strip).take
           country_code_list_object&.identifier
         end
       end
@@ -81,46 +85,60 @@ module UpvsSubmissions
         include ActiveModel::Model
 
         attr_accessor(
-          :full_name, :cin, :address, :new_address,
-          :person_given_name, :person_family_name, :person_prefixes, :person_postfixes,
+          :full_name, :cin, :identifier, :address,
+          :person_given_names, :person_family_names, :person_prefixes, :person_postfixes,
           :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
           :person_date_of_birth, :person_identifier, :other_identifier, :other_identifier_type,
-          :deposit_entries, :identifier_ok
+          :deposit_entries, :identifier_ok, :identifier
         )
 
         def initialize(
-          full_name, cin,
-          person_given_names, person_family_names, person_prefixes, person_postfixes,
-          address_street, address_reg_number, address_building_number, address_postal_code, address_municipality, address_country,
-          deposit_entries, identifiers_status
+          full_name: nil, cin: nil, identifier: nil,
+          person_given_names: nil, person_family_names: nil, person_prefixes: nil, person_postfixes: nil,
+          address_street: nil, address_reg_number: nil, address_building_number: nil, address_postal_code: nil, address_municipality: nil, address_country: nil,
+          all_deposit_entries: nil, identifiers_status: nil,
+          address: nil, deposit_entries: nil, identifier_ok: nil
         )
           @full_name = full_name
           @cin = cin
-          @address = Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
-          @person_given_name = person_given_names.join(' ')
-          @person_family_name = person_family_names.join(' ')
-          @person_prefixes = person_prefixes.join(' ')
-          @person_postfixes = person_postfixes.join(', ')
-          @deposit_entries = filter_deposit_entries(deposit_entries).map{ |entry| Deposit.new(*(entry.except("name")).values) }
-          @identifier_ok = identifier_status(identifiers_status)
+          @identifier = identifier
+          @address = address ? load_address_from_json(address) : Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
+          @person_given_names = person_given_names
+          @person_family_names = person_family_names
+          @person_prefixes = person_prefixes
+          @person_postfixes = person_postfixes
+          @deposit_entries = deposit_entries || filter_deposit_entries(all_deposit_entries)&.map{ |entry| Deposit.new(*(entry.except("name")).values) }
+          @identifier_ok = identifiers_status ? identifier_status(identifiers_status) : identifier_ok
         end
 
         def name
-          return [@person_given_name, @person_family_name].join(' ') if is_person?
+          return [given_name, family_name].join(' ') if is_person?
           full_name
         end
 
-        def is_person?
-          @person_family_name.present? && !@full_name.present?
+        def given_name
+          @person_given_names.join(' ')
         end
-        #
-        # def new_address
-        #   @new_address || @address
-        # end
-        #
-        # def any_change?
-        #   !(@identifier_ok && @address == @new_address)
-        # end
+
+        def family_name
+          @person_family_names.join(' ')
+        end
+
+        def postfixes
+          @person_postfixes.join(' ')
+        end
+
+        def prefixes
+          @person_prefixes.join(' ')
+        end
+
+        def is_person?
+          @person_family_names.present? && !@full_name.present?
+        end
+
+        def load_address_from_json(data)
+          Address.new(data['street'], data['building_number'], data['reg_number'], data['municipality'], data['postal_code'], data['country'], true)
+        end
 
         def other_identifier_type_data
           case @other_identifier_type
@@ -140,11 +158,11 @@ module UpvsSubmissions
         private
 
         def filter_deposit_entries(entries)
-          entries.select{ |entry| (entry["name"].include?(@person_family_name) && entry["name"].include?(@person_given_name)) }
+          entries&.select{ |entry| (entry["name"].include?(family_name) && entry["name"].include?(given_name)) }
         end
 
         def identifier_status(status)
-          ok = status[:ok].select{ |entry| (entry.include?(@person_family_name) && entry.include?(@person_given_name)) }
+          ok = status[:ok].select{ |entry| (entry.include?(family_name) && entry.include?(given_name)) }
           !ok.empty?
         end
 
@@ -171,6 +189,7 @@ module UpvsSubmissions
           :expand => 'rpo_organizations',
           :access_token => access_token
         }
+      private
 
         response = client.get("#{datahub_url}/api/datahub/corporate_bodies/search?#{params.to_query}")
         JSON.parse(response.body)
