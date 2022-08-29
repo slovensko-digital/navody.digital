@@ -1,12 +1,18 @@
 <div class="govuk-form-group">
   <div class="govuk-radios govuk-radios--inline">
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input" id="sr" name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]" type="radio" value="sr" checked>
+      <input class="govuk-radios__input" id="sr"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="sr"
+             <%= 'checked' if @application_form.stakeholder.foreign != true %> >
       <label class="govuk-label govuk-radios__label" for="sr">
         Slovenská firma
       </label>    </div>
     <div class="govuk-radios__item">
-      <input class="govuk-radios__input" id="foreign" name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]" type="radio" value="foreigner">
+      <input class="govuk-radios__input" id="foreign"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="foreigner"
+             <%= 'checked' if @application_form.stakeholder.foreign == true %> >
       <label class="govuk-label govuk-radios__label" for="foreign">
         Zahraničná firma
       </label>
@@ -18,14 +24,14 @@
   <label class="govuk-label govuk-label--s" for="identifier">
     IČO
   </label>
-  <%= form.text_field :stakeholder_identifier %>
+  <%= form.text_field :stakeholder_identifier, value: @application_form.stakeholder.identifier %>
 </div>
 
 <div id="identifiers-foreign" class="govuk-form-group">
   <label class="govuk-label govuk-label--s" for="identifier">
     Identifikačný údaj
   </label>
-  <%= form.text_field :stakeholder_other_identifier %>
+  <%= form.text_field :stakeholder_other_identifier, value: @application_form.stakeholder.other_identifier %>
 </div>
 
 <script type="text/javascript" charset="utf-8">

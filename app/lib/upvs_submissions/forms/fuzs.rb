@@ -25,6 +25,8 @@ module UpvsSubmissions
           @deposit_entries = OrSrRecordFetcher.get_stakeholders_deposit_entries(or_sr_document)
           @identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(or_sr_document)
           @stakeholders = load_stakeholders_from_cb(corporate_body)
+
+          raise FuzsError.new unless OrSrRecordFetcher.get_stakeholders(or_sr_document).size == @stakeholders.size
         end
       end
 
@@ -85,15 +87,15 @@ module UpvsSubmissions
         include ActiveModel::Model
 
         attr_accessor(
-          :full_name, :cin, :identifier, :address,
+          :full_name, :cin, :foreign, :identifier, :other_identifier, :other_identifier_type, :date_of_birth,
+          :address,
           :person_given_names, :person_family_names, :person_prefixes, :person_postfixes,
-          :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
-          :person_date_of_birth, :person_identifier, :other_identifier, :other_identifier_type,
-          :deposit_entries, :identifier_ok, :foreign, :identifier, :identifier_type, :date_of_birth
+          :deposit_entries, :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
+          :identifier_ok
         )
 
         def initialize(
-          full_name: nil, cin: nil, identifier: nil,
+          full_name: nil, cin: nil, foreign: nil, identifier: nil, other_identifier: nil, other_identifier_type: nil, date_of_birth: nil,
           person_given_names: nil, person_family_names: nil, person_prefixes: nil, person_postfixes: nil,
           address_street: nil, address_reg_number: nil, address_building_number: nil, address_postal_code: nil, address_municipality: nil, address_country: nil,
           all_deposit_entries: nil, identifiers_status: nil,
@@ -101,7 +103,11 @@ module UpvsSubmissions
         )
           @full_name = full_name
           @cin = cin
+          @foreign = foreign
           @identifier = identifier
+          @other_identifier = other_identifier
+          @other_identifier_type = other_identifier_type
+          @date_of_birth = Date.parse(date_of_birth) if date_of_birth
           @address = address ? load_address_from_json(address) : Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
           @person_given_names = person_given_names
           @person_family_names = person_family_names
@@ -152,6 +158,8 @@ module UpvsSubmissions
         end
 
         def other_identifier_type_data
+          id, value, code = nil, nil, nil
+
           case @other_identifier_type
           when 'ID'
             id, value, code = 1, 'preukaz totožnosti', 'ID'
@@ -260,7 +268,8 @@ module UpvsSubmissions
 
       def load_stakeholders_from_json(stakeholders)
         @stakeholders = stakeholders&.map { |stakeholder| Stakeholder.new(
-          full_name: stakeholder['full_name'], cin: stakeholder['cin'], identifier: stakeholder['identifier'], address: stakeholder['address'],
+          full_name: stakeholder['full_name'], cin: stakeholder['cin'], address: stakeholder['address'],
+          foreign: stakeholder['foreign'], identifier: stakeholder['identifier'], other_identifier: stakeholder['other_identifier'], other_identifier_type: stakeholder['other_identifier_type'], date_of_birth: stakeholder['date_of_birth'],
           person_given_names: stakeholder['person_given_names'], person_family_names: stakeholder['person_family_names'], person_prefixes: stakeholder['person_prefixes'], person_postfixes: stakeholder['person_postfixes'],
           deposit_entries: stakeholder['deposit_entries'], identifier_ok: stakeholder['identifier_ok']
         )}

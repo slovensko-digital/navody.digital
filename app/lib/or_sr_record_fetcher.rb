@@ -4,15 +4,38 @@ class OrSrRecordFetcher
 
     results = final_urls.map do |url|
       resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
-      return if resp.include?('Spis odstúpený na iný registrový súd')
-
-      Nokogiri::HTML(resp)
+      resp.include?('Spis odstúpený na iný registrový súd') ? nil : Nokogiri::HTML(resp)
     end.compact
 
     raise OrsrRecordError.new("No active records found for company id: #{cin}") if results.size == 0
     raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if results.size > 1
 
     results.first
+  end
+
+  def self.get_stakeholders(doc)
+    stakeholders_table = nil
+
+    doc.css('body > table').each do |table|
+      if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
+        stakeholders_table = table
+        break
+      end
+    end
+
+    stakeholders = []
+
+    stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
+      stakeholder_name = if stakeholder_table.css('.lnm').any?
+                           stakeholder_table.css('.lnm').inner_text.squeeze.strip
+                         else
+                           stakeholder_table.css('td').first.css('span').first.inner_text.squeeze.strip
+                         end
+
+      stakeholders << stakeholder_name
+    end
+
+    stakeholders
   end
 
   def self.get_stakeholders_identifiers_status(doc)

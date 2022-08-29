@@ -34,8 +34,8 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     cin = params.require(:cin)
     form_data = UpvsSubmissions::Forms::Fuzs.new(cin: cin)
 
-    redirect_to action: :unsupported unless form_data.sro?
-    redirect_to action: :nothing_missing if form_data.all_stakeholders_ok?
+    render :unsupported and return unless form_data.sro?
+    render :nothing_missing and return if form_data.all_stakeholders_ok?
 
     @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new(form_data: form_data)
   end

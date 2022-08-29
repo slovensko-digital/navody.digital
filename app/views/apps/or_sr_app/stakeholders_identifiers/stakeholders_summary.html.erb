@@ -28,12 +28,12 @@
           <% if stakeholder.is_person? %>
             <% if stakeholder.foreign %>
               <p class="govuk-body">
-                <%= stakeholder.other_identifier_type_data[:value] %><br>
+                <%= stakeholder.other_identifier_type_data[:value].capitalize %><br>
                 <%= stakeholder.other_identifier %>
               </p>
               <p class="govuk-body">
                 Dátum narodenia<br>
-                <%= stakeholder.date_of_birth %>
+                <%= stakeholder.date_of_birth.strftime('%d.%m.%Y') %>
               </p>
             <% else %>
               <p class="govuk-body">
