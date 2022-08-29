@@ -70,12 +70,16 @@
       </label>
     </div>
   </div>
-
-  <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-    Pokračovať ❯
-  </button>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
-  // TODO show/hide button
+  const submitButtonId = 'submit-button';
+
+  document.querySelector('#correct_data').addEventListener('click', (event) => {
+    if (event.target.checked) {
+      jQuery(`<button id="${submitButtonId}" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">Pokračovať ❯</button>`).appendTo('#hlavny-obsah');
+    } else {
+      document.getElementById(submitButtonId).remove();
+    }
+  })
 </script>

@@ -105,5 +105,26 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  // TODO show/hide
+  const foreignId = 'foreign';
+  const srId = 'sr';
+
+  const setVisibility = (id) => {
+    const elements = {
+      [foreignId]: document.querySelector('#identifiers-foreign'),
+      [srId]: document.querySelector('#identifiers-sr')
+    }
+
+    elements[id].style.display = 'block';
+    elements[id === srId ? foreignId : srId].style.display = 'none';
+  }
+
+  document.querySelectorAll('#sr, #foreign').forEach(item => {
+    if (item.checked) {
+      setVisibility(item.id);
+    }
+
+    item.addEventListener('click', event => {
+      setVisibility(event.target.id);
+    })
+  })
 </script>
