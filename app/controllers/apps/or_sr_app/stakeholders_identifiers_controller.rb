@@ -1,13 +1,14 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
-  rescue_from OrSrRecordFetcher::OrsrRecordError, :with => :orsr_error
+  rescue_from OrSrRecordFetcher::OrsrRecordError, :with => :or_sr_error
+  rescue_from UpvsSubmissions::Forms::Fuzs::FuzsError, :with => :fuzs_error
 
-  def corporate_body_selection
+  def subject_selection
   end
 
   def stakeholder_identifier
     if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :current_stakeholder_index)
       load_application_form
-      update_stakeholder_identifier
+      update_stakeholder_identifier if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
     else
       load_data
     end
@@ -15,7 +16,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     next_step
   end
 
-  def data_summary
+  def stakeholders_summary
   end
 
   def done
@@ -45,21 +46,31 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new(
       json_form_data: form_parameters['json_form_data'],
       current_stakeholder_index: form_parameters['current_stakeholder_index'].to_i,
+      submit_action: form_parameters['submit_action'],
+      go_to_summary: form_parameters['go_to_summary'],
       back: form_parameters['back']
     )
   end
 
   def update_stakeholder_identifier
-    identifier = params[:apps_or_sr_app_stakeholders_identifiers_application_form][:stakeholder_identifier]
-    @application_form.form_data&.stakeholders[@application_form.current_stakeholder_index]&.identifier = identifier
+    current_stakeholder&.identifier = param_value(:stakeholder_identifier).presence
+    current_stakeholder&.set_if_foreign(nationality: param_value(:stakeholder_nationality))
+    current_stakeholder&.other_identifier = param_value(:stakeholder_other_identifier).presence
+    current_stakeholder&.other_identifier_type = param_value(:stakeholder_identifier_type)
+    current_stakeholder&.set_date_of_birth(
+      year: param_value(:stakeholder_dob_year),
+      month: param_value(:stakeholder_dob_month),
+      day: param_value(:stakeholder_dob_day)
+    )
   end
 
   def next_step
-    if @application_form.current_stakeholder_index < @application_form.form_data&.stakeholders&.size - 1
-      @application_form.current_stakeholder_index += 1
-      @application_form.stakeholder = @application_form.form_data&.stakeholders[@application_form.current_stakeholder_index]
+    if should_show_summary?
+      @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
+      render :stakeholders_summary
     else
-      redirect_to action: :data_summary
+      @application_form.current_stakeholder_index += 1
+      @application_form.stakeholder = current_stakeholder
     end
   end
 
@@ -67,12 +78,36 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     params.require(:apps_or_sr_app_stakeholders_identifiers_application_form).permit(
       :json_form_data,
       :stakeholder_identifier,
+      :stakeholder_nationality,
+      :stakeholder_other_identifier,
+      :stakeholder_identifier_type,
+      :stakeholder_dob_year,
+      :stakeholder_dob_month,
+      :stakeholder_dob_day,
       :current_stakeholder_index,
+      :submit_action,
+      :go_to_summary,
       :back
     )
   end
 
-  def orsr_error
+  def current_stakeholder
+    @application_form.form_data&.stakeholders_with_missing_identifiers[@application_form.current_stakeholder_index]
+  end
+
+  def should_show_summary?
+    @application_form.should_go_to_summary?
+  end
+
+  def param_value(attribute)
+    params[:apps_or_sr_app_stakeholders_identifiers_application_form][attribute]
+  end
+
+  def or_sr_error
+    render :unsupported
+  end
+
+  def fuzs_error
     render :unsupported
   end
 end

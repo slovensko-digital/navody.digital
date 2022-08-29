@@ -36,7 +36,11 @@ $govuk-focus-colour: #ffdd00;
   border: 2px solid #0b0c0c;
   border-radius: 0;
   box-sizing: border-box;
-  width: 60%;
+  width: 100%;
+
+  @media only screen and (min-width: 641px) {
+    width: 60%;
+  }
 }
 
 .autocomplete__option {
@@ -110,4 +114,14 @@ div#identifiers input {
   @media only screen and (min-width: 641px) {
     width: 60%;
   }
+}
+
+button#submit-edit-button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: arial, sans-serif;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
 }

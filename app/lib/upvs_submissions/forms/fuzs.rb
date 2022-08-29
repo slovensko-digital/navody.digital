@@ -15,6 +15,8 @@ module UpvsSubmissions
         @org_type = type || corporate_body['registration_number']&.split('/')[0]
         @registration_number = registration_number || corporate_body['registration_number']&.split('/')[1]
 
+        raise FuzsError.new unless sro?
+
         if name
           @registration_number = registration_number
           @stakeholders = load_stakeholders_from_json(stakeholders)
@@ -69,13 +71,11 @@ module UpvsSubmissions
         end
 
         def load_municipality_identifier
-          # TODO what if no record?
           municipality_code_list_object = CodeList::Municipality.where("value ilike ?", @municipality&.strip).take
           municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
-          # TODO what if no record?
           country_code_list_object = CodeList::Country.where("value ilike ?", @country&.strip).take
           country_code_list_object&.identifier
         end
@@ -89,7 +89,7 @@ module UpvsSubmissions
           :person_given_names, :person_family_names, :person_prefixes, :person_postfixes,
           :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
           :person_date_of_birth, :person_identifier, :other_identifier, :other_identifier_type,
-          :deposit_entries, :identifier_ok, :identifier
+          :deposit_entries, :identifier_ok, :foreign, :identifier, :identifier_type, :date_of_birth
         )
 
         def initialize(
@@ -112,28 +112,39 @@ module UpvsSubmissions
         end
 
         def name
-          return [given_name, family_name].join(' ') if is_person?
+          return [[prefixes.presence, given_name, family_name].compact.join(' '), postfixes.presence].compact.join(', ') if is_person?
           full_name
         end
 
         def given_name
-          @person_given_names.join(' ')
+          @person_given_names.compact.join(' ')
         end
 
         def family_name
-          @person_family_names.join(' ')
+          @person_family_names.compact.join(' ')
         end
 
         def postfixes
-          @person_postfixes.join(' ')
+          @person_postfixes.compact.join(' ')
         end
 
         def prefixes
-          @person_prefixes.join(' ')
+          @person_prefixes.compact.join(' ')
         end
 
         def is_person?
           @person_family_names.present? && !@full_name.present?
+        end
+
+        def set_if_foreign(nationality: nil)
+          @foreign = (nationality == 'sr' ? false : true)
+        end
+
+        def set_date_of_birth(year: nil, month: nil, day: nil)
+          return unless is_person?
+
+          year, month, day = get_date_of_birth_from_identifier(@identifier) unless year.present?
+          @date_of_birth = Date.new(year.to_i, month.to_i, day.to_i)
         end
 
         def load_address_from_json(data)
@@ -156,6 +167,17 @@ module UpvsSubmissions
         end
 
         private
+
+        def get_date_of_birth_from_identifier(identifier)
+          day = identifier[4..5].to_i
+          month = identifier[2..3].to_i
+          year = identifier[0..1].to_i
+
+          month = (month > 50 ? month - 50 : month)
+          year += (year > 20 ? 1900 : 2000)
+
+          [year, month, day]
+        end
 
         def filter_deposit_entries(entries)
           entries&.select{ |entry| (entry["name"].include?(family_name) && entry["name"].include?(given_name)) }
@@ -183,13 +205,14 @@ module UpvsSubmissions
       class FuzsError < StandardError
       end
 
+      private
+
       def get_datahub_corporate_body(cin, client: Faraday, datahub_url: ENV.fetch('DATAHUB_URL'), access_token: ENV.fetch('DATAHUB_ACCESS_TOKEN'))
         params = {
           :q => "cin:#{cin}",
           :expand => 'rpo_organizations',
           :access_token => access_token
         }
-      private
 
         response = client.get("#{datahub_url}/api/datahub/corporate_bodies/search?#{params.to_query}")
         JSON.parse(response.body)
@@ -197,22 +220,50 @@ module UpvsSubmissions
 
       def effective_rpo_organization(organizations)
         orgs = organizations.select{ |org| org['effective_to'] == nil }
-        # TODO raise if orgs.size != 1
+
+        raise FuzsError.new if orgs.size != 1
+
         orgs.first
       end
 
-      def load_court(corporate_body)
-        # TODO what if no Okresny sud?
-        registration_office = corporate_body['registration_office'].sub('Okresný súd ', '')
-
-        CodeList::Court.where("name ilike ?", registration_office.strip).take
+      def load_address_from_json(data)
+        Address.new(data['street'], data['building_number'], data['reg_number'], data['municipality'], data['postal_code'], data['country'], true)
       end
 
-      def load_stakeholders(corporate_body)
+      def load_court_from_json(data)
+        CodeList::Court.where("name ilike ?", data['name']).take
+      end
+
+      def load_court(corporate_body)
+        registration_office = corporate_body['registration_office'].sub('Okresný súd ', '')
+
+        court = CodeList::Court.where("name ilike ?", registration_office.strip).take
+
+        raise FuzsError.new unless court
+
+        court
+      end
+
+      def load_stakeholders_from_cb(corporate_body)
         rpo_organization = effective_rpo_organization(corporate_body['rpo_organizations'])
 
         stakeholders_data = rpo_organization["stakeholder_entries"].select{ |stakeholder| stakeholder['effective_to'] == nil }
-        stakeholders_data.map{ |data| Stakeholder.new(*stakeholder_params(data).values) }
+
+        stakeholders_data&.map do |data| Stakeholder.new(
+          full_name: data['full_name'], cin: data['cin'],
+          person_given_names: data['person_given_names'], person_family_names: data['person_family_names'], person_prefixes: data['person_prefixes'], person_postfixes: data['person_postfixes'],
+          address_street: data['address_street'],  address_reg_number: data['address_reg_number'],  address_building_number: data['address_building_number'],  address_postal_code: data['address_postal_code'], address_municipality: data['address_municipality'], address_country: data['address_country'],
+          all_deposit_entries: @deposit_entries, identifiers_status: @identifiers_status
+        )
+        end
+      end
+
+      def load_stakeholders_from_json(stakeholders)
+        @stakeholders = stakeholders&.map { |stakeholder| Stakeholder.new(
+          full_name: stakeholder['full_name'], cin: stakeholder['cin'], identifier: stakeholder['identifier'], address: stakeholder['address'],
+          person_given_names: stakeholder['person_given_names'], person_family_names: stakeholder['person_family_names'], person_prefixes: stakeholder['person_prefixes'], person_postfixes: stakeholder['person_postfixes'],
+          deposit_entries: stakeholder['deposit_entries'], identifier_ok: stakeholder['identifier_ok']
+        )}
       end
 
       def company_params(company)
@@ -221,14 +272,6 @@ module UpvsSubmissions
 
       def address_params(address, with_identifiers: true)
         address.slice('street', 'building_number', 'reg_number', 'municipality', 'postal_code', 'country').merge('with_identifiers' => with_identifiers)
-      end
-
-      def stakeholder_params(stakeholder)
-        stakeholder.slice(
-          'full_name', 'cin',
-          'person_given_names', 'person_family_names', 'person_prefixes', 'person_postfixes',
-          'address_street', 'address_reg_number', 'address_building_number', 'address_postal_code', 'address_municipality', 'address_country',
-        ).merge({ 'deposit_entries' => @deposit_entries, 'identifiers_status' => @identifiers_status })
       end
     end
   end

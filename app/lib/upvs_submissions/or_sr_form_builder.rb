@@ -254,11 +254,11 @@ class UpvsSubmissions::OrSrFormBuilder
     <<~PERSON
       <ns1:Osoba>
         <ns1:TitulPred>#{data&.person_prefixes}</ns1:TitulPred>
-        <ns1:Meno>#{data&.person_given_name}</ns1:Meno>
-        <ns1:Priezvisko>#{data&.person_family_name}</ns1:Priezvisko>
-        <ns1:TitulZa>#{data&.person_postfixes}</ns1:TitulZa>
-        <ns1:DatumNarodenia xmlns:xsi="#{data.present? ? XMLNS_XSI : 'nil'}">#{data&.person_date_of_birth}</ns1:DatumNarodenia>
-        <ns1:RodneCislo>#{data&.person_identifier}</ns1:RodneCislo>
+        <ns1:Meno>#{data&.given_name}</ns1:Meno>
+        <ns1:Priezvisko>#{data&.family_name}</ns1:Priezvisko>
+        <ns1:TitulZa>#{data&.postfixes}</ns1:TitulZa>
+        <ns1:DatumNarodenia xmlns:xsi="#{data.present? ? XMLNS_XSI : 'nil'}">#{data&.date_of_birth}</ns1:DatumNarodenia>
+        <ns1:RodneCislo>#{data&.identifier}</ns1:RodneCislo>
         <ns1:TypInyIdentifikator>
           <ns1:Id>#{data&.other_identifier_type_data[:id]}</ns1:Id>
           <ns1:Value>#{data&.other_identifier_type_data[:value]}</ns1:Value>

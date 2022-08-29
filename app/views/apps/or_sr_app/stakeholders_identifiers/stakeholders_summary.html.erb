@@ -1,0 +1,81 @@
+<%= render partial: 'header' %>
+
+<%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+  <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
+
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+    <h2 class="govuk-fieldset__heading">
+      Kontrola údajov
+    </h2>
+  </legend>
+  <br />
+
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      Pred vygenerovaním formulára je potrebné skontrolovať si údaje o uistiť sa o ich správnosti.
+    </strong>
+  </div>
+
+  <% @stakeholders.each_with_index do |stakeholder, index| %>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= stakeholder.name %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <% if stakeholder.is_person? %>
+            <% if stakeholder.foreign %>
+              <p class="govuk-body">
+                <%= stakeholder.other_identifier_type_data[:value] %><br>
+                <%= stakeholder.other_identifier %>
+              </p>
+              <p class="govuk-body">
+                Dátum narodenia<br>
+                <%= stakeholder.date_of_birth %>
+              </p>
+            <% else %>
+              <p class="govuk-body">
+                Rodné číslo<br>
+                <%= stakeholder.identifier %>
+              </p>
+            <% end %>
+          <% else %>
+            <% if stakeholder.foreign %>
+              <p class="govuk-body">
+                Identifikačný údaj<br>
+                <%= stakeholder.other_identifier %>
+              </p>
+            <% else %>
+              <p class="govuk-body">
+                IČO<br>
+                <%= stakeholder.identifier %>
+              </p>
+            <% end %>
+          <% end %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_subform', index: index - 1 %>
+        </dd>
+      </div>
+    </dl>
+  <% end %>
+
+  <div class="govuk-form-group">
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">
+      <label class="govuk-label govuk-checkboxes__label" for="correct_data">
+        Všetky údaje sú správne
+      </label>
+    </div>
+  </div>
+
+  <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+    Pokračovať ❯
+  </button>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  // TODO show/hide button
+</script>
