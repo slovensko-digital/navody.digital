@@ -3,7 +3,7 @@ class UpvsSubmissions::OrSrFormBuilder
     delegate :uuid, to: SecureRandom
   end
 
-  def fuzs_missing_identifiers(fuzs_data)
+  def self.fuzs_missing_identifiers(fuzs_data)
     <<~FORM
       <?mso-infoPathSolution name="urn:schemas-microsoft-com:office:infopath:FUZS:http---www-justice-gov-sk-Forms20200821" solutionVersion="1.0.0.1133" productVersion="14.0.0.0" PIVersion="1.0.0.0" href="http://www.justice.gov.sk/FormServerTemplates/FUZS.xsn" language="sk-SK"?>
       <?mso-application progid="InfoPath.Document" versionProgid="InfoPath.Document.2"?>
@@ -56,7 +56,7 @@ class UpvsSubmissions::OrSrFormBuilder
 
   private
 
-  def form_info
+  def self.form_info
     <<~FORM_INFO
       <ns1:IdentifikacneUdajeFormulara>
         <ns1:Nazov></ns1:Nazov>
@@ -78,7 +78,7 @@ class UpvsSubmissions::OrSrFormBuilder
     FORM_INFO
   end
 
-  def registration_office(office)
+  def self.registration_office(office)
     <<~REGISTRATION_OFFICE
       <ns1:ObchodnyRegister>
         <ns1:OkresnySud>#{office.name}</ns1:OkresnySud>
@@ -92,7 +92,7 @@ class UpvsSubmissions::OrSrFormBuilder
     REGISTRATION_OFFICE
   end
 
-  def claimer(claimer)
+  def self.claimer(claimer)
     <<~CLAIMER
       #{CLAIMER_PERSON}
       <ns1:NavrhovatelPO>
@@ -104,24 +104,24 @@ class UpvsSubmissions::OrSrFormBuilder
     CLAIMER
   end
 
-  def stakeholder_entries(data)
+  def self.stakeholder_entries(data)
     (data.stakeholders.map {|stakeholder| stakeholder.is_person? ? stakeholder_person(stakeholder) : stakeholder_corporate_body(stakeholder) } + [stakeholders_addition(data)]).join("\n")
   end
 
-  def stakeholders_addition(data)
+  def self.stakeholders_addition(data)
     <<~ADDITION
       #{stakeholder_person(nil) if data.all_stakeholders_corporate_bodies?}
       #{stakeholder_corporate_body(nil) if data.all_stakeholders_persons?}
     ADDITION
   end
 
-  def stakeholder_person(stakeholder)
+  def self.stakeholder_person(stakeholder)
     <<~STAKEHOLDER
-      <ns1:SpolocnikFO ns1:menit="#{stakeholder&.any_change? ? true : 'false'}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
+      <ns1:SpolocnikFO ns1:menit="#{!stakeholder&.identifier_ok ? true : false}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
         <ns1:Zapis>
           <ns1:Spolocnik>
             #{person(stakeholder)}
-            #{address(stakeholder&.new_address)}
+            #{address(stakeholder&.address)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
         </ns1:Zapis>
@@ -137,15 +137,15 @@ class UpvsSubmissions::OrSrFormBuilder
     STAKEHOLDER
   end
 
-  def stakeholder_corporate_body(stakeholder)
+  def self.stakeholder_corporate_body(stakeholder)
     <<~STAKEHOLDER
-      <ns1:SpolocnikPO ns1:menit="#{stakeholder&.any_change? ? true : 'false'}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
+      <ns1:SpolocnikPO ns1:menit="#{stakeholder&.identifier_ok ? true : 'false'}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
         <ns1:Zapis>
           <ns1:Spolocnik>
             <ns1:ObchodneMeno>#{stakeholder&.full_name}</ns1:ObchodneMeno>
             <ns1:Ico>#{stakeholder&.cin}</ns1:Ico>
             <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
-             #{address(stakeholder&.new_address)}
+             #{address(stakeholder&.address)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
         </ns1:Zapis>
@@ -163,7 +163,7 @@ class UpvsSubmissions::OrSrFormBuilder
     STAKEHOLDER
   end
 
-  def backup_right(data)
+  def self.backup_right(data)
     <<~BACKUP_RIGHT
       <ns1:ZaloznePravo>
         <ns1:Zapis>
@@ -250,7 +250,7 @@ class UpvsSubmissions::OrSrFormBuilder
     BACKUP_RIGHT
   end
 
-  def person(data)
+  def self.person(data)
     <<~PERSON
       <ns1:Osoba>
         <ns1:TitulPred>#{data&.person_prefixes}</ns1:TitulPred>
@@ -269,7 +269,7 @@ class UpvsSubmissions::OrSrFormBuilder
     PERSON
   end
 
-  def address(address, with_identifiers: true)
+  def self.address(address, with_identifiers: true)
     <<~ADDRESS
       <ns1:Adresa>
         <ns1:Ulica>#{address&.street}</ns1:Ulica>
@@ -289,13 +289,13 @@ class UpvsSubmissions::OrSrFormBuilder
     ADDRESS
   end
 
-  def deposit_entries(entries)
+  def self.deposit_entries(entries)
     return deposit_entry(nil) unless entries
 
     entries.map {|entry| deposit_entry(entry) }.join("\n")
   end
 
-  def deposit_entry(entry)
+  def self.deposit_entry(entry)
     <<~ENTRY
       <ns1:Vklad>
         <ns1:VyskaVkladu>
@@ -314,7 +314,7 @@ class UpvsSubmissions::OrSrFormBuilder
     ENTRY
   end
 
-  def currency(currency)
+  def self.currency(currency)
     <<~CURRENCY
       <ns1:Mena>
         <ns1:Id>#{currency.identifier if currency&.identifier}</ns1:Id>

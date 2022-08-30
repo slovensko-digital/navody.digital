@@ -94,7 +94,8 @@ Rails.application.routes.draw do
         member do
           get :subject_selection, path: 'spolocnost'
           post :stakeholder_identifier, path: 'spolocnici'
-          post :generate_xml_form, path: 'formular'
+          post :xml_form, path: 'formular'
+          post :generate_xml_form
           get :unsupported, path: 'nepodporovany-typ-spolocnosti'
           get :nothing_missing, path: 'nic-nechyba'
         end

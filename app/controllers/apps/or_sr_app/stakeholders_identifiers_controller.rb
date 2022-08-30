@@ -19,9 +19,19 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   def stakeholders_summary
   end
 
+  def xml_form
+    load_application_form
+
+    # TODO use case with email
+  end
+
   def generate_xml_form
     load_application_form
-    binding.pry
+    @xml_form = UpvsSubmissions::OrSrFormBuilder.fuzs_missing_identifiers(@application_form.form_data)
+
+    respond_to do |format|
+      format.xml { send_data @xml_form, filename: 'fuzs.xml' }
+    end
   end
 
   def unsupported

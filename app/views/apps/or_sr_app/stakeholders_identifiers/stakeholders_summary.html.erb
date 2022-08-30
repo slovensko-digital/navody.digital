@@ -65,7 +65,7 @@
   </div>
 <% end %>
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: generate_xml_form_apps_or_sr_app_stakeholders_identifiers_path, :html => {:id => 'submit-data-form'}  do |f| %>
+<%= form_for @application_form, :builder => AppFormBuilder, url: xml_form_apps_or_sr_app_stakeholders_identifiers_path, :html => {:id => 'submit-data-form'}  do |f| %>
   <div class="govuk-form-group">
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">

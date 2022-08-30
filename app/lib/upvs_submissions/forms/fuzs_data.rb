@@ -113,7 +113,7 @@ module UpvsSubmissions
           @person_family_names = person_family_names
           @person_prefixes = person_prefixes
           @person_postfixes = person_postfixes
-          @deposit_entries = deposit_entries || filter_deposit_entries(all_deposit_entries)&.map{ |entry| Deposit.new(*(entry.except("name")).values) }
+          @deposit_entries = deposit_entries ? load_deposit_entries(deposit_entries) : filter_deposit_entries(all_deposit_entries)&.map{ |entry| Deposit.new(*(entry.except("name")).values) }
           @identifier_ok = identifiers_status ? identifier_status(identifiers_status) : identifier_ok
         end
 
@@ -185,6 +185,10 @@ module UpvsSubmissions
           year += (year > 20 ? 1900 : 2000)
 
           [year, month, day]
+        end
+
+        def load_deposit_entries(entries)
+          entries.map { |entry| Deposit.new(entry["deposit"], entry.dig("deposit_currency", "code"), entry["paid_deposit"], entry.dig("paid_deposit_currency", "code")) }
         end
 
         def filter_deposit_entries(entries)
