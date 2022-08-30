@@ -1,6 +1,6 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   rescue_from OrSrRecordFetcher::OrsrRecordError, :with => :or_sr_error
-  rescue_from UpvsSubmissions::Forms::Fuzs::FuzsError, :with => :fuzs_error
+  rescue_from UpvsSubmissions::Forms::FuzsData::FuzsError, :with => :fuzs_error
 
   def subject_selection
   end
@@ -19,7 +19,9 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   def stakeholders_summary
   end
 
-  def done
+  def generate_xml_form
+    load_application_form
+    binding.pry
   end
 
   def unsupported
@@ -32,7 +34,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
 
   def load_data
     cin = params.require(:cin)
-    form_data = UpvsSubmissions::Forms::Fuzs.new(cin: cin)
+    form_data = UpvsSubmissions::Forms::FuzsData.new(cin: cin)
 
     render :unsupported and return unless form_data.sro?
     render :nothing_missing and return if form_data.all_stakeholders_ok?
@@ -46,7 +48,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new(
       json_form_data: form_parameters['json_form_data'],
       current_stakeholder_index: form_parameters['current_stakeholder_index'].to_i,
-      submit_action: form_parameters['submit_action'],
+      current_step: form_parameters['current_step'],
       go_to_summary: form_parameters['go_to_summary'],
       back: form_parameters['back']
     )
@@ -65,13 +67,35 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def next_step
-    if should_show_summary?
-      @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
-      render :stakeholders_summary
+    if @application_form.go_back?
+      case @application_form.current_step
+      when 'save'
+        if @application_form.current_stakeholder_index > 0
+          @application_form.current_stakeholder_index -= 1
+          @application_form.stakeholder = current_stakeholder
+          render :stakeholder_identifier and return
+        else
+          render :subject_selection and return
+        end
+      when 'edit'
+        show_summary
+      when 'summary'
+        @application_form.stakeholder = current_stakeholder
+        render :stakeholder_identifier and return
+      when 'xml'
+        show_summary
+      end
+    elsif should_show_summary?
+      show_summary
     else
       @application_form.current_stakeholder_index += 1
       @application_form.stakeholder = current_stakeholder
     end
+  end
+
+  def show_summary
+    @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
+    render :stakeholders_summary
   end
 
   def form_params
@@ -85,7 +109,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
       :stakeholder_dob_month,
       :stakeholder_dob_day,
       :current_stakeholder_index,
-      :submit_action,
+      :current_step,
       :go_to_summary,
       :back
     )

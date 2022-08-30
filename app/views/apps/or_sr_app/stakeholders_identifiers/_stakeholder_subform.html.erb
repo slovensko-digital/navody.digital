@@ -1,7 +1,7 @@
 <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
   <%= f.hidden_field :json_form_data, value: @application_form.form_data.to_json %>
   <%= f.hidden_field :current_stakeholder_index, value: index %>
-  <%= f.hidden_field :submit_action, value: 'edit' %>
+  <%= f.hidden_field :current_step, value: 'edit' %>
   <%= f.hidden_field :go_to_summary, value: true %>
   <%= f.hidden_field :back, value: false %>
 

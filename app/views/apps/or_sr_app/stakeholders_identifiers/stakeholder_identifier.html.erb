@@ -27,7 +27,7 @@
       <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_cb', form: f %>
     <% end %>
 
-  <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f %>
+    <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>
   </fieldset>
 
   <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">

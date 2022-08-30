@@ -1,6 +1,6 @@
 module UpvsSubmissions
   module Forms
-    class Fuzs
+    class FuzsData
       include ActiveModel::Model
 
       attr_accessor(:cin, :name, :address, :court, :org_type, :registration_number, :stakeholders)
@@ -149,7 +149,7 @@ module UpvsSubmissions
         def set_date_of_birth(year: nil, month: nil, day: nil)
           return unless is_person?
 
-          year, month, day = get_date_of_birth_from_identifier(@identifier) unless year.present?
+          year, month, day = get_date_of_birth_from_identifier(@identifier) if !year.present? && @identifier
           @date_of_birth = Date.new(year.to_i, month.to_i, day.to_i)
         end
 
