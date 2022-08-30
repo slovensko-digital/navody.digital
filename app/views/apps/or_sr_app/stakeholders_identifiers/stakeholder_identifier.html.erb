@@ -1,6 +1,6 @@
 <%= render partial: 'header' %>
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+<%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
   <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
 
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -10,16 +10,16 @@
   </legend>
   <br />
 
-  <p>Boli <%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
+  <p><%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
   <br />
-
-  <%= render 'components/error_summary', form: @application_form %>
 
   <fieldset class="govuk-fieldset">
     <legend id="stakeholder" class="govuk-fieldset__legend">
       <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
       <p>Spoločník</p>
     </legend>
+
+    <%= render 'components/error_summary', form: @application_form %>
 
     <% if @application_form.stakeholder.is_person? %>
       <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_person', form: f %>

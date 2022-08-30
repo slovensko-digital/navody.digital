@@ -100,6 +100,14 @@ $govuk-focus-colour: #ffdd00;
   animation: spinner .6s linear infinite;
 }
 
+#identifiers-sr input, #identifiers-foreign input {
+  width: 100%;
+
+  @media only screen and (min-width: 641px) {
+    width: 60%;
+  }
+}
+
 legend#stakeholder {
   margin-bottom: 1rem;
 }

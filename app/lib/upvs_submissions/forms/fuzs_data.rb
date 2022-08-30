@@ -87,7 +87,8 @@ module UpvsSubmissions
         include ActiveModel::Model
 
         attr_accessor(
-          :full_name, :cin, :foreign, :identifier, :other_identifier, :other_identifier_type, :date_of_birth,
+          :full_name, :cin, :foreign, :identifier, :other_identifier, :other_identifier_type,
+          :date_of_birth, :dob_day, :dob_month, :dob_year,
           :address,
           :person_given_names, :person_family_names, :person_prefixes, :person_postfixes,
           :deposit_entries, :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
@@ -146,10 +147,29 @@ module UpvsSubmissions
           @foreign = (nationality == 'sr' ? false : true)
         end
 
+        def set_identifiers(identifier: nil, other_identifier: nil, other_identifier_type: nil)
+          if @foreign
+            @identifier = nil
+            @other_identifier = other_identifier
+            @other_identifier_type = other_identifier_type
+          else
+            @identifier = identifier
+            @other_identifier = nil
+            @other_identifier_type = nil
+          end
+        end
+
         def set_date_of_birth(year: nil, month: nil, day: nil)
           return unless is_person?
 
           year, month, day = get_date_of_birth_from_identifier(@identifier) if !year.present? && @identifier
+
+          @dob_day = day
+          @dob_month = month
+          @dob_year = year
+
+          return unless year.presence && month.presence && day.presence
+
           @date_of_birth = Date.new(year.to_i, month.to_i, day.to_i)
         end
 

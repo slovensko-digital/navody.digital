@@ -67,6 +67,20 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def inputs_set(method, options = {}, &block)
+    inputs_div = @template.content_tag(:div, id: "#{@object.model_name.singular}_#{method}") do
+      @template.concat @template.capture(&block)
+    end
+    inputs_fs = field_set(method, '', options) do
+      @template.concat inputs_div
+    end
+
+    classes = 'govuk-form-group'
+    classes = classes + ' govuk-form-group--error' if @object.errors[method].present?
+    @template.content_tag(:div, class: classes) do
+      @template.concat inputs_fs
+    end
+  end
 
   def field_set(method, text, options = {}, &block)
     legend = @template.content_tag(:legend, {class: 'govuk-fieldset__legend govuk-fieldset__legend--xl'}) do
@@ -93,7 +107,6 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
       @template.concat error_message(method)
       @template.concat @template.capture(&block)
     end
-
   end
 
   def submit(value = nil, options = {})

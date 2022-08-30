@@ -1,4 +1,5 @@
 <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+  <%= f.hidden_field :cin, value: @application_form.cin %>
   <%= f.hidden_field :json_form_data, value: @application_form.form_data.to_json %>
   <%= f.hidden_field :current_stakeholder_index, value: index %>
   <%= f.hidden_field :current_step, value: 'edit' %>

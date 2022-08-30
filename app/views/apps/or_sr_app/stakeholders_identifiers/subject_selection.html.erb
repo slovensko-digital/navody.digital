@@ -5,17 +5,20 @@
 </legend>
 <br />
 
-<%= form_tag stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path, id: "form" do %>
+<%= form_for @application_form, :builder => AppFormBuilder, url: subject_selection_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
   <div class="govuk-form-group">
     <p>Táto aplikácia Vám pomôže vyžiadať zápis chýbajúcich identifikačých údajov spoločníkov do Obchodného registra. Začnite s vyhľadaním Vašej firmy.</p>
     <br />
+
+    <%= render 'components/error_summary', form: @application_form %>
 
     <p class="govuk-label-wrapper">
       <b>Zadajte názov spoločnosti</b>
     </p>
     <div id="corporate_bodies_results"></div>
 
-    <%= hidden_field_tag 'cin' %>
+    <%= f.hidden_field :cin %>
+    <%= f.hidden_field :current_step, value: 'subject_selection' %>
 
     <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
       Pokračovať ❯
@@ -104,7 +107,7 @@
         }
       }, 500),
       onConfirm: async (result) => {
-        document.getElementById('cin').value = result?.cin;
+        document.getElementById('apps_or_sr_app_stakeholders_identifiers_application_form_cin').value = result?.cin;
       },
       minLength: 3,
       templates: {

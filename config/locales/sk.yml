@@ -20,9 +20,9 @@ sk:
       few: z %{count} krokov
       other: z %{count} krokov
     stakeholders_found:
-      one: nájedený 1 spoločník, pri ktorom
-      few: nájedení %{count} spoločníci, pri ktorých
-      other: nájedení %{count} spoločníci, pri ktorých
+      one: Bol nájdený 1 spoločník, pri ktorom
+      few: Boli nájdení %{count} spoločníci, pri ktorých
+      other: Boli nájdení %{count} spoločníci, pri ktorých
   date:
     formats:
       dmrg: "%e. %B %Y"
