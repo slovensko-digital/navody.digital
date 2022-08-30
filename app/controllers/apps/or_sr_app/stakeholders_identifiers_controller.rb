@@ -1,30 +1,23 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
-  before_action :load_application_form, only: [:xml_form, :generate_xml_form]
+  before_action :load_application_form, only: [:stakeholder_identifier, :xml_form, :generate_xml_form]
 
   rescue_from OrSrRecordFetcher::OrsrRecordError, :with => :or_sr_error
   rescue_from UpvsSubmissions::Forms::FuzsData::FuzsError, :with => :fuzs_error
 
   def subject_selection
-    if request.post?
-      load_application_form
-
-      unless @application_form.go_back?
-        @application_form.valid?(:cin) ? stakeholder_identifier : (render :subject_selection)
-      end
-    else
-      @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new
-    end
+    @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new
   end
 
   def stakeholder_identifier
+    (render :subject_selection and return) if @application_form.should_validate_cin? && !@application_form.valid?(:cin)
+
     if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :current_stakeholder_index)
-      load_application_form
       update_stakeholder_identifier if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
 
       if @application_form.go_back? or (@application_form.valid?(:identifier) && @application_form.valid?(:other_identifier))
         next_step
       else
-        render :stakeholder_identifier
+        render :stakeholder_identifier and return
       end
     else
       load_data
@@ -109,7 +102,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
           @application_form.stakeholder = current_stakeholder
           render :stakeholder_identifier and return
         else
-          redirect_to action: :subject_selection
+          render :subject_selection and return
         end
       when 'edit'
         show_summary

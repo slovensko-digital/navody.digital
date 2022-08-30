@@ -70,6 +70,10 @@ module Apps
           back == 'true'
         end
 
+        def should_validate_cin?
+          @current_step == 'subject_selection'
+        end
+
         private
 
         def identifier_valid?
