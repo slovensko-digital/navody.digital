@@ -108,7 +108,7 @@ module UpvsSubmissions
           @identifier = identifier
           @other_identifier = other_identifier
           @other_identifier_type = other_identifier_type
-          @date_of_birth = Date.parse(date_of_birth) if date_of_birth
+          @date_of_birth = parse_and_set_date_of_birth(date_of_birth) if date_of_birth
           @address = address ? load_address_from_json(address) : Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
           @person_given_names = person_given_names
           @person_family_names = person_family_names
@@ -159,6 +159,15 @@ module UpvsSubmissions
           end
         end
 
+        def parse_and_set_date_of_birth(date_of_birth)
+          dob = Date.parse(date_of_birth)
+
+          @dob_day = dob.day
+          @dob_month = dob.month
+          @dob_year = dob.year
+          @date_of_birth = dob
+        end
+
         def set_date_of_birth(year: nil, month: nil, day: nil)
           return unless is_person?
 
@@ -169,7 +178,7 @@ module UpvsSubmissions
           @dob_year = year
 
           return unless year.presence && month.presence && day.presence
-
+          
           @date_of_birth = Date.new(year.to_i, month.to_i, day.to_i)
         end
 

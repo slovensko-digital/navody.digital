@@ -260,9 +260,9 @@ class UpvsSubmissions::OrSrFormBuilder
         <ns1:DatumNarodenia xmlns:xsi="#{data.present? ? XMLNS_XSI : 'nil'}">#{data&.date_of_birth}</ns1:DatumNarodenia>
         <ns1:RodneCislo>#{data&.identifier}</ns1:RodneCislo>
         <ns1:TypInyIdentifikator>
-          <ns1:Id>#{data&.other_identifier_type_data[:id]}</ns1:Id>
-          <ns1:Value>#{data&.other_identifier_type_data[:value]}</ns1:Value>
-          <ns1:Znacka>#{data&.other_identifier_type_data[:code]}</ns1:Znacka>
+          <ns1:Id>#{data&.other_identifier_type_data&.dig(:id)}</ns1:Id>
+          <ns1:Value>#{data&.other_identifier_type_data&.dig(:value)}</ns1:Value>
+          <ns1:Znacka>#{data&.other_identifier_type_data&.dig(:code)}</ns1:Znacka>
         </ns1:TypInyIdentifikator>
         <ns1:InyIdentifikacnyUdaj>#{data&.other_identifier}</ns1:InyIdentifikacnyUdaj>
       </ns1:Osoba>

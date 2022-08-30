@@ -85,7 +85,7 @@ module Apps
               errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj')
             end
 
-            errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia') if dob_missing? && @stakeholder.is_person?
+            errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia') if @stakeholder.is_person? && dob_missing?
           end
         end
 
