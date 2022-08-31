@@ -10,7 +10,7 @@ class SeedCodeListsJob < ApplicationJob
     seed_courts
   end
 
-  def seed_municipalities(downloader: Faraday, file_path: Rails.root + 'obce.csv')
+  def seed_municipalities(file_path: build_file_path('municipalities.csv'))
     CSV.foreach(file_path, headers: true, col_sep: '|') do |municipality|
       CodeList::Municipality.find_or_create_by({
         identifier: municipality['code'],
@@ -19,7 +19,7 @@ class SeedCodeListsJob < ApplicationJob
     end
   end
 
-  def seed_countries(downloader: Faraday, file_path: Rails.root + 'krajiny.csv')
+  def seed_countries(file_path: build_file_path('countries.csv'))
     CSV.foreach(file_path, headers: true, col_sep: '|') do |country|
       CodeList::Country.find_or_create_by({
         identifier: country['code'],
@@ -186,5 +186,11 @@ class SeedCodeListsJob < ApplicationJob
     courts.each do |court|
       CodeList::Court.find_or_create_by(court)
     end
+  end
+
+  private
+
+  def build_file_path(file_name)
+    File.join(Rails.root, ['db', 'data', file_name])
   end
 end
