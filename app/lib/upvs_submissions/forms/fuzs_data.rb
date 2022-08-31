@@ -88,7 +88,7 @@ module UpvsSubmissions
 
         attr_accessor(
           :full_name, :cin, :foreign, :identifier, :other_identifier, :other_identifier_type,
-          :date_of_birth, :dob_day, :dob_month, :dob_year,
+          :dob_day, :dob_month, :dob_year,
           :address,
           :person_given_names, :person_family_names, :person_prefixes, :person_postfixes,
           :deposit_entries, :deposit, :deposit_currency, :paid_deposit, :paid_deposit_currency,
@@ -96,7 +96,8 @@ module UpvsSubmissions
         )
 
         def initialize(
-          full_name: nil, cin: nil, foreign: nil, identifier: nil, other_identifier: nil, other_identifier_type: nil, date_of_birth: nil,
+          full_name: nil, cin: nil, foreign: nil, identifier: nil, other_identifier: nil, other_identifier_type: nil,
+          dob_year: nil, dob_month: nil, dob_day: nil,
           person_given_names: nil, person_family_names: nil, person_prefixes: nil, person_postfixes: nil,
           address_street: nil, address_reg_number: nil, address_building_number: nil, address_postal_code: nil, address_municipality: nil, address_country: nil,
           all_deposit_entries: nil, identifiers_status: nil,
@@ -108,7 +109,9 @@ module UpvsSubmissions
           @identifier = identifier
           @other_identifier = other_identifier
           @other_identifier_type = other_identifier_type
-          @date_of_birth = parse_and_set_date_of_birth(date_of_birth) if date_of_birth
+          @dob_year = dob_year
+          @dob_month = dob_month
+          @dob_day = dob_day
           @address = address ? load_address_from_json(address) : Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
           @person_given_names = person_given_names
           @person_family_names = person_family_names
@@ -143,6 +146,14 @@ module UpvsSubmissions
           @person_family_names.present? && !@full_name.present?
         end
 
+        def date_of_birth
+          return nil unless is_person?
+
+          @dob_year, @dob_month, @dob_day = get_date_of_birth_from_identifier(@identifier) if !@dob_year.present? && @identifier
+
+          @date_of_birth = Date.new(@dob_year.to_i, @dob_month.to_i, @dob_day.to_i)
+        end
+
         def set_if_foreign(nationality: nil)
           @foreign = (nationality == 'sr' ? false : true)
         end
@@ -156,30 +167,16 @@ module UpvsSubmissions
             @identifier = identifier
             @other_identifier = nil
             @other_identifier_type = nil
+            @dob_year = nil
+            @dob_month = nil
+            @dob_day = nil
           end
         end
 
-        def parse_and_set_date_of_birth(date_of_birth)
-          dob = Date.parse(date_of_birth)
-
-          @dob_day = dob.day
-          @dob_month = dob.month
-          @dob_year = dob.year
-          @date_of_birth = dob
-        end
-
         def set_date_of_birth(year: nil, month: nil, day: nil)
-          return unless is_person?
-
-          year, month, day = get_date_of_birth_from_identifier(@identifier) if !year.present? && @identifier
-
-          @dob_day = day
-          @dob_month = month
-          @dob_year = year
-
-          return unless year.presence && month.presence && day.presence
-          
-          @date_of_birth = Date.new(year.to_i, month.to_i, day.to_i)
+          @dob_day = day.to_i if day.present?
+          @dob_month = month.to_i if month.present?
+          @dob_year = year.to_i if year.present?
         end
 
         def load_address_from_json(data)
@@ -302,7 +299,8 @@ module UpvsSubmissions
       def load_stakeholders_from_json(stakeholders)
         @stakeholders = stakeholders&.map { |stakeholder| Stakeholder.new(
           full_name: stakeholder['full_name'], cin: stakeholder['cin'], address: stakeholder['address'],
-          foreign: stakeholder['foreign'], identifier: stakeholder['identifier'], other_identifier: stakeholder['other_identifier'], other_identifier_type: stakeholder['other_identifier_type'], date_of_birth: stakeholder['date_of_birth'],
+          foreign: stakeholder['foreign'], identifier: stakeholder['identifier'], other_identifier: stakeholder['other_identifier'], other_identifier_type: stakeholder['other_identifier_type'],
+          dob_year: stakeholder['dob_year'], dob_month: stakeholder['dob_month'], dob_day: stakeholder['dob_day'],
           person_given_names: stakeholder['person_given_names'], person_family_names: stakeholder['person_family_names'], person_prefixes: stakeholder['person_prefixes'], person_postfixes: stakeholder['person_postfixes'],
           deposit_entries: stakeholder['deposit_entries'], identifier_ok: stakeholder['identifier_ok']
         )}

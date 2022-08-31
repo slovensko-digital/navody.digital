@@ -24,7 +24,7 @@
   <label class="govuk-label govuk-label--s" for="identifier">
     IČO
   </label>
-  <%= form.text_field :stakeholder_identifier, value: @application_form.stakeholder.identifier %>
+  <%= form.text_field :stakeholder_identifier, value: @application_form.stakeholder.identifier, type: 'number' %>
 </div>
 
 <div id="identifiers-foreign" class="govuk-form-group">

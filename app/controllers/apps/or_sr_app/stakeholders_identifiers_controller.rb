@@ -62,12 +62,12 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
       cin: form_parameters['cin'].presence,
       json_form_data: form_parameters['json_form_data'],
       stakeholder_nationality: form_parameters['stakeholder_nationality'],
-      stakeholder_identifier: form_parameters['stakeholder_identifier'],
-      stakeholder_other_identifier: form_parameters['stakeholder_other_identifier'],
+      stakeholder_identifier: form_parameters['stakeholder_identifier'].presence,
+      stakeholder_other_identifier: form_parameters['stakeholder_other_identifier'].presence,
       stakeholder_other_identifier_type: form_parameters['stakeholder_other_identifier_type'],
-      stakeholder_dob_year: form_parameters['stakeholder_dob_year'],
-      stakeholder_dob_month: form_parameters['stakeholder_dob_month'],
-      stakeholder_dob_day: form_parameters['stakeholder_dob_day'],
+      stakeholder_dob_year: form_parameters['stakeholder_dob_year'].presence,
+      stakeholder_dob_month: form_parameters['stakeholder_dob_month'].presence,
+      stakeholder_dob_day: form_parameters['stakeholder_dob_day'].presence,
       current_stakeholder_index: (form_parameters['current_stakeholder_index'] ? form_parameters['current_stakeholder_index'].to_i : -1),
       current_step: form_parameters['current_step'],
       go_to_summary: form_parameters['go_to_summary'],
@@ -78,15 +78,15 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
 
   def update_stakeholder_identifier
     current_stakeholder&.set_if_foreign(nationality: param_value(:stakeholder_nationality))
-    current_stakeholder&.set_identifiers(
-      identifier: param_value(:stakeholder_identifier).presence,
-      other_identifier: param_value(:stakeholder_other_identifier).presence,
-      other_identifier_type: param_value(:stakeholder_other_identifier_type)
-    )
     current_stakeholder&.set_date_of_birth(
       year: param_value(:stakeholder_dob_year),
       month: param_value(:stakeholder_dob_month),
       day: param_value(:stakeholder_dob_day)
+    )
+    current_stakeholder&.set_identifiers(
+      identifier: param_value(:stakeholder_identifier).presence,
+      other_identifier: param_value(:stakeholder_other_identifier).presence,
+      other_identifier_type: param_value(:stakeholder_other_identifier_type)
     )
   end
 

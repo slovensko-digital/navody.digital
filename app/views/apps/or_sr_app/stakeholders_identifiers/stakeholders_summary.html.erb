@@ -31,7 +31,7 @@
         <% if stakeholder.is_person? %>
           <% if stakeholder.foreign %>
             <p class="govuk-body">
-              <%= stakeholder.other_identifier_type_data[:value].capitalize %><br>
+              <%= stakeholder.other_identifier_type_data.dig(:value)&.capitalize %><br>
               <%= stakeholder.other_identifier %>
             </p>
             <p class="govuk-body">
