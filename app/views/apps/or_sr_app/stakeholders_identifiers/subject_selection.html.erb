@@ -16,7 +16,9 @@
       <b>Zadajte názov spoločnosti</b>
     </p>
 
-    <div id="corporate_bodies_results"></div>
+    <%= f.inputs_set :corporate_body do %>
+      <div id="corporate_bodies_results"></div>
+    <% end %>
 
     <%= f.hidden_field :cin, value: nil %>
     <%= f.hidden_field :current_step, value: 'subject_selection' %>
@@ -44,6 +46,12 @@
   function initAll() {
     const loadingClass = 'autocomplete__menu--loading';
     const spinnerClass = 'spinner';
+
+    const updateStyleIfError = () => {
+      if (document.getElementsByClassName('govuk-error-summary')) {
+        document.getElementsByClassName('autocomplete__wrapper')[0].classList.add('autocomplete__wrapper--error');
+      }
+    }
 
     const createSpinner = () => {
       const elements = document.getElementsByClassName(spinnerClass);
@@ -123,7 +131,9 @@
       showNoOptionsFound: true,
       displayMenu: 'overlay',
       tNoResults: () => 'Žiadne výsledky',
-    })
+    });
+
+    updateStyleIfError();
   }
 
   document.addEventListener('turbolinks:load', function () {
