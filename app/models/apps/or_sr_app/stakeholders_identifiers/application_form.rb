@@ -5,6 +5,7 @@ module Apps
         include ActiveModel::Model
 
         attr_accessor :cin
+        attr_accessor :subject_search
         attr_accessor :form_data
         attr_accessor :stakeholder
         attr_accessor :stakeholder_nationality
@@ -21,7 +22,7 @@ module Apps
         attr_accessor :go_to_summary
         attr_accessor :back
 
-        validates_presence_of :cin, message: 'Zvoľte spoločnosť'
+        validate :corporate_body_selected?
         validate :identifier_valid?
 
         def initialize(cin: nil, json_form_data: nil, form_data: nil,
@@ -70,11 +71,23 @@ module Apps
           back == 'true'
         end
 
+        def cin_invalid?
+          should_validate_cin? && !valid?(:cin)
+        end
+
+        def identifiers_valid?
+          valid?(:identifier) && valid?(:other_identifier)
+        end
+
+        private
+
         def should_validate_cin?
           @current_step == 'subject_selection'
         end
 
-        private
+        def corporate_body_selected?
+          errors.add(:subject_search, 'Zvoľte spoločnosť') unless @cin.present?
+        end
 
         def identifier_valid?
           if @stakeholder_nationality == 'sr' && !@stakeholder_identifier.present?

@@ -9,12 +9,12 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def stakeholder_identifier
-    (render :subject_selection and return) if @application_form.should_validate_cin? && !@application_form.valid?(:cin)
+    (render :subject_selection and return) if @application_form.cin_invalid?
 
-    if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :current_stakeholder_index)
-      update_stakeholder_identifier if params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
+    if currently_showing_stakeholder?
+      update_stakeholder_identifier if identifier_present?
 
-      if @application_form.go_back? or (@application_form.valid?(:identifier) && @application_form.valid?(:other_identifier))
+      if @application_form.go_back? or @application_form.identifiers_valid?
         next_step
       else
         render :stakeholder_identifier and return
@@ -154,6 +154,14 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
 
   def param_value(attribute)
     params[:apps_or_sr_app_stakeholders_identifiers_application_form][attribute]
+  end
+
+  def currently_showing_stakeholder?
+    params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :current_stakeholder_index)
+  end
+
+  def identifier_present?
+    params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
   end
 
   def or_sr_error
