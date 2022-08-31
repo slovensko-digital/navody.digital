@@ -29,6 +29,10 @@ $govuk-focus-colour: #ffdd00;
   }
 }
 
+.autocomplete__wrapper--error > input {
+  border: 4px solid #b10e1e;
+}
+
 .autocomplete__menu {
   position: relative;
   padding: 0;

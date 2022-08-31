@@ -86,7 +86,7 @@ module Apps
         end
 
         def corporate_body_selected?
-          errors.add(:subject_search, 'Zvoľte spoločnosť') unless @cin.present?
+          errors.add(:corporate_body, 'Zvoľte spoločnosť') unless @cin.present?
         end
 
         def identifier_valid?
