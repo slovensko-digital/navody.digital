@@ -97,7 +97,7 @@
         const currentTime = new Date().getTime();
         latestQuery = currentTime;
 
-        const res = await fetch(`https://autoform.ekosystem.slovensko.digital/api/corporate_bodies/search?q=name:${encodeURIComponent(query)}&private_access_token=89e56e0d966f79a2dca7d1a0f6f97799796e6cc77b616bbc4b796c086290c0acd1ab2f91dad4fb56`);
+        const res = await fetch(`<%= ENV.fetch('AUTOFORM_URL') %>/api/corporate_bodies/search?q=name:${encodeURIComponent(query)}&access_token=<%= ENV.fetch('AUTOFORM_ACCESS_TOKEN') %>`);
         const data = (await res.json());
 
         if (currentTime === latestQuery) {
