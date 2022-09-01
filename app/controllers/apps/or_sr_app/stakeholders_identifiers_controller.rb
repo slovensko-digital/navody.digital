@@ -1,14 +1,14 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   before_action :load_application_form, only: [:stakeholder_identifier, :xml_form, :generate_xml_form]
 
-  rescue_from OrSrRecordFetcher::OrsrRecordError, UpvsSubmissions::Forms::FuzsData::FuzsError, :with => :handle_error
+  rescue_from OrSrRecordFetcher::OrsrRecordError, UpvsSubmissions::Forms::FuzsData::FuzsError, StandardError, :with => :handle_error
 
   def subject_selection
     @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new
   end
 
   def stakeholder_identifier
-    (render :subject_selection and return) if @application_form.cin_invalid?
+    (redirect_to action: :subject_selection and return) if @application_form.cin_invalid?
 
     if currently_showing_stakeholder?
       update_stakeholder_identifier if identifier_present?

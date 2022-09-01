@@ -10,7 +10,7 @@ module UpvsSubmissions
 
         @cin = cin
         @name = name || corporate_body['name']
-        @address = address ? load_address_from_json(address) : Address.new(*(address_params(corporate_body).values))
+        @address = load_address( address ? address : address_params(corporate_body))
         @court = court ? load_court_from_json(court) : load_court(corporate_body)
         @org_type = type || corporate_body['registration_number']&.split('/')[0]
         @registration_number = registration_number || corporate_body['registration_number']&.split('/')[1]
@@ -42,6 +42,14 @@ module UpvsSubmissions
         @stakeholders.select{ |stakeholder| !stakeholder.identifier_ok }
       end
 
+      def stakeholders_persons
+        @stakeholders.select{ |stakeholder| stakeholder.is_person? }
+      end
+
+      def stakeholders_corporate_bodies
+        @stakeholders.select{ |stakeholder| !stakeholder.is_person? }
+      end
+
       def all_stakeholders_persons?
         @stakeholders.all? { |stakeholder| stakeholder.is_person? }
       end
@@ -55,15 +63,15 @@ module UpvsSubmissions
 
         attr_accessor(:street, :number, :postal_code, :municipality, :municipality_identifier, :country, :country_identifier)
 
-        def initialize(street, building_number, reg_number, municipality, postal_code, country, with_identifiers)
+        def initialize(street: nil, number: nil, building_number: nil, reg_number: nil, municipality: nil, postal_code: nil, country: nil)
           @street = street
           registration_number = (reg_number != 0 ? reg_number : nil)
-          @number = join_numbers(building_number, registration_number)
+          @number = number.present? ? number : join_numbers(building_number, registration_number)
           @postal_code = postal_code
           @municipality = municipality
           @country = country
-          @municipality_identifier = with_identifiers ? load_municipality_identifier : nil
-          @country_identifier = with_identifiers ? load_country_identifier : nil
+          @municipality_identifier = load_municipality_identifier
+          @country_identifier = load_country_identifier
         end
 
         private
@@ -112,7 +120,8 @@ module UpvsSubmissions
           @dob_year = dob_year
           @dob_month = dob_month
           @dob_day = dob_day
-          @address = address ? load_address_from_json(address) : Address.new(address_street, address_building_number, address_reg_number, address_municipality, address_postal_code, address_country, true)
+          @address = address ? load_address_from_json(address) : Address.new(street: address_street, building_number: address_building_number, reg_number: address_reg_number,
+                                                                             municipality: address_municipality, postal_code: address_postal_code, country: address_country)
           @person_given_names = person_given_names
           @person_family_names = person_family_names
           @person_prefixes = person_prefixes
@@ -147,9 +156,9 @@ module UpvsSubmissions
         end
 
         def date_of_birth
-          return nil unless is_person?
-
           @dob_year, @dob_month, @dob_day = get_date_of_birth_from_identifier(@identifier) if !@dob_year.present? && @identifier
+
+          return nil unless (@dob_year.present? && @dob_month.present? && @dob_day.present?)
 
           @date_of_birth = Date.new(@dob_year.to_i, @dob_month.to_i, @dob_day.to_i)
         end
@@ -180,7 +189,7 @@ module UpvsSubmissions
         end
 
         def load_address_from_json(data)
-          Address.new(data['street'], data['building_number'], data['reg_number'], data['municipality'], data['postal_code'], data['country'], true)
+          Address.new(street: data['street'], number: data['number'], municipality: data['municipality'], postal_code: data['postal_code'], country: data['country'])
         end
 
         def other_identifier_type_data
@@ -218,12 +227,20 @@ module UpvsSubmissions
         end
 
         def filter_deposit_entries(entries)
-          entries&.select{ |entry| (entry["name"].include?(family_name) && entry["name"].include?(given_name)) }
+          entries&.select{ |entry| (person_name_match?(entry) || cb_name_match?(entry)) }
         end
 
         def identifier_status(status)
           ok = status[:ok].select{ |entry| (entry.include?(family_name) && entry.include?(given_name)) }
           !ok.empty?
+        end
+
+        def person_name_match?(entry)
+          is_person? && entry["name"].include?(family_name) && entry["name"].include?(given_name)
+        end
+
+        def cb_name_match?(entry)
+          !is_person? && entry["name"].include?(full_name)
         end
 
         class Deposit
@@ -264,8 +281,8 @@ module UpvsSubmissions
         orgs.first
       end
 
-      def load_address_from_json(data)
-        Address.new(data['street'], data['building_number'], data['reg_number'], data['municipality'], data['postal_code'], data['country'], true)
+      def load_address(data)
+        Address.new(street: data['street'], number: data['number'], building_number: data['building_number'], reg_number: data['reg_number'], municipality: data['municipality'], postal_code: data['postal_code'], country: data['country'])
       end
 
       def load_court_from_json(data)
@@ -285,7 +302,7 @@ module UpvsSubmissions
       def load_stakeholders_from_cb(corporate_body)
         rpo_organization = effective_rpo_organization(corporate_body['rpo_organizations'])
 
-        stakeholders_data = rpo_organization["stakeholder_entries"].select{ |stakeholder| stakeholder['effective_to'] == nil }
+        stakeholders_data = rpo_organization.dig("stakeholder_entries")&.select{ |stakeholder| stakeholder['effective_to'] == nil &&  STAKEHOLDER_TYPE_IDS.include?(stakeholder.dig("stakeholder_type", "id")) }
 
         stakeholders_data&.map do |data| Stakeholder.new(
           full_name: data['full_name'], cin: data['cin'],
@@ -310,9 +327,11 @@ module UpvsSubmissions
         company.slice('name', 'cin').merge('address_params' => address_params(company))
       end
 
-      def address_params(address, with_identifiers: true)
-        address.slice('street', 'building_number', 'reg_number', 'municipality', 'postal_code', 'country').merge('with_identifiers' => with_identifiers)
+      def address_params(address)
+        address.slice('street', 'building_number', 'reg_number', 'municipality', 'postal_code', 'country')
       end
+
+      STAKEHOLDER_TYPE_IDS = [5, 16]
     end
   end
 end

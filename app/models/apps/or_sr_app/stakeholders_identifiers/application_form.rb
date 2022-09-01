@@ -118,7 +118,7 @@ module Apps
           if dob_missing?
             errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
           else
-            errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia') unless Date.valid_date? @stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_year.to_i
+            errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia') unless Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i)
           end
         end
 

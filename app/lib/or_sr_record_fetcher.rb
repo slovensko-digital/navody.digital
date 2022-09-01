@@ -4,7 +4,7 @@ class OrSrRecordFetcher
 
     results = final_urls.map do |url|
       resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
-      resp.include?('Spis odstúpený na iný registrový súd') ? nil : Nokogiri::HTML(resp)
+      ['Spis odstúpený na iný registrový súd', 'Spoločnosť zrušená', 'Dôvod výmazu'].any? { |s| resp.include?(s) } ? nil : Nokogiri::HTML(resp)
     end.compact
 
     raise OrsrRecordError.new("No active records found for company id: #{cin}") if results.size == 0
@@ -14,49 +14,24 @@ class OrSrRecordFetcher
   end
 
   def self.get_stakeholders(doc)
-    stakeholders_table = nil
-
-    doc.css('body > table').each do |table|
-      if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
-        stakeholders_table = table
-        break
-      end
-    end
-
+    stakeholders_table = get_stakeholders_table(doc)
     stakeholders = []
 
     stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
-      stakeholder_name = if stakeholder_table.css('.lnm').any?
-                           stakeholder_table.css('.lnm').inner_text.squeeze.strip
-                         else
-                           stakeholder_table.css('td').first.css('span').first.inner_text.squeeze.strip
-                         end
-
-      stakeholders << stakeholder_name
+      stakeholders << get_stakeholder_name(stakeholder_table)
     end
 
     stakeholders
   end
 
   def self.get_stakeholders_identifiers_status(doc)
-    stakeholders_table = nil
-
-    doc.css('body > table').each do |table|
-      if table.css('span')&.first&.inner_text&.include?('Spoločníci:')
-        stakeholders_table = table
-        break
-      end
-    end
+    stakeholders_table = get_stakeholders_table(doc)
 
     ok = []
     missing = []
 
     stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
-      stakeholder_name = if stakeholder_table.css('.lnm').any?
-                           stakeholder_table.css('.lnm').inner_text.squeeze.strip
-                         else
-                           stakeholder_table.css('td').first.css('span').first.inner_text.squeeze.strip
-                         end
+      stakeholder_name = get_stakeholder_name(stakeholder_table)
 
       if stakeholder_table.css('a>img').first['alt'].start_with?("Osoba nemá")
         missing << stakeholder_name
@@ -69,18 +44,11 @@ class OrSrRecordFetcher
   end
 
   def self.get_stakeholders_deposit_entries(doc)
-    stakeholders_table = nil
-
-    doc.css('body > table').each do |table|
-      if table.css('span')&.first&.inner_text&.include?('Výška vkladu každého spoločníka:')
-        stakeholders_table = table
-        break
-      end
-    end
+    deposits_table = get_stakeholders_table(doc, text: 'Výška vkladu každého spoločníka:')
 
     deposit_entries = []
 
-    stakeholders_table.css('table').each do |stakeholder_table|
+    deposits_table.css('table').each do |stakeholder_table|
       deposit_entries << stakeholder_deposit_data(stakeholder_table)
     end
 
@@ -122,8 +90,33 @@ class OrSrRecordFetcher
       'name' => names.join(' '),
       'deposit' => deposit.first.delete('Vklad: ').delete(' ').to_i,
       'deposit_currency' => deposit.second.strip,
-      'paid_deposit' => deposit.third.delete('Splatené: ').delete(' ').to_i,
-      'paid_deposit_currency' => deposit.fourth.strip,
+      'paid_deposit' => get_paid_deposit(deposit)&.delete('Splatené: ').delete(' ').to_i,
+      'paid_deposit_currency' => deposit.last.strip,
     }
+  end
+
+  def self.get_paid_deposit(deposit)
+    deposit.select{ |d| d.include? 'Splatené' }.first
+  end
+
+  def self.get_stakeholders_table(doc, text: 'Spoločníci:')
+    stakeholders_table = nil
+
+    doc.css('body > table').each do |table|
+      if table.css('span')&.first&.inner_text&.include?(text)
+        stakeholders_table = table
+        break
+      end
+    end
+
+    stakeholders_table
+  end
+
+  def self.get_stakeholder_name(stakeholder_table)
+    if stakeholder_table.css('.lnm').any?
+      stakeholder_table.css('.lnm').inner_text.strip
+    else
+      stakeholder_table.css('td').first.css('span').first.inner_text.strip
+    end
   end
 end

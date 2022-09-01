@@ -10,7 +10,7 @@ class UpvsSubmissions::OrSrFormBuilder
       <?mso-infoPath-file-attachment-present?>
       <?xml-stylesheet type="text/xsl" href="http://eformulare.justice.sk/schemasAndTransformations/FUZS.2020.08.21.xslt" ?>
       <ns1:FUZS xsi:schemaLocation="http://www.justice.gov.sk/Forms http://eformulare.justice.sk/schemasAndTransformations/FUZS.2020.08.21.xsd"
-        xmlns:xsi="#{XMLNS_XSI}"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:ns1="http://www.justice.gov.sk/Forms20200821"
         xmlns:dfs="http://schemas.microsoft.com/office/infopath/2003/dataFormSolution"
         xmlns:tns="http://www.justice.gov.sk/FormsEnums"
@@ -32,7 +32,7 @@ class UpvsSubmissions::OrSrFormBuilder
           <ns1:Nazov>ziadne prilohy - formular je nevalidny bez uvedenia prilohy</ns1:Nazov>
         </ns1:PrilohyKNavrhu>
         <ns1:Spolocnost>#{fuzs_data.name}</ns1:Spolocnost>
-        <ns1:V></ns1:V>
+        <ns1:V>Bratislave</ns1:V>
         <ns1:Dna>#{Date.today}</ns1:Dna>
         <ns1:Postou>true</ns1:Postou>
         <ns1:Osobne>false</ns1:Osobne>
@@ -105,7 +105,13 @@ class UpvsSubmissions::OrSrFormBuilder
   end
 
   def self.stakeholder_entries(data)
-    (data.stakeholders.map {|stakeholder| stakeholder.is_person? ? stakeholder_person(stakeholder) : stakeholder_corporate_body(stakeholder) } + [stakeholders_addition(data)]).join("\n")
+    stakeholders_persons = data.stakeholders_persons.size > 0 ? data.stakeholders_persons : [nil]
+    stakeholders_corporate_bodies = data.stakeholders_corporate_bodies.size > 0 ? data.stakeholders_corporate_bodies : [nil]
+
+    (
+      stakeholders_persons.map {|s| stakeholder_person(s) } +
+      stakeholders_corporate_bodies.map {|s| stakeholder_corporate_body(s) }
+    ).join("\n")
   end
 
   def self.stakeholders_addition(data)
@@ -117,7 +123,7 @@ class UpvsSubmissions::OrSrFormBuilder
 
   def self.stakeholder_person(stakeholder)
     <<~STAKEHOLDER
-      <ns1:SpolocnikFO ns1:menit="#{!stakeholder&.identifier_ok ? true : false}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
+      <ns1:SpolocnikFO ns1:menit="#{(stakeholder && !stakeholder.identifier_ok) ? true : false}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
         <ns1:Zapis>
           <ns1:Spolocnik>
             #{person(stakeholder)}
@@ -139,11 +145,11 @@ class UpvsSubmissions::OrSrFormBuilder
 
   def self.stakeholder_corporate_body(stakeholder)
     <<~STAKEHOLDER
-      <ns1:SpolocnikPO ns1:menit="#{stakeholder&.identifier_ok ? true : 'false'}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
+      <ns1:SpolocnikPO ns1:menit="#{(stakeholder && !stakeholder.identifier_ok) ? true : false}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
         <ns1:Zapis>
           <ns1:Spolocnik>
             <ns1:ObchodneMeno>#{stakeholder&.full_name}</ns1:ObchodneMeno>
-            <ns1:Ico>#{stakeholder&.cin}</ns1:Ico>
+            <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
             <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
              #{address(stakeholder&.address)}
           </ns1:Spolocnik>
@@ -253,11 +259,11 @@ class UpvsSubmissions::OrSrFormBuilder
   def self.person(data)
     <<~PERSON
       <ns1:Osoba>
-        <ns1:TitulPred>#{data&.person_prefixes}</ns1:TitulPred>
+        <ns1:TitulPred>#{data&.prefixes}</ns1:TitulPred>
         <ns1:Meno>#{data&.given_name}</ns1:Meno>
         <ns1:Priezvisko>#{data&.family_name}</ns1:Priezvisko>
         <ns1:TitulZa>#{data&.postfixes}</ns1:TitulZa>
-        <ns1:DatumNarodenia xmlns:xsi="#{data.present? ? XMLNS_XSI : 'nil'}">#{data&.date_of_birth}</ns1:DatumNarodenia>
+        <ns1:DatumNarodenia #{data&.date_of_birth ? 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{data&.date_of_birth}</ns1:DatumNarodenia>
         <ns1:RodneCislo>#{data&.identifier}</ns1:RodneCislo>
         <ns1:TypInyIdentifikator>
           <ns1:Id>#{data&.other_identifier_type_data&.dig(:id)}</ns1:Id>
@@ -1425,6 +1431,4 @@ class UpvsSubmissions::OrSrFormBuilder
       </ns1:Vymaz>
     </ns1:DobaUrcita>
   FORM_FOOTER
-
-  XMLNS_XSI = 'http://www.w3.org/2001/XMLSchema-instance'
 end
