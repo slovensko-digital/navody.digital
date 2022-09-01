@@ -1,8 +1,7 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   before_action :load_application_form, only: [:stakeholder_identifier, :xml_form, :generate_xml_form]
 
-  rescue_from OrSrRecordFetcher::OrsrRecordError, :with => :or_sr_error
-  rescue_from UpvsSubmissions::Forms::FuzsData::FuzsError, :with => :fuzs_error
+  rescue_from OrSrRecordFetcher::OrsrRecordError, UpvsSubmissions::Forms::FuzsData::FuzsError, :with => :handle_error
 
   def subject_selection
     @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new
@@ -91,8 +90,8 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def next_step
-    render :unsupported and return unless @application_form.form_data&.sro?
-    render :nothing_missing and return if @application_form.form_data&.all_stakeholders_ok?
+    redirect_to action: :unsupported and return unless @application_form.form_data&.sro?
+    redirect_to action: :nothing_missing and return if @application_form.form_data&.all_stakeholders_ok?
 
     if @application_form.go_back?
       case @application_form.current_step
@@ -164,11 +163,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
   end
 
-  def or_sr_error
-    render :unsupported
-  end
-
-  def fuzs_error
-    render :unsupported
+  def handle_error
+    redirect_to action: :unsupported
   end
 end

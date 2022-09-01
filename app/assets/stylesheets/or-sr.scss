@@ -2,6 +2,14 @@ $govuk-border-colour: #b1b4b6;
 $govuk-secondary-text-colour: #505a5f;
 $govuk-focus-colour: #ffdd00;
 
+div.govuk-grid-row {
+  width: 100%;
+
+  div.govuk-grid-column-two-thirds {
+    box-sizing: unset;
+  }
+}
+
 .autocomplete__input {
   font-size: 19px;
   font-size: 1.1875rem;
@@ -23,10 +31,6 @@ $govuk-focus-colour: #ffdd00;
   border-radius: 0;
   -webkit-appearance: none;
   appearance: none;
-
-  @media only screen and (min-width: 641px) {
-    width: 60%;
-  }
 }
 
 .autocomplete__wrapper--error > input {
@@ -41,10 +45,6 @@ $govuk-focus-colour: #ffdd00;
   border-radius: 0;
   box-sizing: border-box;
   width: 100%;
-
-  @media only screen and (min-width: 641px) {
-    width: 60%;
-  }
 }
 
 .autocomplete__option {

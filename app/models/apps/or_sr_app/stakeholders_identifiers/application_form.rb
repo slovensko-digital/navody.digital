@@ -93,43 +93,41 @@ module Apps
 
         def identifier_valid?
           if @stakeholder_nationality == 'sr'
-            if @stakeholder_identifier.present?
-              sr_person_identifier_valid?
-            else
-              errors.add(:stakeholder_identifier, missing_identifier_message)
-            end
+            sr_stakeholder_identifier_valid?
           elsif @stakeholder_nationality == 'foreign'
-            unless @stakeholder_other_identifier.present?
-              errors.add(:stakeholder_other_identifier_type, 'Zvoľte typ identifikačného údaju') if @stakeholder.is_person? && !@stakeholder_other_identifier_type.present?
-              errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj')
-            end
+             foreign_stakeholder_identifier_valid?
+          end
+        end
 
-            if @stakeholder.is_person?
-              if dob_missing?
-                errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
-              else
-                errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia') unless Date.valid_date? @stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_year.to_i
-              end
-            end
+        def sr_stakeholder_identifier_valid?
+          @stakeholder_identifier.present? ? sr_person_identifier_valid? : errors.add(:stakeholder_identifier, missing_identifier_message)
+        end
+
+        def foreign_stakeholder_identifier_valid?
+          errors.add(:stakeholder_other_identifier_type, 'Zvoľte typ identifikačného údaju') if @stakeholder&.is_person? && !@stakeholder_other_identifier_type.present?
+          errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj') unless @stakeholder_other_identifier.present?
+
+          dob_valid? if @stakeholder&.is_person?
+        end
+
+        def sr_person_identifier_valid?
+          errors.add(:stakeholder_identifier, 'Zadajte validné rodné číslo bez /') unless @stakeholder_identifier.match(SR_PERSON_IDENTIFIER_PATTERN)
+        end
+
+        def dob_valid?
+          if dob_missing?
+            errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
+          else
+            errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia') unless Date.valid_date? @stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_year.to_i
           end
         end
 
         def dob_missing?
-          errors.add(:stakeholder_dob_day, '') unless @stakeholder_dob_day.present?
-          errors.add(:stakeholder_dob_month, '') unless @stakeholder_dob_month.present?
-          errors.add(:stakeholder_dob_year, '') unless @stakeholder_dob_year.present?
+          errors.add(:stakeholder_dob_day, nil) unless @stakeholder_dob_day.present?
+          errors.add(:stakeholder_dob_month, nil) unless @stakeholder_dob_month.present?
+          errors.add(:stakeholder_dob_year, nil) unless @stakeholder_dob_year.present?
 
           !@stakeholder_dob_year.present? || !@stakeholder_dob_month.present? || !@stakeholder_dob_day.present?
-        end
-
-        def dob_valid?
-          errors.add(:stakeholder_dob_day, '') unless @stakeholder_dob_day > 0
-          errors.add(:stakeholder_dob_month, '') unless @stakeholder_dob_month.present?
-          errors.add(:stakeholder_dob_year, '') unless @stakeholder_dob_year.present?
-        end
-
-        def sr_person_identifier_valid?
-          errors.add(:stakeholder_identifier, 'Zadajte validné rodné číslo') unless @stakeholder_identifier.match(SR_PERSON_IDENTIFIER_PATTERN)
         end
 
         def missing_identifier_message

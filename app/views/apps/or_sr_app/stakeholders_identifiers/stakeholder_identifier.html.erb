@@ -10,7 +10,7 @@
   </legend>
   <br />
 
-  <p><%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
+  <p>Na výpise z Obchodného registra sme našli <%= @application_form.form_data.stakeholders_with_missing_identifiers.size %> <%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
   <br />
 
   <fieldset class="govuk-fieldset">
