@@ -25,18 +25,10 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def stakeholders_summary
-  end
+    @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
+    @xml_form = Base64.encode64(UpvsSubmissions::OrSrFormBuilder.fuzs_missing_identifiers(@application_form.form_data))
 
-  def xml_form
-    # TODO use case with email
-  end
-
-  def generate_xml_form
-    @xml_form = UpvsSubmissions::OrSrFormBuilder.fuzs_missing_identifiers(@application_form.form_data)
-
-    respond_to do |format|
-      format.xml { send_data @xml_form, filename: 'fuzs.xml' }
-    end
+    render :stakeholders_summary
   end
 
   def unsupported
@@ -104,25 +96,20 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
           render :subject_selection and return
         end
       when 'edit'
-        show_summary
+        stakeholders_summary
       when 'summary'
         @application_form.stakeholder = current_stakeholder
         render :stakeholder_identifier and return
       when 'xml'
-        show_summary
+        stakeholders_summary
       end
     elsif should_show_summary?
-      show_summary
+      stakeholders_summary
     else
       @application_form.current_stakeholder_index += 1
       @application_form.stakeholder = current_stakeholder
       render :stakeholder_identifier
     end
-  end
-
-  def show_summary
-    @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
-    render :stakeholders_summary
   end
 
   def form_params

@@ -65,17 +65,28 @@
   </div>
 <% end %>
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: xml_form_apps_or_sr_app_stakeholders_identifiers_path, :html => {:id => 'submit-data-form'}  do |f| %>
-  <div class="govuk-form-group">
-    <div class="govuk-checkboxes__item">
-      <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">
-      <label class="govuk-label govuk-checkboxes__label" for="correct_data">
-        Všetky údaje sú správne
-      </label>
-    </div>
+<div class="govuk-form-group">
+  <div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">
+    <label class="govuk-label govuk-checkboxes__label" for="correct_data">
+      Všetky údaje sú správne
+    </label>
   </div>
+</div>
 
-  <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'summary' %>
+<%= form_tag start_submissions_path, id: 'submit-data-form' do %>
+  <%= hidden_field_tag 'submission[type]', 'EmailMeSubmissionInstructionsEmail' %>
+  <%= hidden_field_tag 'submission[callback_url]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/podat-navrh-na-zapis-rc' %>
+  <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/podat-navrh-na-zapis-rc' %>
+  <%= hidden_field_tag 'submission[callback_step_status]', 'not_started' %>
+  <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
+  <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
+  <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
+  <%= hidden_field_tag 'submission[subscription_types][]', 'SelfEmployedSubscription' %>
+  <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
+<!--  TODO template_id-->
+  <%= hidden_field_tag 'submission[extra][template_id]', 139 %>
+  <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
