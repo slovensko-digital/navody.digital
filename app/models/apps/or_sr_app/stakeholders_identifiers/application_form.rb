@@ -115,21 +115,26 @@ module Apps
         def dob_valid?
           if dob_missing?
             errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
-          else
-            errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia') unless Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i)
+          elsif !Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i)
+            errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia')
+            invalid_date_errors(day_condition: false, month_condition: false, year_condition: false)
           end
         end
 
         def dob_missing?
-          errors.add(:stakeholder_dob_day, nil) unless @stakeholder_dob_day.present?
-          errors.add(:stakeholder_dob_month, nil) unless @stakeholder_dob_month.present?
-          errors.add(:stakeholder_dob_year, nil) unless @stakeholder_dob_year.present?
+          invalid_date_errors(day_condition: @stakeholder_dob_day.present?, month_condition: @stakeholder_dob_month.present?, year_condition: @stakeholder_dob_year.present?)
 
           !@stakeholder_dob_year.present? || !@stakeholder_dob_month.present? || !@stakeholder_dob_day.present?
         end
 
         def missing_identifier_message
           @stakeholder.is_person?  ? 'Vyplňte rodné číslo' : 'Vyplňte IČO'
+        end
+
+        def invalid_date_errors(day_condition: false, month_condition: false, year_condition: false)
+          errors.add(:stakeholder_dob_day, nil) unless day_condition
+          errors.add(:stakeholder_dob_month, nil) unless month_condition
+          errors.add(:stakeholder_dob_year, nil) unless year_condition
         end
       end
     end

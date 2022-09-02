@@ -183,9 +183,9 @@ module UpvsSubmissions
         end
 
         def set_date_of_birth(year: nil, month: nil, day: nil)
-          @dob_day = day.to_i if day.present?
-          @dob_month = month.to_i if month.present?
-          @dob_year = year.to_i if year.present?
+          @dob_day = day.present? ? day.to_i : nil
+          @dob_month = month.present? ? month.to_i : nil
+          @dob_year = year.present? ? year.to_i : nil
         end
 
         def load_address_from_json(data)
