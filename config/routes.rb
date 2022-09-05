@@ -89,14 +89,14 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
-    namespace :business_register_app, path: 'obchodny-register' do
+    namespace :or_sr_app, path: 'obchodny-register' do
       resources :acts_submissions, only: [:index, :create], path: 'listiny'
       namespace :acts_submissions, path: 'listiny' do
         get :index
         get :create
-        get :step1, path: 'subjekt'
-        post :step2, path: 'vyber'
-        post :step3, path: 'email'
+        get :subject_selection, path: 'spolocnost'
+        post :acts, path: 'vyber'
+        post :email, path: 'email'
         get :callback, path: 'odoslane'
       end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }

@@ -13,7 +13,7 @@
  *= require cookieconsent.min
  *= require static
  *= require navody-frontend-fixes
- *= require acts_submissions
+ *= require or-sr
  *= require_self
  */
 

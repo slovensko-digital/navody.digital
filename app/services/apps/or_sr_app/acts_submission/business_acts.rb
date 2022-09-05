@@ -6,8 +6,9 @@
 # acts = Apps::BusinessRegisterApp::BusinessActs.new.search_acts(businesses.first)
 #
 module Apps
-  module BusinessRegisterApp
-    class BusinessActs
+  module OrSrApp
+    module ActsSubmission
+      class BusinessActs
       def search_business(query)
         return [] unless query.present?
         res = client.get('/orsr.webapiforms/search', s: query)
@@ -99,6 +100,7 @@ module Apps
             )
           end
         end
+      end
       end
     end
   end

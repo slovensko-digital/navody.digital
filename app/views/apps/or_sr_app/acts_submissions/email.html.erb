@@ -1,22 +1,24 @@
 <%= render partial: 'header' %>
 
 <div class="govuk-form-group">
-  <form id="acts-fieldset" class="govuk-fieldset" aria-describedby="waste-hint">
+  <%= form_for @application_form, :builder => AppFormBuilder, :id => "acts-fieldset", url: upvs_submissions_new_path do |f| %>
     <p>Kontaktný e-mail pre posielanie notifikácií z OR SR</p>
-    <input class="govuk-input govuk-input--width-20" id="email" name="email" type="email" value="<%= current_user.logged_in? ? current_user.email : nil %>" required>
+
+    <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : nil %>
     <br />
 
-    <%= render partial: 'hidden_fields_from_step2' %>
+    <%= render 'hidden_fields', form: f, current_step: 'email' %>
+    <%= f.hidden_field :acts, value: @acts %>
 
     <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
       Pokračovať ❯
     </button>
-  </form>
+  <% end %>
 </div>
 
 <%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
   <%= f.hidden_field :form, value: nil %>
-  <%= f.hidden_field :callback_url, value: apps_business_register_app_acts_submissions_callback_url %>
+  <%= f.hidden_field :callback_url, value: apps_or_sr_app_acts_submissions_callback_url %>
   <%= f.hidden_field :recipient_uri %>
   <%= f.hidden_field :posp_version %>
   <%= f.hidden_field :posp_id %>
@@ -27,16 +29,18 @@
 <script type="text/javascript" charset="utf-8">
   const continueEventHandlerOnClick = async (event) => {
     if (!event.target.matches('[data-submit="true"]')) return
-    event.preventDefault()
+    event.preventDefault();
 
-    const company = document.getElementById('company').value
-    const companyAddress = document.getElementById('company_address').value
-    const companyCin = document.getElementById('company_cin').value
-    const companySection = document.getElementById('company_section').value
-    const companyInsertion = document.getElementById('company_insertion').value
-    const companyCourt = document.getElementById('company_court').value
-    const email = document.getElementById('email').value
-    const acts = JSON.parse(document.getElementById('acts').value)
+    debugger;
+
+    const company = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_name').value
+    const companyAddress = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_address').value
+    const companyCin = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_cin').value
+    const companySection = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_section').value
+    const companyInsertion = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_insertion').value
+    const companyCourt = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_court').value
+    const email = document.getElementById('apps_or_sr_app_acts_submission_application_form_email').value
+    const acts = JSON.parse(document.getElementById('apps_or_sr_app_acts_submission_application_form_acts').value)
 
     let at = document.getElementById('authenticity-token').getAttribute('content')
 
