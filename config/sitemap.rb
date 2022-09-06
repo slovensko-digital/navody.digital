@@ -2,17 +2,12 @@ SitemapGenerator::Sitemap.default_host = "https://navody.digital"
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
 sitemap_config = Rails.application.config_for(:sitemap)
-SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(
-  aws_access_key_id: sitemap_config[:access_key_id],
-  aws_secret_access_key: sitemap_config[:secret_access_key],
-  fog_provider: 'AWS',
-  fog_public: true,
-  fog_region: sitemap_config[:region],
-  fog_directory: sitemap_config[:bucket],
-  fog_path_style: sitemap_config[:path_style],
-  fog_storage_options: {
-    endpoint: sitemap_config[:endpoint],
-  },
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(sitemap_config[:bucket],
+  acl: nil,
+  access_key_id: sitemap_config[:access_key_id],
+  secret_access_key: sitemap_config[:secret_access_key],
+  region: sitemap_config[:region],
+  endpoint: sitemap_config[:endpoint]
 )
 
 SitemapGenerator::Sitemap.create do
