@@ -77,8 +77,8 @@
 <%= form_tag start_submissions_path, id: 'submit-data-form' do %>
   <%= hidden_field_tag 'submission[type]', 'EmailMeSubmissionInstructionsEmail' %>
   <%= hidden_field_tag 'submission[callback_url]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/podat-navrh-na-zapis-rc' %>
-  <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/podat-navrh-na-zapis-rc' %>
-  <%= hidden_field_tag 'submission[callback_step_status]', 'not_started' %>
+  <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/vytvorit-navrh-na-zapis' %>
+  <%= hidden_field_tag 'submission[callback_step_status]', 'done' %>
   <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
   <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>

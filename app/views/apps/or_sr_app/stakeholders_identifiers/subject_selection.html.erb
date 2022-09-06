@@ -27,8 +27,10 @@
     <%= f.hidden_field :cin, value: nil %>
     <%= f.hidden_field :current_step, value: 'subject_selection' %>
 
-    <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-      Pokračovať ❯
+    <p class="govuk-body-xs">Používaním tejto služby súhlasíte so spracovaním osobných údajov v rozsahu nevyhnutnom na vygenerovanie návrhu na zápis. Vaše údaje neukladáme, sú použité výlučne na vygenerovanie návrhu na zápis.</p>
+
+    <button id="submit-button" class="govuk-button" type="submit" data-module="govuk-button" data-submit="true">
+      Súhlasím a chcem pokračovať ❯
     </button>
   </div>
 <% end %>

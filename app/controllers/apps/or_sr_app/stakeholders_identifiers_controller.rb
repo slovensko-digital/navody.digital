@@ -8,7 +8,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def stakeholder_identifier
-    (redirect_to action: :subject_selection and return) if @application_form.cin_invalid?
+    (render action: :subject_selection and return) if @application_form.corporate_body_invalid?
 
     if currently_showing_stakeholder?
       update_stakeholder_identifier if identifier_present?

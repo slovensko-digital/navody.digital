@@ -5,7 +5,7 @@ module Apps
         include ActiveModel::Model
 
         attr_accessor :cin
-        attr_accessor :subject_search
+        attr_accessor :corporate_body
         attr_accessor :form_data
         attr_accessor :stakeholder
         attr_accessor :stakeholder_nationality
@@ -69,8 +69,8 @@ module Apps
           back == 'true'
         end
 
-        def cin_invalid?
-          should_validate_cin? && !valid?(:cin)
+        def corporate_body_invalid?
+          should_validate_cb? && !valid?(:corporate_body)
         end
 
         def identifiers_valid?
@@ -79,9 +79,10 @@ module Apps
 
         private
 
-        SR_PERSON_IDENTIFIER_PATTERN = /(\d{2})(0[1-9]|1[0-2]|5[1-9]|6[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/?\d{3,4}/
+        SR_CB_IDENTIFIER_PATTERN = /\A\d{6,8}\z/
+        SR_PERSON_IDENTIFIER_PATTERN = /\A(\d{2})(0[1-9]|1[0-2]|5[1-9]|6[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/?\d{3,4}\z/
 
-        def should_validate_cin?
+        def should_validate_cb?
           @current_step == 'subject_selection'
         end
 
@@ -98,7 +99,11 @@ module Apps
         end
 
         def sr_stakeholder_identifier_valid?
-          @stakeholder_identifier.present? ? sr_person_identifier_valid? : errors.add(:stakeholder_identifier, missing_identifier_message)
+          if @stakeholder_identifier.present?
+            @stakeholder.is_person? ? sr_person_identifier_valid? : sr_cb_identifier_valid?
+          else
+            errors.add(:stakeholder_identifier, missing_identifier_message)
+          end
         end
 
         def foreign_stakeholder_identifier_valid?
@@ -108,8 +113,12 @@ module Apps
           dob_valid? if @stakeholder&.is_person?
         end
 
+        def sr_cb_identifier_valid?
+          errors.add(:stakeholder_identifier, 'IČO má obsahovať 6 až 8 číslic') unless @stakeholder_identifier.match(SR_CB_IDENTIFIER_PATTERN)
+        end
+
         def sr_person_identifier_valid?
-          errors.add(:stakeholder_identifier, 'Zadajte validné rodné číslo bez /') unless @stakeholder_identifier.match(SR_PERSON_IDENTIFIER_PATTERN)
+          errors.add(:stakeholder_identifier, 'Rodné číslo môže obsahovať len číslice a lomku vo formáte 000000/0000') unless @stakeholder_identifier.match(SR_PERSON_IDENTIFIER_PATTERN)
         end
 
         def dob_valid?

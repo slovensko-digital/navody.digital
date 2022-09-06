@@ -89,7 +89,7 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
-    namespace :or_sr_app, path: 'obchodny-register' do
+    namespace :or_sr_app, path: 'or-sr' do
       resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
         member do
           get :subject_selection, path: 'spolocnost'
