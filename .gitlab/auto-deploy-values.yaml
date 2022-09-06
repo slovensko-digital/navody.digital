@@ -2,7 +2,7 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/server-snippet: |
       location /sitemaps/sitemap.xml.gz {
-        return 302 https://navodydigital.s3.eu-central-1.amazonaws.com/sitemap.xml.gz;
+        return 302 https://navodydigital.s3.eu-central-1.amazonaws.com/sitemaps/sitemap.xml.gz;
       }      
 service:
   externalPort: 3000
