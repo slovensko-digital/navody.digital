@@ -1,0 +1,20 @@
+default: &default
+  bucket: <%= ENV.fetch('SITEMAP_BUCKET') %>
+  access_key_id: <%= ENV.fetch('SITEMAP_ACCESS_KEY_ID') %>
+  secret_access_key: <%= ENV.fetch('SITEMAP_SECRET_ACCESS_KEY') %>
+  region: <%= ENV.fetch('SITEMAP_REGION') %>
+  endpoint: <%= ENV.fetch('SITEMAP_ENDPOINT') %>
+  path_style: <%= ENV.fetch('SITEMAP_PATH_STYLE', '1') == '1' %>
+  public_url: <%= ENV.fetch('SITEMAP_PUBLIC_URL', nil) %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
