@@ -1,3 +1,5 @@
+require 'aws-sdk-s3'
+
 SitemapGenerator::Sitemap.default_host = "https://navody.digital"
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
