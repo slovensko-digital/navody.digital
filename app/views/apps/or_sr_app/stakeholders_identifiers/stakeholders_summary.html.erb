@@ -84,8 +84,7 @@
   <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
-<!--  TODO template_id-->
-  <%= hidden_field_tag 'submission[extra][template_id]', 139 %>
+  <%= hidden_field_tag 'submission[extra][template_id]', 3 %>
   <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
 <% end %>
 
