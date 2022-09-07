@@ -158,8 +158,8 @@ class UpvsSubmissions::OrSrFormBuilder
         <ns1:Vymaz>
            <ns1:Spolocnik>
             <ns1:ObchodneMeno>#{stakeholder&.full_name}</ns1:ObchodneMeno>
-            <ns1:Ico></ns1:Ico>
-            <ns1:InyIdentifikacnyUdaj></ns1:InyIdentifikacnyUdaj>
+            <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
+            <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
              #{address(stakeholder&.address, with_identifiers: false)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
