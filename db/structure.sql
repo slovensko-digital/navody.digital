@@ -614,6 +614,39 @@ ALTER SEQUENCE public.notification_subscriptions_id_seq OWNED BY public.notifica
 
 
 --
+-- Name: or_sr_company_records; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.or_sr_company_records (
+    id bigint NOT NULL,
+    cin bigint,
+    identifiers_ok boolean DEFAULT false,
+    email character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: or_sr_company_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.or_sr_company_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: or_sr_company_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.or_sr_company_records_id_seq OWNED BY public.or_sr_company_records.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1285,6 +1318,14 @@ ALTER TABLE ONLY public.notification_subscriptions
 
 
 --
+-- Name: or_sr_company_records or_sr_company_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.or_sr_company_records
+    ADD CONSTRAINT or_sr_company_records_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1838,6 +1879,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220815153557'),
 ('20220815155429'),
 ('20220815155542'),
-('20220815211829');
+('20220815211829'),
+('20220907210125');
 
 

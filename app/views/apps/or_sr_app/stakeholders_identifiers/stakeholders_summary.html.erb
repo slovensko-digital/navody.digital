@@ -82,10 +82,12 @@
   <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
   <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
+  <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeOrSrIdentifiersStatusEmail' %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>
   <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
   <%= hidden_field_tag 'submission[extra][template_id]', 3 %>
   <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
+  <%= hidden_field_tag 'submission[extra][company_cin][company_name]', @application_form.form_data&.cin %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
