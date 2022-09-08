@@ -1147,6 +1147,13 @@ ALTER TABLE ONLY public.notification_subscriptions ALTER COLUMN id SET DEFAULT n
 
 
 --
+-- Name: or_sr_company_records id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.or_sr_company_records ALTER COLUMN id SET DEFAULT nextval('public.or_sr_company_records_id_seq'::regclass);
+
+
+--
 -- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
