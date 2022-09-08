@@ -1,4 +1,4 @@
-class EmailMeOrSrIdentifiersStatusEmail < ApplicationJob
+class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
   queue_as :default
 
   def perform

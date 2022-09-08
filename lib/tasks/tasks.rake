@@ -5,6 +5,6 @@ namespace :navody do
   end
 
   task check_or_sr_identifiers_status: :environment do
-    EmailMeOrSrIdentifiersStatusEmail.perform_later
+    EmailMeOrSrIdentifiersStatusEmailJob.perform_later
   end
 end
