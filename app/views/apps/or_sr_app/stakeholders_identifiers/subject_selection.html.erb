@@ -1,39 +1,43 @@
 <%= render partial: 'header' %>
 
-<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-  <h2 class="govuk-fieldset__heading">Vyhľadávanie spoločnosti</h2>
-</legend>
-<br />
-
-<%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
-  <div class="govuk-form-group">
-    <p>Táto aplikácia Vám pomôže vyžiadať zápis chýbajúcich identifikačých údajov spoločníkov do Obchodného registra. Začnite s vyhľadaním Vašej firmy.</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h2 class="govuk-fieldset__heading">Vyhľadávanie spoločnosti</h2>
+    </legend>
     <br />
 
-    <%= render 'components/error_summary', form: @application_form %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
+      <div class="govuk-form-group">
+        <p>Táto aplikácia Vám pomôže pripraviť prílohu na zápis chýbajúcich identifikačých údajov spoločníkov do Obchodného registra. Začnite s vyhľadaním Vašej firmy.</p>
+        <br />
 
-    <p class="govuk-label-wrapper">
-      <b>Zadajte názov spoločnosti</b>
-    </p>
+        <%= render 'components/error_summary', form: @application_form %>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <%= f.inputs_set :corporate_body do %>
-          <div id="corporate_bodies_results"></div>
-        <% end %>
+        <p class="govuk-label-wrapper">
+          <b>Zadajte názov spoločnosti</b>
+        </p>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <%= f.inputs_set :corporate_body do %>
+              <div id="corporate_bodies_results"></div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= f.hidden_field :cin, value: nil %>
+        <%= f.hidden_field :current_step, value: 'subject_selection' %>
+
+        <p class="govuk-body-xs">Používaním tejto služby súhlasíte so spracovaním osobných údajov v rozsahu nevyhnutnom na vygenerovanie návrhu na zápis. Vaše údaje neukladáme, sú použité výlučne na vygenerovanie návrhu na zápis.</p>
+
+        <button id="submit-button" class="govuk-button" type="submit" data-module="govuk-button" data-submit="true">
+          Súhlasím a chcem pokračovať ❯
+        </button>
       </div>
-    </div>
-
-    <%= f.hidden_field :cin, value: nil %>
-    <%= f.hidden_field :current_step, value: 'subject_selection' %>
-
-    <p class="govuk-body-xs">Používaním tejto služby súhlasíte so spracovaním osobných údajov v rozsahu nevyhnutnom na vygenerovanie návrhu na zápis. Vaše údaje neukladáme, sú použité výlučne na vygenerovanie návrhu na zápis.</p>
-
-    <button id="submit-button" class="govuk-button" type="submit" data-module="govuk-button" data-submit="true">
-      Súhlasím a chcem pokračovať ❯
-    </button>
+    <% end %>
   </div>
-<% end %>
+</div>
 
 <script type="text/javascript" charset="utf-8">
   function debounce(fn, delay) {

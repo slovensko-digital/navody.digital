@@ -1,36 +1,40 @@
 <%= render partial: 'header' %>
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
-  <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
+      <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
 
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-    <h2 class="govuk-fieldset__heading">
-      Dopnenie údajov <%= ("(#{@application_form.current_stakeholder_index + 1}/#{@application_form.form_data.stakeholders_with_missing_identifiers.size})") if @application_form.form_data.stakeholders_with_missing_identifiers.size > 1 %>
-    </h2>
-  </legend>
-  <br />
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">
+          Dopnenie údajov <%= ("(#{@application_form.current_stakeholder_index + 1}/#{@application_form.form_data.stakeholders_with_missing_identifiers.size})") if @application_form.form_data.stakeholders_with_missing_identifiers.size > 1 %>
+        </h2>
+      </legend>
+      <br />
 
-  <p>Na výpise z Obchodného registra sme našli <%= @application_form.form_data.stakeholders_with_missing_identifiers.size %> <%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
-  <br />
+      <p>Na výpise z Obchodného registra sme našli <%= @application_form.form_data.stakeholders_with_missing_identifiers.size %> <%= t('views.stakeholders_found', :count => @application_form.form_data.stakeholders_with_missing_identifiers.size) %> je potrebné vykonať doplnenie údajov.</p>
+      <br />
 
-  <fieldset class="govuk-fieldset">
-    <legend id="stakeholder" class="govuk-fieldset__legend">
-      <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
-      <p>Spoločník</p>
-    </legend>
+      <fieldset class="govuk-fieldset">
+        <legend id="stakeholder" class="govuk-fieldset__legend">
+          <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
+          <p>Spoločník</p>
+        </legend>
 
-    <%= render 'components/error_summary', form: @application_form %>
+        <%= render 'components/error_summary', form: @application_form %>
 
-    <% if @application_form.stakeholder.is_person? %>
-      <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_person', form: f %>
-    <% else %>
-      <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_cb', form: f %>
+        <% if @application_form.stakeholder.is_person? %>
+          <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_person', form: f %>
+        <% else %>
+          <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_cb', form: f %>
+        <% end %>
+
+        <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>
+      </fieldset>
+
+      <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
     <% end %>
-
-    <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>
-  </fieldset>
-
-  <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-    Pokračovať ❯
-  </button>
-<% end %>
+  </div>
+</div>

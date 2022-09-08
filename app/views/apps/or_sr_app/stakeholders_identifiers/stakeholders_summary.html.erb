@@ -1,94 +1,98 @@
 <%= render partial: 'header' %>
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
-  <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'summary' %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'summary' %>
 
-  <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
-<% end %>
+      <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
+    <% end %>
 
-<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-  <h2 class="govuk-fieldset__heading">
-    Kontrola údajov
-  </h2>
-</legend>
-<br />
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h2 class="govuk-fieldset__heading">
+        Kontrola údajov
+      </h2>
+    </legend>
+    <br />
 
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-warning-text__assistive">Warning</span>
-    Pred vygenerovaním formulára je potrebné skontrolovať si údaje o uistiť sa o ich správnosti.
-  </strong>
-</div>
-
-<% @stakeholders.each_with_index do |stakeholder, index| %>
-  <div class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= stakeholder.name %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <% if stakeholder.is_person? %>
-          <% if stakeholder.foreign %>
-            <p class="govuk-body">
-              <%= stakeholder.other_identifier_type_data.dig(:value)&.capitalize %><br>
-              <%= stakeholder.other_identifier %>
-            </p>
-            <p class="govuk-body">
-              Dátum narodenia<br>
-              <%= stakeholder.date_of_birth.strftime('%d.%m.%Y') %>
-            </p>
-          <% else %>
-            <p class="govuk-body">
-              Rodné číslo<br>
-              <%= stakeholder.identifier %>
-            </p>
-          <% end %>
-        <% else %>
-          <% if stakeholder.foreign %>
-            <p class="govuk-body">
-              Identifikačný údaj<br>
-              <%= stakeholder.other_identifier %>
-            </p>
-          <% else %>
-            <p class="govuk-body">
-              IČO<br>
-              <%= stakeholder.identifier %>
-            </p>
-          <% end %>
-        <% end %>
-      </dd>
-      <dd class="govuk-summary-list__actions">
-        <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_subform', index: index - 1 %>
-      </dd>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        Pred vygenerovaním formulára je potrebné skontrolovať si údaje o uistiť sa o ich správnosti.
+      </strong>
     </div>
-  </div>
-<% end %>
 
-<div class="govuk-form-group">
-  <div class="govuk-checkboxes__item">
-    <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">
-    <label class="govuk-label govuk-checkboxes__label" for="correct_data">
-      Všetky údaje sú správne
-    </label>
+    <% @stakeholders.each_with_index do |stakeholder, index| %>
+      <div class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= stakeholder.name %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <% if stakeholder.is_person? %>
+              <% if stakeholder.foreign %>
+                <p class="govuk-body">
+                  <%= stakeholder.other_identifier_type_data.dig(:value)&.capitalize %><br>
+                  <%= stakeholder.other_identifier %>
+                </p>
+                <p class="govuk-body">
+                  Dátum narodenia<br>
+                  <%= stakeholder.date_of_birth.strftime('%d.%m.%Y') %>
+                </p>
+              <% else %>
+                <p class="govuk-body">
+                  Rodné číslo<br>
+                  <%= stakeholder.identifier %>
+                </p>
+              <% end %>
+            <% else %>
+              <% if stakeholder.foreign %>
+                <p class="govuk-body">
+                  Identifikačný údaj<br>
+                  <%= stakeholder.other_identifier %>
+                </p>
+              <% else %>
+                <p class="govuk-body">
+                  IČO<br>
+                  <%= stakeholder.identifier %>
+                </p>
+              <% end %>
+            <% end %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_subform', index: index - 1 %>
+          </dd>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="govuk-form-group">
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="correct_data" name="correct_data" type="checkbox" value="yes">
+        <label class="govuk-label govuk-checkboxes__label" for="correct_data">
+          Všetky údaje sú správne
+        </label>
+      </div>
+    </div>
+
+    <%= form_tag start_submissions_path, id: 'submit-data-form' do %>
+      <%= hidden_field_tag 'submission[type]', 'EmailMeSubmissionInstructionsEmail' %>
+      <%= hidden_field_tag 'submission[callback_url]', '/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/podat-navrh-na-zapis-rc' %>
+      <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/vytvorit-navrh-na-zapis' %>
+      <%= hidden_field_tag 'submission[callback_step_status]', 'done' %>
+      <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
+      <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
+      <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
+      <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeOrSrIdentifiersStatusEmail' %>
+      <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>
+      <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
+      <%= hidden_field_tag 'submission[extra][template_id]', 3 %>
+      <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
+      <%= hidden_field_tag 'submission[extra][company_cin][company_name]', @application_form.form_data&.cin %>
+    <% end %>
   </div>
 </div>
-
-<%= form_tag start_submissions_path, id: 'submit-data-form' do %>
-  <%= hidden_field_tag 'submission[type]', 'EmailMeSubmissionInstructionsEmail' %>
-  <%= hidden_field_tag 'submission[callback_url]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/podat-navrh-na-zapis-rc' %>
-  <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-rodneho-cisla-do-or/krok/vytvorit-navrh-na-zapis' %>
-  <%= hidden_field_tag 'submission[callback_step_status]', 'done' %>
-  <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
-  <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
-  <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
-  <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeOrSrIdentifiersStatusEmail' %>
-  <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>
-  <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
-  <%= hidden_field_tag 'submission[extra][template_id]', 3 %>
-  <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
-  <%= hidden_field_tag 'submission[extra][company_cin][company_name]', @application_form.form_data&.cin %>
-<% end %>
 
 <script type="text/javascript" charset="utf-8">
   const submitButtonId = 'submit-button';
