@@ -89,7 +89,7 @@
       <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
       <%= hidden_field_tag 'submission[extra][template_id]', 3 %>
       <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
-      <%= hidden_field_tag 'submission[extra][company_cin][company_name]', @application_form.form_data&.cin %>
+      <%= hidden_field_tag 'submission[extra][params][company_cin]', @application_form.form_data&.cin %>
     <% end %>
   </div>
 </div>
