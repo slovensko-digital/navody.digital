@@ -88,6 +88,19 @@ Rails.application.routes.draw do
     namespace :child_birth_app, path: 'narodenie-dietata' do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
+
+    namespace :or_sr_app, path: 'or-sr' do
+      resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
+        member do
+          get :subject_selection, path: 'spolocnost'
+          post :stakeholder_identifier, path: 'spolocnici'
+          post :xml_form, path: 'formular'
+          post :generate_xml_form
+          get :unsupported, path: 'nepodporovany-typ-spolocnosti'
+          get :nothing_missing, path: 'nic-nechyba'
+        end
+      end
+    end
   end
   resources :apps, path: 'aplikacie' # faux route
 
