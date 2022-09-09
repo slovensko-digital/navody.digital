@@ -105,20 +105,13 @@ class UpvsSubmissions::OrSrFormBuilder
   end
 
   def self.stakeholder_entries(data)
-    stakeholders_persons = data.stakeholders_persons.size > 0 ? data.stakeholders_persons : [nil]
-    stakeholders_corporate_bodies = data.stakeholders_corporate_bodies.size > 0 ? data.stakeholders_corporate_bodies : [nil]
+    stakeholders_persons = data.stakeholders_with_missing_identifiers_persons.size > 0 ? data.stakeholders_with_missing_identifiers_persons : [nil]
+    stakeholders_corporate_bodies = data.stakeholders_with_missing_identifiers_cb.size > 0 ? data.stakeholders_with_missing_identifiers_cb : [nil]
 
     (
       stakeholders_persons.map {|s| stakeholder_person(s) } +
       stakeholders_corporate_bodies.map {|s| stakeholder_corporate_body(s) }
     ).join("\n")
-  end
-
-  def self.stakeholders_addition(data)
-    <<~ADDITION
-      #{stakeholder_person(nil) if data.all_stakeholders_corporate_bodies?}
-      #{stakeholder_corporate_body(nil) if data.all_stakeholders_persons?}
-    ADDITION
   end
 
   def self.stakeholder_person(stakeholder)

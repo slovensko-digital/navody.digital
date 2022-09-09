@@ -42,12 +42,12 @@ module UpvsSubmissions
         @stakeholders.select{ |stakeholder| !stakeholder.identifier_ok }
       end
 
-      def stakeholders_persons
-        @stakeholders.select{ |stakeholder| stakeholder.is_person? }
+      def stakeholders_with_missing_identifiers_persons
+        stakeholders_with_missing_identifiers.select{ |stakeholder| stakeholder.is_person? }
       end
 
-      def stakeholders_corporate_bodies
-        @stakeholders.select{ |stakeholder| !stakeholder.is_person? }
+      def stakeholders_with_missing_identifiers_cb
+        stakeholders_with_missing_identifiers.select{ |stakeholder| !stakeholder.is_person? }
       end
 
       def all_stakeholders_persons?
