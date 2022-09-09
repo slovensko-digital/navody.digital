@@ -81,12 +81,12 @@ module UpvsSubmissions
         end
 
         def load_municipality_identifier
-          municipality_code_list_object = CodeList::Municipality.where("value ilike ?", @municipality&.strip).take
+          municipality_code_list_object = CodeList::Municipality.where(value: @municipality&.strip).take
           municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
-          country_code_list_object = CodeList::Country.where("value ilike ?", @country&.strip).take
+          country_code_list_object = CodeList::Country.where(value: @country&.strip).take
           country_code_list_object&.identifier
         end
       end
