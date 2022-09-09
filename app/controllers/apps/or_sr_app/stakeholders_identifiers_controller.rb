@@ -1,5 +1,6 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   before_action :load_application_form, only: [:stakeholder_identifier, :xml_form, :generate_xml_form]
+  before_action :set_metadata, only: [:subject_selection]
 
   rescue_from OrSrRecordFetcher::OrsrRecordError, UpvsSubmissions::Forms::FuzsData::FuzsError, StandardError, :with => :handle_error
 
@@ -148,6 +149,13 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
 
   def identifier_present?
     params.dig(:apps_or_sr_app_stakeholders_identifiers_application_form, :stakeholder_identifier)
+  end
+
+  def set_metadata
+    @metadata.og.title = 'Povinnosť zápisu chýbajúcich identifikačných údajov spoločníkov do obchodného registra'
+    @metadata.og.description = 'Zistite, či má Vaša spoločnosť splnenú túto zákonnú povinnosť a vybavte návrh na zápis online, jednoducho, len na pár klikov.'
+    # TODO
+    # @metadata.og.image = ''
   end
 
   def handle_error
