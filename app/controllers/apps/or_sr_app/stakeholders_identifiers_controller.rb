@@ -152,8 +152,8 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def set_metadata
-    @metadata.og.title = 'Povinnosť zápisu chýbajúcich identifikačných údajov spoločníkov do obchodného registra'
-    @metadata.og.description = 'Zistite, či má Vaša spoločnosť splnenú túto zákonnú povinnosť a vybavte návrh na zápis online, jednoducho, len na pár klikov.'
+    @metadata.og.title = 'Zápis identifikačných údajov do obchodného registra'
+    @metadata.og.description = 'Zákonná povinnosť vybavená online, jednoducho, len na pár klikov.'
     # TODO
     # @metadata.og.image = ''
   end
