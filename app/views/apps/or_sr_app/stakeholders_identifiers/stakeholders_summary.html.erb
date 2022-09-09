@@ -87,7 +87,7 @@
       <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeOrSrIdentifiersStatusEmail' %>
       <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>
       <%= hidden_field_tag 'submission[subscription_types][]', 'NewsletterSubscription' %>
-      <%= hidden_field_tag 'submission[extra][template_id]', 193 %>
+      <%= hidden_field_tag 'submission[extra][template_id]', ENV.fetch('OR_SR_IDENTIFIERS_EMAIL_TEMPLATE_ID') %>
       <%= hidden_field_tag 'submission[extra][params][company_name]', @application_form.form_data&.name %>
       <%= hidden_field_tag 'submission[extra][params][company_cin]', @application_form.form_data&.cin %>
     <% end %>
