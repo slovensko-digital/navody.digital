@@ -93,9 +93,7 @@ Rails.application.routes.draw do
       resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
         member do
           get :subject_selection, path: 'spolocnost'
-          post :stakeholder_identifier, path: 'spolocnici'
-          post :xml_form, path: 'formular'
-          post :generate_xml_form
+          post :stakeholder_identifier, path: 'doplnenie'
           get :unsupported, path: 'nepodporovany-typ-spolocnosti'
           get :nothing_missing, path: 'nic-nechyba'
         end

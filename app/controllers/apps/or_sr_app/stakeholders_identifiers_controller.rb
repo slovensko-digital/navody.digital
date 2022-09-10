@@ -1,5 +1,5 @@
 class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
-  before_action :load_application_form, only: [:stakeholder_identifier, :xml_form, :generate_xml_form]
+  before_action :load_application_form, only: [:stakeholder_identifier]
   before_action :set_metadata, only: [:subject_selection]
 
   rescue_from OrSrRecordFetcher::OrsrRecordError, UpvsSubmissions::Forms::FuzsData::FuzsError, StandardError, :with => :handle_error
@@ -44,7 +44,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
     parameters = params.require(:apps_or_sr_app_stakeholders_identifiers_application_form).permit(:cin, :current_step)
     form_data = UpvsSubmissions::Forms::FuzsData.new(cin: parameters['cin'])
 
-    @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new(cin: parameters['cin'], form_data: form_data)
+    @application_form = Apps::OrSrApp::StakeholdersIdentifiers::ApplicationForm.new(cin: parameters['cin'], form_data: form_data, current_step: parameters['current_step'])
   end
 
   def load_application_form
@@ -152,8 +152,8 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   end
 
   def set_metadata
-    @metadata.og.title = 'Povinnosť zápisu chýbajúcich identifikačných údajov spoločníkov do obchodného registra'
-    @metadata.og.description = 'Zistite, či má Vaša spoločnosť splnenú túto zákonnú povinnosť a vybavte návrh na zápis online, jednoducho, len na pár klikov.'
+    @metadata.og.title = 'Zápis identifikačných údajov do obchodného registra'
+    @metadata.og.description = 'Zákonná povinnosť vybavená online, jednoducho, len na pár klikov.'
     # TODO
     # @metadata.og.image = ''
   end

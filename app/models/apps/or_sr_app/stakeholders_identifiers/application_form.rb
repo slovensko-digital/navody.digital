@@ -4,22 +4,10 @@ module Apps
       class ApplicationForm
         include ActiveModel::Model
 
-        attr_accessor :cin
-        attr_accessor :corporate_body
-        attr_accessor :form_data
-        attr_accessor :stakeholder
-        attr_accessor :stakeholder_nationality
-        attr_accessor :stakeholder_identifier
-        attr_accessor :stakeholder_other_identifier
-        attr_accessor :stakeholder_identifier_type
-        attr_accessor :stakeholder_dob
-        attr_accessor :stakeholder_dob_year
-        attr_accessor :stakeholder_dob_month
-        attr_accessor :stakeholder_dob_day
-        attr_accessor :current_stakeholder_index
-        attr_accessor :current_step
-        attr_accessor :go_to_summary
-        attr_accessor :back
+        attr_accessor(:cin, :corporate_body, :form_data,
+                      :stakeholder, :stakeholder_nationality, :stakeholder_identifier, :stakeholder_other_identifier, :stakeholder_identifier_type,
+                      :stakeholder_dob, :stakeholder_dob_year, :stakeholder_dob_month, :stakeholder_dob_day,
+                      :current_stakeholder_index, :current_step, :go_to_summary, :back)
 
         validate :corporate_body_selected?
         validate :identifier_valid?
@@ -58,7 +46,7 @@ module Apps
         end
 
         def should_go_to_summary?
-          (@current_step == 'save' && go_to_summary?) || (@current_stakeholder_index == @form_data&.stakeholders_with_missing_identifiers&.size - 1)
+          showing_last_stakeholder? || (@current_step == 'save' && go_to_summary?)
         end
 
         def go_to_summary?
@@ -81,6 +69,10 @@ module Apps
 
         SR_CB_IDENTIFIER_PATTERN = /\A\d{6,8}\z/
         SR_PERSON_IDENTIFIER_PATTERN = /\A(\d{2})(0[1-9]|1[0-2]|5[1-9]|6[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/?\d{3,4}\z/
+
+        def showing_last_stakeholder?
+          @current_stakeholder_index == @form_data&.stakeholders_with_missing_identifiers&.size - 1
+        end
 
         def should_validate_cb?
           @current_step == 'subject_selection'
