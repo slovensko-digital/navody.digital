@@ -1,0 +1,38 @@
+<%= render partial: 'header' %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
+      <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>
+
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">
+          Nevieme napárovať adresu sídla na číselník
+        </h2>
+      </legend>
+      <br />
+
+      <p>Zvoľte obec, v ktorej má spoločnosť <%= @application_form.form_data&.name %> sídlo.</p>
+      <br />
+
+      <%= render 'components/error_summary', form: @application_form %>
+
+      <div class="govuk-form-group">
+        <legend id="stakeholder_address" class="govuk-fieldset__legend">
+          <p class="govuk-label govuk-label--s">Sídlo</p>
+        </legend>
+
+        <label class="govuk-label govuk-label--xs" for="company_municipality">
+          Obec
+        </label>
+        <%= f.select :company_municipality, @municipality_options, { :include_blank => true, :selected => @application_form.form_data&.address&.municipality }, { :class => "govuk-select" } %>
+      </div>
+
+      <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'company_address' %>
+
+      <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
+    <% end %>
+  </div>
+</div>

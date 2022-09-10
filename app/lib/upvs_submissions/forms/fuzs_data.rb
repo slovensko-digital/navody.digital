@@ -10,7 +10,7 @@ module UpvsSubmissions
 
         @cin = cin
         @name = name || corporate_body['name']
-        @address = load_address( address ? address : address_params(corporate_body))
+        @address = (address ? load_address(address) : load_original_address(corporate_body))
         @court = court ? load_court_from_json(court) : load_court(corporate_body)
         @org_type = type || corporate_body['registration_number']&.split('/')[0]
         @registration_number = registration_number || corporate_body['registration_number']&.split('/')[1]
@@ -58,20 +58,35 @@ module UpvsSubmissions
         @stakeholders.all? { |stakeholder| !stakeholder.is_person? }
       end
 
+      def with_missing_municipality_identifier?
+        @address.originally_missing_municipality_id
+      end
+
       class Address
         include ActiveModel::Model
 
-        attr_accessor(:street, :number, :postal_code, :municipality, :municipality_identifier, :country, :country_identifier)
+        attr_accessor(:street, :number, :postal_code, :original_municipality, :municipality, :municipality_identifier, :originally_missing_municipality_id, :country, :country_identifier)
 
-        def initialize(street: nil, number: nil, building_number: nil, reg_number: nil, municipality: nil, postal_code: nil, country: nil)
+        def initialize(street: nil, number: nil, building_number: nil, reg_number: nil, original_municipality: nil, municipality: nil, originally_missing_municipality_id: nil, postal_code: nil, country: nil)
           @street = street
           registration_number = (reg_number != 0 ? reg_number : nil)
           @number = number.present? ? number : join_numbers(building_number, registration_number)
           @postal_code = postal_code
-          @municipality = municipality
+          @original_municipality = original_municipality
+          @municipality = municipality.present? ? municipality : original_municipality
+          @originally_missing_municipality_id = originally_missing_municipality_id
           @country = country
-          @municipality_identifier = load_municipality_identifier
-          @country_identifier = load_country_identifier
+          load_municipality_identifier
+          load_country_identifier
+        end
+
+        def update_municipality(value)
+          @municipality = value
+          load_municipality_identifier
+        end
+
+        def municipality_code_list
+          CodeList::Municipality.where("value like ?", "#{@original_municipality}%")
         end
 
         private
@@ -82,12 +97,12 @@ module UpvsSubmissions
 
         def load_municipality_identifier
           municipality_code_list_object = CodeList::Municipality.where(value: @municipality&.strip).take
-          municipality_code_list_object&.identifier
+          @municipality_identifier = municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
           country_code_list_object = CodeList::Country.where(value: @country&.strip).take
-          country_code_list_object&.identifier
+          @country_identifier = country_code_list_object&.identifier
         end
       end
 
@@ -120,7 +135,7 @@ module UpvsSubmissions
           @dob_year = dob_year
           @dob_month = dob_month
           @dob_day = dob_day
-          @address = address ? load_address_from_json(address) : Address.new(street: address_street, building_number: address_building_number, reg_number: address_reg_number,
+          @address = address ? load_address_from_json(address) : load_address_from_datahub_cb(street: address_street, building_number: address_building_number, reg_number: address_reg_number,
                                                                              municipality: address_municipality, postal_code: address_postal_code, country: address_country)
           @person_given_names = person_given_names
           @person_family_names = person_family_names
@@ -188,10 +203,6 @@ module UpvsSubmissions
           @dob_year = year.present? ? year.to_i : nil
         end
 
-        def load_address_from_json(data)
-          Address.new(street: data['street'], number: data['number'], municipality: data['municipality'], postal_code: data['postal_code'], country: data['country'])
-        end
-
         def other_identifier_type_data
           id, value, code = nil, nil, nil
 
@@ -209,7 +220,22 @@ module UpvsSubmissions
           { :id => id, :value => value, :code => code }
         end
 
+        def with_missing_municipality_identifier?
+          @address.originally_missing_municipality_id
+        end
+
         private
+
+        def load_address_from_datahub_cb(street: nil, building_number: nil, reg_number: nil, municipality: nil, postal_code: nil, country: nil)
+          address = Address.new(street: street, building_number: building_number, reg_number: reg_number, original_municipality: municipality, postal_code: postal_code, country: country)
+          address.originally_missing_municipality_id = !address.municipality_identifier.present?
+          address
+        end
+
+        def load_address_from_json(data)
+          Address.new(street: data['street'], number: data['number'], original_municipality: data['original_municipality'], municipality: data['municipality'],
+                      originally_missing_municipality_id: data['originally_missing_municipality_id'], postal_code: data['postal_code'], country: data['country'])
+        end
 
         def get_date_of_birth_from_identifier(identifier)
           day = identifier[4..5].to_i
@@ -282,7 +308,9 @@ module UpvsSubmissions
       end
 
       def load_address(data)
-        Address.new(street: data['street'], number: data['number'], building_number: data['building_number'], reg_number: data['reg_number'], municipality: data['municipality'], postal_code: data['postal_code'], country: data['country'])
+        Address.new(street: data['street'], number: data['number'], building_number: data['building_number'], reg_number: data['reg_number'],
+                    original_municipality: data['original_municipality'], municipality: data['municipality'], originally_missing_municipality_id: data['originally_missing_municipality_id'],
+                    postal_code: data['postal_code'], country: data['country'])
       end
 
       def load_court_from_json(data)
@@ -327,8 +355,12 @@ module UpvsSubmissions
         company.slice('name', 'cin').merge('address_params' => address_params(company))
       end
 
-      def address_params(address)
-        address.slice('street', 'building_number', 'reg_number', 'municipality', 'postal_code', 'country')
+      def load_original_address(address)
+        params = address.slice('street', 'building_number', 'reg_number', 'municipality', 'postal_code', 'country')
+        address = Address.new(street: params['street'], building_number: params['building_number'], reg_number: params['reg_number'],
+                              original_municipality: params['municipality'], postal_code: params['postal_code'], country: params['country'])
+        address.originally_missing_municipality_id = !address.municipality_identifier.present?
+        address
       end
 
       STAKEHOLDER_TYPE_IDS = [5, 16]

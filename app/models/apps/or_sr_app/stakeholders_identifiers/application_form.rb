@@ -4,31 +4,22 @@ module Apps
       class ApplicationForm
         include ActiveModel::Model
 
-        attr_accessor :cin
-        attr_accessor :corporate_body
-        attr_accessor :form_data
-        attr_accessor :stakeholder
-        attr_accessor :stakeholder_nationality
-        attr_accessor :stakeholder_identifier
-        attr_accessor :stakeholder_other_identifier
-        attr_accessor :stakeholder_identifier_type
-        attr_accessor :stakeholder_dob
-        attr_accessor :stakeholder_dob_year
-        attr_accessor :stakeholder_dob_month
-        attr_accessor :stakeholder_dob_day
-        attr_accessor :current_stakeholder_index
-        attr_accessor :current_step
-        attr_accessor :go_to_summary
-        attr_accessor :back
+        attr_accessor(:cin, :corporate_body, :form_data, :company_municipality,
+                      :stakeholder, :stakeholder_nationality, :stakeholder_identifier, :stakeholder_other_identifier, :stakeholder_identifier_type,
+                      :stakeholder_dob, :stakeholder_dob_year, :stakeholder_dob_month, :stakeholder_dob_day, :stakeholder_municipality,
+                      :current_stakeholder_index, :current_step, :go_to_summary, :back)
 
         validate :corporate_body_selected?
         validate :identifier_valid?
+        validate :stakeholder_municipality_set?
+        validate :company_municipality_set?
 
-        def initialize(cin: nil, json_form_data: nil, form_data: nil,
+        def initialize(cin: nil, json_form_data: nil, form_data: nil, company_municipality: nil,
                        stakeholder_nationality: nil, stakeholder_identifier: nil, stakeholder_other_identifier: nil, stakeholder_other_identifier_type: nil,
-                       stakeholder_dob_year: nil, stakeholder_dob_month: nil, stakeholder_dob_day: nil, current_stakeholder_index: -1,
+                       stakeholder_dob_year: nil, stakeholder_dob_month: nil, stakeholder_dob_day: nil, current_stakeholder_index: -1, stakeholder_municipality: nil,
                        current_step: nil, go_to_summary: false, back: false)
           @cin = cin
+          @company_municipality = company_municipality
           if json_form_data
             form_data = JSON.parse(json_form_data)
             @form_data = UpvsSubmissions::Forms::FuzsData.new(
@@ -51,14 +42,19 @@ module Apps
           @stakeholder_dob_year = stakeholder_dob_year
           @stakeholder_dob_month = stakeholder_dob_month
           @stakeholder_dob_day = stakeholder_dob_day
+          @stakeholder_municipality = stakeholder_municipality
           @current_stakeholder_index = current_stakeholder_index
           @current_step = current_step
           @go_to_summary = go_to_summary
           @back = back
         end
 
+        def should_go_to_company_address?
+          @form_data.with_missing_municipality_identifier? && (@current_step == 'subject_selection' || (go_back? && showing_first_stakeholder?))
+        end
+
         def should_go_to_summary?
-          (@current_step == 'save' && go_to_summary?) || (@current_stakeholder_index == @form_data&.stakeholders_with_missing_identifiers&.size - 1)
+          showing_last_stakeholder? || (@current_step == 'save' && go_to_summary?)
         end
 
         def go_to_summary?
@@ -67,6 +63,18 @@ module Apps
 
         def go_back?
           back == 'true'
+        end
+
+        def showing_first_stakeholder?
+          @current_stakeholder_index == 0
+        end
+
+        def showing_last_stakeholder?
+          @current_stakeholder_index == @form_data&.stakeholders_with_missing_identifiers&.size - 1
+        end
+
+        def company_address_valid?
+          valid?(:company_municipality)
         end
 
         def corporate_body_invalid?
@@ -88,6 +96,18 @@ module Apps
 
         def corporate_body_selected?
           errors.add(:corporate_body, 'Zvoľte spoločnosť') unless @cin.present?
+        end
+
+        def company_municipality_set?
+          if !@company_municipality.present? && @current_step == 'company_address'
+            errors.add(:company_municipality, 'Zvoľte obec')
+          end
+        end
+
+        def stakeholder_municipality_set?
+          if !@stakeholder_municipality.present? && @current_step == 'save'
+            errors.add(:stakeholder_municipality, 'Zvoľte obec')
+          end
         end
 
         def identifier_valid?

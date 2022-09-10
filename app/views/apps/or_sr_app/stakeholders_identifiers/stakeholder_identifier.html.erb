@@ -29,6 +29,24 @@
           <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_cb', form: f %>
         <% end %>
 
+        <% if @application_form.stakeholder&.with_missing_municipality_identifier? %>
+          <div class="govuk-form-group">
+            <legend id="stakeholder_address" class="govuk-fieldset__legend">
+              <p class="govuk-label govuk-label--s">Bydlisko</p>
+            </legend>
+
+            <label class="govuk-label govuk-label--xs" for="stakeholder_municipality">
+              Obec
+            </label>
+            <span class="govuk-hint">
+              Nevieme napárovať adresu na číselník, zvoľte obec.
+            </span>
+            <%= f.select :stakeholder_municipality, @municipality_options, { :include_blank => true, :selected => @application_form.stakeholder&.address&.municipality }, { :class => "govuk-select" } %>
+          </div>
+        <% else %>
+          <%= f.hidden_field :stakeholder_municipality, value: @application_form.stakeholder&.address&.municipality %>
+        <% end %>
+
         <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>
       </fieldset>
 
