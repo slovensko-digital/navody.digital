@@ -58,7 +58,7 @@ class SeedCodeListsJob < ApplicationJob
   end
 
   def seed_courts(forced_update: false)
-    CodeList::Currency.destroy_all if forced_update
+    CodeList::Court.destroy_all if forced_update
 
     courts = [
       { 'name': 'Bratislava I', 'identifier': 2, 'code': 'B', 'street': 'Záhradnícka', 'number': '10', 'postal_code': '81244', 'municipality': 'Bratislava I' },

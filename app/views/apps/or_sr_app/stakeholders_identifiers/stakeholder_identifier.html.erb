@@ -19,6 +19,10 @@
         <legend id="stakeholder" class="govuk-fieldset__legend">
           <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
           <p>Spoločník</p>
+
+          <% if @application_form.form_data&.same_stakeholders_name?(@application_form.stakeholder&.name) %>
+            <span class="govuk-hint">Vklad: <%= "#{@application_form.stakeholder&.deposit_entries&.first&.deposit} #{@application_form.stakeholder&.deposit_entries&.first&.deposit_currency&.code}" %></span>
+          <% end %>
         </legend>
 
         <%= render 'components/error_summary', form: @application_form %>
