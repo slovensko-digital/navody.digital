@@ -229,6 +229,9 @@ module UpvsSubmissions
         def load_address_from_datahub_cb(street: nil, building_number: nil, reg_number: nil, municipality: nil, postal_code: nil, country: nil)
           address = Address.new(street: street, building_number: building_number, reg_number: reg_number, original_municipality: municipality, postal_code: postal_code, country: country)
           address.originally_missing_municipality_id = !address.municipality_identifier.present?
+
+          raise FuzsError.new if address.originally_missing_municipality_id && !address.municipality_code_list.present?
+
           address
         end
 
@@ -360,6 +363,9 @@ module UpvsSubmissions
         address = Address.new(street: params['street'], building_number: params['building_number'], reg_number: params['reg_number'],
                               original_municipality: params['municipality'], postal_code: params['postal_code'], country: params['country'])
         address.originally_missing_municipality_id = !address.municipality_identifier.present?
+
+        raise FuzsError.new if address.originally_missing_municipality_id && !address.municipality_code_list.present?
+
         address
       end
 
