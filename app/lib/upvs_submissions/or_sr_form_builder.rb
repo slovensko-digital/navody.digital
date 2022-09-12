@@ -31,7 +31,7 @@ class UpvsSubmissions::OrSrFormBuilder
           <ns1:poradoveCislo>1</ns1:poradoveCislo>
           <ns1:Nazov>ziadne prilohy - formular je nevalidny bez uvedenia prilohy</ns1:Nazov>
         </ns1:PrilohyKNavrhu>
-        <ns1:Spolocnost>#{fuzs_data.name}</ns1:Spolocnost>
+        <ns1:Spolocnost>#{fuzs_data.name&.encode(:xml => :text)}</ns1:Spolocnost>
         <ns1:V>Bratislave</ns1:V>
         <ns1:Dna>#{Date.today}</ns1:Dna>
         <ns1:Postou>true</ns1:Postou>
@@ -96,7 +96,7 @@ class UpvsSubmissions::OrSrFormBuilder
     <<~CLAIMER
       #{CLAIMER_PERSON}
       <ns1:NavrhovatelPO>
-        <ns1:ObchodneMeno>#{claimer.name}</ns1:ObchodneMeno>
+        <ns1:ObchodneMeno>#{claimer.name&.encode(:xml => :text)}</ns1:ObchodneMeno>
         <ns1:Ico></ns1:Ico>
         <ns1:InyIdentifikacnyUdaj></ns1:InyIdentifikacnyUdaj>
         #{address(claimer.address)}
@@ -141,7 +141,7 @@ class UpvsSubmissions::OrSrFormBuilder
       <ns1:SpolocnikPO ns1:menit="#{(stakeholder && !stakeholder.identifier_ok) ? true : false}"#{' xmlns:ns1="http://www.justice.gov.sk/Forms20200821"' if stakeholder}>
         <ns1:Zapis>
           <ns1:Spolocnik>
-            <ns1:ObchodneMeno>#{stakeholder&.full_name}</ns1:ObchodneMeno>
+            <ns1:ObchodneMeno>#{stakeholder&.full_name&.encode(:xml => :text)}</ns1:ObchodneMeno>
             <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
             <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
              #{address(stakeholder&.address)}
@@ -150,7 +150,7 @@ class UpvsSubmissions::OrSrFormBuilder
         </ns1:Zapis>
         <ns1:Vymaz>
            <ns1:Spolocnik>
-            <ns1:ObchodneMeno>#{stakeholder&.full_name}</ns1:ObchodneMeno>
+            <ns1:ObchodneMeno>#{stakeholder&.full_name&.encode(:xml => :text)}</ns1:ObchodneMeno>
             <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
             <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
              #{address(stakeholder&.address, with_identifiers: false)}
