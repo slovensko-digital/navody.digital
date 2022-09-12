@@ -7,12 +7,12 @@
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h2 class="govuk-fieldset__heading">
-          Nevieme napárovať adresu sídla na číselník
+          Obec sídla spoločnosti
         </h2>
       </legend>
       <br />
 
-      <p>Zvoľte obec, v ktorej má spoločnosť <%= @application_form.form_data&.name %> sídlo.</p>
+      <p>Pre <b><%= "#{@application_form.form_data&.name}, #{@application_form.form_data&.address&.formatted}" %></b> sa nám nepodarilo automaticky nájsť obec sídla spoločnosti.</p>
       <br />
 
       <%= render 'components/error_summary', form: @application_form %>

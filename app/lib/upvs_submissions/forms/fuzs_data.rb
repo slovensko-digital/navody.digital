@@ -80,6 +80,10 @@ module UpvsSubmissions
           load_country_identifier
         end
 
+        def formatted
+          [street_with_number, postal_code, municipality].compact.join(', ')
+        end
+
         def update_municipality(value)
           @municipality = value
           load_municipality_identifier
@@ -90,6 +94,10 @@ module UpvsSubmissions
         end
 
         private
+
+        def street_with_number
+          [street, number].compact.join(' ')
+        end
 
         def join_numbers(building_number, reg_number)
           [reg_number, building_number].compact.join('/')

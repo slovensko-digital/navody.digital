@@ -118,11 +118,17 @@ p.govuk-body-xs {
 
 legend#stakeholder {
   margin-bottom: 1rem;
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+
+  p.govuk-heading-m {
+    font-weight: normal;
+  }
 }
 
-legend#stakeholder > p {
-  margin-bottom: 0.5rem;
-}
+legend#stakeholder >
 
 legend#stakeholder_address {
   margin-bottom: 0;
