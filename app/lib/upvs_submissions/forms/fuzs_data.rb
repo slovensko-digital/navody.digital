@@ -62,11 +62,6 @@ module UpvsSubmissions
         @address.originally_missing_municipality_id
       end
 
-      def same_stakeholders_name?(name)
-        with_the_name = @stakeholders.select{ |stakeholder| stakeholder.name == name }
-        with_the_name.size > 1
-      end
-
       class Address
         include ActiveModel::Model
 
