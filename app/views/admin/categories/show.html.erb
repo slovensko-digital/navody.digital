@@ -1,6 +1,6 @@
-<p id="notice"><%= notice %></p>
+<%= render 'breadcrumbs', crumbs: [['Categories', admin_categories_url], [@category.name, '#']], current: 'Show' %>
 
-<%= render 'breadcrumbs', crumbs: [], current: 'Documents' %>
+<br>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -24,11 +24,7 @@
           <% end %>
         </td>
         <td class="govuk-table__cell"><%= link_to document.searchable.slug, document.searchable %></td>
-        <% if document.searchable_type == 'Journey' && !document.published? %>
-          <td class="govuk-table__cell" style="color: #d4351c;"><%= document.searchable_type %><%= ' (BLANK)' %></td>
-        <% else %>
-          <td class="govuk-table__cell"><%= document.searchable_type %></td>
-        <% end %>
+        <td class="govuk-table__cell"><%= document.searchable_type %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_document_path(document) %></td>
       </tr>
     <% end %>
@@ -37,5 +33,4 @@
 
 <br>
 
-<%= link_to 'Reposition Documents', reposition_admin_documents_path, method: :post, class: 'govuk-button' %>
-
+<%= link_to 'Back', admin_categories_path %>

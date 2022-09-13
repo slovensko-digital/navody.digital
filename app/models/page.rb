@@ -1,12 +1,13 @@
 class Page < ApplicationRecord
   include Searchable
 
+  has_one :categorization, :as => :categorizable, dependent: :destroy
+  accepts_nested_attributes_for :categorization
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 
   scope :faq, -> { where(is_faq: true) }
-
-  has_and_belongs_to_many :categories
 
   validates :title, presence: true
   validates :content, presence: true

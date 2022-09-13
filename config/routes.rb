@@ -34,7 +34,10 @@ Rails.application.routes.draw do
     end
     resources :user_journeys
     resources :uploads, except: [:show, :update, :edit]
-    resources :categories, except: [:show]
+    resources :categories do
+      put :feature, on: :member
+      put :hide, on: :member
+    end
   end
 
   root to: 'pages#index'

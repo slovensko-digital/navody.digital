@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA upvs;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -335,16 +342,6 @@ CREATE TABLE public.apps (
 
 
 --
--- Name: apps_categories; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.apps_categories (
-    app_id bigint NOT NULL,
-    category_id bigint NOT NULL
-);
-
-
---
 -- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -381,11 +378,21 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.categories (
     id bigint NOT NULL,
-    name character varying,
-    description text,
+    name character varying NOT NULL,
+    description text NOT NULL,
+    featured boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    featured boolean DEFAULT true
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: categories_categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories_categorizations (
+    category_id bigint NOT NULL,
+    categorization_id bigint NOT NULL
 );
 
 
@@ -409,23 +416,33 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 
 --
--- Name: categories_journeys; Type: TABLE; Schema: public; Owner: -
+-- Name: categorizations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.categories_journeys (
-    journey_id bigint NOT NULL,
-    category_id bigint NOT NULL
+CREATE TABLE public.categorizations (
+    id bigint NOT NULL,
+    categorizable_type character varying,
+    categorizable_id bigint
 );
 
 
 --
--- Name: categories_pages; Type: TABLE; Schema: public; Owner: -
+-- Name: categorizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.categories_pages (
-    page_id bigint NOT NULL,
-    category_id bigint NOT NULL
-);
+CREATE SEQUENCE public.categorizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categorizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categorizations_id_seq OWNED BY public.categorizations.id;
 
 
 --
@@ -934,7 +951,8 @@ CREATE TABLE public.users (
     id bigint NOT NULL,
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    eid_sub character varying
 );
 
 
@@ -955,6 +973,75 @@ CREATE SEQUENCE public.users_id_seq
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: egov_application_allow_rules; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.egov_application_allow_rules (
+    id bigint NOT NULL,
+    recipient_uri character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.egov_application_allow_rules_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.egov_application_allow_rules_id_seq OWNED BY upvs.egov_application_allow_rules.id;
+
+
+--
+-- Name: form_template_related_documents; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.form_template_related_documents (
+    id bigint NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    xsd_schema text,
+    xslt_transformation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.form_template_related_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
 
 
 --
@@ -990,6 +1077,13 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 --
 
 ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- Name: categorizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations ALTER COLUMN id SET DEFAULT nextval('public.categorizations_id_seq'::regclass);
 
 
 --
@@ -1091,6 +1185,20 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('upvs.egov_application_allow_rules_id_seq'::regclass);
+
+
+--
+-- Name: form_template_related_documents id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments active_storage_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1136,6 +1244,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categorizations categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations
+    ADD CONSTRAINT categorizations_pkey PRIMARY KEY (id);
 
 
 --
@@ -1275,6 +1391,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules
+    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: form_template_related_documents form_template_related_documents_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents
+    ADD CONSTRAINT form_template_related_documents_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1300,6 +1432,20 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_categories_categorizations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_categories_categorizations ON public.categories_categorizations USING btree (category_id, categorization_id);
+
+
+--
+-- Name: index_categorizations_on_categorizable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categorizations_on_categorizable ON public.categorizations USING btree (categorizable_type, categorizable_id);
 
 
 --
@@ -1454,6 +1600,13 @@ CREATE INDEX index_user_tasks_on_task_id ON public.user_tasks USING btree (task_
 --
 
 CREATE INDEX index_user_tasks_on_user_step_id ON public.user_tasks USING btree (user_step_id);
+
+
+--
+-- Name: index_users_on_eid_sub; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_eid_sub ON public.users USING btree (eid_sub);
 
 
 --
@@ -1712,10 +1865,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321181737'),
 ('20220322180237'),
 ('20220323214831'),
+('20220407131258'),
+('20220623200232'),
+('20220624185928'),
 ('20220624204655'),
-('20220624204819'),
-('20220624204833'),
-('20220624204843'),
-('20220625112822');
+('20220727160233');
 
 

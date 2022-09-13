@@ -1,5 +1,5 @@
 class Admin::CategoriesController < Admin::AdminController
-  before_action :set_category, only: [:edit, :update, :destroy]
+  before_action :set_category, only: [:edit, :update, :destroy, :feature, :hide]
 
   # GET /admin/categories
   def index
@@ -9,6 +9,12 @@ class Admin::CategoriesController < Admin::AdminController
   # GET /admin/categories/new
   def new
     @category = Category.new
+  end
+
+  # GET /admin/categories/1
+  def show
+    @category = Category.find_by!(id: params[:id])
+    @documents = Document.featureable.searchable_with_category(@category).order(featured: :desc, featured_position: :asc)
   end
 
   # POST /admin/categories
@@ -28,6 +34,18 @@ class Admin::CategoriesController < Admin::AdminController
       redirect_to admin_categories_url, notice: 'Category was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def feature
+    if @category.update(featured: true)
+      redirect_back fallback_location: admin_categories_url, notice: 'Category was successfully updated.'
+    end
+  end
+
+  def hide
+    if @category.update(featured: false)
+      redirect_back fallback_location: admin_categories_url, notice: 'Category was successfully updated.'
     end
   end
 
