@@ -126,8 +126,8 @@ class UpvsSubmissions::OrSrFormBuilder
         </ns1:Zapis>
         <ns1:Vymaz>
           <ns1:Spolocnik>
-            #{person(stakeholder)}
-            #{address(stakeholder&.address, with_identifiers: false)}
+            #{person(stakeholder, with_identifiers: false)}
+            #{address(stakeholder&.address, with_identifiers: false, with_original_municipality: true)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
         </ns1:Vymaz>
@@ -151,9 +151,9 @@ class UpvsSubmissions::OrSrFormBuilder
         <ns1:Vymaz>
            <ns1:Spolocnik>
             <ns1:ObchodneMeno>#{stakeholder&.full_name&.encode(:xml => :text)}</ns1:ObchodneMeno>
-            <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
-            <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
-             #{address(stakeholder&.address, with_identifiers: false)}
+            <ns1:Ico></ns1:Ico>
+            <ns1:InyIdentifikacnyUdaj></ns1:InyIdentifikacnyUdaj>
+             #{address(stakeholder&.address, with_identifiers: false, with_original_municipality: true)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
         </ns1:Vymaz>
@@ -249,26 +249,26 @@ class UpvsSubmissions::OrSrFormBuilder
     BACKUP_RIGHT
   end
 
-  def self.person(data)
+  def self.person(data, with_identifiers: true)
     <<~PERSON
       <ns1:Osoba>
         <ns1:TitulPred>#{data&.prefixes}</ns1:TitulPred>
         <ns1:Meno>#{data&.given_name}</ns1:Meno>
         <ns1:Priezvisko>#{data&.family_name}</ns1:Priezvisko>
         <ns1:TitulZa>#{data&.postfixes}</ns1:TitulZa>
-        <ns1:DatumNarodenia #{data&.date_of_birth ? 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{data&.date_of_birth}</ns1:DatumNarodenia>
-        <ns1:RodneCislo>#{data&.identifier}</ns1:RodneCislo>
+        <ns1:DatumNarodenia #{(with_identifiers && data&.date_of_birth) ? 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{data&.date_of_birth if with_identifiers}</ns1:DatumNarodenia>
+        <ns1:RodneCislo>#{data&.identifier if with_identifiers}</ns1:RodneCislo>
         <ns1:TypInyIdentifikator>
-          <ns1:Id>#{data&.other_identifier_type_data&.dig(:id)}</ns1:Id>
-          <ns1:Value>#{data&.other_identifier_type_data&.dig(:value)}</ns1:Value>
-          <ns1:Znacka>#{data&.other_identifier_type_data&.dig(:code)}</ns1:Znacka>
+          <ns1:Id>#{data&.other_identifier_type_data&.dig(:id) if with_identifiers}</ns1:Id>
+          <ns1:Value>#{data&.other_identifier_type_data&.dig(:value) if with_identifiers}</ns1:Value>
+          <ns1:Znacka>#{data&.other_identifier_type_data&.dig(:code) if with_identifiers}</ns1:Znacka>
         </ns1:TypInyIdentifikator>
-        <ns1:InyIdentifikacnyUdaj>#{data&.other_identifier}</ns1:InyIdentifikacnyUdaj>
+        <ns1:InyIdentifikacnyUdaj>#{data&.other_identifier if with_identifiers}</ns1:InyIdentifikacnyUdaj>
       </ns1:Osoba>
     PERSON
   end
 
-  def self.address(address, with_identifiers: true)
+  def self.address(address, with_identifiers: true, with_original_municipality: false)
     <<~ADDRESS
       <ns1:Adresa>
         <ns1:Ulica>#{address&.street}</ns1:Ulica>
@@ -276,7 +276,7 @@ class UpvsSubmissions::OrSrFormBuilder
         <ns1:Obec>
           <ns1:Id>#{address&.municipality_identifier if with_identifiers}</ns1:Id>
           <ns1:StatId></ns1:StatId>
-          <ns1:Value>#{address&.municipality}</ns1:Value>
+          <ns1:Value>#{with_original_municipality ? address&.original_municipality : address&.municipality}</ns1:Value>
           <ns1:Obce></ns1:Obce>
         </ns1:Obec>
         <ns1:Psc>#{address&.postal_code}</ns1:Psc>
@@ -298,7 +298,7 @@ class UpvsSubmissions::OrSrFormBuilder
     <<~ENTRY
       <ns1:Vklad>
         <ns1:VyskaVkladu>
-          <ns1:Suma #{entry ? ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{entry&.deposit}</ns1:Suma>
+          <ns1:Suma #{entry&.deposit ? ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{entry&.deposit}</ns1:Suma>
           #{currency(entry&.deposit_currency)}
           <ns1:TypVkladu>
             <ns1:Id></ns1:Id>
@@ -306,7 +306,7 @@ class UpvsSubmissions::OrSrFormBuilder
           </ns1:TypVkladu>
         </ns1:VyskaVkladu>
         <ns1:RozsahSplatenia>
-          <ns1:Suma #{entry ? ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{entry&.paid_deposit}</ns1:Suma>
+          <ns1:Suma #{entry&.paid_deposit ? ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' : 'xsi:nil="true"'}>#{entry&.paid_deposit}</ns1:Suma>
           #{currency(entry&.paid_deposit_currency)}
         </ns1:RozsahSplatenia>
       </ns1:Vklad>
