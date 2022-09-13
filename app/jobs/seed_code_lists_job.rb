@@ -10,12 +10,14 @@ class SeedCodeListsJob < ApplicationJob
     seed_courts
   end
 
-  def seed_municipalities(file_path: build_file_path('municipalities.csv'))
-    CSV.foreach(file_path, headers: true, col_sep: '|') do |municipality|
+  def seed_municipalities(file_path: build_file_path('municipalities.csv'), forced_update: false)
+    CodeList::Municipality.destroy_all if forced_update
+
+    CSV.foreach(file_path, headers: true, col_sep: ',') do |municipality|
       CodeList::Municipality.find_or_create_by({
-        identifier: municipality['code'],
-        value: municipality['officialTitle']
-      })
+        identifier: municipality['Doplňujúci obsah'],
+        value: municipality['Názov položky']
+      }) unless municipality['Koniec účinnosti'].presence
     end
   end
 
