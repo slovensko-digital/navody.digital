@@ -59,7 +59,7 @@ module UpvsSubmissions
       end
 
       def with_missing_municipality_identifier?
-        @address.originally_missing_municipality_id
+        @address.slovak? && @address.originally_missing_municipality_id
       end
 
       class Address
@@ -91,6 +91,14 @@ module UpvsSubmissions
 
         def municipality_code_list
           CodeList::Municipality.where("value like ?", "#{@original_municipality}%")
+        end
+
+        def unsupported_slovak_address?
+          slovak? && originally_missing_municipality_id && !municipality_code_list.present?
+        end
+
+        def slovak?
+          country&.include?('Slovenská')
         end
 
         private
@@ -229,7 +237,7 @@ module UpvsSubmissions
         end
 
         def with_missing_municipality_identifier?
-          @address.originally_missing_municipality_id
+          @address.slovak? && @address.originally_missing_municipality_id
         end
 
         private
@@ -238,7 +246,7 @@ module UpvsSubmissions
           address = Address.new(street: street, building_number: building_number, reg_number: reg_number, original_municipality: municipality, postal_code: postal_code, country: country)
           address.originally_missing_municipality_id = !address.municipality_identifier.present?
 
-          raise FuzsError.new if address.originally_missing_municipality_id && !address.municipality_code_list.present?
+          raise FuzsError.new if address.unsupported_slovak_address?
 
           address
         end
@@ -376,7 +384,7 @@ module UpvsSubmissions
                               original_municipality: params['municipality'], postal_code: params['postal_code'], country: params['country'])
         address.originally_missing_municipality_id = !address.municipality_identifier.present?
 
-        raise FuzsError.new if address.originally_missing_municipality_id && !address.municipality_code_list.present?
+        raise FuzsError.new if address.unsupported_slovak_address?
 
         address
       end
