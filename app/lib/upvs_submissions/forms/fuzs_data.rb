@@ -264,20 +264,24 @@ module UpvsSubmissions
         end
 
         def filter_deposit_entries(entries)
-          entries&.select{ |entry| (person_name_match?(entry) || cb_name_match?(entry)) }
+          entries&.select{ |entry| name_match?(entry["name"]) }
         end
 
         def identifier_status(status)
-          ok = status[:ok].select{ |entry| (entry.include?(family_name) && entry.include?(given_name)) }
+          ok = status[:ok].select{ |entry| name_match?(entry) }
           !ok.empty?
         end
 
+        def name_match?(data)
+          person_name_match?(data) || cb_name_match?(data)
+        end
+
         def person_name_match?(entry)
-          is_person? && entry["name"].include?(family_name) && entry["name"].include?(given_name)
+          is_person? && entry.include?(family_name) && entry.include?(given_name)
         end
 
         def cb_name_match?(entry)
-          !is_person? && entry["name"].include?(full_name)
+          !is_person? && entry.include?(full_name)
         end
 
         class Deposit
