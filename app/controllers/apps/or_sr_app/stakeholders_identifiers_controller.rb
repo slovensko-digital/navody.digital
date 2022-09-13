@@ -154,8 +154,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
   def set_metadata
     @metadata.og.title = 'Zápis identifikačných údajov do obchodného registra'
     @metadata.og.description = 'Zákonná povinnosť vybavená online, jednoducho, len na pár klikov.'
-    # TODO
-    # @metadata.og.image = ''
+    @metadata.og.image = 'orsr-identifiers-app.png'
   end
 
   def handle_error
