@@ -57,3 +57,13 @@
     <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link', name: :skip_subscribe %>
   </p>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  document.querySelector('[name="commit"]').addEventListener('click', () => {
+    plausible('emailMeSubmission');
+  })
+
+  document.querySelector('[name="skip_subscribe"]').addEventListener('click', () => {
+    plausible('downloadSubmission');
+  })
+</script>
