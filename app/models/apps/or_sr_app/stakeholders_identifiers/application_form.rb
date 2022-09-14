@@ -128,7 +128,12 @@ module Apps
 
         def foreign_stakeholder_identifier_valid?
           errors.add(:stakeholder_other_identifier_type, 'Zvoľte typ identifikačného údaju') if @stakeholder&.is_person? && !@stakeholder_other_identifier_type.present?
-          errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj') unless @stakeholder_other_identifier.present?
+
+          if !@stakeholder_other_identifier.present?
+            errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj')
+          else
+            errors.add(:stakeholder_other_identifier, 'Identifikačný údaj môže obsahovať maximálne 20 znakov') if @stakeholder_other_identifier.length > 20
+          end
 
           dob_valid? if @stakeholder&.is_person?
         end

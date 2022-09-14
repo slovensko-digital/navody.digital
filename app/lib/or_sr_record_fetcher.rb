@@ -88,15 +88,21 @@ class OrSrRecordFetcher
 
     {
       'name' => names.join(' '),
-      'deposit' => deposit&.first&.delete('Vklad: ')&.delete(' ')&.to_i,
+      'deposit' => deposit_to_num(deposit&.first, 'Vklad'),
       'deposit_currency' => deposit&.second&.strip,
-      'paid_deposit' => get_paid_deposit(deposit)&.delete('Splatené: ')&.delete(' ')&.to_i,
+      'paid_deposit' => get_paid_deposit(deposit),
       'paid_deposit_currency' => deposit&.last&.strip,
     }
   end
 
-  def self.get_paid_deposit(deposit)
-    deposit.select{ |d| d.include? 'Splatené' }&.first
+  def self.get_paid_deposit(deposit, key_word: 'Splatené')
+    paid_deposit = deposit.select{ |d| d.include?(key_word) }&.first
+    deposit_to_num(paid_deposit, key_word)
+  end
+
+  def self.deposit_to_num(string_deposit, text_to_remove)
+    value = string_deposit&.delete("#{text_to_remove}: ")&.delete(' ')&.sub(',', '.')
+    (value.to_f % 1) > 0 ? value.to_f : value.to_i
   end
 
   def self.get_stakeholders_table(doc, text: 'Spoločníci:')

@@ -159,6 +159,8 @@ module UpvsSubmissions
           @person_postfixes = person_postfixes
           @deposit_entries = deposit_entries ? load_deposit_entries(deposit_entries) : filter_deposit_entries(all_deposit_entries)&.map{ |entry| Deposit.new(*(entry.except("name")).values) }
           @identifier_ok = identifiers_status ? identifier_status(identifiers_status) : identifier_ok
+
+          raise FuzsError.new if missing_deposit_entries? && !@identifier_ok
         end
 
         def name
@@ -273,6 +275,11 @@ module UpvsSubmissions
 
         def filter_deposit_entries(entries)
           entries&.select{ |entry| name_match?(entry["name"]) }
+        end
+
+        def missing_deposit_entries?
+          data = @deposit_entries.first
+          !(data.deposit && data.deposit_currency && data.paid_deposit && data.paid_deposit_currency)
         end
 
         def identifier_status(status)
