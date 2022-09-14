@@ -1,6 +1,9 @@
 class Page < ApplicationRecord
   include Searchable
 
+  has_one :categorization, :as => :categorizable, dependent: :destroy
+  accepts_nested_attributes_for :categorization
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 
@@ -11,6 +14,7 @@ class Page < ApplicationRecord
   validates :content, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :is_faq, inclusion: { in: [true, false] }
+  validates :short_description, presence: true, if: :is_searchable?
 
   # FIXME: fill in position from id!
 
