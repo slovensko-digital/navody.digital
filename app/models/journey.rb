@@ -18,10 +18,13 @@ class Journey < ApplicationRecord
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
+  has_one :categorization, :as => :categorizable, dependent: :destroy
+  accepts_nested_attributes_for :categorization
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true, unless: :blank?
+  validates :short_description, presence: true, unless: :blank?
   # FIXME: fill in position from id!
 
   multisearchable against: %i(description_search),
