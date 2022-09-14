@@ -128,7 +128,12 @@ module Apps
 
         def foreign_stakeholder_identifier_valid?
           errors.add(:stakeholder_other_identifier_type, 'Zvoľte typ identifikačného údaju') if @stakeholder&.is_person? && !@stakeholder_other_identifier_type.present?
-          errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj') unless @stakeholder_other_identifier.present?
+
+          if !@stakeholder_other_identifier.present?
+            errors.add(:stakeholder_other_identifier, 'Vyplňte identifikačný údaj')
+          else
+            errors.add(:stakeholder_other_identifier, 'Identifikačný údaj môže obsahovať maximálne 20 znakov') if @stakeholder_other_identifier.length > 20
+          end
 
           dob_valid? if @stakeholder&.is_person?
         end
@@ -144,9 +149,15 @@ module Apps
         def dob_valid?
           if dob_missing?
             errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
-          elsif !Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i)
+          elsif invalid_dob?
             errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia')
-            invalid_date_errors(day_condition: false, month_condition: false, year_condition: false)
+            invalid_date_errors
+          elsif @stakeholder_dob_year.length < 4
+            errors.add(:stakeholder_dob, 'Zadajte celý rok narodenia, napr. 1983')
+            invalid_date_errors(day_condition: true, month_condition: true, year_condition: false)
+          elsif @stakeholder_dob_year.to_i < 1900
+            errors.add(:stakeholder_dob, 'Rok narodenia nemôže byť starší ako 1900')
+            invalid_date_errors(day_condition: true, month_condition: true, year_condition: false)
           end
         end
 
@@ -164,6 +175,10 @@ module Apps
           errors.add(:stakeholder_dob_day, nil) unless day_condition
           errors.add(:stakeholder_dob_month, nil) unless month_condition
           errors.add(:stakeholder_dob_year, nil) unless year_condition
+        end
+
+        def invalid_dob?
+          !Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i) || Date.new(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i).future?
         end
       end
     end
