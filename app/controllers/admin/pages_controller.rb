@@ -58,6 +58,7 @@ class Admin::PagesController < Admin::AdminController
     params.require(:page).permit(
         :title,
         :keywords,
+        :short_description,
         :content,
         :slug,
         :is_faq,

@@ -337,7 +337,8 @@ CREATE TABLE public.apps (
     published_status text NOT NULL,
     description text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    short_description text
 );
 
 
@@ -493,7 +494,8 @@ CREATE TABLE public.journeys (
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
     custom_title character varying,
-    last_checked_on date
+    last_checked_on date,
+    short_description text
 );
 
 
@@ -568,7 +570,8 @@ CREATE TABLE public.pages (
     "position" integer DEFAULT 0 NOT NULL,
     keywords text,
     image_name character varying,
-    is_searchable boolean DEFAULT false NOT NULL
+    is_searchable boolean DEFAULT false NOT NULL,
+    short_description text
 );
 
 
@@ -1869,6 +1872,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220623200232'),
 ('20220624185928'),
 ('20220624204655'),
-('20220727160233');
+('20220727160233'),
+('20220914073624'),
+('20220914073645'),
+('20220914073653');
 
 

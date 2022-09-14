@@ -13,6 +13,7 @@ class Page < ApplicationRecord
   validates :content, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :is_faq, inclusion: { in: [true, false] }
+  validates :short_description, presence: true, if: :is_searchable?
 
   # FIXME: fill in position from id!
 
