@@ -58,12 +58,4 @@
   </p>
 <% end %>
 
-<script type="text/javascript" charset="utf-8">
-  document.querySelector('[name="commit"]').addEventListener('click', () => {
-    plausible('emailMeSubmission');
-  })
-
-  document.querySelector('[name="skip_subscribe"]').addEventListener('click', () => {
-    plausible('downloadSubmission');
-  })
-</script>
+<%= javascript_include_tag 'submission_analytics.js', 'data-turbolinks-track': 'reload' %>
