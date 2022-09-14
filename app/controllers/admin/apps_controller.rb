@@ -9,6 +9,7 @@ class Admin::AppsController < Admin::AdminController
   # GET /apps/new
   def new
     @app = App.new
+    @app.categorization = Categorization.new(categorizable: @app)
   end
 
   # GET /apps/1/edit
@@ -53,9 +54,11 @@ class Admin::AppsController < Admin::AdminController
     params.require(:app).permit(
       :title,
       :image_name,
+      :short_description,
       :published_status,
       :slug,
-      :description
+      :description,
+      categorization_attributes: [:id, category_ids: []]
     )
   end
 end

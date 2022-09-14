@@ -13,6 +13,7 @@ class Admin::JourneysController < Admin::AdminController
   # GET /admin/journeys/new
   def new
     @journey = Journey.new
+    @journey.categorization = Categorization.new(categorizable: @journey)
   end
 
   # GET /admin/journeys/1/edit
@@ -68,11 +69,13 @@ class Admin::JourneysController < Admin::AdminController
         :custom_title,
         :image_name,
         :keywords,
+        :short_description,
         :published_status,
         :slug,
         :description,
         :position,
         :last_checked_on,
+        categorization_attributes: [:id, category_ids: []]
     )
   end
 end
