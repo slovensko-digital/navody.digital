@@ -149,9 +149,13 @@ module Apps
         def dob_valid?
           if dob_missing?
             errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
-          elsif !Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i)
+          elsif invalid_dob?
             errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia')
             invalid_date_errors(day_condition: false, month_condition: false, year_condition: false)
+          elsif @stakeholder_dob_year.length < 4
+            errors.add(:stakeholder_dob_year, 'Zadajte rok narodenia vo formáte YYYY')
+          elsif @stakeholder_dob_year.to_i < 1900
+            errors.add(:stakeholder_dob_year, 'Zvoľte validný dátum narodenia')
           end
         end
 
@@ -169,6 +173,10 @@ module Apps
           errors.add(:stakeholder_dob_day, nil) unless day_condition
           errors.add(:stakeholder_dob_month, nil) unless month_condition
           errors.add(:stakeholder_dob_year, nil) unless year_condition
+        end
+
+        def invalid_dob?
+          !Date.valid_date?(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i) || Date.new(@stakeholder_dob_year.to_i, @stakeholder_dob_month.to_i, @stakeholder_dob_day.to_i).future?
         end
       end
     end
