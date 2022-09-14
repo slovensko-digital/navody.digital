@@ -7,7 +7,7 @@
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h2 class="govuk-fieldset__heading">
-          Dopnenie údajov <%= ("(#{@application_form.current_stakeholder_index + 1}/#{@application_form.form_data.stakeholders_with_missing_identifiers.size})") if @application_form.form_data.stakeholders_with_missing_identifiers.size > 1 %>
+          Doplnenie údajov <%= ("(#{@application_form.current_stakeholder_index + 1}/#{@application_form.form_data.stakeholders_with_missing_identifiers.size})") if @application_form.form_data.stakeholders_with_missing_identifiers.size > 1 %>
         </h2>
       </legend>
       <br />
@@ -18,7 +18,10 @@
       <fieldset class="govuk-fieldset">
         <legend id="stakeholder" class="govuk-fieldset__legend">
           <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
+          <p class="govuk-heading-m"><%= @application_form.stakeholder.address.formatted %></p>
           <p>Spoločník</p>
+
+          <span class="govuk-hint">Vklad: <%= "#{@application_form.stakeholder&.deposit_entries&.first&.deposit} #{@application_form.stakeholder&.deposit_entries&.first&.deposit_currency&.code}" %></span>
         </legend>
 
         <%= render 'components/error_summary', form: @application_form %>
@@ -27,6 +30,24 @@
           <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_person', form: f %>
         <% else %>
           <%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_cb', form: f %>
+        <% end %>
+
+        <% if @application_form.stakeholder&.with_missing_municipality_identifier? %>
+          <div class="govuk-form-group">
+            <legend id="stakeholder_address" class="govuk-fieldset__legend">
+              <p class="govuk-label govuk-label--s">Bydlisko</p>
+            </legend>
+
+            <label class="govuk-label govuk-label--xs" for="stakeholder_municipality">
+              Obec
+            </label>
+            <span class="govuk-hint">
+              Nepodarilo sa nám automaticky nájsť obec k adrese bydliska, vyberte ju zo zoznamu.
+            </span>
+            <%= f.select :stakeholder_municipality, @municipality_options, { :include_blank => true, :selected => @application_form.stakeholder&.address&.municipality }, { :class => "govuk-select" } %>
+          </div>
+        <% else %>
+          <%= f.hidden_field :stakeholder_municipality, value: @application_form.stakeholder&.address&.municipality %>
         <% end %>
 
         <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>

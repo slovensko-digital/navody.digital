@@ -3,16 +3,16 @@ require 'csv'
 class SeedCodeListsJob < ApplicationJob
   queue_as :default
 
-  def perform
-    seed_municipalities
-    seed_countries
-    seed_currencies
-    seed_courts
+  def perform(forced_update: false)
+    seed_municipalities(forced_update: forced_update)
+    seed_countries(forced_update: forced_update)
+    seed_currencies(forced_update: forced_update)
+    seed_courts(forced_update: forced_update)
   end
 
   def seed_municipalities(file_path: build_file_path('municipalities.csv'), forced_update: false)
     CodeList::Municipality.destroy_all if forced_update
-
+    
     CSV.foreach(file_path, headers: true, col_sep: ',') do |municipality|
       CodeList::Municipality.find_or_create_by({
         identifier: municipality['Doplňujúci obsah'],
@@ -21,16 +21,20 @@ class SeedCodeListsJob < ApplicationJob
     end
   end
 
-  def seed_countries(file_path: build_file_path('countries.csv'))
+  def seed_countries(file_path: build_file_path('countries.csv'), forced_update: false)
+    CodeList::Country.destroy_all if forced_update
+
     CSV.foreach(file_path, headers: true, col_sep: '|') do |country|
       CodeList::Country.find_or_create_by({
         identifier: country['code'],
         value: country['officialTitle']
-      })
+      }) unless country['validTo'].presence
     end
   end
 
-  def seed_currencies
+  def seed_currencies(forced_update: false)
+    CodeList::Currency.destroy_all if forced_update
+
     currencies = [
       { 'identifier': 1, 'value': 'Sk', 'code': 'Sk' },
       { 'identifier': 6, 'value': 'EUR', 'code': 'EUR' },
@@ -53,7 +57,9 @@ class SeedCodeListsJob < ApplicationJob
     end
   end
 
-  def seed_courts
+  def seed_courts(forced_update: false)
+    CodeList::Court.destroy_all if forced_update
+
     courts = [
       { 'name': 'Bratislava I', 'identifier': 2, 'code': 'B', 'street': 'Záhradnícka', 'number': '10', 'postal_code': '81244', 'municipality': 'Bratislava I' },
       { 'name': 'Banská Bystrica', 'identifier': 3, 'code': 'S', 'street': 'Skuteckého', 'number': '28', 'postal_code': '97559', 'municipality': 'Banská Bystrica' },
