@@ -167,11 +167,11 @@ module UpvsSubmissions
         end
 
         def given_name
-          @person_given_names.compact.join(' ')
+          @person_given_names.compact.join(' ').presence
         end
 
         def family_name
-          @person_family_names.compact.join(' ')
+          @person_family_names.compact.join(' ').presence
         end
 
         def postfixes
