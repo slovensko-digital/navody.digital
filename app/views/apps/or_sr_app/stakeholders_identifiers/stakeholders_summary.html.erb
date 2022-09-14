@@ -1,6 +1,6 @@
 <%= render partial: 'header' %>
 
-<div class="govuk-grid-row">
+<div id="or-sr-identifiers" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
       <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'summary' %>
