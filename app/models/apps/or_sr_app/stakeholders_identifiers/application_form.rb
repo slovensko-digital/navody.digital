@@ -151,11 +151,13 @@ module Apps
             errors.add(:stakeholder_dob, 'Vyplňte dátum narodenia')
           elsif invalid_dob?
             errors.add(:stakeholder_dob, 'Zvoľte validný dátum narodenia')
-            invalid_date_errors(day_condition: false, month_condition: false, year_condition: false)
+            invalid_date_errors
           elsif @stakeholder_dob_year.length < 4
-            errors.add(:stakeholder_dob_year, 'Zadajte rok narodenia vo formáte YYYY')
+            errors.add(:stakeholder_dob, 'Zadajte celý rok narodenia, napr. 1983')
+            invalid_date_errors(day_condition: true, month_condition: true, year_condition: false)
           elsif @stakeholder_dob_year.to_i < 1900
-            errors.add(:stakeholder_dob_year, 'Zvoľte validný dátum narodenia')
+            errors.add(:stakeholder_dob, 'Rok narodenia nemôže byť starší ako 1900')
+            invalid_date_errors(day_condition: true, month_condition: true, year_condition: false)
           end
         end
 
