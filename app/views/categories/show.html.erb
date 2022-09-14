@@ -13,25 +13,25 @@
             <h2 class="govuk-heading-l">
               <%= @category.name %>
             </h2>
-            <% @documents.each do |searchable| %>
-              <div class="govuk-grid-column-full">
-                <div class="govuk-!-margin-top-5">
-                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-                  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                    <%= link_to searchable.title, searchable %>
-                  </h3>
-                  <p class="govuk-body-s">
-                    <% if searchable.is_a? Page %>
-                      <% description = searchable.content %>
-                    <% else %>
-                      <% description = searchable.description %>
-                    <% end %>
-                    <%= truncate description.squish, :length => 400, :separator => /\w/ %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
           </div>
+          <% @documents.each do |searchable| %>
+            <div class="govuk-grid-column-full">
+              <div class="govuk-!-margin-top-5">
+                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to searchable.title, searchable %>
+                </h3>
+                <p class="govuk-body-s">
+                  <% if searchable.is_a? Page %>
+                    <% description = searchable.content %>
+                  <% else %>
+                    <% description = searchable.description %>
+                  <% end %>
+                  <%= truncate description.squish, :length => 400, :separator => /\w/ %>
+                </p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

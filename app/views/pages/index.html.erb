@@ -11,22 +11,22 @@
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
             <h2 class="govuk-heading-l">
-              Kategórie
+            Kategórie
             </h2>
-            <% @categories.each do |category| %>
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-!-margin-top-5">
-                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-                  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                    <%= link_to category.name, category %>
-                  </h3>
-                  <p class="govuk-body-s">
-                    <%= category.description %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
           </div>
+          <% @categories.each do |category| %>
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-!-margin-top-5">
+                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to category.name, category %>
+                </h3>
+                <p class="govuk-body-s">
+                  <%= category.description %>
+                </p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -38,20 +38,20 @@
             <h2 class="govuk-heading-l">
               Najnovšie návody
             </h2>
-            <% @journeys.take(3).each do |journey| %>
-              <div class="govuk-grid-column-full">
-                <div class="govuk-!-margin-top-5">
-                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-                  <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
-                    <%= link_to journey.title, journey %>
-                  </h3>
-                  <p class="govuk-body-s">
-                    <%= truncate journey.description.squish, :length => 400, :separator => /\w/ %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
           </div>
+          <% @journeys.take(3).each do |journey| %>
+            <div class="govuk-grid-column-full">
+              <div class="govuk-!-margin-top-5">
+                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                  <%= link_to journey.title, journey %>
+                </h3>
+                <p class="govuk-body-s">
+                  <%= truncate journey.description.squish, :length => 400, :separator => /\w/ %>
+                </p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
