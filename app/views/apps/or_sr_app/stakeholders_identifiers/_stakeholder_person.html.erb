@@ -1,0 +1,129 @@
+<div class="govuk-form-group">
+  <div class="govuk-radios govuk-radios--inline">
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="sr"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="sr"
+             <%= 'checked' if @application_form.stakeholder.foreign != true %> >
+      <label class="govuk-label govuk-radios__label" for="sr">
+        Občan SR
+      </label>
+    </div>
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="foreign"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="foreign"
+             <%= 'checked' if @application_form.stakeholder.foreign == true %> >
+      <label class="govuk-label govuk-radios__label" for="foreign">
+        Cudzinec
+      </label>
+    </div>
+  </div>
+</div>
+
+<div id="identifiers-sr" class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="identifier">
+    Rodné číslo
+  </label>
+  <span id="input-with-hint-text-hint" class="govuk-hint">
+    Zadajte rodné číslo pridelené v SR s lomkou
+  </span>
+  <%= form.text_field :stakeholder_identifier, value: @application_form.stakeholder.identifier %>
+</div>
+
+<div id="identifiers-foreign" class="govuk-form-group">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <label class="govuk-label govuk-label--s" for="identifier">
+        Typ identifikačného údaju
+      </label>
+
+      <%= form.radios :stakeholder_other_identifier_type, '', inline: false do %>
+        <span id="housing-act-hint" class="govuk-hint">
+          Osoby bez slovenského občianstva nedisponujú slovenským rodným číslom. Preto je potrebné použiť na ich identifikáciu iné údaje.
+        </span>
+
+        <%= form.radio_button :stakeholder_other_identifier_type, 'ID', label: 'Preukaz totožnosti',
+                              checked: @application_form.stakeholder.other_identifier_type_data.dig(:code) == 'ID' %>
+        <%= form.radio_button :stakeholder_other_identifier_type, 'CD', label: 'Cestovný doklad',
+                              checked: @application_form.stakeholder.other_identifier_type_data.dig(:code) == 'CD' %>
+        <%= form.radio_button :stakeholder_other_identifier_type, 'DPC', label: 'Doklad o pobyte cudzinca',
+                              checked: @application_form.stakeholder.other_identifier_type_data.dig(:code) == 'DPC' %>
+        <%= form.radio_button :stakeholder_other_identifier_type, 'IIU', label: 'Iný identifikačný údaj',
+                              checked: @application_form.stakeholder.other_identifier_type_data.dig(:code) == 'IIU' %>
+      <% end %>
+    </fieldset>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label govuk-label--s" for="identifier">
+      Identifikačný údaj
+    </label>
+    <%= form.text_field :stakeholder_other_identifier, value: @application_form.stakeholder.other_identifier %>
+  </div>
+
+  <div class="govuk-form-group">
+<!--    <fieldset class="govuk-fieldset" aria-describedby="dob_hint" role="group">-->
+    <label class="govuk-label govuk-label--s" for="identifier">
+      Dátum narodenia
+    </label>
+
+    <%= form.inputs_set :stakeholder_dob do %>
+      <div class="govuk-date-input" id="dob">
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob_day">
+              Deň
+            </label>
+            <%= form.text_field :stakeholder_dob_day, type: 'number', pattern: "[0-9]*", class: 'govuk-input--width-4',
+                                value: @application_form.stakeholder.dob_day %>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob_month">
+              Mesiac
+            </label>
+            <%= form.text_field :stakeholder_dob_month, type: 'number', pattern: "[0-9]*", class: 'govuk-input--width-4',
+                                value: @application_form.stakeholder.dob_month %>
+          </div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="dob_year">
+              Rok
+            </label>
+            <%= form.text_field :stakeholder_dob_year, type: 'number', pattern: "[0-9]*", class: 'govuk-input--width-5',
+                                value: @application_form.stakeholder.dob_year %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+<!--    </fieldset>-->
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  const foreignId = 'foreign';
+  const srId = 'sr';
+
+  const setVisibility = (id) => {
+    const elements = {
+      [foreignId]: document.querySelector('#identifiers-foreign'),
+      [srId]: document.querySelector('#identifiers-sr')
+    }
+
+    elements[id].style.display = 'block';
+    elements[id === srId ? foreignId : srId].style.display = 'none';
+  }
+
+  document.querySelectorAll('#sr, #foreign').forEach(item => {
+    if (item.checked) {
+      setVisibility(item.id);
+    }
+
+    item.addEventListener('click', event => {
+      setVisibility(event.target.id);
+    })
+  })
+</script>

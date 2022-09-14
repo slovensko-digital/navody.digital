@@ -69,6 +69,7 @@ class Admin::JourneysController < Admin::AdminController
         :custom_title,
         :image_name,
         :keywords,
+        :short_description,
         :published_status,
         :slug,
         :description,

@@ -7,6 +7,7 @@
 
   <%= form.text_field :title %>
   <%= form.text_field :slug %>
+  <%= form.text_area :short_description %>
   <%= form.fields_for :categorization do |cat| %>
     <%= cat.collection_check_boxes :category_ids, Category.all, :id, :name, checked: app.categorization.categories.pluck(:id) %>
   <% end %>

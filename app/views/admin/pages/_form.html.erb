@@ -10,6 +10,7 @@
   <%= form.check_box :is_faq %>
   <%= form.check_box :is_searchable %>
   <%= form.text_field :keywords %>
+  <%= form.text_area :short_description %>
   <%= form.fields_for :categorization do |cat| %>
     <%= cat.collection_check_boxes :category_ids, Category.all, :id, :name, checked: page.categorization.categories.pluck(:id) %>
   <% end %>

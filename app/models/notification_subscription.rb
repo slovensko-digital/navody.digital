@@ -58,6 +58,11 @@ class NotificationSubscription < ApplicationRecord
       transactional: true,
       after_subscribe_message: 'email_me_after_subscribe_instructions',
       on_submission_job: EmailMeSubmissionInstructionsEmailJob
+    },
+    'EmailMeOrSrIdentifiersStatusEmail' => {
+      label: 'Chcem, aby ste ma informovali, keď údaje budú zapísané v obchodnom registri',
+      hint: 'Dáme Vám vedieť, keď chýbajúce identifikačné údaje budú zapísané v obchodnom registri.',
+      on_submission_job: SaveCompanyWithMissingIdentifiersJob
     }
   }
 

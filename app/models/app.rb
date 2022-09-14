@@ -15,6 +15,7 @@ class App < ApplicationRecord
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
+  validates :short_description, presence: true
 
   multisearchable against: %i(description_search),
     if: :published?,

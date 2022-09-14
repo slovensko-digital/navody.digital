@@ -24,6 +24,7 @@ class Journey < ApplicationRecord
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true, unless: :blank?
+  validates :short_description, presence: true, unless: :blank?
   # FIXME: fill in position from id!
 
   multisearchable against: %i(description_search),

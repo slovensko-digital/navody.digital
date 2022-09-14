@@ -54,6 +54,7 @@ class Admin::AppsController < Admin::AdminController
     params.require(:app).permit(
       :title,
       :image_name,
+      :short_description,
       :published_status,
       :slug,
       :description,
