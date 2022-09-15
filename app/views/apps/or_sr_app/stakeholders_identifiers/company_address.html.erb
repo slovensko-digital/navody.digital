@@ -12,7 +12,7 @@
       </legend>
       <br />
 
-      <p>Pre <b><%= "#{@application_form.form_data&.name}, #{@application_form.form_data&.address&.formatted}" %></b> sa nám nepodarilo automaticky nájsť obec sídla spoločnosti.</p>
+      <p>Pre <b><%= "#{@application_form.form_data&.name}, #{@application_form.form_data&.address&.formatted}" %></b> sa nám nepodarilo nájsť v&nbsp;číselníku obec sídla spoločnosti. Väčšinou je potrebné len&nbsp;doplniť mestskú časť. Vyberte prosím príslušnú obec z&nbsp;uvedených možností.</p>
       <br />
 
       <%= render 'components/error_summary', form: @application_form %>
