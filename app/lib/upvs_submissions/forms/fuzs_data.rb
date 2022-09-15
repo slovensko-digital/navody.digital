@@ -116,6 +116,8 @@ module UpvsSubmissions
         end
 
         def load_municipality_identifier
+          return unless slovak?
+
           municipality_code_list_object = CodeList::Municipality.where(value: @municipality&.strip).take
           @municipality_identifier = municipality_code_list_object&.identifier
         end
