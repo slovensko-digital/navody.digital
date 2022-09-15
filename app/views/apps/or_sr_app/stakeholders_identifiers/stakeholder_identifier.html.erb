@@ -42,7 +42,7 @@
               Obec
             </label>
             <span class="govuk-hint">
-              Nepodarilo sa nám automaticky nájsť obec k adrese bydliska, vyberte ju zo zoznamu.
+              Nepodarilo sa nám nájsť v&nbsp;číselníku obec k adrese bydliska. Vyberte prosím príslušnú obec z&nbsp;uvedených možností.
             </span>
             <%= f.select :stakeholder_municipality, @municipality_options, { :include_blank => true, :selected => @application_form.stakeholder&.address&.municipality }, { :class => "govuk-select" } %>
           </div>
