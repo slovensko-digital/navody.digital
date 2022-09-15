@@ -1,6 +1,6 @@
 <%= render partial: 'header' %>
 
-<div class="govuk-grid-row">
+<div id="or-sr-identifiers" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_for @application_form, :builder => AppFormBuilder, url: stakeholder_identifier_apps_or_sr_app_stakeholders_identifiers_path do |f| %>
       <%= render 'apps/or_sr_app/stakeholders_identifiers/back', form: f %>

@@ -90,7 +90,11 @@ module UpvsSubmissions
         end
 
         def municipality_code_list
-          CodeList::Municipality.where("value like ?", "#{@original_municipality}%")
+          original_municipality_similars = CodeList::Municipality.where("value like ?", "#{@original_municipality}%")
+
+          return original_municipality_similars if original_municipality_similars.present?
+
+          CodeList::Municipality.where("value like ?", "#{@original_municipality.split('-')&.first&.strip}%")
         end
 
         def unsupported_slovak_address?
