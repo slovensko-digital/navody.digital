@@ -143,7 +143,7 @@ module UpvsSubmissions
         def initialize(
           full_name: nil, cin: nil, foreign: nil, identifier: nil, other_identifier: nil, other_identifier_type: nil,
           dob_year: nil, dob_month: nil, dob_day: nil,
-          person_given_names: nil, person_family_names: nil, person_prefixes: nil, person_postfixes: nil,
+          person_formatted_name: nil, person_given_names: nil, person_family_names: nil, person_prefixes: nil, person_postfixes: nil,
           address_street: nil, address_reg_number: nil, address_building_number: nil, address_postal_code: nil, address_municipality: nil, address_country: nil,
           all_deposit_entries: nil, identifiers_status: nil,
           address: nil, deposit_entries: nil, identifier_ok: nil
@@ -163,6 +163,7 @@ module UpvsSubmissions
           @person_family_names = person_family_names
           @person_prefixes = person_prefixes
           @person_postfixes = person_postfixes
+          parse_person_formatted_name(person_formatted_name) if person_formatted_name
           @deposit_entries = deposit_entries ? load_deposit_entries(deposit_entries) : filter_deposit_entries(all_deposit_entries)&.map{ |entry| Deposit.new(*(entry.except("name")).values) }
           @identifier_ok = identifiers_status ? identifier_status(identifiers_status) : identifier_ok
 
@@ -249,6 +250,16 @@ module UpvsSubmissions
         end
 
         private
+
+        def parse_person_formatted_name(formatted_name)
+          return if @person_prefixes.present? || @person_postfixes.present?
+
+          formatted_name_pattern = /(.*)\b#{given_name}\b\s\b#{family_name}\b(.*)/
+          prefixes, postfixes = formatted_name.match(formatted_name_pattern).captures
+
+          @person_prefixes = [prefixes.presence&.strip].compact
+          @person_postfixes = [postfixes.presence&.strip&.delete_prefix(',')&.strip].compact
+        end
 
         def load_address_from_datahub_cb(street: nil, building_number: nil, reg_number: nil, municipality: nil, postal_code: nil, country: nil)
           address = Address.new(street: street, building_number: building_number, reg_number: reg_number, original_municipality: municipality, postal_code: postal_code, country: country)
@@ -370,7 +381,7 @@ module UpvsSubmissions
 
         stakeholders_data&.map do |data| Stakeholder.new(
           full_name: data['full_name'], cin: data['cin'],
-          person_given_names: data['person_given_names'], person_family_names: data['person_family_names'], person_prefixes: data['person_prefixes'], person_postfixes: data['person_postfixes'],
+          person_formatted_name: data['person_formatted_name'], person_given_names: data['person_given_names'], person_family_names: data['person_family_names'], person_prefixes: data['person_prefixes'], person_postfixes: data['person_postfixes'],
           address_street: data['address_street'],  address_reg_number: data['address_reg_number'],  address_building_number: data['address_building_number'],  address_postal_code: data['address_postal_code'], address_municipality: data['address_municipality'], address_country: data['address_country'],
           all_deposit_entries: @deposit_entries, identifiers_status: @identifiers_status
         )
