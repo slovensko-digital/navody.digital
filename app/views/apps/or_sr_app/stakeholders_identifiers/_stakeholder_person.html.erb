@@ -63,7 +63,6 @@
   </div>
 
   <div class="govuk-form-group">
-<!--    <fieldset class="govuk-fieldset" aria-describedby="dob_hint" role="group">-->
     <label class="govuk-label govuk-label--s" for="identifier">
       Dátum narodenia
     </label>
@@ -99,9 +98,10 @@
         </div>
       </div>
     <% end %>
-<!--    </fieldset>-->
   </div>
 </div>
+
+<%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_address', form: form, label: 'Bydlisko', hint: 'Nepodarilo sa nám automaticky nájsť obec k adrese bydliska, vyberte ju zo zoznamu.' %>
 
 <script type="text/javascript" charset="utf-8">
   const foreignId = 'foreign';
