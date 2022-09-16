@@ -30,6 +30,36 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def select(method, values, options = {}, html_options = {}, &block)
+    group_classes = ['govuk-form-group']
+    field_classes = ['govuk-select', html_options[:class]]
+    described_by = []
+
+    label = html_options.delete(:label)
+    label = label(method, label, class: 'govuk-label') if label
+
+    hint = html_options.delete(:hint)
+    if hint
+      hint = @template.content_tag(:span, hint, id: hint_id(method), class: 'govuk-hint')
+      described_by << hint_id(method)
+    end
+
+    if @object.errors[method].present?
+      group_classes << 'govuk-form-group--error'
+      field_classes << 'govuk-select--error'
+      described_by << error_id(method)
+    end
+
+    html_options = options.merge({'aria-describedby': described_by.join(' ')}) unless described_by.empty?
+
+    @template.content_tag(:div, class: group_classes) do
+      @template.concat label
+      @template.concat hint
+      @template.concat error_message(method)
+      @template.concat super(method, values, options, objectify_options(html_options.merge({class: field_classes})))
+    end
+  end
+
   def radio_button(method, tag_value, options = {})
     field_classes = ['govuk-radios__input', options[:class]]
     radio_method = method.to_s + "_" + tag_value
@@ -67,6 +97,20 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def inputs_set(method, options = {}, &block)
+    inputs_div = @template.content_tag(:div, id: "#{@object.model_name.singular}_#{method}") do
+      @template.concat @template.capture(&block)
+    end
+    inputs_fs = field_set(method, '', options) do
+      @template.concat inputs_div
+    end
+
+    classes = 'govuk-form-group'
+    classes = classes + ' govuk-form-group--error' if @object.errors[method].present?
+    @template.content_tag(:div, class: classes) do
+      @template.concat inputs_fs
+    end
+  end
 
   def field_set(method, text, options = {}, &block)
     legend = @template.content_tag(:legend, {class: 'govuk-fieldset__legend govuk-fieldset__legend--xl'}) do
@@ -93,7 +137,6 @@ class AppFormBuilder < ActionView::Helpers::FormBuilder
       @template.concat error_message(method)
       @template.concat @template.capture(&block)
     end
-
   end
 
   def submit(value = nil, options = {})

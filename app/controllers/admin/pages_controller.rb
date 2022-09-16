@@ -13,6 +13,7 @@ class Admin::PagesController < Admin::AdminController
   # GET /pages/new
   def new
     @page = Page.new
+    @page.categorization = Categorization.new(categorizable: @page)
   end
 
   # GET /pages/1/edit
@@ -54,6 +55,17 @@ class Admin::PagesController < Admin::AdminController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def page_params
-    params.require(:page).permit(:title, :keywords, :content, :slug, :is_faq, :is_searchable, :position, :image_name)
+    params.require(:page).permit(
+        :title,
+        :keywords,
+        :short_description,
+        :content,
+        :slug,
+        :is_faq,
+        :is_searchable,
+        :position,
+        :image_name,
+        categorization_attributes: [:id, category_ids: []]
+    )
   end
 end

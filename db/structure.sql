@@ -10,6 +10,19 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA upvs;
+
+
+--
+-- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA code_list;
+
+
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -220,6 +233,140 @@ $$;
 
 
 --
+-- Name: countries; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.countries (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.countries_id_seq OWNED BY code_list.countries.id;
+
+
+--
+-- Name: courts; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.courts (
+    id bigint NOT NULL,
+    name character varying,
+    street character varying,
+    number character varying,
+    postal_code character varying,
+    municipality character varying,
+    identifier integer,
+    code character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: courts_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.courts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: courts_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.courts_id_seq OWNED BY code_list.courts.id;
+
+
+--
+-- Name: currencies; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.currencies (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    code character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: currencies_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.currencies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: currencies_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.currencies_id_seq OWNED BY code_list.currencies.id;
+
+
+--
+-- Name: municipalities; Type: TABLE; Schema: code_list; Owner: -
+--
+
+CREATE TABLE code_list.municipalities (
+    id bigint NOT NULL,
+    identifier integer,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: municipalities_id_seq; Type: SEQUENCE; Schema: code_list; Owner: -
+--
+
+CREATE SEQUENCE code_list.municipalities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: municipalities_id_seq; Type: SEQUENCE OWNED BY; Schema: code_list; Owner: -
+--
+
+ALTER SEQUENCE code_list.municipalities_id_seq OWNED BY code_list.municipalities.id;
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -330,7 +477,8 @@ CREATE TABLE public.apps (
     published_status text NOT NULL,
     description text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    short_description text
 );
 
 
@@ -363,6 +511,79 @@ CREATE TABLE public.ar_internal_metadata (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    description text NOT NULL,
+    featured boolean DEFAULT true,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: categories_categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories_categorizations (
+    category_id bigint NOT NULL,
+    categorization_id bigint NOT NULL
+);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- Name: categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categorizations (
+    id bigint NOT NULL,
+    categorizable_type character varying,
+    categorizable_id bigint
+);
+
+
+--
+-- Name: categorizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.categorizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categorizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categorizations_id_seq OWNED BY public.categorizations.id;
 
 
 --
@@ -413,7 +634,8 @@ CREATE TABLE public.journeys (
     "position" integer DEFAULT 0 NOT NULL,
     image_name text,
     custom_title character varying,
-    last_checked_on date
+    last_checked_on date,
+    short_description text
 );
 
 
@@ -474,6 +696,39 @@ ALTER SEQUENCE public.notification_subscriptions_id_seq OWNED BY public.notifica
 
 
 --
+-- Name: or_sr_company_records; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.or_sr_company_records (
+    id bigint NOT NULL,
+    cin bigint,
+    identifiers_ok boolean DEFAULT false,
+    email character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: or_sr_company_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.or_sr_company_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: or_sr_company_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.or_sr_company_records_id_seq OWNED BY public.or_sr_company_records.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -488,7 +743,8 @@ CREATE TABLE public.pages (
     "position" integer DEFAULT 0 NOT NULL,
     keywords text,
     image_name character varying,
-    is_searchable boolean DEFAULT false NOT NULL
+    is_searchable boolean DEFAULT false NOT NULL,
+    short_description text
 );
 
 
@@ -701,11 +957,11 @@ CREATE TABLE public.submissions (
     callback_url character varying NOT NULL,
     callback_step_id bigint,
     callback_step_status character varying,
+    selected_subscription_types character varying[] DEFAULT '{}'::character varying[] NOT NULL,
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    selected_subscription_types character varying[]
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -896,6 +1152,102 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: egov_application_allow_rules; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.egov_application_allow_rules (
+    id bigint NOT NULL,
+    recipient_uri character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.egov_application_allow_rules_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: egov_application_allow_rules_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.egov_application_allow_rules_id_seq OWNED BY upvs.egov_application_allow_rules.id;
+
+
+--
+-- Name: form_template_related_documents; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.form_template_related_documents (
+    id bigint NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    xsd_schema text,
+    xslt_transformation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.form_template_related_documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: form_template_related_documents_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.countries ALTER COLUMN id SET DEFAULT nextval('code_list.countries_id_seq'::regclass);
+
+
+--
+-- Name: courts id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.courts ALTER COLUMN id SET DEFAULT nextval('code_list.courts_id_seq'::regclass);
+
+
+--
+-- Name: currencies id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.currencies ALTER COLUMN id SET DEFAULT nextval('code_list.currencies_id_seq'::regclass);
+
+
+--
+-- Name: municipalities id; Type: DEFAULT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.municipalities ALTER COLUMN id SET DEFAULT nextval('code_list.municipalities_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -924,6 +1276,20 @@ ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id
 
 
 --
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- Name: categorizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations ALTER COLUMN id SET DEFAULT nextval('public.categorizations_id_seq'::regclass);
+
+
+--
 -- Name: current_topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -942,6 +1308,13 @@ ALTER TABLE ONLY public.journeys ALTER COLUMN id SET DEFAULT nextval('public.jou
 --
 
 ALTER TABLE ONLY public.notification_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.notification_subscriptions_id_seq'::regclass);
+
+
+--
+-- Name: or_sr_company_records id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.or_sr_company_records ALTER COLUMN id SET DEFAULT nextval('public.or_sr_company_records_id_seq'::regclass);
 
 
 --
@@ -1022,6 +1395,47 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: egov_application_allow_rules id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT nextval('upvs.egov_application_allow_rules_id_seq'::regclass);
+
+
+--
+-- Name: form_template_related_documents id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
+
+ALTER TABLE ONLY code_list.countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courts courts_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.courts
+    ADD CONSTRAINT courts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: currencies currencies_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.currencies
+    ADD CONSTRAINT currencies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: municipalities municipalities_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+ALTER TABLE ONLY code_list.municipalities
+    ADD CONSTRAINT municipalities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: active_storage_attachments active_storage_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1062,6 +1476,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categorizations categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categorizations
+    ADD CONSTRAINT categorizations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: current_topics current_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1083,6 +1513,14 @@ ALTER TABLE ONLY public.journeys
 
 ALTER TABLE ONLY public.notification_subscriptions
     ADD CONSTRAINT notification_subscriptions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: or_sr_company_records or_sr_company_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.or_sr_company_records
+    ADD CONSTRAINT or_sr_company_records_pkey PRIMARY KEY (id);
 
 
 --
@@ -1198,6 +1636,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: egov_application_allow_rules egov_application_allow_rules_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.egov_application_allow_rules
+    ADD CONSTRAINT egov_application_allow_rules_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: form_template_related_documents form_template_related_documents_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.form_template_related_documents
+    ADD CONSTRAINT form_template_related_documents_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1223,6 +1677,20 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_categories_categorizations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_categories_categorizations ON public.categories_categorizations USING btree (category_id, categorization_id);
+
+
+--
+-- Name: index_categorizations_on_categorizable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categorizations_on_categorizable ON public.categorizations USING btree (categorizable_type, categorizable_id);
 
 
 --
@@ -1642,6 +2110,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321181737'),
 ('20220322180237'),
 ('20220323214831'),
-('20220407131258');
-
-
+('20220407131258'),
+('20220623200232'),
+('20220624185928'),
+('20220624204655'),
+('20220727160233'),
+('20220815153512'),
+('20220815153557'),
+('20220815155429'),
+('20220815155542'),
+('20220815211829'),
+('20220907210125'),
+('20220914073624'),
+('20220914073645'),
+('20220914073653');

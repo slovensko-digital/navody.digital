@@ -17,4 +17,5 @@ Rails.application.config.assets.precompile += %w(
   accessible-autocomplete.css
   admin.js
   iframe.js
+  submission_analytics.js
 )
