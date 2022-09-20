@@ -143,7 +143,7 @@ class UpvsSubmissions::OrSrFormBuilder
           <ns1:Spolocnik>
             <ns1:ObchodneMeno>#{stakeholder&.full_name&.encode(:xml => :text)}</ns1:ObchodneMeno>
             <ns1:Ico>#{stakeholder&.identifier}</ns1:Ico>
-            <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier}</ns1:InyIdentifikacnyUdaj>
+            <ns1:InyIdentifikacnyUdaj>#{stakeholder&.other_identifier&.encode(:xml => :text)}</ns1:InyIdentifikacnyUdaj>
              #{address(stakeholder&.address)}
           </ns1:Spolocnik>
           #{deposit_entries(stakeholder&.deposit_entries)}
@@ -263,7 +263,7 @@ class UpvsSubmissions::OrSrFormBuilder
           <ns1:Value>#{data&.other_identifier_type_data&.dig(:value) if with_identifiers}</ns1:Value>
           <ns1:Znacka>#{data&.other_identifier_type_data&.dig(:code) if with_identifiers}</ns1:Znacka>
         </ns1:TypInyIdentifikator>
-        <ns1:InyIdentifikacnyUdaj>#{data&.other_identifier if with_identifiers}</ns1:InyIdentifikacnyUdaj>
+        <ns1:InyIdentifikacnyUdaj>#{data&.other_identifier&.encode(:xml => :text) if with_identifiers}</ns1:InyIdentifikacnyUdaj>
       </ns1:Osoba>
     PERSON
   end
