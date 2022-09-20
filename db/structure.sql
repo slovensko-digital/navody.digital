@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA code_list;
+
+
+--
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -17,12 +24,20 @@ CREATE SCHEMA upvs;
 
 
 --
--- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
 --
 
-CREATE SCHEMA code_list;
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
 
 
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -1407,6 +1422,11 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
 
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
 ALTER TABLE ONLY code_list.countries
     ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
@@ -2123,5 +2143,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220907210125'),
 ('20220914073624'),
 ('20220914073645'),
-('20220914073653');
+('20220914073653'),
+('20220920105702');
+
 
