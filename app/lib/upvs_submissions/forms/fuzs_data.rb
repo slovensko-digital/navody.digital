@@ -78,6 +78,8 @@ module UpvsSubmissions
           @country = country
           load_municipality_identifier
           load_country_identifier
+
+          raise FuzsError.new unless required_data_present?
         end
 
         def formatted
@@ -125,6 +127,10 @@ module UpvsSubmissions
         def load_country_identifier
           country_code_list_object = CodeList::Country.where(value: @country&.strip).take
           @country_identifier = country_code_list_object&.identifier
+        end
+
+        def required_data_present?
+          @number.present? && @municipality.present? && @country.present?
         end
       end
 
