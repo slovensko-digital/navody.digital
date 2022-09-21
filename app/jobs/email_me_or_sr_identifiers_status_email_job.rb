@@ -9,8 +9,27 @@ class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
       if current_identifiers_status[:missing].size == 0
         company_record.update(:identifiers_ok => true)
 
-        # TODO send email
+        email = build_template_email(company_record)
+        EmailService.send_email(email)
       end
     end
+  end
+
+  private
+
+  def build_template_email(company_record)
+    # TODO templateID
+    {
+      templateId: 0,
+      params: email_params(company_record),
+      to: [{ email: company_record.email }]
+    }
+  end
+
+  def email_params(company_record)
+    {
+      company_name: company_record.name,
+      company_cin: company_record.cin
+    }
   end
 end
