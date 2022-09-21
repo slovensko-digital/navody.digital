@@ -2,7 +2,7 @@ class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
   queue_as :default
 
   def perform
-    Apps::OrSrApp::StakeholdersIdentifiers::CompanyRecord.where(identifiers_ok: false) do |company_record|
+    Apps::OrSrApp::StakeholdersIdentifiers::CompanyRecord.where(identifiers_ok: false).each do |company_record|
       or_sr_document = OrSrRecordFetcher.get_document(company_record.cin)
       current_identifiers_status = OrSrRecordFetcher.get_stakeholders_identifiers_status(or_sr_document)
 
