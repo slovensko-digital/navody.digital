@@ -96,7 +96,7 @@ module UpvsSubmissions
 
           return original_municipality_similars if original_municipality_similars.present?
           
-          CodeList::Municipality.where("unaccent(value) like unaccent(?)", "#{@original_municipality.split('-')&.first&.strip}%")
+          CodeList::Municipality.where("lower_unaccent(value) like lower_unaccent(?)", "#{@original_municipality.split('-')&.first&.strip}%")
         end
 
         def unsupported_slovak_address?
@@ -120,7 +120,7 @@ module UpvsSubmissions
         def load_municipality_identifier
           return unless slovak?
 
-          municipality_code_list_object = CodeList::Municipality.where("unaccent(value) = unaccent(?)", "#{@municipality.strip}").take
+          municipality_code_list_object = CodeList::Municipality.where("lower_unaccent(value) = lower_unaccent(?)", "#{@municipality.strip}").take
           @municipality_identifier = municipality_code_list_object&.identifier
         end
 

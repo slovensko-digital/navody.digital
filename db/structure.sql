@@ -38,6 +38,15 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
 --
+-- Name: lower_unaccent(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.lower_unaccent(text) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    AS $_$SELECT lower(unaccent($1))$_$;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -1672,6 +1681,13 @@ ALTER TABLE ONLY upvs.form_template_related_documents
 
 
 --
+-- Name: unaccent_value_index; Type: INDEX; Schema: code_list; Owner: -
+--
+
+CREATE INDEX unaccent_value_index ON code_list.municipalities USING btree (public.lower_unaccent((value)::text));
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2144,6 +2160,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073624'),
 ('20220914073645'),
 ('20220914073653'),
-('20220920105702');
+('20220920105702'),
+('20220921072632');
 
 
