@@ -18,9 +18,8 @@ class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
   private
 
   def build_template_email(company_record)
-    # TODO templateID
     {
-      templateId: 0,
+      templateId: ENV.fetch('OR_SR_IDENTIFIERS_DONE_EMAIL_TEMPLATE_ID'),
       params: email_params(company_record),
       to: [{ email: company_record.email }]
     }
@@ -29,7 +28,7 @@ class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
   def email_params(company_record)
     {
       company_name: company_record.name,
-      company_cin: company_record.cin
+      orsr_url: OrSrRecordFetcher.get_company_url(company_record.cin)
     }
   end
 end
