@@ -13,6 +13,19 @@ class OrSrRecordFetcher
     results.first
   end
 
+  def self.get_company_url(cin)
+    final_urls = retrieve_entity_urls(cin)
+
+    urls = final_urls.map do |url|
+      resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
+      ['Spis odstúpený na iný registrový súd', 'Spoločnosť zrušená', 'Dôvod výmazu'].any? { |s| resp.include?(s) } ? nil : url
+    end.compact
+
+    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if urls.size > 1
+
+    urls.first
+  end
+
   def self.get_stakeholders(doc)
     stakeholders_table = get_stakeholders_table(doc)
     stakeholders = []
