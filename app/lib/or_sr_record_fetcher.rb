@@ -21,7 +21,7 @@ class OrSrRecordFetcher
       ['Spis odstúpený na iný registrový súd', 'Spoločnosť zrušená', 'Dôvod výmazu'].any? { |s| resp.include?(s) } ? nil : url
     end.compact
 
-    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if results.size > 1
+    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if urls.size > 1
 
     urls.first
   end
