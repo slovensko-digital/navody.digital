@@ -19,7 +19,7 @@ class EmailMeOrSrIdentifiersStatusEmailJob < ApplicationJob
 
   def build_template_email(company_record)
     {
-      templateId: ENV.fetch('OR_SR_IDENTIFIERS_DONE_EMAIL_TEMPLATE_ID'),
+      templateId: Integer(ENV.fetch('OR_SR_IDENTIFIERS_DONE_EMAIL_TEMPLATE_ID')),
       params: email_params(company_record),
       to: [{ email: company_record.email }]
     }
