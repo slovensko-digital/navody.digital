@@ -18,7 +18,15 @@
       <fieldset class="govuk-fieldset">
         <legend id="stakeholder" class="govuk-fieldset__legend">
           <p class="govuk-heading-l"><%= @application_form.stakeholder.name %></p>
-          <p class="govuk-heading-m"><%= @application_form.stakeholder.address.formatted %></p>
+
+          <div class="address-wrap">
+            <div>
+              <span class="govuk-heading-m"><%= @application_form.stakeholder.address.formatted %></span>
+              <span id="address-helper">Adresa nie je aktuálna?</span>
+            </div>
+            <p id="address-helper-text">V rámci aplikácie si viete bez poplatku zmeniť výhradne identifikačné údaje. Ak si želáte zmeniť napr. adresu, musíte tak urobiť prostredníctvom <a href="/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/vytvorit-navrh-na-zapis-do-or#basic-flow">formulára</a>, ktorý je spoplatnený.</p>
+          </div>
+
           <p>Spoločník</p>
 
           <span class="govuk-hint">Vklad: <%= "#{@application_form.stakeholder&.deposit_entries&.first&.deposit} #{@application_form.stakeholder&.deposit_entries&.first&.deposit_currency&.code}" %></span>
@@ -35,9 +43,31 @@
         <%= render 'apps/or_sr_app/stakeholders_identifiers/hidden_fields', form: f, current_step: 'save' %>
       </fieldset>
 
+      <br />
+      <span class="govuk-hint">V rámci aplikácie si viete bez poplatku zmeniť výhradne identifikačné údaje. Ak si želáte zmeniť napr. adresu, musíte tak urobiť prostredníctvom <a class="govuk-link" href="/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/vytvorit-navrh-na-zapis-do-or#basic-flow">formulára</a>, ktorý je spoplatnený.</span>
+
       <button id="submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
         Pokračovať ❯
       </button>
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  const addressToggle = document.getElementById('address-helper');
+  const toggleAddressCollapsibleVisibility = () => {
+    const addressCollapsible = document.getElementById('address-helper-text');
+
+    if (addressCollapsible.style.display === 'none'){
+      addressCollapsible.style.display = 'block';
+    } else {
+      addressCollapsible.style.display = 'none';
+    }
+  }
+
+  toggleAddressCollapsibleVisibility();
+
+  addressToggle.addEventListener('click', () => {
+    toggleAddressCollapsibleVisibility();
+  })
+</script>
