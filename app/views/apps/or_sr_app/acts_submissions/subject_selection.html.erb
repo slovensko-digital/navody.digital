@@ -1,35 +1,39 @@
 <%= render partial: 'header' %>
 
-<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-  <h2 class="govuk-fieldset__heading">Vyhľadávanie spoločnosti</h2>
-</legend>
-<br />
+<div id="acts-submission" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+      <h2 class="govuk-fieldset__heading">Vyhľadávanie spoločnosti</h2>
+    </legend>
+    <br />
 
-<%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_acts_path do |f| %>
-  <%= render 'components/error_summary', form: @application_form %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_acts_path do |f| %>
+      <%= render 'components/error_summary', form: @application_form %>
 
-  <div class="govuk-form-group">
-    <p class="govuk-label-wrapper">
-      <label class="govuk-label govuk-label--s" for="event-name">
-        Obchodné meno/IČO/Spisová značka
-      </label>
-    </p>
+      <div class="govuk-form-group">
+        <p class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--s" for="event-name">
+            Obchodné meno/IČO/Spisová značka
+          </label>
+        </p>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <%= f.inputs_set :corporate_body do %>
-          <div id="acts_submission_business_results"></div>
-        <% end %>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <%= f.inputs_set :corporate_body do %>
+              <div id="acts_submission_business_results"></div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= render 'hidden_fields', form: f, current_step: 'subject_selection' %>
+
+        <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
+          Pokračovať ❯
+        </button>
       </div>
-    </div>
-
-    <%= render 'hidden_fields', form: f, current_step: 'subject_selection' %>
-
-    <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-      Pokračovať ❯
-    </button>
+    <% end %>
   </div>
-<% end %>
+</div>
 
 <script type="text/javascript" charset="utf-8">
   function debounce(fn, delay) {
