@@ -35,6 +35,7 @@ module UpvsSubmissions
       end
 
       def default_recipient_uri
+        # "ico://sk/83369507"
         "ico://sk/00166073_10006"
         # Rails.env.production? ? "ico://sk/00166073_10006" : "ico://sk/83369507"
       end

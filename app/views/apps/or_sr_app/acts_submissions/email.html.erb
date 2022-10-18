@@ -31,8 +31,6 @@
     if (!event.target.matches('[data-submit="true"]')) return
     event.preventDefault();
 
-    debugger;
-
     const company = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_name').value
     const companyAddress = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_address').value
     const companyCin = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_cin').value
@@ -44,10 +42,10 @@
 
     let at = document.getElementById('authenticity-token').getAttribute('content')
 
-    res = await post('/aplikacie/obchodny-register/listiny',
+    res = await post('/aplikacie/or-sr/listiny',
       {
         authenticity_token: at,
-        acts_submission: {
+        apps_or_sr_app_acts_submission_application_form: {
           business_cin: companyCin,
           business_name: company,
           business_address: companyAddress,

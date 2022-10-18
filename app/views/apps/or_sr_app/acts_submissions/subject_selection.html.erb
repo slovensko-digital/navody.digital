@@ -107,7 +107,7 @@
           const currentTime = new Date().getTime();
           latestQuery = currentTime;
 
-          const res = await fetch(`/aplikacie/obchodny-register/search_business?q=${encodeURIComponent(query)}`);
+          const res = await fetch(`/aplikacie/or-sr/search_business?q=${encodeURIComponent(query)}`);
           const data = (await res.json()).result;
 
           if (currentTime === latestQuery) {

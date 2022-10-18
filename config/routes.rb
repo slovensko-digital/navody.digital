@@ -89,12 +89,12 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
-    namespace :or_sr_app, path: 'obchodny-register' do
+    namespace :or_sr_app, path: 'or-sr' do
       resources :acts_submissions, only: [:index, :create], path: 'listiny'
       namespace :acts_submissions, path: 'listiny' do
         get :index
         get :create
-        get :subject_selection, path: 'spolocnost'
+        get :subject_selection, path: 'subjekt'
         post :acts, path: 'vyber'
         post :email, path: 'email'
         get :callback, path: 'odoslane'
