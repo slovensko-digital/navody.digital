@@ -18,7 +18,7 @@ class EidToken
   end
 
   def name
-    decoded_token&.first&.fetch('actor').fetch('name')
+    decoded_token&.first&.fetch('actor')&.fetch('name')
   end
 
   def expires_at
