@@ -7,30 +7,31 @@
     </legend>
     <br />
 
-    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_acts_path do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>
+      <p>Táto aplikácia Vám umožní podať žiadosť o vyhotovenie kópie listiny uloženej v zbierke listín. Začnite s vyhľadaním spoločnosti, ktorej listiny Vás zaujímajú.</p>
+      <br />
+
       <%= render 'components/error_summary', form: @application_form %>
 
-      <div class="govuk-form-group">
-        <p class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--s" for="event-name">
-            Obchodné meno/IČO/Spisová značka
-          </label>
-        </p>
+      <p class="govuk-label-wrapper">
+        <b>Obchodné meno/IČO/Spisová značka</b>
+      </p>
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <%= f.inputs_set :corporate_body do %>
-              <div id="acts_submission_business_results"></div>
-            <% end %>
-          </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= f.inputs_set :corporate_body do %>
+            <div id="corporate_bodies_results"></div>
+          <% end %>
         </div>
-
-        <%= render 'hidden_fields', form: f, current_step: 'subject_selection' %>
-
-        <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" type="submit" data-module="govuk-button" data-submit="true">
-          Pokračovať ❯
-        </button>
       </div>
+
+      <%= render 'hidden_fields', form: f, current_step: 'subject_selection' %>
+
+      <p class="govuk-body-xs">Používaním tejto služby súhlasíte so spracovaním osobných údajov v rozsahu nevyhnutnom na odoslanie podania. Vaše údaje neukladáme, sú použité výlučne na vyplnenie podania.</p>
+
+      <button id="acts-submit-button" class="govuk-button" type="submit" data-module="govuk-button" data-submit="true">
+        Súhlasím a chcem pokračovať ❯
+      </button>
     <% end %>
   </div>
 </div>
@@ -98,7 +99,7 @@
 
     if (document.getElementsByClassName('autocomplete__wrapper').length == 0) {
       accessibleAutocomplete({
-        element: document.getElementById('acts_submission_business_results'),
+        element: document.getElementById('corporate_bodies_results'),
         id: 'subject-search', // To match it to the existing <label>.
         source: debounce(async (query, populateResults) => {
           let setLoadingState = getLoadingStateHandler();

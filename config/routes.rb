@@ -95,8 +95,8 @@ Rails.application.routes.draw do
         get :index
         get :create
         get :subject_selection, path: 'subjekt'
-        post :acts, path: 'vyber'
-        post :email, path: 'email'
+        post :fill_submission, path: 'vyplnenie'
+        post :form_check
         get :callback, path: 'odoslane'
       end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }

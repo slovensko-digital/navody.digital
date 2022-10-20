@@ -6,10 +6,8 @@ module Apps
         include ActiveModel::Validations
 
         validate :corporate_body_selected?
-        # validates_presence_of :email, :presence => true, message: 'Zadajte emailovú adresu'
-        # validates :email, if: -> { email.present? },
-        #           format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }
-        # validates :acts, :presence => true, message: 'Vyberte aspoň jednu listinu'
+        validate :acts_selected?
+        validate :email_present?
 
         attr_accessor(
           :email,
@@ -26,7 +24,7 @@ module Apps
         )
 
         def acts=(array)
-          @acts = array.map do |act|
+          @acts = array&.map do |act|
             Act.new(act)
           end
         end
@@ -35,8 +33,28 @@ module Apps
           Base64.encode64(note.to_s)
         end
 
-        def cb_invalid?
-          should_validate_corporate_body? && !valid?(:corporate_body)
+        def go_back?
+          back == 'true'
+        end
+
+        def should_go_to_acts_list?
+          @current_step == 'subject_selection' || (go_back? && @current_step == 'email')
+        end
+
+        def should_go_to_email?
+          @current_step == 'acts'
+        end
+
+        def corporate_body_invalid?
+          @current_step == 'subject_selection' && !valid?(:corporate_body)
+        end
+
+        def acts_invalid?
+          @current_step == 'acts' && !valid?(:acts)
+        end
+
+        def email_invalid?
+          @current_step == 'email' && !valid?(:email)
         end
 
         private
@@ -56,19 +74,33 @@ module Apps
           }.to_json
         end
 
+        def corporate_body_selected?
+          if @current_step == 'subject_selection' && !@business_cin.present?
+            errors.add(:corporate_body, 'Zvoľte spoločnosť')
+          end
+        end
+
+        def acts_selected?
+          if @current_step == 'acts' && !@acts.present?
+            errors.add(:acts_list, 'Vyberte aspoň jednu listinu')
+          end
+        end
+
+        def email_present?
+          return unless (@current_step == 'email')
+
+          if @email.present?
+            errors.add(:email, 'Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk') unless @email.match?(URI::MailTo::EMAIL_REGEXP)
+          else
+            errors.add(:email, 'Zadajte emailovú adresu')
+          end
+        end
+
         class Act
           include ActiveModel::Model
           include ActiveModel::Validations
 
           attr_accessor(:id, :code, :name, :make_copy)
-        end
-
-        def should_validate_corporate_body?
-          @current_step == 'subject_selection'
-        end
-
-        def corporate_body_selected?
-          errors.add(:corporate_body, 'Zvoľte spoločnosť') unless @business_cin.present?
         end
       end
     end

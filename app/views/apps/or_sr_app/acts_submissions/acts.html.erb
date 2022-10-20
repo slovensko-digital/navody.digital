@@ -1,25 +1,31 @@
 <%= render partial: 'header' %>
 
-
 <div id="acts-submission" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-      <h2 class="govuk-fieldset__heading">Pre ktoré listiny požadujete vyhotovenie kópie?</h2>
-    </legend>
-    <br />
+    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>
+      <%= render 'apps/or_sr_app/acts_submission/back', form: f %>
 
-    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_email_path do |f| %>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">Pre ktoré listiny požadujete vyhotovenie kópie?</h2>
+      </legend>
+      <br />
+
+      <p>Označte listiny, pre ktoré požadujete vyhotovenie kópie.</p>
+      <br />
+
       <%= render 'components/error_summary', form: @application_form %>
 
       <div class="govuk-form-group govuk-checkboxes" data-module="govuk-checkboxes">
         <div id="acts_box">
-          <% @acts.each do |act| %>
-            <div class="govuk-checkboxes__item" >
-              <%= f.check_box 'acts', { :class => "govuk-checkboxes__input", :multiple => true }, act.json_value, nil %>
-              <label class="govuk-label govuk-checkboxes__label" for="company_<%= act.serial_number %>">
-                <span class="govuk-!-font-weight-bold"><%= act.name %></span>, typ: <%= act.type %>, <%= act.delivery_date.present? ? "dátum doručenia: #{Date.parse(act.delivery_date.slice(0..9)).strftime('%d.%m.%Y')}" : "" %>, poradové číslo: <%= act.serial_number %>, počet listov: <%= act.raw["pageCount"] || 0 %>
-              </label>
-            </div>
+          <%= f.inputs_set :acts_list do %>
+            <% @acts.each do |act| %>
+              <div class="govuk-checkboxes__item" >
+                <%= f.check_box 'acts', { :id => "act_#{act.serial_number}", :class => "govuk-checkboxes__input", :multiple => true, :checked => act.make_copy ? true : nil }, act.json_value, nil %>
+                <label class="govuk-label govuk-checkboxes__label" for="act_<%= act.serial_number %>">
+                  <span class="govuk-!-font-weight-bold"><%= act.name %></span>, typ: <%= act.type %>, <%= act.delivery_date.present? ? "dátum doručenia: #{Date.parse(act.delivery_date.slice(0..9)).strftime('%d.%m.%Y')}" : "" %>, poradové číslo: <%= act.serial_number %>, počet listov: <%= act.raw["pageCount"] || 0 %>
+                </label>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

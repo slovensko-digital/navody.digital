@@ -3,34 +3,38 @@
 
 <div id="acts-submission" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-      <h2 class="govuk-fieldset__heading">Kontaktný e-mail pre posielanie notifikácií z OR SR</h2>
-    </legend>
-    <br />
+    <%= form_for @application_form, :builder => AppFormBuilder, :id => "acts-fieldset", url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>
+      <%= render 'apps/or_sr_app/acts_submission/back', form: f %>
 
-    <div class="govuk-form-group">
-      <%= form_for @application_form, :builder => AppFormBuilder, :id => "acts-fieldset", url: upvs_submissions_new_path do |f| %>
-        <p class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--s" for="event-name">
-            Email
-          </label>
-        </p>
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">Kontaktný e-mail pre posielanie notifikácií z OR SR</h2>
+      </legend>
+      <br />
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : nil %>
-          </div>
+      <p>Uveďte email, na ktorý Vám bude OR SR posielať nofitikácie o stave podania.</p>
+      <br />
+
+      <%= render 'components/error_summary', form: @application_form %>
+
+      <p class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--s" for="event-name">
+          Email
+        </label>
+      </p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : nil %>
         </div>
-        <br />
+      </div>
 
-        <%= render 'hidden_fields', form: f, current_step: 'email' %>
-        <%= f.hidden_field :acts, value: @acts %>
+      <%= render 'hidden_fields', form: f, current_step: 'email' %>
+      <%= f.hidden_field :acts, value: @acts %>
 
-        <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
-          Pokračovať ❯
-        </button>
-      <% end %>
-    </div>
+      <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
+    <% end %>
 
     <%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
       <%= f.hidden_field :form, value: nil %>
@@ -60,7 +64,7 @@
 
     let at = document.getElementById('authenticity-token').getAttribute('content')
 
-    res = await post('/aplikacie/or-sr/listiny',
+    document.getElementById('upvs_submission_form').value = await post('/aplikacie/or-sr/listiny',
       {
         authenticity_token: at,
         apps_or_sr_app_acts_submission_application_form: {
@@ -76,12 +80,33 @@
       }
     ).then(res => res.text())
 
-    document.getElementById('upvs_submission_form').value = res
-    document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
+    const validation_response = await post('/aplikacie/or-sr/listiny/form_check',
+      {
+        authenticity_token: at,
+        apps_or_sr_app_acts_submission_application_form: {
+          business_cin: companyCin,
+          business_name: company,
+          business_address: companyAddress,
+          business_section: companySection,
+          business_insertion: companyInsertion,
+          business_court: companyCourt,
+          email: email,
+          acts: acts,
+          current_step: 'email'
+        }
+      }
+    ).then(res => res.json());
+
+    if (validation_response['status'] === 'valid') {
+      document.getElementById('new_upvs_submissions_forms_application_for_document_copy').submit();
+    }
+    else {
+      document.getElementById('new_apps_or_sr_app_acts_submission_application_form').submit();
+    }
   }
 
   const post = async (url, data) => {
-    const response = await fetch(url, {
+    return await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +114,6 @@
       },
       body: JSON.stringify(data),
     })
-    return response
   }
 
   const main = async () => {

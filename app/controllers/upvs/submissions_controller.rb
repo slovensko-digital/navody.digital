@@ -2,6 +2,8 @@ class Upvs::SubmissionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:new]
   before_action :load_upvs_submission, only: [:new, :submit, :continue]
 
+  rescue_from Upvs::Submission::SkApiError, :with => :handle_error
+
   def new
     unless @upvs_submission.valid?
       # error
@@ -41,9 +43,7 @@ class Upvs::SubmissionsController < ApplicationController
           redirect_to action: :finish
         end
       else
-        # TODO notify in Slack devops
         redirect_to action: :submit_error
-
       end
     else
       render :new, status: :unprocessable_entity
@@ -62,11 +62,15 @@ class Upvs::SubmissionsController < ApplicationController
   private
 
   def submit_to_sk_api(client: Faraday)
-    headers =  { "Content-Type": "application/json" }
-    data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission) }.to_json
-    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{@upvs_submission.token.api_token}"
+    begin
+      headers =  { "Content-Type": "application/json" }
+      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission) }.to_json
+      url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{@upvs_submission.token.api_token}"
 
-    client.post(url, data, headers)
+      client.post(url, data, headers)
+    rescue Exception
+      raise Upvs::Submission::SkApiError.new
+    end
   end
 
   def successful_sk_api_submission?(response)
@@ -96,5 +100,9 @@ class Upvs::SubmissionsController < ApplicationController
       :token,
       :callback_url
     ).except(:authenticity_token)
+  end
+
+  def handle_error
+    redirect_to action: :submit_error
   end
 end

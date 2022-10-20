@@ -73,4 +73,7 @@ class Upvs::Submission
       errors.add(:form, "Nevalidný XML formulár")
     end
   end
+
+  class SkApiError < StandardError
+  end
 end
