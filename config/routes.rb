@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     end
     resources :user_journeys
     resources :uploads, except: [:show, :update, :edit]
+    resources :categories do
+      put :feature, on: :member
+      put :hide, on: :member
+    end
   end
 
   root to: 'pages#index'
@@ -100,8 +104,20 @@ Rails.application.routes.draw do
         get :callback, path: 'odoslane'
       end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }
+
+      resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
+        member do
+          get :subject_selection, path: 'spolocnost'
+          post :stakeholder_identifier, path: 'doplnenie'
+          post :xml_form, path: 'formular'
+          post :generate_xml_form
+          get :unsupported, path: 'nepodporovany-typ-spolocnosti'
+          get :nothing_missing, path: 'nic-nechyba'
+        end
+      end
     end
   end
+
   resources :apps, path: 'aplikacie' # faux route
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do

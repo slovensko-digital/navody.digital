@@ -7,6 +7,10 @@
 
   <%= form.text_field :title %>
   <%= form.text_field :slug %>
+  <%= form.text_area :short_description %>
+  <%= form.fields_for :categorization do |cat| %>
+    <%= cat.collection_check_boxes :category_ids, Category.all, :id, :name, checked: app.categorization.categories.pluck(:id) %>
+  <% end %>
   <%= form.select :published_status, App.defined_enums['published_status'] %>
   <%= form.text_field :image_name %>
   <%= form.text_area :description, size: "60x12" %>

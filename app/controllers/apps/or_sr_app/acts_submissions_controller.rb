@@ -83,7 +83,7 @@ module Apps
 
       # generates XML to be submitted
       def create
-        xml_form = UpvsSubmissions::OrSrFormBuilder.new.application_for_document_copy(@application_form)
+        xml_form = UpvsSubmissions::FormBuilders::ApplicationForDocumentCopyFormBuilder.build_form(@application_form)
         render xml: xml_form.to_xml
       end
 

@@ -1,6 +1,5 @@
 <%= render partial: 'header' %>
 
-
 <div id="acts-submission" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_for @application_form, :builder => AppFormBuilder, :id => "acts-fieldset", url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>

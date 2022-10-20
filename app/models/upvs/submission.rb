@@ -28,7 +28,8 @@ class Upvs::Submission
   end
 
   def recipient_name
-    # return @recipient_uri unless Rails.env.production?
+    return @recipient_uri if Rails.env.development?
+
     @recipient_name ||= Datahub::Upvs::PublicAuthorityEdesk.where(uri: @recipient_uri).pluck(:name).first
   end
 

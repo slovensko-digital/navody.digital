@@ -1,0 +1,62 @@
+<div class="govuk-form-group">
+  <div class="govuk-radios govuk-radios--inline">
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="sr"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="sr"
+             <%= 'checked' if @application_form.stakeholder.foreign != true %> >
+      <label class="govuk-label govuk-radios__label" for="sr">
+        Slovenská firma
+      </label>    </div>
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="foreign"
+             name="apps_or_sr_app_stakeholders_identifiers_application_form[stakeholder_nationality]"
+             type="radio" value="foreign"
+             <%= 'checked' if @application_form.stakeholder.foreign == true %> >
+      <label class="govuk-label govuk-radios__label" for="foreign">
+        Zahraničná firma
+      </label>
+    </div>
+  </div>
+</div>
+
+<div id="identifiers-sr" class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="identifier">
+    IČO (pridelené v SR)
+  </label>
+  <%= form.text_field :stakeholder_identifier, value: @application_form.stakeholder.identifier, type: 'number' %>
+</div>
+
+<div id="identifiers-foreign" class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="identifier">
+    Identifikačný údaj
+  </label>
+  <%= form.text_field :stakeholder_other_identifier, value: @application_form.stakeholder.other_identifier %>
+</div>
+
+<%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_address', form: form, label: 'Sídlo', hint: 'Nepodarilo sa nám automaticky nájsť obec k adrese sídla, vyberte ju zo zoznamu.' %>
+
+<script type="text/javascript" charset="utf-8">
+  const foreignId = 'foreign';
+  const srId = 'sr';
+
+  const setVisibility = (id) => {
+    const elements = {
+      [foreignId]: document.querySelector('#identifiers-foreign'),
+      [srId]: document.querySelector('#identifiers-sr')
+    }
+
+    elements[id].style.display = 'block';
+    elements[id === srId ? foreignId : srId].style.display = 'none';
+  }
+
+  document.querySelectorAll('#sr, #foreign').forEach(item => {
+    if (item.checked) {
+      setVisibility(item.id);
+    }
+
+    item.addEventListener('click', event => {
+      setVisibility(event.target.id);
+    })
+  })
+</script>
