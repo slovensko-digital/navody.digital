@@ -4,7 +4,7 @@
 <div id="acts-submission" class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= form_for @application_form, :builder => AppFormBuilder, :id => "acts-fieldset", url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>
-      <%= render 'apps/or_sr_app/acts_submission/back', form: f %>
+      <%= render 'apps/or_sr_app/acts_submissions/back', form: f %>
 
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h2 class="govuk-fieldset__heading">Kontaktný e-mail pre posielanie notifikácií z OR SR</h2>
