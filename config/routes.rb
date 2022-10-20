@@ -98,7 +98,7 @@ Rails.application.routes.draw do
       namespace :acts_submissions, path: 'listiny' do
         get :index
         get :create
-        get :subject_selection, path: 'subjekt'
+        get :subject_selection, path: 'spolocnost'
         post :fill_submission, path: 'vyplnenie'
         post :form_check
         get :callback, path: 'odoslane'

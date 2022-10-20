@@ -23,7 +23,7 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : nil %>
+          <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : @application_form.email %>
         </div>
       </div>
 

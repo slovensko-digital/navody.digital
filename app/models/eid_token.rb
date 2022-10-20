@@ -14,11 +14,11 @@ class EidToken
   end
 
   def sub
-    decoded_token&.first&.fetch('actor').fetch('sub')
+    decoded_token&.first&.fetch('actor')&.fetch('sub')
   end
 
   def name
-    decoded_token&.first&.fetch('actor').fetch('name')
+    decoded_token&.first&.fetch('actor')&.fetch('name')
   end
 
   def subject_sub

@@ -3,6 +3,14 @@ $govuk-secondary-text-colour: #505a5f;
 $govuk-focus-colour: #ffdd00;
 
 div#or-sr-identifiers, div#acts-submission {
+  div.govuk-grid-row {
+    width: 100%;
+
+    div.govuk-grid-column-two-thirds {
+      box-sizing: unset;
+    }
+  }
+
   .autocomplete__input {
     font-size: 19px;
     font-size: 1.1875rem;
@@ -205,17 +213,11 @@ div#or-sr-identifiers, div#acts-submission {
   }
 }
 
-div#or-sr-identifiers {
-  div.govuk-grid-row {
-    width: 100%;
-
-    div.govuk-grid-column-two-thirds {
-      box-sizing: unset;
-    }
-  }
-}
-
 div#acts-submission {
+  div.govuk-form-group {
+    margin-bottom: 0;
+  }
+
   .govuk-checkboxes__label {
     padding-top: 0;
   }
