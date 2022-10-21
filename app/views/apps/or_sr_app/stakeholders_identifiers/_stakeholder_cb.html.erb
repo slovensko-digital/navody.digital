@@ -34,6 +34,8 @@
   <%= form.text_field :stakeholder_other_identifier, value: @application_form.stakeholder.other_identifier %>
 </div>
 
+<%= render 'apps/or_sr_app/stakeholders_identifiers/stakeholder_address', form: form, label: 'Sídlo', hint: 'Nepodarilo sa nám automaticky nájsť obec k adrese sídla, vyberte ju zo zoznamu.' %>
+
 <script type="text/javascript" charset="utf-8">
   const foreignId = 'foreign';
   const srId = 'sr';

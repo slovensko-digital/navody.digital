@@ -13,6 +13,19 @@ class OrSrRecordFetcher
     results.first
   end
 
+  def self.get_company_url(cin)
+    final_urls = retrieve_entity_urls(cin)
+
+    urls = final_urls.map do |url|
+      resp = HTTP.get(url, encoding: 'windows-1250').to_s.encode('utf-8')
+      ['Spis odstúpený na iný registrový súd', 'Spoločnosť zrušená', 'Dôvod výmazu'].any? { |s| resp.include?(s) } ? nil : url
+    end.compact
+
+    raise OrsrRecordError.new("Several active records found for one company id: #{cin}") if urls.size > 1
+
+    urls.first
+  end
+
   def self.get_stakeholders(doc)
     stakeholders_table = get_stakeholders_table(doc)
     stakeholders = []
@@ -88,15 +101,21 @@ class OrSrRecordFetcher
 
     {
       'name' => names.join(' '),
-      'deposit' => deposit.first.delete('Vklad: ').delete(' ').to_i,
-      'deposit_currency' => deposit.second.strip,
-      'paid_deposit' => get_paid_deposit(deposit)&.delete('Splatené: ').delete(' ').to_i,
-      'paid_deposit_currency' => deposit.last.strip,
+      'deposit' => deposit_to_num(deposit&.first, 'Vklad'),
+      'deposit_currency' => deposit&.second&.strip,
+      'paid_deposit' => get_paid_deposit(deposit),
+      'paid_deposit_currency' => deposit&.last&.strip,
     }
   end
 
-  def self.get_paid_deposit(deposit)
-    deposit.select{ |d| d.include? 'Splatené' }.first
+  def self.get_paid_deposit(deposit, key_word: 'Splatené')
+    paid_deposit = deposit.select{ |d| d.include?(key_word) }&.first
+    deposit_to_num(paid_deposit, key_word)
+  end
+
+  def self.deposit_to_num(string_deposit, text_to_remove)
+    value = string_deposit&.delete("#{text_to_remove}: ")&.delete(' ')&.sub(',', '.')
+    (value.to_f % 1) > 0 ? value.to_f : value.to_i
   end
 
   def self.get_stakeholders_table(doc, text: 'Spoločníci:')
