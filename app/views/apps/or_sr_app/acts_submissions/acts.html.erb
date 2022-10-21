@@ -22,7 +22,7 @@
               <div class="govuk-checkboxes__item" >
                 <%= f.check_box 'acts', { :id => "act_#{act.serial_number}", :class => "govuk-checkboxes__input", :multiple => true, :checked => act.make_copy ? true : nil }, act.json_value, nil %>
                 <label class="govuk-label govuk-checkboxes__label" for="act_<%= act.serial_number %>">
-                  <span class="govuk-!-font-weight-bold"><%= act.name %></span>, typ: <%= act.type %>, <%= act.delivery_date.present? ? "dátum doručenia: #{Date.parse(act.delivery_date.slice(0..9)).strftime('%d.%m.%Y')}" : "" %>, poradové číslo: <%= act.serial_number %>, počet listov: <%= act.raw["pageCount"] || 0 %>
+                  <span class="govuk-!-font-weight-bold"><%= act.name %></span><br /> typ: <%= act.type %>, <%= act.delivery_date.present? ? "dátum doručenia: #{Date.parse(act.delivery_date.slice(0..9)).strftime('%d.%m.%Y')}" : "" %>, poradové číslo: <%= act.serial_number %>, počet listov: <%= act.raw["pageCount"] || 0 %>
                 </label>
               </div>
             <% end %>

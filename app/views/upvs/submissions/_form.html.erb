@@ -25,15 +25,16 @@
     <%= f.hidden_field :recipient_uri %>
   </div>
 
-  <iframe srcdoc="<%= raw @upvs_submission.form_visualisation %>"
-          onload='(
-            function(o) {
-              o.style.height = 1.025* o.contentWindow.document.body.scrollHeight + "px";
-            }
-            (this)
-          );'
-          style="height:200px;width:100%;border:none;overflow:hidden;">
-  </iframe>
+  <div id="iframe-wrapper">
+    <iframe id="iframe"  srcdoc="<%= raw @upvs_submission.form_visualisation %>"
+      onload="(
+        function() {
+          $('#iframe-wrapper').height( $('#iframe').contents().outerHeight() );
+        }
+        (this)
+      )">
+    </iframe>
+  </div>
 
   <%= render partial: 'actions' %>
 <% end %>
