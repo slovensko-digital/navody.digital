@@ -22,12 +22,7 @@
                   <%= link_to searchable.title, searchable %>
                 </h3>
                 <p class="govuk-body-s">
-                  <% if searchable.is_a? Page %>
-                    <% description = searchable.content %>
-                  <% else %>
-                    <% description = searchable.description %>
-                  <% end %>
-                  <%= truncate description.squish, :length => 400, :separator => /\w/ %>
+                  <%= truncate searchable.short_description, :length => 400, :separator => /\w/ %>
                 </p>
               </div>
             </div>

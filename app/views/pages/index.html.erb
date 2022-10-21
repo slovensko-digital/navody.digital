@@ -47,7 +47,7 @@
                   <%= link_to journey.title, journey %>
                 </h3>
                 <p class="govuk-body-s">
-                  <%= truncate journey.description.squish, :length => 400, :separator => /\w/ %>
+                  <%= truncate journey.short_description, :length => 400, :separator => /\w/ %>
                 </p>
               </div>
             </div>
