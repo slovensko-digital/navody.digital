@@ -6,6 +6,11 @@ default: &default
   sendinblue:
     api_key: <%= ENV.fetch('SENDINBLUE_API_KEY', nil) %>
 
+  eid:
+    base_url: <%= ENV.fetch('AUTH_EID_BASE_URL', nil) %>
+    public_key: <%= ENV.fetch('AUTH_EID_PUBLIC_KEY', nil).inspect %>
+    private_key: <%= ENV.fetch('AUTH_EID_PRIVATE_KEY', nil).inspect %>
+
 development:
   <<: *default
 
