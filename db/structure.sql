@@ -705,7 +705,8 @@ CREATE TABLE public.or_sr_company_records (
     identifiers_ok boolean DEFAULT false,
     email character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying
 );
 
 
@@ -2123,4 +2124,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220907210125'),
 ('20220914073624'),
 ('20220914073645'),
-('20220914073653');
+('20220914073653'),
+('20220921082415');

@@ -3,8 +3,10 @@
 # Table name: or_sr_company_records
 #
 #  id                                          :integer          not null, primary key
-#  cin                                         :bigint           not null
-#  identifiers_ok                              :boolean          not null, default false
+#  cin                                         :bigint
+#  name                                        :string
+#  identifiers_ok                              :boolean
+#  email                                       :string
 #  created_at                                  :datetime         not null
 #  updated_at                                  :datetime         not null
 

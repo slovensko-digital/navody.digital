@@ -187,4 +187,30 @@ div#or-sr-identifiers {
       margin: 2rem 0 0 0;
     }
   }
+
+  .address-wrap {
+    & > div {
+      display: flex;
+      gap: 1rem;
+      margin: .75rem 0;
+      .govuk-heading-m  {
+        margin-bottom: 0;
+      }
+    }
+
+    #address-helper {
+      cursor: pointer;
+      line-height: 1.5;
+      margin-top: auto;
+      text-decoration: underline;
+    }
+
+    p {
+      display: block;
+    }
+  }
+
+  .before {
+    flex-shrink: 0;
+  }
 }
