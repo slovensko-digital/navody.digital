@@ -23,7 +23,7 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : @application_form.email %>
+          <%= f.text_field :email, type: 'email', value: current_user.logged_in? ? current_user.email : @application_form.email, :onkeypress => "handleKeyPress(event)" %>
         </div>
       </div>
 
@@ -52,6 +52,10 @@
     if (!event.target.matches('[data-submit="true"]')) return
     event.preventDefault();
 
+    await submitForm();
+  }
+
+  async function submitForm() {
     const company = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_name').value
     const companyAddress = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_address').value
     const companyCin = document.getElementById('apps_or_sr_app_acts_submission_application_form_business_cin').value
@@ -113,6 +117,14 @@
       },
       body: JSON.stringify(data),
     })
+  }
+
+  function handleKeyPress(e){
+    if(e.keyCode === 13){
+      e.preventDefault();
+
+      submitForm();
+    }
   }
 
   const main = async () => {
