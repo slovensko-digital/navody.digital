@@ -1,5 +1,5 @@
 module Apps
-  module OrSrApp
+  module ActsOrSrApp
     class ActsSubmissionsController < ApplicationController
       before_action :load_application_form, only: [:fill_submission, :form_check, :submit, :create]
 
@@ -8,19 +8,19 @@ module Apps
         render json: { result: businesses }
       end
 
-      def subject_selection
+      def index
         @application_form = Apps::OrSrApp::ActsSubmission::ApplicationForm.new
 
-        render :subject_selection
+        render :index
       end
 
       def fill_submission
-        (render action: :subject_selection and return) if @application_form.corporate_body_invalid?
+        (render action: :index and return) if @application_form.corporate_body_invalid?
 
         if @application_form.go_back?
           case @application_form.current_step
           when 'acts'
-            subject_selection
+            index
           when 'email'
             acts(back: true)
           end

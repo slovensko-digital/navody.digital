@@ -7,9 +7,9 @@
     </legend>
     <br />
 
-    <%= form_for @application_form, :builder => AppFormBuilder, url: apps_or_sr_app_acts_submissions_fill_submission_path do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: fill_submission_apps_acts_or_sr_app_acts_submissions_path do |f| %>
       <p>Táto aplikácia Vám umožní podať žiadosť o vyhotovenie kópie listiny uloženej v zákonom ustanovených listín obchodného registra na pár klikov.<p>
-        Budete potrebovať prihlásiť sa cez <b>eID</b> alebo <b>Slovensko v mobile</b>. Začnite s vyhľadaním spoločnosti, ktorej listiny Vás zaujímajú.</p>
+        <p><b>Budete potrebovať prihlásiť sa cez eID alebo Slovensko v mobile</b>. Začnite s vyhľadaním spoločnosti, ktorej listiny Vás zaujímajú.</p>
       <br />
 
       <%= render 'components/error_summary', form: @application_form %>
@@ -113,7 +113,7 @@
           const currentTime = new Date().getTime();
           latestQuery = currentTime;
 
-          const res = await fetch(`/aplikacie/or-sr/search_business?q=${encodeURIComponent(query)}`);
+          const res = await fetch(`/aplikacie/or-sr-listiny/search_business?q=${encodeURIComponent(query)}`);
           const data = (await res.json()).result;
 
           if (currentTime === latestQuery) {

@@ -8,19 +8,11 @@
   </div>
 </div>
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-8">
-    <%= form_tag(auth_path(:google_oauth2), method: :post) do %>
+  <div class="govuk-grid-column-one-half">
+    <%= form_tag(auth_path(:google_oauth2), method: :post, class: 'govuk-body govuk-!-margin-bottom-8') do %>
       <%= image_submit_tag 'google/btn_google_signin_dark_normal.svg', class: 'govuk-link', title: 'Prihlásiť sa cez Google', alt: 'Prihlásiť sa cez Google', style: 'max-width: 300px' %>
     <% end %>
-  </div>
-  <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-8">
-    <%= form_tag(auth_path(:eid), method: :post, id: 'login-eid') do %>
-      <%= image_submit_tag 'eid-sk.svg', class: 'govuk-link', title: 'Prihlásiť sa cez EID', alt: 'Prihlásiť sa cez EID', style: 'max-width: 300px' %>
-    <% end %>
-  </div>
-</div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-half">
+
     <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
       <fieldset class="govuk-fieldset">
         <div class="govuk-form-group">

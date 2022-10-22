@@ -93,18 +93,22 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
-    namespace :or_sr_app, path: 'or-sr' do
-      resources :acts_submissions, only: [:index, :create], path: 'listiny'
-      namespace :acts_submissions, path: 'listiny' do
-        get :index
-        get :create
-        get :subject_selection, path: 'spolocnost'
-        post :fill_submission, path: 'vyplnenie'
-        post :form_check
-        get :callback, path: 'odoslane'
+    namespace :acts_or_sr_app, path: 'or-sr-listiny' do
+      # resources :acts_submissions, only: [:index, :create], path: ''
+      resource :acts_submissions, path: '' do
+        member do
+          get :index
+          get :create
+          # get :subject_selection, path: 'spolocnost'
+          post :fill_submission, path: 'vyplnenie'
+          post :form_check
+          get :callback, path: 'odoslane'
+        end
       end
       get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }
+    end
 
+    namespace :or_sr_app, path: 'or-sr' do
       resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
         member do
           get :subject_selection, path: 'spolocnost'
