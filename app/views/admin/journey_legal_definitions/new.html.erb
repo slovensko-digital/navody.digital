@@ -1,7 +1,7 @@
 <%= render 'breadcrumbs', crumbs: [
     ['Journeys', admin_journeys_url],
     [@journey.title, '#'],
-    ['Journey Legal Definition', admin_journey_journey_legal_definitions_path(@journey)],
+    ['Law link', admin_journey_journey_legal_definitions_path(@journey)],
   ], current: 'New' %>
 
 <%= render 'form', journey_legal_definition: @journey_legal_definition %>
