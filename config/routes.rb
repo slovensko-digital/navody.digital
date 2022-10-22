@@ -108,6 +108,7 @@ Rails.application.routes.draw do
   end
   resources :apps, path: 'aplikacie' # faux route
 
+  resource :dashboards, path: 'osobna-zona', only: [:show]
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
   end
