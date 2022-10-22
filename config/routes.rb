@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       member do
         post :reposition
       end
+      resources :journey_legal_definitions
     end
     resources :user_journeys
     resources :uploads, except: [:show, :update, :edit]

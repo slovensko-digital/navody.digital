@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_path], [@journey.title, '#']], current: 'Journey Legal Definitions' %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Link</th>
+      <th class="govuk-table__header" scope="col" colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @journey_legal_definitions.each do |journey_legal_definition| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= link_to journey_legal_definition.link, [:admin, journey_legal_definition.journey, journey_legal_definition] %></td>
+        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_journey_legal_definition_path(journey_legal_definition.journey, journey_legal_definition) %></td>
+        <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey_legal_definition.journey, journey_legal_definition], method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Journey Legal Definition', new_admin_journey_journey_legal_definition_path(@journey), {class: 'govuk-button'} %>
