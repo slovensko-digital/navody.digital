@@ -16,10 +16,6 @@ class Admin::JourneyLegalDefinitionsController < Admin::AdminController
   def create
     @journey_legal_definition = @journey.journey_legal_definitions.new(journey_legal_definition_params)
 
-    law_identifier = Legal::SlovLexLink.new(@journey_legal_definition.link).current_date_version()
-    law = Law.find_or_create_by!(identifier: law_identifier)
-    @journey_legal_definition.law = law
-
     if @journey_legal_definition.save
       redirect_to admin_journey_journey_legal_definitions_url(@journey_legal_definition.journey), notice: 'Journey legal definition was successfully created.'
     else
