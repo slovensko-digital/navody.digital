@@ -46,6 +46,5 @@ module Legal
         nil
       end
     end
-
   end
 end

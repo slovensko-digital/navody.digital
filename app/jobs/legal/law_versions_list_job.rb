@@ -16,8 +16,9 @@ module Legal
 
         record.save!
 
-        record.id
-      end.map { |record_id| Legal::LawVersionJob.new.perform(record_id) }
+        Legal::LawVersionJob.perform_later(record_id)
+        record_id
+      end
     end
   end
 end
