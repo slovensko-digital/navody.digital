@@ -6,7 +6,7 @@ class Upvs::SubmissionsController < ApplicationController
 
   def new
     unless @upvs_submission.valid?
-      # error
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +43,7 @@ class Upvs::SubmissionsController < ApplicationController
           redirect_to action: :finish
         end
       else
-        redirect_to action: :submit_error
+        raise Upvs::Submission::SkApiError.new
       end
     else
       render :new, status: :unprocessable_entity
@@ -56,7 +56,7 @@ class Upvs::SubmissionsController < ApplicationController
   def finish
   end
 
-  def submit_error
+  def submission_error
   end
 
   private

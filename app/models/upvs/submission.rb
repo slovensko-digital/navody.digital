@@ -55,7 +55,7 @@ class Upvs::Submission
 
   def xslt_transformation
     unless (form_related_document = Upvs::FormTemplateRelatedDocument.where(posp_id: @posp_id, posp_version: @posp_version, message_type: @message_type).first)
-      # TODO raise error
+      raise MissingFormTemplateError.new
     end
 
     xslt_template = Nokogiri::XSLT(form_related_document.xslt_transformation)
@@ -76,5 +76,8 @@ class Upvs::Submission
   end
 
   class SkApiError < StandardError
+  end
+
+  class MissingFormTemplateError < StandardError
   end
 end

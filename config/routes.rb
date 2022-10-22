@@ -157,7 +157,7 @@ Rails.application.routes.draw do
       post :new, path: ''
       post :sign, path: 'podpisat'
       post :submit, path: 'odoslat'
-      get :submit_error, path: 'chyba'
+      get :submission_error, path: 'chyba'
       post :continue, path: 'pokracovat'
       get :finish, path: 'hotovo'
     end
