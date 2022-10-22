@@ -9,7 +9,14 @@
       <%= hidden_field_tag 'notification_subscription_group[subscription_types][]', form.subscription_types.first %>
     <% else %>
       <div class="govuk-checkboxes">
-        <% form.subscription_types.each_with_index do |type, index| %>
+
+        <% primary_subscription_types = form.subscription_types.select do |type| %>
+          <% subscription = NotificationSubscription::TYPES[type]%>
+          <% subscription[:on_submission_job] %>
+        <% end %>
+
+
+        <% primary_subscription_types.each_with_index do |type, index| %>
           <% subscription = NotificationSubscription::TYPES[type] %>
           <% next unless subscription %>
           <div class="govuk-checkboxes__item">
@@ -19,13 +26,35 @@
             <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
           </div>
         <% end %>
+
+        <% secondary_subscription_types = form.subscription_types.select do |type| %>
+          <% subscription = NotificationSubscription::TYPES[type]%>
+          <% !subscription[:on_submission_job] %>
+        <% end %>
+
+        <% if secondary_subscription_types.length > 0 %>
+
+          <h4 style="margin-top:60px">Mohlo by Vás tiež zaujímať</h4>
+
+          <% secondary_subscription_types.each_with_index do |type, index| %>
+            <% subscription = NotificationSubscription::TYPES[type] %>
+            <% next unless subscription %>
+            <div class="govuk-checkboxes__item govuk-checkboxes--small">
+              <%= check_box_tag 'notification_subscription_group[selected_subscription_types][]', type, form.selected_subscription_types.include?(type), {class: 'govuk-checkboxes__input', id: "notification_subscription_group_#{index}"} %>
+              <%= f.label index, subscription[:label], class: 'govuk-checkboxes__label' %>
+              <%= hidden_field_tag 'notification_subscription_group[subscription_types][]', type %>
+              <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
+            </div>
+          <% end %>
+        <% end %>
+
       </div>
     <% end %>
   </div>
 
-    <% if current_user.logged_in? %>
-      <%= hidden_field_tag 'notification_subscription_group[email]', current_user.email %>
-    <% else %>
+  <% if current_user.logged_in? %>
+    <%= hidden_field_tag 'notification_subscription_group[email]', current_user.email %>
+  <% else %>
     <div class="govuk-form-group<% if form.errors[:email].any? %> govuk-form-group--error<% end %>">
       <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
       <% form.errors[:email].each do |error| %>
