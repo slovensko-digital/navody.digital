@@ -1,6 +1,7 @@
 class Upvs::Submission
   include ActiveModel::Model
 
+  attr_accessor :title
   attr_accessor :posp_id
   attr_accessor :posp_version
   attr_accessor :message_type

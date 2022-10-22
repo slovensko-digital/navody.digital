@@ -88,6 +88,7 @@ class Upvs::SubmissionsController < ApplicationController
   def application_params
     params.require(:upvs_submission).permit(
       :authenticity_token,
+      :title,
       :posp_id,
       :posp_version,
       :message_type,
