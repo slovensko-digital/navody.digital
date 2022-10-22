@@ -10,20 +10,25 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA upvs;
-
-
---
-
 -- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
 --
 
 CREATE SCHEMA code_list;
 
 
+--
+<<<<<<< HEAD
+
+-- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+=======
+-- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
+>>>>>>> 90c6d5c2c0854dcd7c70f81685636d82e0b33197
+--
+
+CREATE SCHEMA upvs;
+
+
+--
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -524,7 +529,8 @@ CREATE TABLE public.categories (
     description text NOT NULL,
     featured boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    featured_position integer DEFAULT 0
 );
 
 
@@ -1411,6 +1417,13 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
 
 
+<<<<<<< HEAD
+=======
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
+>>>>>>> 90c6d5c2c0854dcd7c70f81685636d82e0b33197
 ALTER TABLE ONLY code_list.countries
     ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
@@ -2129,5 +2142,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073624'),
 ('20220914073645'),
 ('20220914073653'),
-('20220921082415');
+('20220921082415'),
+('20221022143119');
+
 

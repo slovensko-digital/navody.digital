@@ -66,7 +66,8 @@ class Admin::CategoriesController < Admin::AdminController
     params.require(:category).permit(
         :name,
         :description,
-        :featured
+        :featured,
+        :featured_position
     )
   end
 end

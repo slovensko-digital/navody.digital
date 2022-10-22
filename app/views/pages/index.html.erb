@@ -5,22 +5,53 @@
   <%= render 'components/active_topic' if @active_current_topic.present? %>
 
   <main id="main-content" class="govuk-main-wrapper govuk-!-padding-top-0" role="main">
-    <div class="featured-journeys govuk-!-padding-top-9 govuk-!-padding-bottom-9">
+    <div class="govuk-!-padding-top-9 govuk-!-padding-bottom-9">
       <div class="govuk-width-container">
         <%= render 'shared/flash_messages' %>
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
-            <div class="sdn-tiles">
-              <% @documents.each do |searchable| %>
-                <%= link_to searchable, class: 'sdn-tiles__item sdn-tile' do %>
-                  <%= image_tag(searchable.image_name, class: 'sdn-tile__image') rescue image_tag('placeholder.png', class: 'sdn-tile__image') %>
-                    <span class="sdn-tile__content sdn-tile-content-text-block">
-                    <span class="sdn-tile-content-text-block__item"><%= searchable.title %></span>
-                  </span>
-                <% end %>
-              <% end %>
-            </div>
+            <h2 class="govuk-heading-l">
+            Kategórie
+            </h2>
           </div>
+          <% @categories.each do |category| %>
+            <div class="govuk-grid-column-one-third">
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                <%= link_to category.name, category, style: "color: #3a67e8" %>
+              </h3>
+              <p class="govuk-body-s">
+                <%= category.description %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="featured-journeys govuk-!-padding-top-9 govuk-!-padding-bottom-9">
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-l">
+              Vybrané návody
+            </h2>
+          </div>
+          <% @documents.take(3).each do |searchable| %>
+            <div class="govuk-grid-column-full">
+              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+              <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
+                <%= link_to searchable.title, searchable, style: "color: #3a67e8" %>
+              </h3>
+              <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                  <p class="govuk-body-s">
+                    <%= truncate searchable.short_description, :length => 400, :separator => /\w/ %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
