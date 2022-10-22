@@ -94,12 +94,10 @@ Rails.application.routes.draw do
     end
 
     namespace :acts_or_sr_app, path: 'or-sr-listiny' do
-      # resources :acts_submissions, only: [:index, :create], path: ''
       resource :acts_submissions, path: '' do
         member do
           get :index
           get :create
-          # get :subject_selection, path: 'spolocnost'
           post :fill_submission, path: 'vyplnenie'
           post :form_check
           get :callback, path: 'odoslane'
