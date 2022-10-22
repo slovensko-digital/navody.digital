@@ -17,12 +17,9 @@ CREATE SCHEMA code_list;
 
 
 --
-<<<<<<< HEAD
 
 -- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
-=======
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
->>>>>>> 90c6d5c2c0854dcd7c70f81685636d82e0b33197
 --
 
 CREATE SCHEMA upvs;
@@ -1417,8 +1414,6 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
 
 
-<<<<<<< HEAD
-=======
 --
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
 --
