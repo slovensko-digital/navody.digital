@@ -8,7 +8,7 @@
     <div class="govuk-notification-banner__content">
       <p class="govuk-notification-banner__heading">
         <% if local_assigns[:past_due] %>
-          Do termínu ostáva <%= (local_assigns[:time] - Date.today).to_i %> dní.
+          <%= t('.remaining_days', :count => (local_assigns[:time] - Date.today).to_i) %>
         <% else %>
           Termín uplynul.
         <% end %>
