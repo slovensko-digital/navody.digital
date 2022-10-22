@@ -8,8 +8,9 @@
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
+      <th class="govuk-table__header" scope="col">Position</th>
       <th class="govuk-table__header" scope="col">Name</th>
-      <th class="govuk-table__header" scope="col">Featured on front page</th>
+      <th class="govuk-table__header" scope="col">Featured</th>
       <th class="govuk-table__header" scope="col">Searchable documents in category</th>
       <th class="govuk-table__header" scope="col" colspan="2">Actions</th>
     </tr>
@@ -17,6 +18,7 @@
   <tbody class="govuk-table__body">
   <% @categories.each do |category| %>
     <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><%= category.featured_position %></td>
       <td class="govuk-table__cell"><%= category.name %></td>
       <td class="govuk-table__cell">
         <% if category.featured? %>

@@ -14,4 +14,8 @@ module ApplicationHelper
   def sanitize_description(description, length: 500)
     truncate(strip_tags(description), length: length)
   end
+
+  def dont_show_small_search_bar?
+    current_page?(root_path) || current_page?(search_path)
+  end
 end
