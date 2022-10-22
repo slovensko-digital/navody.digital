@@ -14,6 +14,8 @@ class Journey < ApplicationRecord
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
+  has_many :journey_legal_definitions
+  has_many :laws, through: :journey_legal_definitions
 
   enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
 
