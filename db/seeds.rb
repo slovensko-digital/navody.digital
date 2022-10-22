@@ -23,6 +23,7 @@ journey = Journey.create!(
   position: 1,
   title: "Založenie živnosti",
   slug: "zalozenie-zivnosti",
+  short_description: "empty",
   description: "<h1>Založenie živnosti: krok po kroku</h1>
 <p>Zistite, čo treba vybaviť na založenie živnosti.</p>
 <p>Založenie živnosti zvyčajne trvá 5 až 10 pracovných dní.</p>",

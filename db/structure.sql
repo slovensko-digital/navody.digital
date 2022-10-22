@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA code_list;
+
+
+--
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -17,12 +24,6 @@ CREATE SCHEMA upvs;
 
 
 --
--- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA code_list;
-
-
 -- Name: que_validate_tags(jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -619,6 +620,40 @@ ALTER SEQUENCE public.current_topics_id_seq OWNED BY public.current_topics.id;
 
 
 --
+-- Name: journey_legal_definitions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.journey_legal_definitions (
+    id bigint NOT NULL,
+    journey_id bigint NOT NULL,
+    law_id bigint NOT NULL,
+    link character varying,
+    note text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: journey_legal_definitions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.journey_legal_definitions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: journey_legal_definitions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.journey_legal_definitions_id_seq OWNED BY public.journey_legal_definitions.id;
+
+
+--
 -- Name: journeys; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -656,6 +691,72 @@ CREATE SEQUENCE public.journeys_id_seq
 --
 
 ALTER SEQUENCE public.journeys_id_seq OWNED BY public.journeys.id;
+
+
+--
+-- Name: law_versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.law_versions (
+    id bigint NOT NULL,
+    law_id bigint NOT NULL,
+    identifier character varying,
+    valid_from date NOT NULL,
+    valid_to date,
+    checksum character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: law_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.law_versions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: law_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.law_versions_id_seq OWNED BY public.law_versions.id;
+
+
+--
+-- Name: laws; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.laws (
+    id bigint NOT NULL,
+    identifier character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: laws_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.laws_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: laws_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.laws_id_seq OWNED BY public.laws.id;
 
 
 --
@@ -1220,6 +1321,7 @@ CREATE SEQUENCE upvs.form_template_related_documents_id_seq
 
 ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
 
+
 --
 -- Name: countries id; Type: DEFAULT; Schema: code_list; Owner: -
 --
@@ -1298,10 +1400,31 @@ ALTER TABLE ONLY public.current_topics ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: journey_legal_definitions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions ALTER COLUMN id SET DEFAULT nextval('public.journey_legal_definitions_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys ALTER COLUMN id SET DEFAULT nextval('public.journeys_id_seq'::regclass);
+
+
+--
+-- Name: law_versions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions ALTER COLUMN id SET DEFAULT nextval('public.law_versions_id_seq'::regclass);
+
+
+--
+-- Name: laws id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.laws ALTER COLUMN id SET DEFAULT nextval('public.laws_id_seq'::regclass);
 
 
 --
@@ -1408,6 +1531,11 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
 
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
+--
+
 ALTER TABLE ONLY code_list.countries
     ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
@@ -1501,11 +1629,35 @@ ALTER TABLE ONLY public.current_topics
 
 
 --
+-- Name: journey_legal_definitions journey_legal_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT journey_legal_definitions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: journeys journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys
     ADD CONSTRAINT journeys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: law_versions law_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions
+    ADD CONSTRAINT law_versions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: laws laws_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.laws
+    ADD CONSTRAINT laws_pkey PRIMARY KEY (id);
 
 
 --
@@ -1692,6 +1844,27 @@ CREATE UNIQUE INDEX index_categories_categorizations ON public.categories_catego
 --
 
 CREATE INDEX index_categorizations_on_categorizable ON public.categorizations USING btree (categorizable_type, categorizable_id);
+
+
+--
+-- Name: index_journey_legal_definitions_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_journey_legal_definitions_on_journey_id ON public.journey_legal_definitions USING btree (journey_id);
+
+
+--
+-- Name: index_journey_legal_definitions_on_law_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_journey_legal_definitions_on_law_id ON public.journey_legal_definitions USING btree (law_id);
+
+
+--
+-- Name: index_law_versions_on_law_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_law_versions_on_law_id ON public.law_versions USING btree (law_id);
 
 
 --
@@ -1941,6 +2114,14 @@ ALTER TABLE ONLY public.quick_tips
 
 
 --
+-- Name: journey_legal_definitions fk_rails_26f32722ea; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT fk_rails_26f32722ea FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
 -- Name: user_steps fk_rails_270661d7b7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1981,11 +2162,27 @@ ALTER TABLE ONLY public.user_tasks
 
 
 --
+-- Name: journey_legal_definitions fk_rails_690d321c6a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT fk_rails_690d321c6a FOREIGN KEY (law_id) REFERENCES public.laws(id);
+
+
+--
 -- Name: user_journeys fk_rails_70185eaf12; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys
     ADD CONSTRAINT fk_rails_70185eaf12 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: law_versions fk_rails_852992ee31; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions
+    ADD CONSTRAINT fk_rails_852992ee31 FOREIGN KEY (law_id) REFERENCES public.laws(id);
 
 
 --
@@ -2125,5 +2322,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073624'),
 ('20220914073645'),
 ('20220914073653'),
-('20220921082415');
+('20220921082415'),
+('20221022121113');
+
 
