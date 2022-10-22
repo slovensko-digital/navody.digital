@@ -14,7 +14,11 @@
             Kategórie
             </h2>
           </div>
-          <% @categories.each do |category| %>
+          <% @categories.each_with_index do |category, idx| %>
+            <% if (idx % 3) == 0 %>
+              </div>
+              <div class="govuk-grid-row">
+            <% end %>
             <div class="govuk-grid-column-one-third">
               <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
               <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
