@@ -63,11 +63,6 @@ class NotificationSubscription < ApplicationRecord
       label: 'Chcem, aby ste ma informovali, keď údaje budú zapísané v obchodnom registri',
       hint: 'Dáme Vám vedieť, keď chýbajúce identifikačné údaje budú zapísané v obchodnom registri.',
       on_submission_job: SaveCompanyWithMissingIdentifiersJob
-    },
-    'DeadlineSubscription' => {
-      sendinblue_list_name: 'DeadlineSubscription',
-      label: 'Chcem dostávať upozornenia k deadline termínom',
-      hint: 'Zašleme Vám správu na pripomenutie vybavenia zálžitosti pred deadlinom.',
     }
   }
 
