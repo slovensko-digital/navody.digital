@@ -21,9 +21,13 @@
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-1">
                   <%= link_to searchable.title, searchable %>
                 </h3>
-                <p class="govuk-body-s">
-                  <%= truncate searchable.short_description, :length => 400, :separator => /\w/ %>
-                </p>
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-two-thirds">
+                    <p class="govuk-body-s">
+                      <%= truncate searchable.short_description, :length => 400, :separator => /\w/ %>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           <% end %>
