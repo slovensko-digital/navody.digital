@@ -12,8 +12,12 @@ module CustomComponentsHelper
     end
 
     fragment.css('deadline').each do |elm|
-      deadline = Date.parse(elm[:time])
-      elm.replace(render 'components/deadline', time: deadline, inner_html: elm.inner_html)
+      date_info = elm[:time]
+      is_one_time_event = date_info.start_with?(/\d{4}-/)
+      date_info = "#{Date.today.year}-#{date_info}" unless is_one_time_event
+      deadline = Date.parse(date_info)
+      inner_html_selector = deadline > Date.today ? 'before' : 'after'
+      elm.replace(render 'components/deadline', time: deadline, past_due: deadline > Date.today, inner_html: elm.css(inner_html_selector).inner_html)
     end
 
     raw(fragment.to_s)

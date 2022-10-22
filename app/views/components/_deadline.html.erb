@@ -1,37 +1,73 @@
 <div class="navody-deadline">
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <span class="govuk-warning-text__text">
-      <span class="govuk-warning-text__assistive">Upozornenie</span>
-      <strong>Do termínu ostáva <%= (local_assigns[:time] - Date.today).to_i %> dní.</strong>
-      <%= raw inner_html %>
-    </span>
+  <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        Upozornenie
+      </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+      <p class="govuk-notification-banner__heading">
+        <% if local_assigns[:past_due] %>
+          Do termínu ostáva <%= (local_assigns[:time] - Date.today).to_i %> dní.
+        <% else %>
+          Termín uplynul.
+        <% end %>
+        <%= raw inner_html %>
+      </p>
+    </div>
   </div>
 
-  <details class="govuk-details">
-    <summary class="govuk-details__summary, noselect">
+  <% if local_assigns[:past_due] %>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary, noselect">
       <span class="govuk-details__summary-text">
         Tip: chcem dostať upozornenie pred termínom
       </span>
-    </summary>
+      </summary>
       <%= render_notification_subscription_component ['DeadlineSubscription'] do %>
         <h3 class="govuk-heading-m">Pošleme vám na email notifikáciu aby ste nazabudli.</h3>
       <% end %>
-  </details>
-
+    </details>
+  <% end %>
 </div>
 
 
 <style>
-  .navody-deadline {
-    background-color: #eeeaea;
-    border-radius: 20px;
-    box-shadow: 1px 2px 3px rgba(0,0,0,.5);
-    /*background-color: none;*/
-    color: white;
-    /*border: 2px solid black;*/
-    margin: 20px;
-    padding: 20px;
+  .govuk-notification-banner {
+    font-family: "GDS Transport",arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin-bottom: 30px;
+    border: 5px solid #1d70b8;
+    background-color: #1d70b8;
+  }
+
+  .govuk-notification-banner__header {
+    padding: 2px 15px 5px;
+    border-bottom: 1px solid rgba(0,0,0,0);
+  }
+
+  .govuk-notification-banner__title {
+    font-family: "GDS Transport",arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 700;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+  }
+
+  .govuk-notification-banner__content {
+    color: #0b0c0c;
+    padding: 15px;
+    background-color: #fff;
   }
 
 .noselect {
