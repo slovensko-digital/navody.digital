@@ -1418,7 +1418,6 @@ ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAUL
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
 --
 
->>>>>>> 90c6d5c2c0854dcd7c70f81685636d82e0b33197
 ALTER TABLE ONLY code_list.countries
     ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
