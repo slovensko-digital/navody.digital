@@ -1,0 +1,8 @@
+<% content_for :title, build_page_title('Podania') %>
+<% content_for :description, sanitize_description('Podanie pomocou prihlásenia cez eID') %>
+
+<div id="upvs-submissions" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render partial: 'form' %>
+  </div>
+</div>

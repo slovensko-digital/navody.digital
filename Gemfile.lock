@@ -439,6 +439,7 @@ DEPENDENCIES
   http
   jbuilder
   jquery-rails
+  jwt
   kaminari
   letter_opener_web
   listen

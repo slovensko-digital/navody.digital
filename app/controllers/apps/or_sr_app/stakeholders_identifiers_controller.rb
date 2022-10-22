@@ -43,7 +43,7 @@ class Apps::OrSrApp::StakeholdersIdentifiersController < ApplicationController
 
   def stakeholders_summary
     @stakeholders = @application_form.form_data&.stakeholders_with_missing_identifiers
-    @xml_form = Base64.encode64(UpvsSubmissions::OrSrFormBuilder.fuzs_missing_identifiers(@application_form.form_data))
+    @xml_form = Base64.encode64(UpvsSubmissions::FormBuilders::FuzsFormBuilder.build_form(@application_form.form_data))
 
     render :stakeholders_summary
   end
