@@ -15,6 +15,16 @@
 
       <%= render 'components/error_summary', form: @application_form %>
 
+      <div class="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="handle_all" name="handle_all" type="checkbox"  onclick="handleAll()">
+          <label class="govuk-label govuk-checkboxes__label" for="handle_all">
+            Vybrať všetky
+          </label>
+        </div>
+      </div>
+      <hr>
+
       <div class="govuk-form-group govuk-checkboxes" data-module="govuk-checkboxes">
         <div id="acts_box">
           <%= f.inputs_set :acts_list do %>
@@ -40,6 +50,13 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  let isAllChecked = false;
+
+  function handleAll () {
+    isAllChecked = !isAllChecked;
+    document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = isAllChecked);
+  }
+
   function handleKeyPress(e){
     if(e.keyCode === 13){
       e.preventDefault();

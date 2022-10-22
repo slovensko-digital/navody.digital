@@ -218,11 +218,15 @@ div#acts-submission {
     margin-bottom: 0;
   }
 
-  .govuk-checkboxes__label {
+  #acts_box .govuk-checkboxes__label {
     padding-top: 0;
   }
 
-  .govuk-checkboxes__input {
+  #acts_box .govuk-checkboxes__input {
     padding-top: 2px;
+  }
+
+  hr {
+    margin-top: 1em;
   }
 }
