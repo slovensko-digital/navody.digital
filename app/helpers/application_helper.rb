@@ -16,6 +16,6 @@ module ApplicationHelper
   end
 
   def dont_show_small_search_bar?
-    current_page?(root_path) || current_page?(search_path) || (params[:id] && current_page?(category_path))
+    current_page?(root_path) || current_page?(search_path)
   end
 end
