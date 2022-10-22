@@ -1,7 +1,9 @@
 <header class="sdn-header sdn-header-950" role="banner" data-module="sdn-header">
   <div class="sdn-header__container govuk-width-container">
     <%= link_to root_path, class: 'sdn-header__link' do %>
-      <span class="sdn-header__product-name">Návody.Digital</span>
+    <span class="govuk-header__logotype">
+      <%= image_tag "logo.svg" %>
+    </span>
     <% end %>
     <div class="sdn-header__content">
       <button type="button" role="button" class="sdn-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
