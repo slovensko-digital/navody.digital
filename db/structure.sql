@@ -524,7 +524,8 @@ CREATE TABLE public.categories (
     description text NOT NULL,
     featured boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    featured_position integer DEFAULT 0
 );
 
 
@@ -2122,6 +2123,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220623200232'),
 ('20220624185928'),
 ('20220624204655'),
+('20220715194212'),
 ('20220727160233'),
 ('20220815153512'),
 ('20220815153557'),
@@ -2132,6 +2134,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073624'),
 ('20220914073645'),
 ('20220914073653'),
-('20220921082415');
+('20220921082415'),
+('20221022143119');
+
 
 

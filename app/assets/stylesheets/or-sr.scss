@@ -2,7 +2,7 @@ $govuk-border-colour: #b1b4b6;
 $govuk-secondary-text-colour: #505a5f;
 $govuk-focus-colour: #ffdd00;
 
-div#or-sr-identifiers {
+div#or-sr-identifiers, div#acts-submission {
   div.govuk-grid-row {
     width: 100%;
 
@@ -129,9 +129,7 @@ div#or-sr-identifiers {
     }
   }
 
-  legend#stakeholder >
-
-  legend#stakeholder_address {
+  legend#stakeholder > legend#stakeholder_address {
     margin-bottom: 0;
   }
 
@@ -212,5 +210,23 @@ div#or-sr-identifiers {
 
   .before {
     flex-shrink: 0;
+  }
+}
+
+div#acts-submission {
+  div.govuk-form-group {
+    margin-bottom: 0;
+  }
+
+  #acts_box .govuk-checkboxes__label {
+    padding-top: 0;
+  }
+
+  #acts_box .govuk-checkboxes__input {
+    padding-top: 2px;
+  }
+
+  hr {
+    margin-top: 1em;
   }
 }
