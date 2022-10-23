@@ -46,9 +46,35 @@ a.sdn-timeline-dropdown__option {
   display: block;
 }
 
-.button-back ,
-.button-back:hover ,
-.button-back:focus ,
+.autocomplete__wrapper {
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+.sdn-submission-form__panel {
+  border-left: 10px solid #ffdd00;
+  background-color: #fff9cc;
+  padding: 2em 2em 1em;
+}
+
+.sdn-submission-form__signature {
+  background-color: #e5f2e4;
+  border-left: 10px solid #00703c;
+  padding: 1em 2em;
+  margin-bottom: 2px;
+}
+
+.sdn-submission-form__signature .govuk-body {
+  margin: 0;
+}
+
+.govuk-input--disabled {
+  background-color: rgba(239, 239, 239, 0.3);
+  border-color: #6f777b;
+}
+
+.button-back,
+.button-back:hover,
+.button-back:focus,
 .button-back:active {
   border: none;
   background: none;
@@ -71,4 +97,8 @@ a.sdn-timeline-dropdown__option {
 .sdn-header__menu-button {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.govuk-cancel-link {
+  color: #d4351c !important;
 }

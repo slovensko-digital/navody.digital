@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include EidAuth
+
   before_action :set_default_metadata, :set_active_current_topic
 
   protected
@@ -13,6 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 
   def require_user
     unless current_user.logged_in?

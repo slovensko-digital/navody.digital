@@ -1,0 +1,18 @@
+<% unless content_for?(:title) %><% content_for :title, "Neúspešné podanie" %><% end %>
+<% @disable_feedback = true %>
+
+<%= content_for(:before_main_wrapper) do %>
+  <div class="govuk-width-container ">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-xl">Odoslanie podania nebolo úspešné</h1>
+          <p class="govuk-body-lead">Ospravedlňujeme sa, podanie sa nepodarilo odoslať. Naši programátori boli notifikovaní a pravdepodobne už pracujú na náprave.</p>
+          <p>Ak by chyba v dohľadnej dobe nezmizla, tak <%= mail_to 'navody@slovensko.digital', 'nám radšej napíšte' %>.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+<% end %>
+
+<%= render template: "layouts/application" %>
