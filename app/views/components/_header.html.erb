@@ -7,7 +7,7 @@
       <button type="button" role="button" class="sdn-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
       <nav>
         <ul id="navigation" class="sdn-header__navigation" aria-label="Navigácia">
-          <% unless current_page?(root_path) || current_page?(search_path) %>
+          <% unless dont_show_small_search_bar? %>
             <li class="sdn-header__form">
               <%= form_tag(search_path, method: :get) do %>
                 <%= search_field_tag(:q, @q, class: 'govuk-input', placeholder: 'Hľadať', autocomplete: :off) %>
@@ -24,7 +24,14 @@
           <li class="user-info">
             <% if current_user.logged_in? %>
               <div class="sdn-header__subnavigation">
-                <a href="#" data-turbolinks="false" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown"><span class="sdn-header__fixed-width-text"><%= current_user.email %></span></a>
+                <a href="#" data-turbolinks="false" class="sdn-header__link sdn-header__dropdown-toggle js-dropdown-toggle" aria-controls="subnav-dropdown">
+                  <span class="sdn-header__fixed-width-text">
+                    <%= current_user.email %>
+                    <% if eid_token&.valid? %>
+                    <sup>EID</sup>
+                  <% end %>
+                  </span>
+                </a>
                 <ul class="sdn-header__dropdown" id="subnav-dropdown">
                   <li>
                     <%= link_to 'Moje životné situácie', user_journeys_path %>
