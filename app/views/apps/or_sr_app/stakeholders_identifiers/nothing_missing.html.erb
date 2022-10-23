@@ -1,0 +1,18 @@
+<%= render partial: 'header' %>
+
+<div id="or-sr-identifiers" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">
+        Vyzerá, že všetko je v&nbsp;poriadku.
+      </h1>
+      <div class="govuk-panel__body">
+        V zápise obchodného registra pre túto firmu sme nenašli žiadneho spoločníka, pri ktorom by bolo potrebné doplniť identifikačné údaje.
+      </div>
+    </div>
+
+    <%= render_notification_subscription_component(%w[CompanyNewsletterSubscription NewsletterSubscription]) do %>
+      <p class="govuk-body">Pravidelne pracujeme na zjednodušení komunikácie so štátom. Až príde ďalšia povinnosť alebo nová možnosť zjednodušenia, môžeme Vás o tom informovať.</p>
+    <% end %>
+  </div>
+</div>

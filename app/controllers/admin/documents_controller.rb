@@ -21,13 +21,13 @@ class Admin::DocumentsController < Admin::AdminController
 
   def feature
     if @document.update(featured: true)
-      redirect_to admin_documents_url, notice: 'Document was successfully updated.'
+      redirect_back fallback_location: admin_documents_url, notice: 'Document was successfully updated.'
     end
   end
 
   def hide
     if @document.update(featured: false)
-      redirect_to admin_documents_url, notice: 'Document was successfully updated.'
+      redirect_back fallback_location: admin_documents_url, notice: 'Document was successfully updated.'
     end
   end
 

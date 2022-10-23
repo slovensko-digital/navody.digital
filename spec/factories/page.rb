@@ -4,6 +4,7 @@ FactoryBot.define do
       '%s %d' % [Faker::Commerce.product_name, n]
     end
     content { Faker::Lorem.paragraph(sentence_count: 10) }
+    short_description { Faker::Lorem.paragraph(sentence_count: 1) }
     slug { title.parameterize }
     is_faq { false }
     sequence(:position) { |n| n }

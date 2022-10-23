@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     @metadata.og.description = 'Interaktívne návody, ako vybaviť úradné záležitosti elektronicky.'
 
     @faqs = Page.faq.all # TODO: fetch top FAQs here
-    @journeys = Journey.published
+    @categories = Category.featured.order(featured_position: :asc, name: :asc)
     @documents = Document.featured.includes(:searchable).order(featured_position: :asc).map(&:searchable).compact # we do not have FK constraints here, compact eliminates any possible documents hanging without searchable counterpart, which was deleted
   end
 

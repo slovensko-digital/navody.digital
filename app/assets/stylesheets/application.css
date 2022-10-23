@@ -13,6 +13,7 @@
  *= require cookieconsent.min
  *= require static
  *= require navody-frontend-fixes
+ *= require or-sr
  *= require_self
  */
 
@@ -23,7 +24,6 @@
 #show-more-container {
     text-align: center;
 }
-
 
 .govuk-panel--contact {
     color: white;
@@ -164,4 +164,12 @@
     .active-topic__inner {
         grid-template-columns: 1fr;
     }
+}
+
+#upvs-submissions #iframe {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border: none;
+    overflow: hidden;
 }

@@ -1,0 +1,13 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to 'Návody', root_path, class: 'govuk-breadcrumbs__link' %>
+    </li>
+    <% crumbs.each do |crumb| %>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to crumb[0], crumb[1], class: 'govuk-breadcrumbs__link' %>
+    </li>
+    <% end %>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= current %></li>
+  </ol>
+</div>

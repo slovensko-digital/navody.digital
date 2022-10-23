@@ -19,6 +19,10 @@ sk:
       one: z 1 kroku
       few: z %{count} krokov
       other: z %{count} krokov
+    stakeholders_found:
+      one: spoločníka, pri ktorom
+      few: spoločníkov, pri ktorých
+      other: spoločníkov, pri ktorých
   date:
     formats:
       dmrg: "%e. %B %Y"

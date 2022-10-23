@@ -7,5 +7,6 @@ FactoryBot.define do
     published_status { 'PUBLISHED' }
     slug { title.parameterize }
     description { Faker::Lorem.paragraph(sentence_count: 5) }
+    short_description { Faker::Lorem.paragraph(sentence_count: 1) }
   end
 end

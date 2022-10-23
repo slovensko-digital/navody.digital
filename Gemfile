@@ -39,6 +39,7 @@ gem 'que'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+gem 'jwt'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
@@ -61,6 +62,8 @@ gem 'clockwork'
 gem 'sitemap_generator'
 
 gem 'validate_url'
+
+gem 'http'
 
 # sendinblue V3
 gem 'sib-api-v3-sdk'
