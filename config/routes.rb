@@ -126,7 +126,6 @@ Rails.application.routes.draw do
     post :restart, on: :member, path: 'zacat-odznova'
   end
 
-  # PROFILE ROUTE
   resource :profile, path: 'moj-profil' do
     get :show
     delete :destroy

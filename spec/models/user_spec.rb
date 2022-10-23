@@ -6,7 +6,11 @@ RSpec.describe User, type: :model do
     journey = create(:journey)
     user_journey = create(:user_journey, user: user, journey: journey)
 
-    # user.destroy
+    expect(User.count).to eq(1)
+    expect(UserJourney.count).to eq(1)
+
+    user.destroy
+
     expect(User.count).to eq(0)
     expect(UserJourney.count).to eq(0)
   end
