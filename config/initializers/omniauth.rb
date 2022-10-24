@@ -1,4 +1,6 @@
 require 'omniauth/strategies/magic_link'
+require 'omniauth/strategies/eid'
+
 OmniAuth.config.logger = Rails.logger
 OmniAuth.config.failure_raise_out_environments = []
 
@@ -11,6 +13,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     on_send_link: -> (email, token) {
       UserMailer.with(email: email, token: token).magic_link.deliver_later
     }
+  }
+  provider :eid, {
+    config: Rails.application.config_for(:auth).fetch(:eid),
   }
 end
 
