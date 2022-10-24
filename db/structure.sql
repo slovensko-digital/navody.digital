@@ -17,8 +17,6 @@ CREATE SCHEMA code_list;
 
 
 --
-
--- Name: code_list; Type: SCHEMA; Schema: -; Owner: -
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -2138,5 +2136,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073653'),
 ('20220921082415'),
 ('20221022143119');
+
 
 
