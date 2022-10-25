@@ -11,6 +11,14 @@ module CustomComponentsHelper
       elm.replace render_notification_subscription_component(subscription_types, journey: journey, content: elm.inner_html)
     end
 
+    fragment.css('deadline').each do |elm|
+      date_info = elm[:time]
+      date_info = "#{Date.today.year}-#{date_info}" unless date_info.start_with?(/\d{4}-/)
+      deadline = Date.parse(date_info)
+      inner_html_selector = deadline > Date.today ? 'before' : 'after'
+      elm.replace(render 'components/deadline', time: deadline, past_due: deadline > Date.today, inner_html: elm.css(inner_html_selector).inner_html)
+    end
+
     raw(fragment.to_s)
   end
 
