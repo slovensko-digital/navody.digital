@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :user_journeys, dependent: :destroy do
+  has_many :user_journeys do
     def start!(journey)
       create!(journey: journey)
     end
