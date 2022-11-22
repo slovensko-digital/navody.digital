@@ -11,6 +11,6 @@ class PagesController < ApplicationController
   def show
     @page = Page.find_by_slug!(params[:id])
 
-    @metadata.og.image = "journeys/#{@page.image_name.presence || "placeholder.png" }"
+    @metadata.og.image = @page.image_name.presence || "placeholder.png"
   end
 end
