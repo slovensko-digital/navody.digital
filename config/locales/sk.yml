@@ -2,9 +2,9 @@ sk:
   components:
     deadline:
       remaining_days:
-        one: Do termínu ostáva 1 deň.
-        few: Do termínu ostáva %{count} dni.
-        other: Do termínu ostáva %{count} dní.
+        one: 1 deň
+        few: "%{count} dni"
+        other: "%{count} dní"
   results_genitive:
     one: výsledok
     few: výsledky

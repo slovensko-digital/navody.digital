@@ -7,12 +7,7 @@
     </div>
     <div class="govuk-notification-banner__content">
       <p class="govuk-notification-banner__heading">
-        <% if local_assigns[:past_due] %>
-          <%= t('.remaining_days', :count => (local_assigns[:time] - Date.today).to_i) %>
-        <% else %>
-          Termín uplynul.
-        <% end %>
-        <%= raw inner_html %>
+        <%= raw inner_html.gsub(':remaining_days:', t('.remaining_days', count: remaining_days)) %>
       </p>
     </div>
   </div>

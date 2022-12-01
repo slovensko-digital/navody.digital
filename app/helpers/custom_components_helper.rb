@@ -1,6 +1,6 @@
 module CustomComponentsHelper
-  def raw_with_custom_components(html, journey: nil)
-    fragment = Nokogiri::HTML.fragment(html)
+  def raw_with_custom_components(inner_html, journey: nil)
+    fragment = Nokogiri::HTML.fragment(inner_html)
 
     fragment.css('embedded-app').each do |elm|
       elm.replace render_embedded_app(elm)
@@ -16,7 +16,7 @@ module CustomComponentsHelper
       date_info = "#{Date.today.year}-#{date_info}" unless date_info.start_with?(/\d{4}-/)
       deadline = Date.parse(date_info)
       inner_html_selector = deadline > Date.today ? 'before' : 'after'
-      elm.replace(render 'components/deadline', time: deadline, past_due: deadline > Date.today, inner_html: elm.css(inner_html_selector).inner_html)
+      elm.replace(render 'components/deadline', remaining_days: (deadline - Date.today).to_i, inner_html: elm.css(inner_html_selector).inner_html)
     end
 
     raw(fragment.to_s)
