@@ -120,12 +120,12 @@ module UpvsSubmissions
         def load_municipality_identifier
           return unless slovak?
 
-          municipality_code_list_object = CodeList::Municipality.where("lower(value) = ?", @municipality&.strip.downcase).take
+          municipality_code_list_object = CodeList::Municipality.where("lower(value) = lower(?)", @municipality&.strip).take
           @municipality_identifier = municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
-          country_code_list_object = CodeList::Country.where("lower(value) = ?", @country&.strip.downcase).take
+          country_code_list_object = CodeList::Country.where("lower(value) = lower(?)", @country&.strip).take
           @country_identifier = country_code_list_object&.identifier
         end
 
