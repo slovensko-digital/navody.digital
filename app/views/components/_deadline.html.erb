@@ -7,7 +7,7 @@
     </div>
     <div class="govuk-notification-banner__content">
       <p class="govuk-notification-banner__heading">
-        <%= raw inner_html.gsub(':remaining_days:', t('.remaining_days', count: remaining_days)) %>
+        <%= raw inner_html.gsub('{{remaining_days}}', t('.remaining_days', count: remaining_days)) %>
       </p>
     </div>
   </div>
