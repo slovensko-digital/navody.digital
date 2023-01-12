@@ -7,6 +7,9 @@ ingress:
 service:
   externalPort: 3000
   internalPort: 3000
+image:
+  secrets:
+  - name: skdigital-bonet-registry
 livenessProbe.initialDelaySeconds: 20
 readinessProbe.initialDelaySeconds: 20 
 application.migrateCommand: ["bundle", "exec", "rails", "db:migrate"]
