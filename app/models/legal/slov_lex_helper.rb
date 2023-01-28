@@ -5,6 +5,11 @@ module Legal
       Digest::SHA512.hexdigest(body.to_s)
     end
 
+    def self.is_valid_law_identifier?(identifier)
+      doc = load_document(identifier)
+      parse_law_versions(doc).any?
+    end
+
     def self.load_document(url)
       law_link = Legal::SlovLexLink.new(url).current_date_version
       response = HTTP.get(law_link)
@@ -12,11 +17,14 @@ module Legal
     end
 
     def self.parse_law_versions(doc)
-      doc.css("tr.effectivenessHistoryItem").to_a[1..].map do |tr|
+      versions = doc.css("tr.effectivenessHistoryItem")
+      return [] unless versions.any?
+
+      versions.to_a[1..].map do |tr|
         {
           valid_from: parse_date(tr.attributes["data-ucinnostod"].value),
           valid_to: parse_date(tr.attributes["data-ucinnostdo"].value),
-          link_path: tr.attributes["data-iri"].value # not used for now, but maybe should
+          link_path: tr.attributes["data-iri"].value # law version identifier
         }
       end
     end

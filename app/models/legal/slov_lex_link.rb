@@ -2,6 +2,8 @@ module Legal
   class SlovLexLink
     attr_reader :law, :version_date, :section, :given
 
+    class SlovLexLinkException < StandardError;end
+
     def initialize(given_url)
       @given = given_url
       parsed = parse_given_link(given_url)
@@ -40,7 +42,7 @@ module Legal
       results[:law] = given_url.match(/#{prefix}(\d{4}\/\d+)/).to_a[1]
 
       if results[:law].nil?
-        throw 'invalid slov-lex.sk url, no law was found (e.g. 2003/595)'
+        raise SlovLexLinkException, 'invalid slov-lex.sk url, no law was found (e.g. 2003/595)'
       end
 
       results[:version_date] = given_url.match(/#{prefix}\d{4}\/\d+\/(\d{8})/).to_a[1]

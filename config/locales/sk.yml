@@ -1,4 +1,11 @@
 sk:
+  activerecord:
+    errors:
+      models:
+        journey_legal_definition:
+          attributes:
+            law:
+              required: 'Unable to create law from the provided link. Check validity of the provided URL.'
   results_genitive:
     one: výsledok
     few: výsledky

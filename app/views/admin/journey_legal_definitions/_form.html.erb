@@ -2,6 +2,7 @@
   <% if journey_legal_definition.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(journey_legal_definition.errors.count, "error") %> prohibited this journey_legal_definition from being saved:</h2>
+      <%= journey_legal_definition.errors.full_messages.join(", ") %>
     </div>
   <% end %>
 
