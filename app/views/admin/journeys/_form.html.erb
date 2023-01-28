@@ -6,6 +6,31 @@
   <% end %>
 
 
+  <% if journey.is_outdated? %>
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li>
+              This journey is linked to laws which were updated since the journey was last checked for law compliance.
+            </li>
+            <li>
+              Updated laws:
+              <ol>
+                <% journey.updated_laws_since_last_check.each do |law| %>
+                  <li><%= link_to law.identifier, law.identifier %></li>
+                <% end %>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <% if journey.last_checked_on && journey.last_checked_on < 3.months.ago %>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>

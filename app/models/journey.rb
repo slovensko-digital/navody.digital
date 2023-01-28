@@ -81,6 +81,14 @@ class Journey < ApplicationRecord
     slug.blank? && !title.blank?
   end
 
+  def is_outdated?
+    laws.any? {|law| last_checked_on < law.valid_from }
+  end
+
+  def updated_laws_since_last_check
+    laws.select {|law| last_checked_on < law.valid_from }
+  end
+
   private
 
   def update_steps_search
