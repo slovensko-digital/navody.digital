@@ -22,7 +22,7 @@ RUN apt install -y chromium-driver
 RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import -
 RUN curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
 RUN curl -sSL https://get.rvm.io | bash -s
-RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 2.7.5"
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 3.2.1"
 
 # Install Rails
 RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && gem install rails webdrivers"
