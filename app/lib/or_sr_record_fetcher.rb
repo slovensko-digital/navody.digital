@@ -46,10 +46,10 @@ class OrSrRecordFetcher
     stakeholders_table.css('td[align=left]').last.children.each do |stakeholder_table|
       stakeholder_name = get_stakeholder_name(stakeholder_table)
 
-      if stakeholder_table.css('a>img').first['alt'].start_with?("Osoba nemá")
-        missing << stakeholder_name
-      else
+      if stakeholder_status_ok?(stakeholder_table)
         ok << stakeholder_name
+      else
+        missing << stakeholder_name
       end
     end
 
@@ -137,5 +137,13 @@ class OrSrRecordFetcher
     else
       stakeholder_table.css('td').first.css('span').first.inner_text.strip
     end
+  end
+
+  def self.stakeholder_status_ok?(stakeholder_table)
+    stakeholder_table.css('a>img').each do |a|
+      return false if a['alt'].start_with?("Osoba nemá")
+    end
+
+    true
   end
 end
