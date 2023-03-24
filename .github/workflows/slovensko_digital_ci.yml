@@ -31,6 +31,7 @@ jobs:
           bundler-cache: true
 
       - run: yarn install
+      - run: bundle exec rails webpacker:compile
       - run: bundle exec rails db:create db:structure:load --trace
 
       - uses: paambaati/codeclimate-action@v2.7.5
