@@ -1,7 +1,19 @@
-<%= content_for(:headerline, 'Profil užívateľa (' + @user_email + ')')  %>
+<%= content_for(:headerline, 'Profil používateľa (' + @user_email + ')') %>
 
-<%= link_to 'Zrušiť profil', profile_path,
-    method: "delete",
-    data: { confirm: "Skutočne chcete odstrániť Váš profil?" },
-    class: 'govuk-button govuk-button--large',
-    style: 'background-color:#aa2a16' %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-body sdn-content">
+      <h2 class="govuk-heading-l">Nastavenia</h2>
+      <div class="govuk-inset-text">Jedného dňa tu pribudne veľa zaujímavých nastavení, ale zatiaľ je to tu také
+        prázdne. Ak nám chceš pomôcť testovať novú funkcionalitu Návody.Digital, <%= link_to 'ozvi sa nám', page_path('kontakt') %>.
+      </div>
+      <h2 class="govuk-heading-l">Nebezpečná zóna</h2>
+
+      <%= link_to 'Zmazať profil', profile_path,
+                  method: "delete",
+                  data: { confirm: "Skutočne chcete zmazať Váš profil? Všetky údaje v rozpracovaných návodoch budú tiež zmazané." },
+                  class: 'govuk-button govuk-button--large',
+                  style: 'background-color:#aa2a16' %>
+    </div>
+  </div>
+</div>
