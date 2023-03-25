@@ -34,7 +34,7 @@ class Submission < ApplicationRecord
   end
 
   def preselect_transactional_emails
-    self.selected_subscription_types = subscription_types.filter_map { |type| type if NotificationSubscription::TYPES[type][:transactional] }
+    self.selected_subscription_types = subscription_types.filter_map { |type| type if NotificationSubscription::TYPES[type].try(:[],:transactional) }
   end
 
   def to_param

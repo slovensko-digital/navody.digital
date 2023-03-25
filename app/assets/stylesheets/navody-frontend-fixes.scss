@@ -152,3 +152,9 @@ a.sdn-timeline-dropdown__option {
   margin-bottom: 15px;
   padding: 0;
 }
+
+.sdn-header__dropdown-toggle:focus {
+  color: #0b0c0c;
+  background-color: #ffbf47;
+  box-shadow: none;
+}

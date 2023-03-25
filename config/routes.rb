@@ -126,6 +126,11 @@ Rails.application.routes.draw do
     post :restart, on: :member, path: 'zacat-odznova'
   end
 
+  resource :profile, path: 'moj-profil' do
+    get :show
+    delete :destroy
+  end
+
   resources :notification_subscription_groups, controller: :notification_subscriptions, path: 'notifikacie' do
     get :confirm, on: :member, path: 'potvrdit'
   end

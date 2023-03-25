@@ -3,7 +3,9 @@ const templateId = () => {
 }
 
 const plausibleEvent = (event) => {
-  plausible(event, { props: { template_id: templateId() } });
+  if (typeof plausible !== 'undefined') {
+    plausible(event, { props: { template_id: templateId() } });
+  }
 }
 
 document.querySelector('[name="commit"]').addEventListener('click', () => {

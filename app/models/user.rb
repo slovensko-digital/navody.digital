@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :user_journeys do
+  has_many :user_journeys, dependent: :destroy do
     def start!(journey)
       create!(journey: journey)
     end
@@ -30,7 +30,6 @@ class User < ApplicationRecord
     submission.current_user = self
     submission
   end
-
 
   def build_upvs_submission(params, callback_step:)
     upvs_submission = upvs_submissions.build(params)
