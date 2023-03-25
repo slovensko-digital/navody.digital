@@ -4,7 +4,7 @@ class EmailMeSubmissionInstructionsEmailJob < ApplicationJob
   def perform(submission)
     email = build_template_email(submission)
     Submission.transaction do
-      submission.expires_at = submission.compute_expiration_time
+      submission.set_new_expiration_time
       submission.save!
       EmailService.send_email(email)
     end

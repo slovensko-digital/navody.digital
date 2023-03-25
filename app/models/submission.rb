@@ -5,7 +5,7 @@ class Submission < ApplicationRecord
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   before_create { self.selected_subscription_types = [] if skip_subscribe }
-  before_create { self.expires_at = skip_subscribe ? compute_expiration_time : nil }
+  before_create { set_new_expiration_time unless skip_subscribe }
   after_create :subscribe, unless: :skip_subscribe
 
   validates_presence_of :email, message: 'Zadajte emailovú adresu', unless: :skip_subscribe
@@ -14,8 +14,8 @@ class Submission < ApplicationRecord
 
   scope :expired, -> { where('expires_at < ?', Time.zone.now) }
 
-  def compute_expiration_time
-    Time.zone.now + 20.minutes
+  def set_new_expiration_time
+    self.expires_at = Time.zone.now + 20.minutes
   end
 
   def subscribe
