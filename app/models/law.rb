@@ -12,6 +12,6 @@ class Law < ApplicationRecord
   end
 
   def schedule_law_versions_check
-    Legal::LawVersionsListJob.perform_later(self.id)
+    Legal::LawVersionsListJob.perform_later(self)
   end
 end

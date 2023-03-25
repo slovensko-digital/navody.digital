@@ -2,8 +2,7 @@ module Legal
   class LawVersionJob < ApplicationJob
     queue_as :default
 
-    def perform(law_version_id)
-      law_version = LawVersion.find(law_version_id)
+    def perform(law_version)
       identifier = law_version.law.identifier
 
       date_string = law_version.valid_from.to_s.gsub(/\-/, "")
