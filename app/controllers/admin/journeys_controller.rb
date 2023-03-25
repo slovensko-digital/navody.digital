@@ -13,7 +13,7 @@ LEFT JOIN (
     JOIN journey_legal_definitions jld on jo.id = jld.journey_id
     JOIN laws l on jld.law_id = l.id
     JOIN active_law_versions alv on alv.law_id = l.id
-    WHERE alv.valid_from > jo.last_checked_on
+    WHERE alv.valid_from > jo.last_checked_on OR alv.updated_at > jo.last_checked_on
 ) alerting_journeys ON j.id = alerting_journeys.id
     SQL
 
