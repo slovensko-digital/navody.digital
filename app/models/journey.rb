@@ -90,6 +90,8 @@ class Journey < ApplicationRecord
   end
 
   def updated_laws_since_last_check
+    return laws if last_checked_on.nil?
+
     laws.select {|law| last_checked_on < law.valid_from }
   end
 

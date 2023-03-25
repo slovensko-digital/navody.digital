@@ -21,7 +21,7 @@
         <td class="govuk-table__cell">&hellip;<%= link_to journey_legal_definition.link.slice(-30, 30), journey_legal_definition.link, target: '_blank' %></td>
         <td class="govuk-table__cell"><%= journey_legal_definition.law.valid_from  %></td>
         <td class="govuk-table__cell"><%= journey_legal_definition.law.valid_to %></td>
-        <td class="govuk-table__cell"><%= journey_legal_definition.law.last_update_at.to_date %></td>
+        <td class="govuk-table__cell"><%= journey_legal_definition.law.last_update_at&.to_date %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_journey_legal_definition_path(journey_legal_definition.journey, journey_legal_definition) %></td>
         <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey_legal_definition.journey, journey_legal_definition], method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
       </tr>

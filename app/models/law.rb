@@ -6,6 +6,6 @@ class Law < ApplicationRecord
   delegate :valid_from, :valid_to, to: :active_version, allow_nil: true
 
   def last_update_at
-    active_version.updated_at
+    active_version&.updated_at
   end
 end
