@@ -1,0 +1,25 @@
+<%= render partial: 'header' %>
+
+<div id="acts-submission" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: fill_submission_apps_acts_or_sr_app_acts_submissions_path do |f| %>
+      <%= render 'apps/acts_or_sr_app/acts_submissions/back', form: f %>
+
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">Neboli nájdené žiadne listiny</h2>
+      </legend>
+      <br />
+
+      <p>
+        Pre zvolenú spoločnosť sme nenašli žiadne digitalizované listiny, tieto však môžu existovať v listinnej podobe.
+      </p>
+      <p>
+        <b>Vyžiadajte si zdigitalizovanie požadovaných listín</b> mailom, prípadne iným podaním na súde, ktorý vedie obchodný register, v ktorom je požadovaná spoločnosť zapísaná.<br />
+        Kontakty na súdy nájdete na <%= link_to 'portáli Ministerstva spravodlivosti', 'https://obcan.justice.sk/infosud/-/infosud/zoznam/sud' %>.
+      </p>
+      <br />
+
+      <%= render 'hidden_fields', form: f, current_step: 'acts' %>
+    <% end %>
+  </div>
+</div>

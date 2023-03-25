@@ -39,6 +39,8 @@ module Apps
         business = Apps::OrSrApp::ActsSubmission::BusinessActs.new.search_business(parameters['business_cin'])&.first
         @acts = Apps::OrSrApp::ActsSubmission::BusinessActs.new.search_acts(business)
 
+        render :no_acts and return if @acts.empty?
+
         # to mark selected as checked
         if back
           acts_params = params.require(:apps_or_sr_app_acts_submission_application_form)[:acts]
