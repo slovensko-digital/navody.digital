@@ -46,9 +46,35 @@ a.sdn-timeline-dropdown__option {
   display: block;
 }
 
-.button-back ,
-.button-back:hover ,
-.button-back:focus ,
+.autocomplete__wrapper {
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+.sdn-submission-form__panel {
+  border-left: 10px solid #ffdd00;
+  background-color: #fff9cc;
+  padding: 2em 2em 1em;
+}
+
+.sdn-submission-form__signature {
+  background-color: #e5f2e4;
+  border-left: 10px solid #00703c;
+  padding: 1em 2em;
+  margin-bottom: 2px;
+}
+
+.sdn-submission-form__signature .govuk-body {
+  margin: 0;
+}
+
+.govuk-input--disabled {
+  background-color: rgba(239, 239, 239, 0.3);
+  border-color: #6f777b;
+}
+
+.button-back,
+.button-back:hover,
+.button-back:focus,
 .button-back:active {
   border: none;
   background: none;
@@ -66,4 +92,69 @@ a.sdn-timeline-dropdown__option {
   color: #06070b;
   font-weight: normal;
   text-decoration: underline;
+}
+
+.govuk-cancel-link {
+  color: #d4351c !important;
+}
+
+// deadline component
+.govuk-notification-banner {
+  font-family: "GDS Transport",arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  margin-bottom: 30px;
+  border: 5px solid #1d70b8;
+  background-color: #1d70b8;
+}
+
+.govuk-notification-banner__header {
+  padding: 2px 15px 5px;
+  border-bottom: 1px solid rgba(0,0,0,0);
+}
+
+.govuk-notification-banner__title {
+  font-family: "GDS Transport",arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.govuk-notification-banner__content {
+  color: #0b0c0c;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.govuk-notification-banner__content > :last-child {
+  margin-bottom: 0;
+}
+
+.govuk-notification-banner__heading {
+  font-family: "GDS Transport",arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 18px;
+  font-size: 1.125rem;
+  line-height: 1.1111111111;
+  margin: 0 0 15px 0;
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+.sdn-header__dropdown-toggle:focus {
+  color: #0b0c0c;
+  background-color: #ffbf47;
+  box-shadow: none;
 }

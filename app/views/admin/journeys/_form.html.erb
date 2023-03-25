@@ -47,7 +47,7 @@
   <%= form.text_field :keywords %>
   <%= form.text_area :short_description %>
   <%= form.fields_for :categorization do |cat| %>
-    <%= cat.collection_check_boxes :category_ids, Category.all, :id, :name, checked: journey.categorization.categories.pluck(:id) %>
+    <%= cat.collection_check_boxes :category_ids, Category.order(:name), :id, :name, checked: journey.categorization.categories.pluck(:id) %>
   <% end %>
   <%= form.select :published_status, Journey.defined_enums['published_status'] %>
   <%= form.text_field :image_name %>

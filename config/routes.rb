@@ -94,6 +94,19 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
+    namespace :acts_or_sr_app, path: 'or-sr-listiny' do
+      resource :acts_submissions, path: '' do
+        member do
+          get :index
+          get :create
+          post :fill_submission, path: 'vyplnenie'
+          post :form_check
+          get :callback, path: 'odoslane'
+        end
+      end
+      get :search_business, to: 'acts_submissions#search_business', defaults: { format: :json }
+    end
+
     namespace :or_sr_app, path: 'or-sr' do
       resource :stakeholders_identifiers, path: 'identifikacne-udaje' do
         member do
@@ -107,10 +120,16 @@ Rails.application.routes.draw do
       end
     end
   end
+
   resources :apps, path: 'aplikacie' # faux route
 
   resources :user_journeys, path: 'moje-zivotne-situacie' do
     post :restart, on: :member, path: 'zacat-odznova'
+  end
+
+  resource :profile, path: 'moj-profil' do
+    get :show
+    delete :destroy
   end
 
   resources :notification_subscription_groups, controller: :notification_subscriptions, path: 'notifikacie' do
@@ -126,6 +145,7 @@ Rails.application.routes.draw do
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'
   resources :feedbacks, path: 'spatna-vazba'
+  resources :categories, only: [:show]
 
   resources :submissions, path: 'podania' do
     post :start, path: 'nove', on: :collection # public facing API
@@ -133,5 +153,28 @@ Rails.application.routes.draw do
     post :finish, path: 'dokoncit'
 
     get :test, on: :collection unless Rails.env.production?
+  end
+
+  namespace :upvs  do
+    namespace :submissions, path: 'podania' do
+      get :login_callback
+      get :switch_account_callback
+      get :resubmit_without_token
+      post :new, path: ''
+      post :sign, path: 'podpisat'
+      post :submit, path: 'odoslat'
+      get :submission_error, path: 'chyba'
+      post :continue, path: 'pokracovat'
+      get :finish, path: 'hotovo'
+    end
+  end
+
+  # data utils
+  namespace :datahub do
+    namespace :upvs do
+      resources :public_authority_edesks do
+        get :search, on: :collection
+      end
+    end
   end
 end

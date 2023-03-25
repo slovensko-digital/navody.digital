@@ -3,7 +3,11 @@ class EmailMeSubmissionInstructionsEmailJob < ApplicationJob
 
   def perform(submission)
     email = build_template_email(submission)
-    EmailService.send_email(email)
+    Submission.transaction do
+      submission.set_new_expiration_time
+      submission.save!
+      EmailService.send_email(email)
+    end
   end
 
   private

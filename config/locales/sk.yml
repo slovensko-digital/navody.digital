@@ -1,4 +1,10 @@
 sk:
+  components:
+    deadline:
+      remaining_days:
+        one: 1 deň
+        few: "%{count} dni"
+        other: "%{count} dní"
   activerecord:
     errors:
       models:
