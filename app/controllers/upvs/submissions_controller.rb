@@ -17,29 +17,23 @@ class Upvs::SubmissionsController < ApplicationController
 
   def show
     @token = eid_token
-    session[:after_login_callback] = request.url
+    session[:submission_callback] = request.url
   end
 
   def login_callback
     session[:eid_encoded_token] = params[:token]
 
-    redirect_to session[:after_login_callback]
+    redirect_to session[:submission_callback]
   end
 
   def switch_account_callback
     session.delete(:eid_encoded_token)
 
-    redirect_to action: :show
-  end
-
-  def resubmit_without_token
-    session.delete(:eid_encoded_token)
-
-    render action: :show
+    redirect_to session[:submission_callback]
   end
 
   def submit
-    return resubmit_without_token unless eid_token&.valid? # If token expires meanwhile
+    return switch_account_callback unless eid_token&.valid? # If token expires meanwhile
 
     @upvs_submission.token = session[:eid_encoded_token]
 
