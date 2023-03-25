@@ -34,7 +34,7 @@ class Journey < ApplicationRecord
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
                       keywords: journey.keywords_search,
-                      published: journey.published?}
+                      published: journey.published? }
                   }
 
   def published?
@@ -47,6 +47,10 @@ class Journey < ApplicationRecord
 
   def searchable?
     published? || blank?
+  end
+
+  def getting_ready?
+    published_status == 'BLANK'
   end
 
   def to_param
