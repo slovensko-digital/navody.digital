@@ -9,9 +9,11 @@
 
     <%= render partial: 'components/next_step', object: @next_step, locals: { journey: @journey } %>
   </div>
-  <div class="govuk-grid-column-one-third">
-    <%= render 'components/timeline' %>
-  </div>
+  <% if @journey.steps.any? %>
+    <div class="govuk-grid-column-one-third">
+      <%= render 'components/timeline' %>
+    </div>
+  <% end %>
 </div>
 
 <% content_for :json_ld do %>

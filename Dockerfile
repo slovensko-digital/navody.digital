@@ -1,4 +1,4 @@
-FROM ruby:2.7.5
+FROM ruby:3.2.1
 
 # Install packages
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -

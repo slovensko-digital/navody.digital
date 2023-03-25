@@ -7,9 +7,18 @@ ingress:
 service:
   externalPort: 3000
   internalPort: 3000
+image:
+  secrets:
+  - name: skdigital-bonet-registry
 livenessProbe.initialDelaySeconds: 20
 readinessProbe.initialDelaySeconds: 20 
 application.migrateCommand: ["bundle", "exec", "rails", "db:migrate"]
+resources:
+  requests:
+    cpu: 20m
+    memory: 450Mi
+  limits:
+    memory: 1Gi
 workers:
   clock:
     replicaCount: "1"
@@ -27,6 +36,12 @@ workers:
       command:
         - "pgrep"
         - "bundle"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 300Mi
   worker:
     replicaCount: "1"
     command: ["bundle", "exec", "que", "-w1", "./config/environment.rb"]
@@ -43,3 +58,9 @@ workers:
       command:
         - "pgrep"
         - "bundle"
+    resources:
+      requests:
+        cpu: 200m
+        memory: 250Mi
+      limits:
+        memory: 500Mi

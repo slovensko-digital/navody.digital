@@ -92,11 +92,11 @@ module UpvsSubmissions
         end
 
         def municipality_code_list
-          original_municipality_similars = CodeList::Municipality.where("value like ?", "#{@original_municipality}%")
+          original_municipality_similars = CodeList::Municipality.where("value ilike ?", "#{@original_municipality}%")
 
           return original_municipality_similars if original_municipality_similars.present?
 
-          CodeList::Municipality.where("value like ?", "#{@original_municipality.split('-')&.first&.strip}%")
+          CodeList::Municipality.where("value ilike ?", "#{@original_municipality.split('-')&.first&.strip}%")
         end
 
         def unsupported_slovak_address?
@@ -120,12 +120,12 @@ module UpvsSubmissions
         def load_municipality_identifier
           return unless slovak?
 
-          municipality_code_list_object = CodeList::Municipality.where(value: @municipality&.strip).take
+          municipality_code_list_object = CodeList::Municipality.where("lower(value) = lower(?)", @municipality&.strip).take
           @municipality_identifier = municipality_code_list_object&.identifier
         end
 
         def load_country_identifier
-          country_code_list_object = CodeList::Country.where(value: @country&.strip).take
+          country_code_list_object = CodeList::Country.where("lower(value) = lower(?)", @country&.strip).take
           @country_identifier = country_code_list_object&.identifier
         end
 
