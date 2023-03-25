@@ -23,9 +23,9 @@
     <% end %>
   </div>
 
-    <% if current_user.logged_in? %>
-      <%= hidden_field_tag 'notification_subscription_group[email]', current_user.email %>
-    <% else %>
+  <% if current_user.logged_in? %>
+    <%= hidden_field_tag 'notification_subscription_group[email]', current_user.email %>
+  <% else %>
     <div class="govuk-form-group<% if form.errors[:email].any? %> govuk-form-group--error<% end %>">
       <%= f.label :email, 'Emailová adresa', class: 'govuk-label' %>
       <% form.errors[:email].each do |error| %>
