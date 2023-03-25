@@ -16,6 +16,7 @@ class JourneyLegalDefinition < ApplicationRecord
 
   def is_outdated?
     return true if journey.last_checked_on.nil?
+    return true if law.active_version.nil?
 
     journey.last_checked_on < law.valid_from || journey.last_checked_on < law.active_version.updated_at
   end
