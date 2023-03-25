@@ -60,7 +60,7 @@ class SubmissionsController < ApplicationController
 
   def build_submission
     @submission = current_user.build_submission(
-      submission_params.merge(expires_at: params[:skip_subscribe] ? Submission.expiration_time : nil),
+      submission_params,
       extra: params[:submission][:extra],
       skip_subscribe: params[:skip_subscribe],
       callback_step: find_callback_step_by_path(submission_params[:callback_step_path])
