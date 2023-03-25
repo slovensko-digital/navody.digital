@@ -10,6 +10,6 @@ class ProfilesController < ApplicationController
     user = current_user
     reset_session
     user.destroy
-    redirect_to root_path, notice: 'Odstránenie konta bolo úspešné.'
+    redirect_to root_path, notice: 'Váš profil bol úspešne zmazaný.'
   end
 end
