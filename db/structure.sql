@@ -1722,15 +1722,6 @@ ALTER TABLE ONLY upvs.form_template_related_documents
 ALTER TABLE ONLY upvs.submissions
     ADD CONSTRAINT submissions_pkey PRIMARY KEY (id);
 
-
---
--- Name: unaccent_value_index; Type: INDEX; Schema: code_list; Owner: -
---
-
-CREATE INDEX unaccent_value_index ON code_list.municipalities USING btree (public.lower_unaccent((value)::text));
-
-
---
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
