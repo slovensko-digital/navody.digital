@@ -7,6 +7,7 @@ FactoryBot.define do
     short_description { Faker::Lorem.paragraph(sentence_count: 1) }
     slug { title.parameterize }
     is_faq { false }
+    is_searchable { false }
     sequence(:position) { |n| n }
 
     trait :faq do
