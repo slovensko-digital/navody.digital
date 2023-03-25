@@ -85,7 +85,7 @@ class Journey < ApplicationRecord
 
   def is_outdated?
     return true if last_checked_on.nil?
-    return true if law.any? {|law| law.active_version.nil?}
+    return true if laws.any? {|law| law.active_version.nil?}
 
     laws.any? {|law| last_checked_on < law.valid_from || last_checked_on < law.active_version.updated_at }
   end
