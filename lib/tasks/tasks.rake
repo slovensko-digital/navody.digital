@@ -8,7 +8,7 @@ namespace :navody do
     EmailMeOrSrIdentifiersStatusEmailJob.perform_later
   end
 
-  task schedule_law_check_job do
+  task schedule_law_check_job: :environment do
     Legal::ScheduleLawCheckJob.perform_later
   end
 end
