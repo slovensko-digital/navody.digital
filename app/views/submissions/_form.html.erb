@@ -23,14 +23,29 @@
       <span class="govuk-error-message"><%= error %></span>
     <% end %>
     <div class="govuk-checkboxes">
-      <% @submission.subscription_types.each_with_index do |type, index| %>
+      <% valid_types = @submission.subscription_types.select {|type| NotificationSubscription::TYPES[type] } %>
+      <% primary_types, secondary_types = valid_types.partition { |type| NotificationSubscription::TYPES[type][:on_submission_job] } %>
+      <% primary_types, secondary_types = secondary_types, [] if primary_types.empty? %>
+
+      <% primary_types.each_with_index do |type, index| %>
         <% subscription = NotificationSubscription::TYPES[type] %>
-        <% next unless subscription %>
         <div class="govuk-checkboxes__item">
           <%= f.check_box :selected_subscription_types, { multiple: true, class: 'govuk-checkboxes__input', id: "subscription_#{index}" }, type, nil %>
           <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s', for: "subscription_#{index}" %>
           <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
         </div>
+      <% end %>
+
+      <% if secondary_types.length > 0 %>
+        <h4 class="govuk-heading-m govuk-!-margin-top-9">Mohlo by Vás tiež zaujímať</h4>
+        <% secondary_types.each.with_index(primary_types.length) do |type, index| %>
+          <% subscription = NotificationSubscription::TYPES[type] %>
+          <div class="govuk-checkboxes__item govuk-checkboxes--small">
+            <%= f.check_box :selected_subscription_types, { multiple: true, class: 'govuk-checkboxes__input', id: "subscription_#{index}" }, type, nil %>
+            <%= f.label index, subscription[:label], class: 'govuk-label govuk-checkboxes__label govuk-label--s', for: "subscription_#{index}" %>
+            <span class="govuk-hint govuk-checkboxes__hint"><%= subscription[:hint] %></span>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
