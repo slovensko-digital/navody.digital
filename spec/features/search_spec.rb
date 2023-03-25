@@ -4,7 +4,7 @@ RSpec.feature 'Search', type: :feature do
   scenario 'Visitor searches for topic of interest' do
     matching = 'Batman'
     unmatching = 'Superman'
-    
+
     matching_journey = create(:journey, title: "#{matching} journey")
     matching_step = create(:step, title: "#{matching} step", journey: matching_journey)
     unmatching_step = create(:step, title: "#{unmatching} step", journey: matching_journey)
