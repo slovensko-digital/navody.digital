@@ -965,7 +965,8 @@ CREATE TABLE public.submissions (
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    expires_at timestamp without time zone
 );
 
 
@@ -2137,6 +2138,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073653'),
 ('20220921082415'),
 ('20221022143119'),
-('20230325092744');
+('20230325092744'),
+('20230325151049');
 
 
