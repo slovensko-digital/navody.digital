@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :user_tasks, through: :user_steps
   has_many :notification_subscriptions
   has_many :submissions
+  has_many :upvs_submissions
 
   def logged_in?
     true
@@ -28,6 +29,20 @@ class User < ApplicationRecord
     submission = submissions.find_by!(uuid: uuid)
     submission.current_user = self
     submission
+  end
+
+
+  def build_upvs_submission(params, callback_step:)
+    upvs_submission = upvs_submissions.build(params)
+    upvs_submission.current_user = self
+    upvs_submission.callback_step = callback_step
+    upvs_submission
+  end
+
+  def find_upvs_submission!(uuid)
+    upvs_submission = upvs_submissions.find_by!(uuid: uuid)
+    upvs_submission.current_user = self
+    upvs_submission
   end
 
   def update_step_status(step, status)

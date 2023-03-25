@@ -1224,6 +1224,52 @@ ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_te
 
 
 --
+-- Name: submissions; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.submissions (
+    id bigint NOT NULL,
+    uuid uuid NOT NULL,
+    title character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    message_subject character varying NOT NULL,
+    recipient_uri character varying NOT NULL,
+    sender_business_reference character varying,
+    recipient_business_reference character varying,
+    form text NOT NULL,
+    token character varying,
+    callback_url character varying,
+    callback_step_id bigint,
+    callback_step_status character varying,
+    user_id bigint,
+    anonymous_user_uuid uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.submissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.submissions_id_seq OWNED BY upvs.submissions.id;
+
+
+--
 -- Name: countries id; Type: DEFAULT; Schema: code_list; Owner: -
 --
 
@@ -1410,6 +1456,13 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 --
 
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
+
+
+--
+-- Name: submissions id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions ALTER COLUMN id SET DEFAULT nextval('upvs.submissions_id_seq'::regclass);
 
 
 --
@@ -1661,6 +1714,21 @@ ALTER TABLE ONLY upvs.form_template_related_documents
 
 
 --
+-- Name: submissions submissions_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT submissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: unaccent_value_index; Type: INDEX; Schema: code_list; Owner: -
+--
+
+CREATE INDEX unaccent_value_index ON code_list.municipalities USING btree (public.lower_unaccent((value)::text));
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1906,6 +1974,34 @@ CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree
 
 
 --
+-- Name: index_upvs.submissions_on_anonymous_user_uuid_and_uuid; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE UNIQUE INDEX "index_upvs.submissions_on_anonymous_user_uuid_and_uuid" ON upvs.submissions USING btree (anonymous_user_uuid, uuid);
+
+
+--
+-- Name: index_upvs.submissions_on_callback_step_id; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE INDEX "index_upvs.submissions_on_callback_step_id" ON upvs.submissions USING btree (callback_step_id);
+
+
+--
+-- Name: index_upvs.submissions_on_user_id; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE INDEX "index_upvs.submissions_on_user_id" ON upvs.submissions USING btree (user_id);
+
+
+--
+-- Name: index_upvs.submissions_on_user_id_and_uuid; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE UNIQUE INDEX "index_upvs.submissions_on_user_id_and_uuid" ON upvs.submissions USING btree (user_id, uuid);
+
+
+--
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -2069,6 +2165,22 @@ ALTER TABLE ONLY public.steps
 
 
 --
+-- Name: submissions fk_rails_35f0013109; Type: FK CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT fk_rails_35f0013109 FOREIGN KEY (callback_step_id) REFERENCES public.steps(id);
+
+
+--
+-- Name: submissions fk_rails_7026efca7d; Type: FK CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT fk_rails_7026efca7d FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2135,7 +2247,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073645'),
 ('20220914073653'),
 ('20220921082415'),
-('20221022143119');
-
+('20221022143119'),
+('20230325095737');
 
 

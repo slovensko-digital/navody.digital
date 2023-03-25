@@ -35,7 +35,7 @@
       </button>
     <% end %>
 
-    <%= form_with model: @submission_form, url: upvs_submissions_new_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
+    <%= form_with model: @submission_form, url: upvs_submissions_path, scope: 'upvs_submission', html: { id: 'new_upvs_submissions_forms_application_for_document_copy' } do |f| %>
       <%= f.hidden_field :title, value: 'Podanie žiadosti vyhotovenia kópie listín z ORSR' %>
       <%= f.hidden_field :form, value: nil %>
       <%= f.hidden_field :callback_url, value: callback_apps_acts_or_sr_app_acts_submissions_url %>
