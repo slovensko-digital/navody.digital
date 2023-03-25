@@ -35,8 +35,6 @@ class Upvs::SubmissionsController < ApplicationController
   def submit
     return switch_account_callback unless eid_token&.valid? # If token expires meanwhile
 
-    @upvs_submission.token = session[:eid_encoded_token]
-
     if @upvs_submission.valid?
       response = submit_to_sk_api
 
@@ -80,12 +78,11 @@ class Upvs::SubmissionsController < ApplicationController
   def submit_to_sk_api(client: Faraday)
     begin
       headers =  { "Content-Type": "application/json" }
-      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission) }.to_json
+      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission, eid_token) }.to_json
       url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}"
 
       client.post(url, data, headers)
     rescue Exception
-      binding.pry
       raise Upvs::Submission::SkApiError.new
     end
   end

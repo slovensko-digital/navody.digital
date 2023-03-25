@@ -15,7 +15,6 @@
 #  sender_business_reference         :string
 #  recipient_business_reference      :string
 #  form                              :text             not null
-#  token                             :string
 #  callback_url                      :string
 #  callback_step_id                  :string
 #  callback_step_status              :string
@@ -37,10 +36,6 @@ class Upvs::Submission  < ApplicationRecord
 
   self.table_name = "upvs.submissions"
 
-  def sender_uri
-    eid_token&.subject_sub
-  end
-
   def recipient_name
     return recipient_uri if Rails.env.development?
 
@@ -53,10 +48,6 @@ class Upvs::Submission  < ApplicationRecord
 
   def correlation_id
     SecureRandom.uuid
-  end
-
-  def eid_token
-    EidToken.new(token, config: Rails.application.config_for(:auth).fetch(:eid))
   end
 
   def form_visualisation
