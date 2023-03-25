@@ -11,7 +11,7 @@ class Journey < ApplicationRecord
   scope :blank, -> { where(published_status: 'BLANK') }
   scope :displayable, -> { published.or(blank) }
   scope :url_only, -> { where(published_status: 'URL_ONLY') }
-  scope :accessed_by_url, -> { published.or(blank).or(url_only) }
+  scope :accessible_by_url, -> { published.or(blank).or(url_only) }
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
@@ -47,10 +47,6 @@ class Journey < ApplicationRecord
 
   def searchable?
     published? || blank?
-  end
-
-  def getting_ready?
-    published_status == 'BLANK'
   end
 
   def to_param
