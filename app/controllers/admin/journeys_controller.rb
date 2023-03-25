@@ -3,23 +3,12 @@ class Admin::JourneysController < Admin::AdminController
 
   # GET /admin/journeys
   def index
-    query = <<-SQL
-WITH active_law_versions AS (
-    SELECT * FROM law_versions lv WHERE lv.valid_from <= current_date AND (lv.valid_to > current_date OR lv.valid_to IS NULL)
-) SELECT j.*, alerting_journeys.id IS NULL as check_valid FROM journeys j
-LEFT JOIN (
-    SELECT DISTINCT jo.id
-    FROM journeys jo
-    JOIN journey_legal_definitions jld on jo.id = jld.journey_id
-    JOIN laws l on jld.law_id = l.id
-    JOIN active_law_versions alv on alv.law_id = l.id
-    WHERE alv.valid_from > jo.last_checked_on OR alv.updated_at > jo.last_checked_on
-) alerting_journeys ON j.id = alerting_journeys.id
-    SQL
+    @journeys = if params[:status].blank?
+      Journey.all
+    else
+      Journey.where(published_status: params[:status])
+    end
 
-    query << " WHERE published_status = '#{params[:status]}'" unless params[:status].blank?
-
-    @journeys = Journey.find_by_sql(query)
   end
 
   # GET /admin/journeys/new

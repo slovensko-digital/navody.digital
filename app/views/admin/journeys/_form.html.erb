@@ -21,7 +21,7 @@
               Updated laws:
               <ol>
                 <% journey.updated_laws_since_last_check.each do |law| %>
-                  <li><%= link_to law.identifier, law.identifier %></li>
+                  <li><%= link_to law.identifier, law.identifier, target: '_blank' %></li>
                 <% end %>
               </ol>
             </li>
