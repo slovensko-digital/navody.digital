@@ -4,10 +4,11 @@ class Admin::JourneysController < Admin::AdminController
   # GET /admin/journeys
   def index
     @journeys = if params[:status].blank?
-                  Journey.all
-                else
-                  Journey.where(published_status: params[:status])
-                end
+      Journey.all
+    else
+      Journey.where(published_status: params[:status])
+    end
+
   end
 
   # GET /admin/journeys/new
@@ -59,7 +60,7 @@ class Admin::JourneysController < Admin::AdminController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_journey
-    @journey = Journey.find_by!(slug: params[:id])
+    @journey = Journey.includes(laws: :active_version).find_by!(slug: params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

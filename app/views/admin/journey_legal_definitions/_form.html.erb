@@ -1,0 +1,15 @@
+<%= form_with(model: [:admin, journey_legal_definition.journey, journey_legal_definition], local: true, builder: AdminFormBuilder) do |form| %>
+  <% if journey_legal_definition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(journey_legal_definition.errors.count, "error") %> prohibited this journey_legal_definition from being saved:</h2>
+      <%= journey_legal_definition.errors.full_messages.join(", ") %>
+    </div>
+  <% end %>
+
+  <%= form.text_field :link %>
+  <%= form.text_area :note, size: "60x12" %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
