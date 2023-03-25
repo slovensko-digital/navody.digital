@@ -5,7 +5,13 @@ class Law < ApplicationRecord
   has_one :active_version, -> { where("valid_from < ? AND (valid_to > ? OR valid_to IS NULL)", Date.today, Date.today) }, class_name: 'LawVersion'
   delegate :valid_from, :valid_to, to: :active_version, allow_nil: true
 
+  after_create { schedule_law_versions_check }
+
   def last_update_at
     active_version&.updated_at
+  end
+
+  def schedule_law_versions_check
+    Legal::LawVersionsListJob.perform_later(self)
   end
 end
