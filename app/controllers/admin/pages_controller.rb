@@ -3,7 +3,7 @@ class Admin::PagesController < Admin::AdminController
 
   # GET /pages
   def index
-    @pages = Page.all
+    @pages = Page.all.order(is_faq: :desc, position: :asc)
   end
 
   # GET /pages/1
