@@ -7,15 +7,17 @@ class Journey < ApplicationRecord
 
   before_save :update_steps_search
 
-  scope :published, -> { where(published_status: 'PUBLISHED')}
-  scope :blank, -> { where(published_status: 'BLANK')}
+  scope :published, -> { where(published_status: 'PUBLISHED') }
+  scope :blank, -> { where(published_status: 'BLANK') }
   scope :displayable, -> { published.or(blank) }
+  scope :url_only, -> { where(published_status: 'URL_ONLY') }
+  scope :accessed_by_url, -> { published.or(blank).or(url_only) }
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
 
-  enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
+  enumerates :published_status, with: %w{DRAFT URL_ONLY BLANK PUBLISHED}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
   has_one :categorization, :as => :categorizable, dependent: :destroy
