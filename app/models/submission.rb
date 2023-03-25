@@ -5,7 +5,7 @@ class Submission < ApplicationRecord
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   before_create { self.selected_subscription_types = [] if skip_subscribe }
-  before_create { set_new_expiration_time unless skip_subscribe }
+  before_create { set_new_expiration_time if skip_subscribe }
   after_create :subscribe, unless: :skip_subscribe
 
   validates_presence_of :email, message: 'Zadajte emailovú adresu', unless: :skip_subscribe
