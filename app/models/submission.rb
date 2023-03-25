@@ -11,7 +11,11 @@ class Submission < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, message: "Zadajte emailovú adresu v platnom tvare, napríklad jan.novak@firma.sk" }, if: -> { email.present? }, unless: :skip_subscribe
   validates :selected_subscription_types, presence: { message: 'Vyberte si aspoň jednu možnosť' }, unless: :skip_subscribe
 
-  scope :expired, -> { where('created_at < ?', 20.minutes.ago) }
+  scope :expired, -> { where('expires_at < ?', Time.zone.now) }
+
+  def self.expiration_time
+    Time.zone.now + 20.minutes
+  end
 
   def subscribe
     selected_subscription_objects.filter_map { |s| s[:on_submission_job] }.each { |job| job.perform_later(self) }
