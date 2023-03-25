@@ -7,6 +7,8 @@ RSpec.feature "Journeys", type: :feature do
   let!(:step2) { create(:step, journey: journey, app_url: faqs_url(host: 'http://localhost:3000'), type: 'ExternalAppStep') }
   let!(:task) { create(:task, step: step1) }
   let!(:blank_journey) { create(:journey, published_status: "BLANK", description: nil) }
+  let!(:url_only_journey) { create(:journey, published_status: "URL_ONLY", description: "this is the url only journey") }
+
 
   before(:each) do
     # https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
@@ -202,6 +204,14 @@ RSpec.feature "Journeys", type: :feature do
 
     expect(page).to have_content('Na tomto návode ešte len pracujeme')
     expect(page).to have_content(blank_journey.title)
+  end
+
+  scenario 'As an anonymous user I want to check if the url_only journey displays correctly' do
+    sign_in(user)
+    visit journey_path(url_only_journey)
+
+    expect(page).to have_content('this is the url only journey')
+    expect(page).to have_content(url_only_journey.title)
   end
 
   scenario 'As user I want to check if last_check date is visible if old enough' do
