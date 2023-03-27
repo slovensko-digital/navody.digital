@@ -162,7 +162,7 @@ Rails.application.routes.draw do
       get :resubmit_without_token, on: :collection
       post :submit, path: 'odoslat'
       get :submission_error, path: 'chyba'
-      get :finish, path: 'hotovo'
+      get :finish, path: 'dokoncene'
     end
   end
 
