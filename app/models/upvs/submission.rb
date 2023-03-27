@@ -28,6 +28,7 @@ class Upvs::Submission  < ApplicationRecord
   attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user, :callback_step_path
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
+  before_create { set_new_expiration_time if skip_subscribe }
 
   validates_presence_of :posp_id, :posp_version, :message_type, :recipient_uri, :message_subject, :form
   validate :recipient_uri_allowed?, if: -> { Rails.env.production? }
@@ -65,6 +66,10 @@ class Upvs::Submission  < ApplicationRecord
   end
 
   private
+
+  def set_new_expiration_time
+    self.expires_at = Time.zone.now + 20.minutes
+  end
 
   def egov_application_allowed?
     unless Upvs::EgovApplicationAllowRule.exists?(recipient_uri: recipient_uri, posp_id: posp_id, posp_version: posp_version, message_type: message_type)

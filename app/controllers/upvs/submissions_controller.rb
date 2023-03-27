@@ -3,7 +3,7 @@ class Upvs::SubmissionsController < ApplicationController
 
   before_action :set_metadata
   before_action :build_upvs_submission, only: :create
-  before_action :load_upvs_submission, only: [:show, :finish, :submit, :continue]
+  before_action :load_upvs_submission, only: [:show, :submit, :finish]
 
   rescue_from Upvs::Submission::SkApiError, :with => :handle_error
 
@@ -53,6 +53,7 @@ class Upvs::SubmissionsController < ApplicationController
   end
 
   def finish
+    @upvs_submission.expires_at = Time.zone.now
   end
 
   def submission_error
