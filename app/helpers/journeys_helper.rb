@@ -25,4 +25,8 @@ module JourneysHelper
       end
     }.to_json
   end
+
+  def outdated_helper(outdated_status)
+    outdated_status ? "❌" : "✅"
+  end
 end

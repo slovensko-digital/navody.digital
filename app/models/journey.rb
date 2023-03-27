@@ -16,6 +16,8 @@ class Journey < ApplicationRecord
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
+  has_many :journey_legal_definitions
+  has_many :laws, through: :journey_legal_definitions
 
   enumerates :published_status, with: %w{DRAFT URL_ONLY BLANK PUBLISHED}
 
@@ -79,6 +81,19 @@ class Journey < ApplicationRecord
 
   def should_generate_new_friendly_id?
     slug.blank? && !title.blank?
+  end
+
+  def is_outdated?
+    return true if last_checked_on.nil?
+    return true if laws.any? {|law| law.active_version.nil?}
+
+    laws.any? {|law| last_checked_on < law.valid_from || last_checked_on < law.active_version.updated_at }
+  end
+
+  def updated_laws_since_last_check
+    return laws if last_checked_on.nil?
+
+    laws.select {|law| last_checked_on < law.valid_from }
   end
 
   private
