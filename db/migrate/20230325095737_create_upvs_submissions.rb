@@ -11,10 +11,10 @@ class CreateUpvsSubmissions < ActiveRecord::Migration[6.1]
       t.string :sender_business_reference
       t.string :recipient_business_reference
       t.text :form, null: false
-      t.string :token
       t.string :callback_url
       t.references :callback_step, foreign_key: { to_table: :steps }
       t.string :callback_step_status
+      t.timestamp :expires_at
 
       t.belongs_to :user, foreign_key: true
       t.uuid :anonymous_user_uuid
