@@ -1,5 +1,5 @@
 class NotificationSubscriptionsController < ApplicationController
-  invisible_captcha only: [:create, :confirm], scope: :notification_subscription_group, honeypot: :more
+  invisible_captcha only: [:create], scope: :notification_subscription_group, honeypot: :more
 
   def index
     @metadata.og.image = 'og-subscriptions.jpg'
