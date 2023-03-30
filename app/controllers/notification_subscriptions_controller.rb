@@ -1,10 +1,12 @@
 class NotificationSubscriptionsController < ApplicationController
+  invisible_captcha only: [:create], scope: :notification_subscription_group, honeypot: :more
+
   def index
     @metadata.og.image = 'og-subscriptions.jpg'
   end
 
   def create
-    @group = NotificationSubscriptionGroup.new(notification_group_params)
+    @group = NotificationSubscriptionGroup.new(notification_group_params.except(:more))
     @group.user = current_user
     @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
 
@@ -30,6 +32,7 @@ class NotificationSubscriptionsController < ApplicationController
   def notification_group_params
     params.require(:notification_subscription_group).permit(
       :email,
+      :more,
       selected_subscription_types: [],
       subscription_types: []
     )
