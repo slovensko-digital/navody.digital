@@ -18,6 +18,7 @@
 #  callback_url                      :string
 #  callback_step_id                  :string
 #  callback_step_status              :string
+#  expires_at                        :datetime
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
 #
@@ -28,12 +29,14 @@ class Upvs::Submission  < ApplicationRecord
   attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user, :callback_step_path
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
-  before_create { set_new_expiration_time if skip_subscribe }
+  before_create { set_new_expiration_time }
 
   validates_presence_of :posp_id, :posp_version, :message_type, :recipient_uri, :message_subject, :form
   validate :recipient_uri_allowed?, if: -> { Rails.env.production? }
   validate :egov_application_allowed?, if: -> { Rails.env.production? }
   validate :valid_xml_form?
+
+  scope :expired, -> { where('expires_at < ?', Time.zone.now) }
 
   self.table_name = "upvs.submissions"
 
