@@ -53,7 +53,7 @@ class Upvs::SubmissionsController < ApplicationController
   end
 
   def finish
-    @upvs_submission.expires_at = Time.zone.now
+    @upvs_submission.update(expires_at: Time.zone.now)
   end
 
   def submission_error
