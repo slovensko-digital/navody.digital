@@ -1,11 +1,11 @@
 <div id="submission-actions">
-  <% if @upvs_submission.token&.valid? %>
-    <%= submit_tag "Odoslať ako #{@upvs_submission.token&.subject_name}", formaction: upvs_submissions_submit_path, class: 'govuk-button' %>
-    <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?token=#{@upvs_submission.token&.api_token}").to_s %>
-    <%= link_to 'Prihlásiť sa ako iný subjekt', url, target: :login, class: 'govuk-button govuk-link' %>
+  <% if @token&.valid? %>
+    <%= submit_tag "Odoslať ako #{@token&.subject_name}", method: 'POST', class: 'govuk-button' %>
+    <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "logout?token=#{@token&.api_token}").to_s %>
+    <%= link_to 'Prihlásiť sa ako iný subjekt', url, class: 'govuk-button govuk-link' %>
   <% else %>
     <div class="govuk-inset-text">Aby ste mohli odoslať takéto podanie, <strong>musíte sa prihlásiť pomocou slovensko.sk</strong>. Ak neviete eID používať, prečítajte si <%= link_to 'návod na jeho aktiváciu', journey_path('aktivacia-eid') %>.</div>
     <% url = URI.join(ENV['SLOVENSKO_SK_API_URL'], "login").to_s %>
-    <%= link_to 'Prihlásiť sa pomocou slovensko.sk', url, target: :login, class: 'govuk-button', data: {controller: 'eid', action: 'eid#start'} %>
+    <%= link_to 'Prihlásiť sa pomocou slovensko.sk', url, class: 'govuk-button', data: { controller: 'eid', action: 'eid#start' } %>
   <% end %>
 </div>

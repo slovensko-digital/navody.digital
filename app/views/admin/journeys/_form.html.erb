@@ -6,6 +6,31 @@
   <% end %>
 
 
+  <% if journey.is_outdated? && journey.journey_legal_definitions.any? %>
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li>
+              This journey is linked to laws which were updated since the journey was last checked for law compliance.
+            </li>
+            <li>
+              Updated laws:
+              <ol>
+                <% journey.updated_laws_since_last_check.each do |law| %>
+                  <li><%= link_to law.identifier, law.identifier, target: '_blank' %></li>
+                <% end %>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <% if journey.last_checked_on && journey.last_checked_on < 3.months.ago %>
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -22,7 +47,7 @@
   <%= form.text_field :keywords %>
   <%= form.text_area :short_description %>
   <%= form.fields_for :categorization do |cat| %>
-    <%= cat.collection_check_boxes :category_ids, Category.all, :id, :name, checked: journey.categorization.categories.pluck(:id) %>
+    <%= cat.collection_check_boxes :category_ids, Category.order(:name), :id, :name, checked: journey.categorization.categories.pluck(:id) %>
   <% end %>
   <%= form.select :published_status, Journey.defined_enums['published_status'] %>
   <%= form.text_field :image_name %>

@@ -1,6 +1,0 @@
-<script type="text/javascript">
-  window.opener.document.getElementById('upvs_submission_token').value = '<%=j @token %>';
-  const form = window.opener.document.getElementById('new_message');
-  window.opener.Rails.fire(form, 'submit');
-  window.close();
-</script>

@@ -25,4 +25,19 @@ class AnonymousUser
     submission.current_user = self
     submission
   end
+
+  def build_upvs_submission(params, callback_step:)
+    upvs_submission = Upvs::Submission.new(params)
+    upvs_submission.anonymous_user_uuid = @uuid
+    upvs_submission.current_user = self
+    upvs_submission.callback_step = callback_step
+
+    upvs_submission
+  end
+
+  def find_upvs_submission!(uuid)
+    upvs_submission = Upvs::Submission.where(anonymous_user_uuid: self.uuid, uuid: uuid).first!
+    upvs_submission.current_user = self
+    upvs_submission
+  end
 end
