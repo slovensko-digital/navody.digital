@@ -156,16 +156,13 @@ Rails.application.routes.draw do
   end
 
   namespace :upvs  do
-    namespace :submissions, path: 'podania' do
-      get :login_callback
-      get :switch_account_callback
-      get :resubmit_without_token
-      post :new, path: ''
-      post :sign, path: 'podpisat'
+    resources :submissions, path: 'podania' do
+      get :login_callback, on: :collection
+      get :switch_account_callback, on: :collection
+      get :resubmit_without_token, on: :collection
       post :submit, path: 'odoslat'
       get :submission_error, path: 'chyba'
-      post :continue, path: 'pokracovat'
-      get :finish, path: 'hotovo'
+      get :finish, path: 'dokoncene'
     end
   end
 

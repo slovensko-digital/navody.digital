@@ -1,16 +1,4 @@
-<%= form_with model: @upvs_submission, url: upvs_submissions_new_path, id: :new_message, builder: AppFormBuilder do |f| %>
-  <%= f.hidden_field :posp_id %>
-  <%= f.hidden_field :posp_version %>
-  <%= f.hidden_field :message_type %>
-  <%= f.hidden_field :recipient_uri %>
-  <%= f.hidden_field :sender_business_reference %>
-  <%= f.hidden_field :recipient_business_reference %>
-  <%= f.hidden_field :message_subject %>
-  <%= f.hidden_field :form %>
-  <%= f.hidden_field :attachments %>
-  <%= f.hidden_field :token %>
-  <%= f.hidden_field :callback_url %>
-
+<%= form_with model: @upvs_submission, url: upvs_submission_submit_path(@upvs_submission), method: 'POST', id: :new_message, builder: AppFormBuilder do |f| %>
   <h1 class="govuk-heading-l"><%= @upvs_submission.title %></h1>
   <p class="govuk-body-l">Pripravené na odoslanie.</p>
 
@@ -21,8 +9,6 @@
     <%= f.label :recipient_name, 'Príjimateľ správy', class: 'govuk-label' %>
     <%= f.text_field :recipient_name, disabled: true %>
     <div id="recipient-name-container"></div>
-    <%= hidden_field_tag :recipient_name_default, @upvs_submission.recipient_name %>
-    <%= f.hidden_field :recipient_uri %>
   </div>
 
   <div id="iframe-wrapper">
