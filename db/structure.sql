@@ -60,7 +60,8 @@ CREATE TABLE public.que_jobs (
     expired_at timestamp with time zone,
     args jsonb DEFAULT '[]'::jsonb NOT NULL,
     data jsonb DEFAULT '{}'::jsonb NOT NULL,
-    job_schema_version integer DEFAULT 1,
+    job_schema_version integer NOT NULL,
+    kwargs jsonb DEFAULT '{}'::jsonb NOT NULL,
     CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
     CONSTRAINT job_class_length CHECK ((char_length(
 CASE job_class
@@ -78,7 +79,7 @@ WITH (fillfactor='90');
 -- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.que_jobs IS '5';
+COMMENT ON TABLE public.que_jobs IS '7';
 
 
 --
@@ -621,6 +622,40 @@ ALTER SEQUENCE public.current_topics_id_seq OWNED BY public.current_topics.id;
 
 
 --
+-- Name: journey_legal_definitions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.journey_legal_definitions (
+    id bigint NOT NULL,
+    journey_id bigint NOT NULL,
+    law_id bigint NOT NULL,
+    link character varying,
+    note text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: journey_legal_definitions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.journey_legal_definitions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: journey_legal_definitions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.journey_legal_definitions_id_seq OWNED BY public.journey_legal_definitions.id;
+
+
+--
 -- Name: journeys; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -658,6 +693,72 @@ CREATE SEQUENCE public.journeys_id_seq
 --
 
 ALTER SEQUENCE public.journeys_id_seq OWNED BY public.journeys.id;
+
+
+--
+-- Name: law_versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.law_versions (
+    id bigint NOT NULL,
+    law_id bigint NOT NULL,
+    identifier character varying,
+    valid_from date NOT NULL,
+    valid_to date,
+    checksum character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: law_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.law_versions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: law_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.law_versions_id_seq OWNED BY public.law_versions.id;
+
+
+--
+-- Name: laws; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.laws (
+    id bigint NOT NULL,
+    identifier character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: laws_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.laws_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: laws_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.laws_id_seq OWNED BY public.laws.id;
 
 
 --
@@ -964,7 +1065,8 @@ CREATE TABLE public.submissions (
     attachments jsonb,
     extra jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    expires_at timestamp without time zone
 );
 
 
@@ -1224,6 +1326,52 @@ ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_te
 
 
 --
+-- Name: submissions; Type: TABLE; Schema: upvs; Owner: -
+--
+
+CREATE TABLE upvs.submissions (
+    id bigint NOT NULL,
+    uuid uuid NOT NULL,
+    title character varying NOT NULL,
+    posp_id character varying NOT NULL,
+    posp_version character varying NOT NULL,
+    message_type character varying NOT NULL,
+    message_subject character varying NOT NULL,
+    recipient_uri character varying NOT NULL,
+    sender_business_reference character varying,
+    recipient_business_reference character varying,
+    form text NOT NULL,
+    callback_url character varying,
+    callback_step_id bigint,
+    callback_step_status character varying,
+    expires_at timestamp without time zone,
+    user_id bigint,
+    anonymous_user_uuid uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
+--
+
+CREATE SEQUENCE upvs.submissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: submissions_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
+--
+
+ALTER SEQUENCE upvs.submissions_id_seq OWNED BY upvs.submissions.id;
+
+
+--
 -- Name: countries id; Type: DEFAULT; Schema: code_list; Owner: -
 --
 
@@ -1301,10 +1449,31 @@ ALTER TABLE ONLY public.current_topics ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: journey_legal_definitions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions ALTER COLUMN id SET DEFAULT nextval('public.journey_legal_definitions_id_seq'::regclass);
+
+
+--
 -- Name: journeys id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys ALTER COLUMN id SET DEFAULT nextval('public.journeys_id_seq'::regclass);
+
+
+--
+-- Name: law_versions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions ALTER COLUMN id SET DEFAULT nextval('public.law_versions_id_seq'::regclass);
+
+
+--
+-- Name: laws id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.laws ALTER COLUMN id SET DEFAULT nextval('public.laws_id_seq'::regclass);
 
 
 --
@@ -1413,6 +1582,13 @@ ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAUL
 
 
 --
+-- Name: submissions id; Type: DEFAULT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions ALTER COLUMN id SET DEFAULT nextval('upvs.submissions_id_seq'::regclass);
+
+
+--
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: code_list; Owner: -
 --
 
@@ -1509,11 +1685,35 @@ ALTER TABLE ONLY public.current_topics
 
 
 --
+-- Name: journey_legal_definitions journey_legal_definitions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT journey_legal_definitions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: journeys journeys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.journeys
     ADD CONSTRAINT journeys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: law_versions law_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions
+    ADD CONSTRAINT law_versions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: laws laws_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.laws
+    ADD CONSTRAINT laws_pkey PRIMARY KEY (id);
 
 
 --
@@ -1661,6 +1861,12 @@ ALTER TABLE ONLY upvs.form_template_related_documents
 
 
 --
+-- Name: submissions submissions_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT submissions_pkey PRIMARY KEY (id);
+
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1700,6 +1906,27 @@ CREATE UNIQUE INDEX index_categories_categorizations ON public.categories_catego
 --
 
 CREATE INDEX index_categorizations_on_categorizable ON public.categorizations USING btree (categorizable_type, categorizable_id);
+
+
+--
+-- Name: index_journey_legal_definitions_on_journey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_journey_legal_definitions_on_journey_id ON public.journey_legal_definitions USING btree (journey_id);
+
+
+--
+-- Name: index_journey_legal_definitions_on_law_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_journey_legal_definitions_on_law_id ON public.journey_legal_definitions USING btree (law_id);
+
+
+--
+-- Name: index_law_versions_on_law_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_law_versions_on_law_id ON public.law_versions USING btree (law_id);
 
 
 --
@@ -1892,31 +2119,59 @@ CREATE INDEX que_jobs_data_gin_idx ON public.que_jobs USING gin (data jsonb_path
 
 
 --
+-- Name: que_jobs_kwargs_gin_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX que_jobs_kwargs_gin_idx ON public.que_jobs USING gin (kwargs jsonb_path_ops);
+
+
+--
 -- Name: que_poll_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
+CREATE INDEX que_poll_idx ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
 
 
 --
--- Name: que_poll_idx_with_job_schema_version; Type: INDEX; Schema: public; Owner: -
+-- Name: index_upvs.submissions_on_anonymous_user_uuid_and_uuid; Type: INDEX; Schema: upvs; Owner: -
 --
 
-CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
+CREATE UNIQUE INDEX "index_upvs.submissions_on_anonymous_user_uuid_and_uuid" ON upvs.submissions USING btree (anonymous_user_uuid, uuid);
+
+
+--
+-- Name: index_upvs.submissions_on_callback_step_id; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE INDEX "index_upvs.submissions_on_callback_step_id" ON upvs.submissions USING btree (callback_step_id);
+
+
+--
+-- Name: index_upvs.submissions_on_user_id; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE INDEX "index_upvs.submissions_on_user_id" ON upvs.submissions USING btree (user_id);
+
+
+--
+-- Name: index_upvs.submissions_on_user_id_and_uuid; Type: INDEX; Schema: upvs; Owner: -
+--
+
+CREATE UNIQUE INDEX "index_upvs.submissions_on_user_id_and_uuid" ON upvs.submissions USING btree (user_id, uuid);
 
 
 --
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW WHEN ((NOT (COALESCE(current_setting('que.skip_notify'::text, true), ''::text) = 'true'::text))) EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW WHEN ((NOT (COALESCE(current_setting('que.skip_notify'::text, true), ''::text) = 'true'::text))) EXECUTE FUNCTION public.que_state_notify();
 
 
 --
@@ -1946,6 +2201,14 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.pg_search_docume
 
 ALTER TABLE ONLY public.quick_tips
     ADD CONSTRAINT fk_rails_0a21363dd0 FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
+
+
+--
+-- Name: journey_legal_definitions fk_rails_26f32722ea; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT fk_rails_26f32722ea FOREIGN KEY (journey_id) REFERENCES public.journeys(id);
 
 
 --
@@ -1989,11 +2252,27 @@ ALTER TABLE ONLY public.user_tasks
 
 
 --
+-- Name: journey_legal_definitions fk_rails_690d321c6a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.journey_legal_definitions
+    ADD CONSTRAINT fk_rails_690d321c6a FOREIGN KEY (law_id) REFERENCES public.laws(id);
+
+
+--
 -- Name: user_journeys fk_rails_70185eaf12; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.user_journeys
     ADD CONSTRAINT fk_rails_70185eaf12 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: law_versions fk_rails_852992ee31; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.law_versions
+    ADD CONSTRAINT fk_rails_852992ee31 FOREIGN KEY (law_id) REFERENCES public.laws(id);
 
 
 --
@@ -2069,6 +2348,22 @@ ALTER TABLE ONLY public.steps
 
 
 --
+-- Name: submissions fk_rails_35f0013109; Type: FK CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT fk_rails_35f0013109 FOREIGN KEY (callback_step_id) REFERENCES public.steps(id);
+
+
+--
+-- Name: submissions fk_rails_7026efca7d; Type: FK CONSTRAINT; Schema: upvs; Owner: -
+--
+
+ALTER TABLE ONLY upvs.submissions
+    ADD CONSTRAINT fk_rails_7026efca7d FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2135,7 +2430,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914073645'),
 ('20220914073653'),
 ('20220921082415'),
-('20221022143119');
-
+('20221022121113'),
+('20221022143119'),
+('20230325092744'),
+('20230325095737'),
+('20230325151049');
 
 

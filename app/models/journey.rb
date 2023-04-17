@@ -7,15 +7,19 @@ class Journey < ApplicationRecord
 
   before_save :update_steps_search
 
-  scope :published, -> { where(published_status: 'PUBLISHED')}
-  scope :blank, -> { where(published_status: 'BLANK')}
+  scope :published, -> { where(published_status: 'PUBLISHED') }
+  scope :blank, -> { where(published_status: 'BLANK') }
   scope :displayable, -> { published.or(blank) }
+  scope :url_only, -> { where(published_status: 'URL_ONLY') }
+  scope :accessible_by_url, -> { published.or(blank).or(url_only) }
 
   has_many :steps, dependent: :destroy
   has_many :tasks, through: :steps
   has_many :user_journeys
+  has_many :journey_legal_definitions
+  has_many :laws, through: :journey_legal_definitions
 
-  enumerates :published_status, with: %w{DRAFT PUBLISHED BLANK}
+  enumerates :published_status, with: %w{DRAFT URL_ONLY BLANK PUBLISHED}
 
   has_many :search_documents, :class_name => 'Document', as: :searchable
   has_one :categorization, :as => :categorizable, dependent: :destroy
@@ -32,7 +36,7 @@ class Journey < ApplicationRecord
                   additional_attributes: -> (journey) {
                     { title: journey.title_search,
                       keywords: journey.keywords_search,
-                      published: journey.published?}
+                      published: journey.published? }
                   }
 
   def published?
@@ -77,6 +81,19 @@ class Journey < ApplicationRecord
 
   def should_generate_new_friendly_id?
     slug.blank? && !title.blank?
+  end
+
+  def is_outdated?
+    return true if last_checked_on.nil?
+    return true if laws.any? {|law| law.active_version.nil?}
+
+    laws.any? {|law| last_checked_on < law.valid_from || last_checked_on < law.active_version.updated_at }
+  end
+
+  def updated_laws_since_last_check
+    return laws if last_checked_on.nil?
+
+    laws.select {|law| last_checked_on < law.valid_from }
   end
 
   private

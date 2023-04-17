@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_path], [@journey.title, '#']], current: 'Steps' %>
+<%= render 'breadcrumbs', crumbs: [['Journeys', admin_journeys_path], [@journey.title, edit_admin_journey_path(@journey)]], current: 'Steps' %>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">

@@ -24,6 +24,8 @@
       <th class="govuk-table__header" scope="col">Position</th>
       <th class="govuk-table__header" scope="col">Title</th>
       <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col"></th>
       <th class="govuk-table__header" scope="col" colspan="2"></th>
     </tr>
   </thead>
@@ -33,6 +35,8 @@
         <td class="govuk-table__cell"><%= journey.position %></td>
         <td class="govuk-table__cell"><%= link_to journey.title, journey %> <%= "(#{journey.published_status})" if journey.published_status != 'PUBLISHED' %></td>
         <td class="govuk-table__cell"><%= link_to "Steps (#{journey.steps.count})", admin_journey_steps_path(journey) %></td>
+        <td class="govuk-table__cell"><%= link_to "Law links (#{journey.journey_legal_definitions.count})", admin_journey_journey_legal_definitions_path(journey) %></td>
+        <td class="govuk-table__cell"><%= outdated_helper(journey.is_outdated?) %></td>
         <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_journey_path(journey) %></td>
         <td class="govuk-table__cell"><%= link_to 'Destroy', [:admin, journey], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

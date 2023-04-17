@@ -3,7 +3,7 @@ class JourneysController < ApplicationController
   before_action :redirect_inactive_parliament_application
 
   def show
-    @journey = Journey.displayable.find_by!(slug: params[:id])
+    @journey = Journey.accessible_by_url.find_by!(slug: params[:id])
     @next_step = @journey.steps.order(:position).first
 
     load_newest_user_journey(current_user, @journey)

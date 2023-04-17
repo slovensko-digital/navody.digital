@@ -5,7 +5,8 @@ class UpvsSubmissions::SktalkMessageBuilder
 
   XML_ENTITIES = HTMLEntities.new(:expanded)
 
-  def build_sktalk_message(egov_application)
+  # TODO add #{build_attachment_objects(egov_application.attachments)} when attachments added to upvs_submission
+  def build_sktalk_message(egov_application, eid_token)
     <<~SKTALK
       <?xml version="1.0" encoding="utf-8"?>
       <SKTalkMessage xmlns="http://gov.sk/SKTalkMessage">
@@ -22,11 +23,11 @@ class UpvsSubmissions::SktalkMessageBuilder
         <Body>
           <MessageContainer xmlns="http://schemas.gov.sk/core/MessageContainer/1.0">
             <MessageId>#{egov_application.message_id}</MessageId>
-            <SenderId>#{egov_application.sender_uri}</SenderId>
+            <SenderId>#{eid_token.subject_sub}</SenderId>
             <RecipientId>#{egov_application.recipient_uri}</RecipientId>
             <MessageType>#{egov_application.message_type}</MessageType>
             <MessageSubject>#{sanitize(egov_application.message_subject)}</MessageSubject>
-            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form)}#{build_attachment_objects(egov_application.attachments)}
+            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form)}
           </MessageContainer>
         </Body>
       </SKTalkMessage>

@@ -24,12 +24,17 @@
           <% end %>
         </td>
         <td class="govuk-table__cell"><%= link_to document.searchable.slug, document.searchable %></td>
-        <% if document.searchable_type == 'Journey' && !document.published? %>
-          <td class="govuk-table__cell" style="color: #d4351c;"><%= document.searchable_type %><%= ' (BLANK)' %></td>
-        <% else %>
-          <td class="govuk-table__cell"><%= document.searchable_type %></td>
-        <% end %>
-        <td class="govuk-table__cell"><%= link_to 'Edit', edit_admin_document_path(document) %></td>
+        <td class="govuk-table__cell">
+          <% if document.searchable_type == 'Journey' && !document.published? %>
+            <strong class="govuk-tag govuk-tag--red">Blank <%= document.searchable_type %></strong>
+          <% else %>
+            <%= document.searchable_type %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to 'Edit position', edit_admin_document_path(document) %>
+          <%= link_to "Edit content", [:edit, :admin, document.searchable] %>
+        </td>
       </tr>
     <% end %>
   </tbody>
