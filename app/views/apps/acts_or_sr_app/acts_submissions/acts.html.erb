@@ -13,6 +13,14 @@
       <p>Označte listiny, pre ktoré požadujete vyhotovenie kópie.</p>
       <br />
 
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+            Ak potrebujete listiny, ktoré nie sú zdigitalizované, <%= link_to 'kontaktujte súd', 'https://obcan.justice.sk/infosud/-/infosud/zoznam/sud' %>, ktorý vedie obchodný register, v ktorom je požadovaná spoločnosť zapísaná.
+        </strong>
+      </div>
+
       <%= render 'components/error_summary', form: @application_form %>
 
       <div class="govuk-checkboxes">

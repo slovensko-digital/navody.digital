@@ -8,7 +8,7 @@
     <br />
 
     <%= form_for @application_form, :builder => AppFormBuilder, url: fill_submission_apps_acts_or_sr_app_acts_submissions_path do |f| %>
-      <p>Táto aplikácia Vám umožní podať žiadosť o vyhotovenie kópie listiny uloženej v zákonom ustanovených listín obchodného registra na pár klikov.<p>
+      <p>Táto aplikácia Vám umožní podať žiadosť o vyhotovenie kópie listiny uloženej v zákonom ustanovených listín obchodného registra na pár klikov. <b>Ak potrebujete výpis (nie listinu) na právne účely, použite službu <%= link_to 'obchodného registra', 'https://www.slovensko.sk/sk/detail-sluzby?externalCode=ks_340705' %> alebo <%= link_to 'registra právnických osôb', 'https://rpo.statistics.sk/' %>.</b><p>
         <p><b>Budete potrebovať prihlásiť sa cez eID alebo Slovensko v mobile</b>. Začnite s vyhľadaním spoločnosti, ktorej listiny Vás zaujímajú.</p>
       <br />
 
