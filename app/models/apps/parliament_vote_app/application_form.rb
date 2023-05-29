@@ -1,6 +1,7 @@
 module Apps
   module ParliamentVoteApp
     class ApplicationForm
+      # TODO: the following dates are fake
       VOTE_DATE = Date.new(2024, 2, 29)
       DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2024, 2, 10)
       PICKUP_DEADLINE_DATE = Date.new(2024, 2, 28)
