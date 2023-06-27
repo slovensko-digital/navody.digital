@@ -34,7 +34,9 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Gems for tracking the statuses of jobs
 gem 'que'
+gem 'que-web'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -48,6 +50,7 @@ gem 'pry-rails'
 
 gem 'aws-sdk-rails'
 gem "aws-sdk-s3", require: false
+gem 'aws-sdk-cloudwatch'
 
 gem 'rollbar'
 gem 'oj' # needed by rollbar
