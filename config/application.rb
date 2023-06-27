@@ -51,3 +51,5 @@ module NavodySlovenskoDigital
     }
   end
 end
+
+require 'que/active_record/model'
