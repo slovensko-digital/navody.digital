@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+
+  #Added que-web
+  require "que/web"
+  mount Que::Web => "/que"
+
+
   get :health, to: 'health#index'
   get 'robots.:format', to: 'robots#index'
 

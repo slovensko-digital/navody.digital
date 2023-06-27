@@ -2,4 +2,10 @@
 
 require_relative 'config/environment'
 
+require "que/web"
+
+map "/que" do
+  run Que::Web
+end
+
 run Rails.application
