@@ -35,17 +35,11 @@ class Upvs::SubmissionsController < ApplicationController
   def submit
     return switch_account_callback unless eid_token&.valid? # If token expires meanwhile
 
-    if @upvs_submission.valid?
-      response = submit_to_sk_api
-
-      if successful_sk_api_submission?(response)
-        if @upvs_submission.callback_url.present?
-          redirect_to @upvs_submission.callback_url
-        else
-          redirect_to action: :finish
-        end
+    if @upvs_submission.submit
+      if @upvs_submission.callback_url.present?
+        redirect_to @upvs_submission.callback_url
       else
-        raise Upvs::Submission::SkApiError.new
+        redirect_to action: :finish
       end
     else
       render :new, status: :unprocessable_entity
@@ -53,7 +47,6 @@ class Upvs::SubmissionsController < ApplicationController
   end
 
   def finish
-    @upvs_submission.update(expires_at: Time.zone.now)
   end
 
   def submission_error
@@ -74,25 +67,6 @@ class Upvs::SubmissionsController < ApplicationController
 
   def set_metadata
     @metadata.og.title = params[:title] || 'Návody.Digital: Podanie' # TODO
-  end
-
-  def submit_to_sk_api(client: Faraday)
-    begin
-      headers =  { "Content-Type": "application/json" }
-      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission, eid_token) }.to_json
-      url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}"
-
-      client.post(url, data, headers)
-    rescue Exception
-      raise Upvs::Submission::SkApiError.new
-    end
-  end
-
-  def successful_sk_api_submission?(response)
-    json_body = JSON.parse(response.body)
-
-    return true if (response.status == 200 && json_body["receive_result"] == 0 && json_body["save_to_outbox_result"] == 0)
-    false
   end
 
   def build_upvs_submission
