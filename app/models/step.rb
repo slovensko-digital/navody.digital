@@ -18,6 +18,7 @@ class Step < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :description, presence: true
   validates :is_waiting_step, inclusion: { in: [true, false] }
+  validates :waiting_time, :numericality => { :greater_than_or_equal_to => 0 }
 
   # FIXME: fill in position from id!
 

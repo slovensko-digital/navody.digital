@@ -23,6 +23,18 @@
           <strong>
             <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
           </strong>
+          <% if step.waiting_time > 0 && user_step.status == "waiting" %>
+            <% time_waited = step.waiting_time - (Date.today - Date.parse(user_step.updated_at.to_s)).to_i %>
+            <% if time_waited < 0 %>
+              <strong class="govuk-tag govuk-tag--red">
+            <% elsif time_waited < 5 %>
+              <strong class="govuk-tag govuk-tag--orange">
+            <% else %>
+              <strong class="govuk-tag govuk-tag--green">
+            <% end %>
+              <%= time_waited %>
+            </strong>
+          <% end %>
         <% else %>
           <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
         <% end %>
