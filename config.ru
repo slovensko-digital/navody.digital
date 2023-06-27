@@ -1,11 +1,14 @@
 # This file is used by Rack-based servers to start the application.
 
-require_relative 'config/environment'
+# Added que-web gem for showing job tracking
+require 'que/web'
 
-require "que/web"
+# Que path variable
+$que_web_path = '/admin/que'
 
-map "/que" do
+map $que_web_path do
   run Que::Web
 end
 
+require_relative 'config/environment'
 run Rails.application
