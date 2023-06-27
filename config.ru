@@ -3,10 +3,7 @@
 # Added que-web gem for showing job tracking
 require 'que/web'
 
-# Que path variable
-$que_web_path = '/admin/que'
-
-map $que_web_path do
+map '/admin/que' do
   run Que::Web
 end
 

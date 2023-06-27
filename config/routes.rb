@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
     # Route for que
     require 'que/web'
-    mount Que::Web, at: $que_web_path
+    mount Que::Web => '/admin/que'
   end
 
   root to: 'pages#index'
