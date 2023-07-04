@@ -68,10 +68,9 @@ class Upvs::Submission  < ApplicationRecord
     uuid
   end
 
-  def submit(eid_token, client: Faraday)
+  def submit(eid_token, client: Faraday, url: "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}")
     return false unless valid?
 
-    url = "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}"
     response = submit_to_sk_api(client, url)
 
     if successful_sk_api_submission?(response)
