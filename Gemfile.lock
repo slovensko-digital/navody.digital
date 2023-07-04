@@ -66,6 +66,9 @@ GEM
     aws-partitions (1.734.0)
     aws-record (2.10.1)
       aws-sdk-dynamodb (~> 1.18)
+    aws-sdk-cloudwatch (1.73.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-core (3.171.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -229,6 +232,8 @@ GEM
     minitest (5.18.0)
     msgpack (1.6.1)
     multi_xml (0.6.0)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
     net-imap (0.3.4)
       date
       net-protocol
@@ -286,6 +291,9 @@ GEM
     puma (6.1.1)
       nio4r (~> 2.0)
     que (2.2.0)
+    que-web (0.10.0)
+      que (>= 1)
+      sinatra
     racc (1.6.2)
     rack (2.2.6.4)
     rack-protection (3.0.5)
@@ -382,6 +390,11 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    sinatra (3.0.5)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.5)
+      tilt (~> 2.0)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
     snaky_hash (2.0.1)
@@ -443,6 +456,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-cloudwatch
   aws-sdk-rails
   aws-sdk-s3
   bootsnap
@@ -474,6 +488,7 @@ DEPENDENCIES
   pry-rails
   puma
   que
+  que-web
   rails (~> 6.1.7.3)
   rails-i18n
   recaptcha
