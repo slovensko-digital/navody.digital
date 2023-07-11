@@ -5,13 +5,13 @@
   <div class="govuk-grid-column-two-thirds">
     <% if @application_form.vote_by_post_expired? %>
       <h1 class="govuk-heading-xl">Termín na zaslanie žiadosti o&nbsp;voľbu poštou uplynul 9.&nbsp;augusta</h1>
-      <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky bolo potrebné doručiť na Ministerstvo vnútra najneskôr do 50 dní pred dňom konania volieb.</p>
+      <p class="govuk-body-lead">Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky bolo potrebné doručiť na Ministerstvo vnútra najneskôr do 52 dní pred dňom konania volieb.</p>
       <p class="govuk-body-lead">Môžete však voliť kdekoľvek na území Slovenskej republiky <%= link_to 'pomocou hlasovacieho preukazu', delivery_apps_parliament_vote_app_application_forms_path %>.</p>
       <%= render 'apps/parliament_vote_app/application_forms/next_vote_notifications' %>
     <% else %>
       <h1 class="govuk-heading-xl">Pre voľbu zo zahraničia je potrebné požiadať o voľbu poštou</h1>
       <p class="govuk-body-m">Zákon umožňuje voliť zo zahraničia občanom, ktorí majú trvalý pobyt na území Slovenskej republiky a v čase volieb sa zdržiavajú mimo jej územia.</p>
-      <p class="govuk-body-m"><strong>Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť na ministerstvo vnútra najneskôr do 50 dní pred dňom konania volieb. Na tento účel zriadilo ministerstvo vnútra samostatnú službu.</strong>.</p>
+      <p class="govuk-body-m"><strong>Žiadosť o voľbu poštou pre voľby do Národnej rady Slovenskej republiky je potrebné doručiť na Ministerstvo vnútra najneskôr do 52 dní pred dňom konania volieb. Na tento účel zriadilo ministerstvo vnútra samostatnú službu.</strong></p>
       <!-- TODO deadline component -->
       <p><%= link_to 'Prejsť na oficiálnu žiadosť o voľbu poštou', 'https://portal.minv.sk/wps/VolbyZoZahranicia/', target: :_blank, class: 'govuk-button govuk-button--large' %></p>
 
