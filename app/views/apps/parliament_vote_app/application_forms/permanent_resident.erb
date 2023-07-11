@@ -12,7 +12,7 @@
         <%= f.radio_button :permanent_resident, 'no',
           label: "Nie, mám odhlásený trvalý pobyt zo Slovenska",
           hint: @application_form.vote_by_post_expired? ?
-                  'Termín zaslanie žiadosti o voľbu poštou uplynul 10.1.2020.' :
+                  'Termín zaslanie žiadosti o voľbu poštou uplynul 9.8.2023.' :
                   "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali, zvoľte túto možnosť. #{format_remaining_days(@application_form.vote_by_post_remaining_days)}"
         %>
       <% end %>
