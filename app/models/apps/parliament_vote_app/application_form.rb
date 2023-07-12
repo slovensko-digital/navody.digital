@@ -1,11 +1,11 @@
 module Apps
   module ParliamentVoteApp
     class ApplicationForm
-      VOTE_DATE = Date.new(2020, 2, 29)
-      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2020, 2, 10)
-      PICKUP_DEADLINE_DATE = Date.new(2020, 2, 28)
-      VOTE_BY_POST_DEADLINE_DATE = Date.new(2020, 1, 10)
-      REQUEST_SENDING_DEADLINE_DATE = Date.new(2020, 2, 10)
+      VOTE_DATE = Date.new(2023, 9, 30)
+      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2023, 9, 8)
+      PICKUP_DEADLINE_DATE = Date.new(2023, 9, 29)
+      VOTE_BY_POST_DEADLINE_DATE = Date.new(2023, 8, 9)
+      REQUEST_SENDING_DEADLINE_DATE = Date.new(2023, 9, 8)
 
       include ActiveModel::Model
 
