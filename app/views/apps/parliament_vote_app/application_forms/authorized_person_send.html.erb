@@ -3,36 +3,34 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Zaslanie žiadosti na úrad</h1>
+    <h1 class="govuk-heading-xl">Pošlite žiadosť na úrad</h1>
+
+    <% if @application_form.municipality_email.present? %>
+      Otvorte
+      <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
+        target: '_blank',
+        body: @application_form.from_slovakia_authorized_person_email_body,
+        subject: 'Žiadosť o hlasovací preukaz do parlamentých volieb.'
+      %>
+      alebo ju manuálne
+      <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>.
+    <% end %>
+    <div id="conditional-manual"<% if @application_form.municipality_email.present? %> style="display: none;"<% end %>>
+      <p class="govuk-body-l">Skopírujte text žiadosti a pošlite ho na emailovú adresu obce.</p>
+      <div class="govuk-form-group">
+        <textarea onclick="this.focus();this.select();" rows="8" class="govuk-textarea"><%= @application_form.from_slovakia_authorized_person_email_body %></textarea>
+      </div>
+    </div>
 
     <%= render 'municipality_email_warning' %>
 
-    <h3 class="govuk-heading-l">Pokyny</h3>
-    <ol class="govuk-list govuk-list--number govuk-!-font-size-24">
-      <li class="govuk-!-margin-bottom-4">
-        <% if @application_form.municipality_email.present? %>
-          Otvorte
-          <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
-            target: '_blank',
-            body: @application_form.from_slovakia_authorized_person_email_body,
-            subject: 'Žiadosť o hlasovací preukaz do parlamentých volieb.'
-          %>
-          alebo ju manuálne
-          <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>.
-        <% end %>
-        <div id="conditional-manual"<% if @application_form.municipality_email.present? %> style="display: none;"<% end %>>
-          <p class="govuk-body govuk-!-margin-top-5">Skopírujte text žiadosti.</p>
-          <div class="govuk-form-group">
-            <textarea onclick="this.focus();this.select();" rows="8" class="govuk-textarea"><%= @application_form.from_slovakia_authorized_person_email_body %></textarea>
-          </div>
-        </div>
-      </li>
-      <li class="govuk-!-margin-bottom-4">
-        Odošlite na emailovú adresu obce<% if @application_form.municipality_email.present? %> <strong><%= @application_form.municipality_email %></strong><% end %>.
-      </li>
-      <li>
-        A potom <%= link_to 'pokračujte ďalej', end_apps_parliament_vote_app_application_forms_url %>.
-      </li>
-    </ol>
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses" onchange="document.getElementById('nextButton').disabled = !this.checked;">
+      <label class="govuk-label govuk-checkboxes__label" for="waste">Poslal/a som žiadosť na úrad</label>
+    </div>
+
+    <%= form_with url: end_apps_parliament_vote_app_application_forms_url, method: :get, local: true do |form| %>
+      <%= form.submit 'Pokračovať', id: 'nextButton', class: 'govuk-button govuk-!-margin-top-5', disabled: true %>
+    <% end %>
   </div>
 </div>
