@@ -1,3 +1,4 @@
+Webdrivers::Chromedriver.required_version = "114.0.5735.90"
 Webdrivers::Chromedriver.update
 
 Capybara.register_driver :chrome do |app|
