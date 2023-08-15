@@ -1,0 +1,63 @@
+image: alpine:latest
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_BUILDKIT: 0
+  AUTO_DEVOPS_BUILD_CACHE: registry
+  AUTO_DEPLOY_IMAGE_VERSION: 'v2.47.0'
+
+stages:
+  - build
+  - deploy
+
+include:
+  - template: Jobs/Build.gitlab-ci.yml
+
+staging:
+  extends: .auto-deploy
+  stage: deploy
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy use_kube_context || true
+    - auto-deploy ensure_namespace
+    - auto-deploy create_secret
+    - auto-deploy deploy
+  environment:
+    name: staging
+    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  rules:
+    - if: '($CI_KUBERNETES_ACTIVE == null || $CI_KUBERNETES_ACTIVE == "") && ($KUBECONFIG == null || $KUBECONFIG == "")'
+      when: never
+    - when: on_success
+
+production:
+  extends: .auto-deploy
+  stage: deploy
+  script:
+    - auto-deploy check_kube_domain
+    - auto-deploy download_chart
+    - auto-deploy use_kube_context || true
+    - auto-deploy ensure_namespace
+    - auto-deploy create_secret
+    - auto-deploy deploy
+    - auto-deploy persist_environment_url
+  environment:
+    name: production
+    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+  artifacts:
+    paths: [environment_url.txt]
+    when: always
+  allow_failure: false
+  rules:
+    - if: '($CI_KUBERNETES_ACTIVE == null || $CI_KUBERNETES_ACTIVE == "") && ($KUBECONFIG == null || $KUBECONFIG == "")'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: manual
+
+# The latest build job generates a dotenv report artifact with a CI_APPLICATION_TAG
+# that also includes the image digest. This configures Auto Deploy to receive
+# this artifact and use the updated CI_APPLICATION_TAG for deployments.
+.auto-deploy:
+  image: "registry.gitlab.com/gitlab-org/cluster-integration/auto-deploy-image:${AUTO_DEPLOY_IMAGE_VERSION}"
+  dependencies: [build]
