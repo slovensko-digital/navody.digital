@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Pošlite žiadosť na úrad</h1>
 
-    <div id="conditional-manual" style="display: none;">
+    <div id="conditional-manual">
       <% if @application_form.municipality_email.present? %>
         <p>Otvorte
         <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
@@ -13,9 +13,7 @@
           body: @application_form.from_slovakia_email_body,
           subject: 'Žiadosť o hlasovací preukaz do parlamentých volieb.'
         %>
-        alebo ju manuálne
-        <a href="#" onclick="document.getElementById('conditional-manual').style.display = 'block'; return false;">skopírujte</a>
-        a odošlite na emailovú adresu obce:
+        alebo ju manuálne skopírujte a odošlite na emailovú adresu obce:
         <%= mail_to @application_form.municipality_email, @application_form.municipality_email %>
         </p>
       <% else %>
