@@ -5,19 +5,21 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Pošlite žiadosť na úrad</h1>
 
-    <% if @application_form.municipality_email.present? %>
-      <p class="govuk-body-l>Otvorte
-      <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
-        target: '_blank',
-        body: @application_form.from_slovakia_authorized_person_email_body,
-        subject: 'Žiadosť o hlasovací preukaz do parlamentých volieb.'
-      %>
-      alebo ju manuálne skopírujte a odošlite na emailovú adresu obce:
-      <%= mail_to @application_form.municipality_email, @application_form.municipality_email %>
-      </p>
-    <% else %>
-      <p class="govuk-body-l">Skopírujte text žiadosti a pošlite ho na emailovú adresu obce.</p>
-    <% end %>
+    <div>
+      <% if @application_form.municipality_email.present? %>
+        <p class="govuk-body-l>Otvorte
+        <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
+          target: '_blank',
+          body: @application_form.from_slovakia_authorized_person_email_body,
+          subject: 'Žiadosť o hlasovací preukaz do parlamentých volieb.'
+        %>
+        alebo ju manuálne skopírujte a odošlite na emailovú adresu obce:
+        <%= mail_to @application_form.municipality_email, @application_form.municipality_email %>
+        </p>
+      <% else %>
+        <p class="govuk-body-l">Skopírujte text žiadosti a pošlite ho na emailovú adresu obce.</p>
+      <% end %>
+    </div>
     <div class="govuk-form-group">
       <textarea onclick="this.focus();this.select();" rows="8" class="govuk-textarea"><%= @application_form.from_slovakia_authorized_person_email_body %></textarea>
     </div>
