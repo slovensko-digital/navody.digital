@@ -7,7 +7,7 @@
 
     <div>
       <% if @application_form.municipality_email.present? %>
-        <p class="govuk-body-l>Otvorte
+        <p class="govuk-body-l">Otvorte
         <%= mail_to @application_form.municipality_email, 'pripravenú žiadosť v emailovom klientovi'.html_safe,
           target: '_blank',
           body: @application_form.from_slovakia_email_body,
