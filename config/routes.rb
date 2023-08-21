@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get :health, to: 'health#index'
   get 'robots.:format', to: 'robots#index'
 
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
       put :hide, on: :member
       post :reposition, on: :collection
     end
+
     resources :apps, except: [:show]
     resources :current_topics, except: [:show, :destroy]
     resources :pages, except: [:show]
@@ -39,6 +41,10 @@ Rails.application.routes.draw do
       put :feature, on: :member
       put :hide, on: :member
     end
+
+    # Route for que
+    require 'que/web'
+    mount Que::Web => '/admin/que'
   end
 
   root to: 'pages#index'

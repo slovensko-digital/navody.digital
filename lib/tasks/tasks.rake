@@ -12,4 +12,8 @@ namespace :navody do
   task schedule_law_check_job: :environment do
     Legal::ScheduleLawCheckJob.perform_later
   end
+
+  task report_quarter_hourly: :environment do
+    Environment.stats_reporter.report_quarter_hourly
+  end
 end
