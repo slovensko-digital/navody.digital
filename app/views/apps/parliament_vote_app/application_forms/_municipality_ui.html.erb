@@ -56,21 +56,20 @@
   /* ------------------------------------------------------------ */
   /* ------------------------------------------------------------ */
 
-  var SPREADSHEET_JSON_URL = 'https://spreadsheets.google.com/feeds/list/1UWA_P-OrH-IvmZnqO89FF2OzQ3gdhQCi3HLRHKx4RZI/oc4boel/public/values?alt=json';
+  var SPREADSHEET_JSON_URL = 'https://sheets.googleapis.com/v4/spreadsheets/1zGC07Zp77EF1lSFCITCWwXFOuNERMzkCrSLVeWzss-k/values/master!C2:G?alt=json&key=AIzaSyDEUeT4Ov9rkc6egolxX1ejoqqNwY7eAm8';
 
   function convertSourceDataToMunicipality(data) {
-    var CONST_MUNICIPALITY = 'gsx$obec';
-    var CONST_PRIMARY_EMAIL = 'gsx$editaciesemfinalakinyakoij';
-    var CONST_EMAIL = 'gsx$emailprevolbupostou';
-    var CONST_COUNTY = 'gsx$okres';
-    var CONST_STATUS = 'gsx$status';
+    var CONST_MUNICIPALITY = 0;
+    var CONST_COUNTY = 1;
+    var CONST_STATUS = 3;
+    var CONST_EMAIL = 4;
 
     var result = {
-      municipalityName: data[CONST_MUNICIPALITY]['$t'],
-      countyName: data[CONST_COUNTY]['$t'],
-      email: data[CONST_PRIMARY_EMAIL]['$t'] == '' ? data[CONST_EMAIL]['$t'] : data[CONST_PRIMARY_EMAIL]['$t'],
+      municipalityName: data[CONST_MUNICIPALITY],
+      countyName: data[CONST_COUNTY],
+      email: data[CONST_EMAIL],
       payload: {
-        status: data[CONST_STATUS]['$t']
+        status: data[CONST_STATUS]
       }
     };
 
@@ -97,9 +96,9 @@
       var municipalityIndices = {};
       var result = [];
 
-      if (response.feed && response.feed.entry)
+      if (response.values)
       {
-        $.each(response.feed.entry, function (i, data) {
+        $.each(response.values, function (i, data) {
           var item = convertSourceDataToMunicipality(data);
           var countyName = item.countyName;
 
