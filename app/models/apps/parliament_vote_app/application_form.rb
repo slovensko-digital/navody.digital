@@ -131,14 +131,14 @@ module Apps
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/from_slovakia_email_body",
           locals: { model: self },
-        )
+        ).gsub(/\n/, "\r\n")
       end
 
       def from_slovakia_authorized_person_email_body
         ActionController::Base.new.render_to_string(
           partial: "apps/parliament_vote_app/application_forms/from_slovakia_authorized_person_email_body",
           locals: { model: self },
-        )
+        ).gsub(/\n/, "\r\n")
       end
 
       def world_abroad_resident_email_body
