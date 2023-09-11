@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.1'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.7.3'
@@ -80,7 +80,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '4.0.0.beta4'
+  gem 'rspec-rails', '4.0.2'
   gem 'rspec_junit_formatter'
   gem 'faker'
 end
@@ -98,10 +98,10 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara'
+  gem 'capybara', "~> 3.39.2"
   gem 'show_me_the_cookies'
-  gem 'selenium-webdriver'
-  gem 'webdrivers'
+  gem 'selenium-webdriver', "~> 4.9.0"
+  gem "webdrivers", "= 5.3.0"
   gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
 end
 
