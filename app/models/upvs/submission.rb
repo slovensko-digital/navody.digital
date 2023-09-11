@@ -71,7 +71,7 @@ class Upvs::Submission  < ApplicationRecord
   def submit(eid_token, client: Faraday, url: "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}")
     return false unless valid?
 
-    response = submit_to_sk_api(client, url)
+    response = submit_to_sk_api(client, url, eid_token)
 
     if successful_sk_api_submission?(response)
       update(expires_at: Time.zone.now)
@@ -87,10 +87,10 @@ class Upvs::Submission  < ApplicationRecord
     false unless valid?
   end
 
-  def submit_to_sk_api(client, url)
+  def submit_to_sk_api(client, url, eid_token)
     begin
       headers =  { "Content-Type": "application/json" }
-      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(@upvs_submission, eid_token) }.to_json
+      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(self, eid_token) }.to_json
 
       client.post(url, data, headers)
     rescue Exception

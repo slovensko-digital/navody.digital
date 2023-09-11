@@ -35,7 +35,7 @@ class Upvs::SubmissionsController < ApplicationController
   def submit
     return switch_account_callback unless eid_token&.valid? # If token expires meanwhile
 
-    if @upvs_submission.submit
+    if @upvs_submission.submit(eid_token)
       if @upvs_submission.callback_url.present?
         redirect_to @upvs_submission.callback_url
       else
