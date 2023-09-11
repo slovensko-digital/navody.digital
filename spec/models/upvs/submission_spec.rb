@@ -28,14 +28,10 @@ RSpec.describe Upvs::Submission, type: :model do
       it 'is valid' do
         response_dbl = instance_double('Faraday::Response')
         allow(Faraday).to receive(:post)
-          .with('https://testing.stub.com/')
-          .and_return(response_dbl)
-        # stub body method on response object to return a canned response for Paris weather
-        allow(response_dbl).to receive(:body)
-          .and_return('{"receive_result":0, "save_to_outbox_result":0}')
+          .and_return(OpenStruct.new(body: { "receive_result" => 0, "save_to_outbox_result" => 0 }.to_json, status: 200))
 
-
-        expect(submission.submit(nil, Faraday, 'https://testing.stub.com/')).to be_truthy
+        allow_any_instance_of(EidToken).to receive(:subject_sub).and_return("subject_sub")
+        expect(submission.submit(EidToken.new("eid_token", config: nil), client: Faraday, url: 'https://testing.stub.com/')).to be_truthy
       end
     end
   end
