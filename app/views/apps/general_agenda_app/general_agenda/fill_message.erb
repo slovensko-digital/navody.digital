@@ -1,0 +1,45 @@
+<%= render partial: 'header' %>
+
+<div id="acts-submission" class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: fill_message_apps_general_agenda_app_general_agenda_path do |f| %>
+      <%= link_to 'Späť', apps_general_agenda_app_general_agenda_path, class: 'govuk-back-link button-back or-sr-app-back' %>
+
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h2 class="govuk-fieldset__heading">Vaša správa</h2>
+      </legend>
+      <br />
+
+      <p>Zadajte text správy a vyberte prílohy.</p>
+      <br />
+
+      <%= render 'components/error_summary', form: @application_form %>
+
+      <p class="govuk-label-wrapper">
+        <b>Predmet</b>
+      </p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= f.text_field :subject %>
+        </div>
+      </div>
+
+      <p class="govuk-label-wrapper">
+        <b>Text</b>
+      </p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= f.text_field :text %>
+        </div>
+      </div>
+
+      <%= render 'hidden_fields', form: f, current_step: 'acts' %>
+
+      <button id="acts-submit-button" class="govuk-button govuk-!-margin-top-6" data-module="govuk-button" data-submit="true">
+        Pokračovať ❯
+      </button>
+    <% end %>
+  </div>
+</div>

@@ -100,6 +100,17 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
+    namespace :general_agenda_app, path: 'vseobecna-agenda' do
+      resource :general_agenda, controller: 'general_agenda', path: '' do
+        get :index
+        get :create
+        post :fill_message, path: 'vyplnenie'
+        post :form_check
+        get :callback, path: 'odoslane'
+      end
+      get :search_recipient, to: 'general_agenda#search_recipient', defaults: { format: :json }
+    end
+
     namespace :acts_or_sr_app, path: 'or-sr-listiny' do
       resource :acts_submissions, path: '' do
         member do
