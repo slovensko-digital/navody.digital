@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <%= render 'hidden_fields', form: f, current_step: 'subject_selection' %>
+      <%= render 'hidden_fields', form: f, current_step: 'recipient_selection' %>
 
       <p class="govuk-body-xs">Používaním tejto služby súhlasíte so spracovaním osobných údajov v rozsahu nevyhnutnom na odoslanie podania. Vaše údaje neukladáme, sú použité výlučne na vyplnenie podania.</p>
 
@@ -123,8 +123,8 @@
           }
         }, 500),
         onConfirm: async (result) => {
-          document.getElementById('apps_general_agenda_general_agenda_app_application_form_recipient_name').value = result?.name;
-          document.getElementById('apps_general_agenda_general_agenda_app_application_form_recipient_uri').value = result?.uri;
+          document.getElementById('apps_general_agenda_app_general_agenda_application_form_recipient_name').value = result?.name;
+          document.getElementById('apps_general_agenda_app_general_agenda_application_form_recipient_uri').value = result?.uri;
         },
         minLength: 3,
         templates: {

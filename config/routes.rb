@@ -105,7 +105,7 @@ Rails.application.routes.draw do
         get :index
         get :create
         post :fill_message, path: 'vyplnenie'
-        post :form_check
+        post :fill_message, path: 'vyplnenie'
         get :callback, path: 'odoslane'
       end
       get :search_recipient, to: 'general_agenda#search_recipient', defaults: { format: :json }

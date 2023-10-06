@@ -17,13 +17,9 @@ module Apps
       end
 
       def fill_message
-        rerender_confirmation if @application_form.valid?
-      end
+        return render action: :index unless @application_form.valid?(:recipient_uri)
 
-      # generates XML to be submitted
-      def create
-        xml_form = UpvsSubmissions::FormBuilders::ApplicationForDocumentCopyFormBuilder.build_form(@application_form)
-        render xml: xml_form.to_xml
+        redirect_to_upvs_submission if @application_form.should_redirect_to_upvs_submission?
       end
 
       def callback
@@ -31,14 +27,10 @@ module Apps
 
       private
 
-      def rerender_confirmation
-        # @acts = params.require(:apps_or_sr_app_message_form_application_form)[:acts]
-        #
-        # @application_form.email_invalid?
+      def redirect_to_upvs_submission
+        @submission_form = UpvsSubmissions::Forms::GeneralAgenda.new(form_params: @application_form)
 
-        @submission_form = UpvsSubmissions::Forms::ApplicationForDocumentCopy.new
-
-        render :confirmation
+        render :redirect_to_upvs_submission
       end
 
       def load_application_form
@@ -51,7 +43,6 @@ module Apps
           :text,
           :recipient_name,
           :recipient_uri,
-          :back,
           :current_step
         )
       end
