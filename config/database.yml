@@ -21,7 +21,6 @@ test:
   datahub:
     <<: *default
     database: datahub_test
-    replica: true
 
 staging:
   primary:

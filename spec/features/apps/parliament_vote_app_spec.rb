@@ -25,54 +25,56 @@ RSpec.feature "Parliament vote app", type: :feature do
 
     expect(page).to have_content('Potrebujete požiadať o hlasovací preukaz')
     expect(page).to have_content('Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz vás oprávňuje voliť z ktoréhokoľvek volebného okrsku v SR.')
-    expect(page).to have_content('Obce potrebné informácie k žiadostiam v súčastnosti ešte len zverejňujú, ak nám však necháte email, dáme Vám vedieť, keď už bude možné o hlasovací preukaz požiadať. Posledný termín na zaslanie žiadosti je 8. septembra.')
+    expect(page).to have_content('Ako prevezmete hlasovací preukaz?')
+    expect(page).to have_content('Poštou')
+    expect(page).to have_content('Vyzdvihne ho za mňa iná osoba')
+    expect(page).to have_content('Osobne na úrade')
   end
 
-  # TODO: /app/views/apps/parliament_vote_app/application_forms/delivery.html.erb:13 "else"
-  # scenario 'As a citizen I want to request voting permit personally after the deadline' do
-  #   travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
-  #   start
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+  scenario 'As a citizen I want to request voting permit personally after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Na Slovensku, mimo trvalého bydliska'
-  #   click_button 'Pokračovať'
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
 
-  #   expect(page).to have_field('Osobne na úrade', disabled: true)
-  # end
+    expect(page).to have_field('Osobne na úrade', disabled: true)
+  end
 
-  # scenario 'As a citizen I want to request voting permit by authorized person after the deadline' do
-  #   travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
-  #   start
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+  scenario 'As a citizen I want to request voting permit by authorized person after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Na Slovensku, mimo trvalého bydliska'
-  #   click_button 'Pokračovať'
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
 
-  #   expect(page).to have_field('Vyzdvihne ho za mňa iná osoba', disabled: true)
-  # end
+    expect(page).to have_field('Vyzdvihne ho za mňa iná osoba', disabled: true)
+  end
 
-  # scenario 'As a citizen I want to request voting permit by post after the deadline' do
-  #   travel_to Apps::ParliamentVoteApp::ApplicationForm::DELIVERY_BY_POST_DEADLINE_DATE + 1.day
-  #   start
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+  scenario 'As a citizen I want to request voting permit by post after the deadline' do
+    travel_to Apps::ParliamentVoteApp::ApplicationForm::DELIVERY_BY_POST_DEADLINE_DATE + 1.day
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Na Slovensku, mimo trvalého bydliska'
-  #   click_button 'Pokračovať'
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
 
-  #   expect(page).to have_field('Poštou', disabled: true)
-  # end
+    expect(page).to have_field('Poštou', disabled: true)
+  end
 
   scenario 'As a pernament citizen with I want to vote by post after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_BY_POST_DEADLINE_DATE + 1.day
@@ -101,55 +103,53 @@ RSpec.feature "Parliament vote app", type: :feature do
     expect(page).to have_content('Termín na zaslanie žiadosti o voľbu poštou uplynul 9. augusta')
   end
 
-  # # TODO: /app/views/apps/parliament_vote_app/application_forms/delivery.html.erb:13 "else"
-  # scenario 'As a citizen I want to request voting permit personally' do
-  #   start
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+  scenario 'As a citizen I want to request voting permit personally' do
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Na Slovensku, mimo trvalého bydliska'
-  #   click_button 'Pokračovať'
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
 
-  #   choose 'Osobne'
-  #   click_button 'Pokračovať'
+    choose 'Osobne'
+    click_button 'Pokračovať'
 
-  #   expect(page).to have_content('Prevzatie hlasovacieho preukazu osobne')
-  # end
+    expect(page).to have_content('Prevzatie hlasovacieho preukazu osobne')
+  end
 
-  # scenario 'As a citizen I want to request voting permit via authorized person' do
-  #   start
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+  scenario 'As a citizen I want to request voting permit via authorized person' do
+    start
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Áno'
-  #   click_button 'Pokračovať'
+    choose 'Áno'
+    click_button 'Pokračovať'
 
-  #   choose 'Na Slovensku, mimo trvalého bydliska'
-  #   click_button 'Pokračovať'
+    choose 'Na Slovensku, mimo trvalého bydliska'
+    click_button 'Pokračovať'
 
-  #   choose 'Vyzdvihne ho za mňa iná osoba'
-  #   click_button 'Pokračovať'
+    choose 'Vyzdvihne ho za mňa iná osoba'
+    click_button 'Pokračovať'
 
-  #   fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva', class: 'person'
-  #   fill_in 'Rodné číslo', with: '123', class: 'person'
-  #   fill_in 'Ulica', with: 'Pupavova 31'
-  #   fill_in 'PSČ', with: '456'
-  #   fill_in 'Obec', with: 'Bratislava - Karlova ves'
-  #   fill_in 'Meno, priezvisko, titul', with: 'Jarko Mrkva', class: 'authorized-person'
-  #   fill_in 'Číslo občianskeho preukazu', with: '567', class: 'authorized-person'
-  #   click_button 'Pokračovať'
+    fill_in 'Meno, priezvisko, titul', with: 'Ferko Mrkva', class: 'person'
+    fill_in 'Rodné číslo', with: '123', class: 'person'
+    fill_in 'Ulica', with: 'Pupavova 31'
+    fill_in 'PSČ', with: '456'
+    fill_in 'Obec', with: 'Bratislava - Karlova ves'
+    fill_in 'Meno, priezvisko, titul', with: 'Jarko Mrkva', class: 'authorized-person'
+    fill_in 'Číslo občianskeho preukazu', with: '567', class: 'authorized-person'
+    click_button 'Pokračovať'
 
-  #   expect(page).to have_content('Meno: Ferko Mrkva')
-  #   expect(page).to have_content('Rodné číslo: 123')
-  #   expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
-  #   expect(page).to have_content('Preukaz vyzdvihne splnomocnená osoba: Meno: Jarko Mrkva Číslo občianskeho preukazu: 567')
+    expect(page).to have_content('Meno: Ferko Mrkva')
+    expect(page).to have_content('Rodné číslo: 123')
+    expect(page).to have_content('Trvalý pobyt: Pupavova 31, 456 Bratislava - Karlova ves')
+    expect(page).to have_content("Preukaz vyzdvihne splnomocnená osoba:\r \r Meno: Jarko Mrkva\r Číslo občianskeho preukazu: 567")
 
-  #   click_link 'pokračujte ďalej'
-  #   expect(page).to have_content('Gratulujeme')
-  # end
+    check 'Poslal/a som žiadosť na úrad'
+  end
 
   scenario 'As a citizen I want to vote at home address' do
     start

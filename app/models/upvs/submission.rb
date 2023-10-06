@@ -31,10 +31,10 @@ class Upvs::Submission  < ApplicationRecord
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   before_create { set_new_expiration_time }
 
-  validates_presence_of :posp_id, :posp_version, :message_type, :recipient_uri, :message_subject, :form
-  validate :recipient_uri_allowed?, if: -> { Rails.env.production? }
-  validate :egov_application_allowed?, if: -> { Rails.env.production? }
-  validate :valid_xml_form?
+  validates_presence_of :posp_id, :posp_version, :message_type, :recipient_uri, :message_subject, :form, on: :create
+  validate :recipient_uri_allowed?, if: -> { Rails.env.production? }, on: :create
+  validate :egov_application_allowed?, if: -> { Rails.env.production? }, on: :create
+  validate :valid_xml_form?, on: :create
 
   scope :expired, -> { where('expires_at < ?', Time.zone.now) }
 
@@ -68,7 +68,42 @@ class Upvs::Submission  < ApplicationRecord
     uuid
   end
 
+  def submit(eid_token, client: Faraday, url: "#{ENV.fetch('SLOVENSKO_SK_API_URL')}/api/sktalk/receive_and_save_to_outbox?token=#{eid_token&.api_token}")
+    return false unless valid?
+
+    response = submit_to_sk_api(client, url, eid_token)
+
+    if successful_sk_api_submission?(response)
+      update(expires_at: Time.zone.now)
+      return true
+    else
+      raise Upvs::Submission::SkApiError.new
+    end
+  end
+
   private
+
+  def validate
+    false unless valid?
+  end
+
+  def submit_to_sk_api(client, url, eid_token)
+    begin
+      headers =  { "Content-Type": "application/json" }
+      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(self, eid_token) }.to_json
+
+      client.post(url, data, headers)
+    rescue Exception
+      raise Upvs::Submission::SkApiError.new
+    end
+  end
+
+  def successful_sk_api_submission?(response)
+    json_body = JSON.parse(response.body)
+
+    return true if (response.status == 200 && json_body["receive_result"] == 0 && json_body["save_to_outbox_result"] == 0)
+    false
+  end
 
   def set_new_expiration_time
     self.expires_at = Time.zone.now + 20.minutes
@@ -97,7 +132,7 @@ class Upvs::Submission  < ApplicationRecord
   end
 
   def valid_xml_form?
-    unless Nokogiri::XML(@form).errors.empty?
+    unless Nokogiri::XML(form).errors.empty?
       errors.add(:form, "Nevalidný XML formulár")
     end
   end

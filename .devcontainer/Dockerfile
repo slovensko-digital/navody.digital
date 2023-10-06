@@ -25,6 +25,7 @@ RUN curl -sSL https://get.rvm.io | bash -s
 RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 3.2.1"
 
 # Install Rails
+RUN ln -s /bin/mkdir /usr/bin/mkdir
 RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && gem install rails webdrivers"
 RUN chown -R vscode /usr/local/rvm
 
