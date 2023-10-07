@@ -80,7 +80,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '4.0.2'
+  gem 'rspec-rails', '~> 6.0'
   gem 'rspec_junit_formatter'
   gem 'faker'
 end
