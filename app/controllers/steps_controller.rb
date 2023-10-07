@@ -19,7 +19,7 @@ class StepsController < ApplicationController
 
     @current_step = @journey.steps.find_by(slug: params[:id])
     @user_step = @user_journey.user_steps.find_or_initialize_by(step: @current_step)
-    @user_step.update(status: params['status'])
+    @user_step.update_status(new_status: params['status'])
 
     respond_to do |format|
       format.html do
