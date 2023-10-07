@@ -22,6 +22,8 @@ class SessionsController < ApplicationController
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
+    notice = user.previously_new_record? ? :first_time_login : 'Prihlásenie úspešné. Vitajte!'
+
     if eid_identity_approval?
       user.update!(eid_sub: eid_sub_from_auth)
     end
@@ -31,9 +33,9 @@ class SessionsController < ApplicationController
     end
 
     session[:user_id] = user.id
-    redirect_to after_login_redirect_path, notice: 'Prihlásenie úspešné. Vitajte!'
-  end
 
+    redirect_to after_login_redirect_path, notice: notice
+  end
   def magic_link_info
     @email = params[:email]
   end
