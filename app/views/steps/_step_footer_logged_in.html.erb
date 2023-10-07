@@ -13,15 +13,14 @@
         <% end %></h2>
       <div id="next-steps-info">
         <%= render 'step_subscription', current_user_step: current_user_step %>
-        <a href="#" class="sdn-feedbackbar__link" data-module="sdn-appear-link" data-appear="change-notification-date" data-disappear="next-steps-info">Zmeniť
-          dátum?</a>
+        <a href="#" onclick="$('#change-notification-date').removeClass('sdn-appear-link-hide');$('#next-steps-info').addClass('sdn-appear-link-hide');return false;">Zmeniť dátum?</a>
       </div>
       <div id="change-notification-date" class="sdn-appear-link-hide">
         <div class="govuk-grid-column-two-thirds">
           Zmeniť dátum notifikácie
         </div>
         <div class="govuk-grid-column-one-third" style="text-align:right">
-          <a href="#" data-module="sdn-appear-link" data-appear="next-steps-info" data-disappear="change-notification-date">Zatvoriť</a>
+          <a href="#" onclick="$('#change-notification-date').addClass('sdn-appear-link-hide');$('#next-steps-info').removeClass('sdn-appear-link-hide');return false;">Zatvoriť</a>
         </div>
         <%= form_tag subscribe_to_deadline_notification_journey_step_path(@current_step.journey, @current_step) , remote: true, authenticity_token: true do  %>
           <div class="govuk-form-group">
