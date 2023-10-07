@@ -41,6 +41,48 @@ class StepsController < ApplicationController
     redirect_to step.app_url
   end
 
+  def subscribe_to_deadline_notification
+    @journey = Journey.published.find_by!(slug: params[:journey_id])
+    @current_step = @journey.steps.find_by!(slug: params[:id])
+
+    notification_date = params[:notification_date] ? Date.parse(params[:notification_date]) : nil
+    notification_date ||= Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+
+    @user_journey = UserJourney.order(id: :desc).find_by(user: current_user, journey: @journey)
+    @user_step = @user_journey.user_steps.find_by(step: @current_step)
+
+    @user_step.update(to_be_notified_at: notification_date)
+
+    respond_to do |format|
+      format.html do
+        redirect_to [@journey, @current_step]
+      end
+      format.js do
+        render 'step_subscription_updated'
+      end
+    end
+  end
+
+  def unsubscribe_deadline_notification
+    @journey = Journey.published.find_by!(slug: params[:journey_id])
+    @current_step = @journey.steps.find_by!(slug: params[:id])
+
+    @user_journey = UserJourney.order(id: :desc).find_by(user: current_user, journey: @journey)
+    @user_step = @user_journey.user_steps.find_by(step: @current_step)
+
+    @user_step.update(to_be_notified_at: nil)
+
+    respond_to do |format|
+      format.html do
+        redirect_to [@journey, @current_step]
+      end
+      format.js do
+        render 'step_subscription_updated'
+      end
+    end
+
+  end
+
   private def redirect_inactive_eu_application
     return if Apps::EpVoteApp::ApplicationForm.active?
     redirect_to apps_ep_vote_app_application_forms_path if params[:journey_id] == "volby-do-eu-parlamentu"
