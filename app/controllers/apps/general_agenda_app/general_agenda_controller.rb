@@ -8,7 +8,7 @@ module Apps
           description: params[:description].presence || 'Formulár pre odoslanie podania pre všeobecnú agendu',
           subject: params[:subject_placeholder],
           text: params[:text_placeholder],
-          signed_required: params[:signed_required],
+          signed_required: params[:signed_required] || '1',
           text_hint: params[:text_hint],
           attachments_template: params[:attachments] || [{name: 'Subor 1', description: 'Popis suboru 1', signed_required: '1'},{name: 'Subor 2', description: 'Popis suboru 1', signed_required: '0'}],
         }.merge(general_agenda_params || {})
@@ -38,6 +38,7 @@ module Apps
           :attachments_template,
           :subject,
           :text,
+          :signed_required,
           :attachments,
           :recipient_name,
           :recipient_uri,

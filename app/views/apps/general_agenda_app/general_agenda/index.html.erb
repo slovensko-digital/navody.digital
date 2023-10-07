@@ -13,8 +13,20 @@
 
       <%= render 'components/error_summary', form: @application_form %>
 
+      <%= f.hidden_field :title %>
+      <%= f.hidden_field :description %>
+      <%= f.hidden_field :signed_required %>
+
+      <% @application_form.attachments_template.to_a.each do |attachment_template| %>
+        <%= f.hidden_field "attachments_template[][name]", value: attachment_template[:name] %>
+        <%= f.hidden_field "attachments_template[][description]", value: attachment_template[:description] %>
+        <%= f.hidden_field "attachments_template[][required]", value: attachment_template[:required] %>
+        <%= f.hidden_field "attachments_template[][signed_required]", value: attachment_template[:signed_required] %>
+      <% end %>
+
       <%= f.hidden_field :recipient_name %>
       <%= f.hidden_field :recipient_uri %>
+
       <%= f.hidden_field :is_submitted, value: 1 %>
 
       <p class="govuk-label-wrapper">

@@ -60,6 +60,7 @@ class Upvs::SubmissionsController < ApplicationController
       content: Base64.strict_encode64(@blob.download)
     }
 
+    # This mime type is set in `UpvsSubmissions::Forms::GeneralAgenda#create_form_attachment`
     if @blob.content_type == 'application/x-eform-xml'
       form_template = Upvs::FormTemplateRelatedDocument.find_by!(message_type: 'App.GeneralAgenda')
 

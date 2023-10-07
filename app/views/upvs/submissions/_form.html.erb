@@ -26,7 +26,7 @@
     <% if @upvs_submission.form.metadata[:signed] %>
       <%= render 'upvs/submissions/signed_badge' %>
     <% elsif @upvs_submission.form.metadata[:signed_required] %>
-      <button type="button" class="govuk-button govuk-button__secondary" onclick=sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>')>Podpísať</button>
+      <button type="button" class="govuk-button govuk-button__secondary" onclick="sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>', <%= @upvs_submission.form.id %>)">Podpísať</button>
     <% end %>
   </div>
 
@@ -36,7 +36,7 @@
 <script>
   const authenticityToken = '<%= form_authenticity_token %>';
 
-  async function sign(messageObjectPath, batchId = null) {
+  async function sign(messageObjectPath, blob_id, batchId = null) {
     return new Promise((resolve, reject) => {
       fetch(messageObjectPath)
         .then(function (response) {
@@ -101,7 +101,7 @@
             throw new Error
           }
         }).then(function (signedData) {
-          updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedData.content);
+          updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedData.content, blob_id);
         }).then(function () {
           resolve();
         }).catch(function (err) {
@@ -109,6 +109,7 @@
             alert("Spustite aplikáciu autogram.")
           }
           else {
+            console.log(err);
             alert("Podpisovanie neprebehlo úspešne.");
           }
         });
@@ -117,9 +118,9 @@
   }
 
   // TODO doriesit co namiesto turba
-  async function updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedContent) {
+  async function updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedContent, blob_id) {
     return new Promise((resolve, reject) => {
-      blobWrapperId = `signature-for-blob-${response.old_blob_id}`
+      blobWrapperId = `signature-for-blob-${blob_id}`
       blobWrapper = document.getElementById(blobWrapperId)
 
       // request.js lib is used, responseKind: "turbo-stream" option is very important (be careful if case of changes)
@@ -135,6 +136,8 @@
           render_partial: blobWrapper.dataset.partial
         })
       }).then(function (response) {
+        console.log(response);
+
         if (response.success) {
           blobWrapper.innerHTML(response.html)
         } else {

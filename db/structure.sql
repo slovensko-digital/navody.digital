@@ -17,6 +17,13 @@ CREATE SCHEMA code_list;
 
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
 --
 

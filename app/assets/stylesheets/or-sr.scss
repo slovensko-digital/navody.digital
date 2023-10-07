@@ -83,28 +83,6 @@ div#or-sr-identifiers, div#acts-submission {
     min-height: 40px;
   }
 
-  @keyframes spinner {
-    to {transform: rotate(360deg);}
-  }
-
-  .spinner {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-  }
-
-  .spinner:before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    border-top-color: #000;
-    animation: spinner .6s linear infinite;
-  }
-
   #identifiers-sr input, #identifiers-foreign input {
     width: 100%;
 

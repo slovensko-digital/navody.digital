@@ -52,12 +52,14 @@ module UpvsSubmissions
 
       def create_form_attachment(form_params)
         form = UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder.build_form(form_params)
-        filename = 'exam.xml' # TODO: change to random generated
 
         blob = ActiveStorage::Blob.create_and_upload!(
           io: StringIO.new(form.to_xml),
-          filename: filename,
-          content_type: 'application/xml'
+          filename: 'Dokument.xml', # This is how the XML is called in slovensko.sk
+          content_type: 'application/x-eform-xml', # Mandatory content type for the Autogram and UPVS app. See `Upvs::SubmissionsController#signing_data`
+          metadata: {
+            signed_required: UtilityService.yes?(form_params.signed_required)
+          }
         )
 
         blob.id

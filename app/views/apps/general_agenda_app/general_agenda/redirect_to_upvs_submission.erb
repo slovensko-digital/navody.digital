@@ -1,6 +1,8 @@
 <%= render partial: 'header' %>
 
-<div class="spinner"></div>
+<div class="spinner spinner-lg"></div>
+
+<!-- This form is automatically immediately submitted as a POST request to the Upvs::SubmissionController -->
 
 <%= form_with model: @submission_form, url: upvs_submissions_path, scope: 'upvs_submission', html: { id: 'upvs_submissions_form' } do |f| %>
   <%= f.hidden_field :title, value: 'Podanie všeobecnej agendy' %>
