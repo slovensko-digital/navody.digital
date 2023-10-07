@@ -6,8 +6,8 @@ module Apps
         include ActiveModel::Validations
 
         validate :recipient_present?
-        validates :subject, presence: true
-        validates :text, presence: true
+        validate :subject?
+        validate :text?
 
         attr_accessor(
           # Static/template attributes
@@ -51,6 +51,14 @@ module Apps
 
         def recipient_present?
           errors.add(:recipient_name, 'Zvoľte prijímateľa') if recipient_name.blank? || recipient_uri.blank?
+        end
+
+        def subject?
+          errors.add(:subject, 'Predmet je povinná položka') if subject.blank?
+        end
+
+        def text?
+          errors.add(:text, 'Text je povinná položka') if text.blank?
         end
       end
     end
