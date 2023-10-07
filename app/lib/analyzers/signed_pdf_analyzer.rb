@@ -9,7 +9,12 @@ module Analyzers
     end
 
     def is_signed?
-      reader = PDF::Reader.new(blob.file)
+      begin
+        reader = PDF::Reader.new(blob.download)
+      rescue StandardError
+        return false # NOTE: if pdf reading fails it is not signed
+      end
+
       reader.objects.to_a.flatten.select { |o| o.is_a?(Hash) }.select { |o| o[:Type] == :Sig }.first.present?
     end
   end
