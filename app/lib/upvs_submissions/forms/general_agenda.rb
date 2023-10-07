@@ -14,7 +14,7 @@ module UpvsSubmissions
         @recipient_uri = recipient_uri || default_recipient_uri
         @sender_business_reference = sender_business_reference
         @recipient_business_reference = recipient_business_reference
-        @form = form_params ? build_form(form_params) : nil
+        @form = form_params ? UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder.build_form(form_params) : nil
         @attachments = []
       end
 
@@ -47,13 +47,6 @@ module UpvsSubmissions
       end
 
       private
-
-      def build_form(form_params, builder: UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder)
-        {
-          :encoding => "XML",
-          :content => builder.build_form(form_params)
-        }
-      end
 
       delegate :uuid, to: self
     end
