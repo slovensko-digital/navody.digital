@@ -36,7 +36,6 @@ module NavodySlovenskoDigital
 
     config.action_mailer.default_url_options = options
     config.action_mailer.deliver_later_queue_name = 'default'
-    # TODO: add config.active_storage.analyzers.prepend Analyzers::SignedPdfAnalyzer
 
     config.active_record.schema_format = :sql
 
@@ -50,6 +49,12 @@ module NavodySlovenskoDigital
         },
       }
     }
+
+    config.after_initialize do
+      config.active_storage.analyzers.prepend ::Analyzers::SignedPdfAnalyzer
+      config.active_storage.analyzers.prepend ::Analyzers::SignedXAnalyzer
+      config.active_storage.analyzers.prepend ::Analyzers::SignedXmlAnalyzer
+    end
   end
 end
 

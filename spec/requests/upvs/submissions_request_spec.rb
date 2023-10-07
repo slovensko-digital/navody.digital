@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Upvs::Submissions", type: :request do
+  let(:file) do
+    ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new('<form>9</form>'),
+      filename: 'test.xml',
+      content_type: 'application/xml'
+    )
+  end
   let(:valid_attributes) do
     {
       posp_id: 'posp_id',
@@ -8,7 +15,7 @@ RSpec.describe "Upvs::Submissions", type: :request do
       message_type: 'message_type',
       recipient_uri: 'foo://bar',
       message_subject: 'message_subject',
-      form: '<form>9</form>',
+      form_blob_id: file.id,
       title: 'title'
     }
   end
@@ -20,7 +27,6 @@ RSpec.describe "Upvs::Submissions", type: :request do
       message_type: 'message_type',
       recipient_uri: '',
       message_subject: 'message_subject',
-      form: '<form></form>',
       title: 'title'
     }
   end
@@ -106,7 +112,6 @@ RSpec.describe "Upvs::Submissions", type: :request do
   end
 
   describe "POST submit" do
-
     context "with valid params" do
       it "redirects to the callback url" do
         # stub valid eid_token

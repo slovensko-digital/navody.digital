@@ -131,7 +131,6 @@ class Upvs::SubmissionsController < ApplicationController
       :sender_business_reference,
       :recipient_business_reference,
       :message_subject,
-      :form,
       :form_blob_id,
       :attachments,
       :callback_url
