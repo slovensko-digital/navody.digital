@@ -22,33 +22,28 @@
     </iframe>
   </div>
 
-  <%= render 'upvs/submissions/blob_sign_button', blob: @upvs_submission.form %>
+  <div id="signature-for-blob-<%= @upvs_submission.form.id %>" data-partial="signed_badge">
+    <%= render 'upvs/submissions/blob_sign_button', blob: @upvs_submission.form %>
+  </div>
 
   <% if @upvs_submission.attachments.attached? %>
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <td scope="col" class="govuk-table__header">Požadovaný súbor</td>
-        <td scope="col" class="govuk-table__header">Názov súboru</td>
-        <td scope="col" class="govuk-table__header">Vyžaduje podpis?</td>
-        <td scope="col" class="govuk-table__header"></td>
+        <td class="govuk-table__header">Požadovaný súbor</td>
+        <td class="govuk-table__header">Názov súboru</td>
+        <td class="govuk-table__header">Vyžaduje podpis?</td>
+        <td class="govuk-table__header"></td>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
         <% @upvs_submission.attachments.each do |blob| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">
-              <%= blob.metadata[:original_template_name] %><br>
-            </td>
-            <td class="govuk-table__cell"><%= blob.filename %></td>
-            <td class="govuk-table__cell"><%= lb blob.metadata[:signed_required] %></td>
-            <td class="govuk-table__cell">
-              <%= render 'upvs/submissions/blob_sign_button', blob: blob %>
-            </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+          <tr id="signature-for-blob-<%= blob.id %>" class="govuk-table__row" data-partial="blob_row_content">
+            <%= render 'upvs/submissions/blob_row_content', blob: blob %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 
   <%= render partial: 'actions' %>
@@ -135,7 +130,6 @@
     });
   }
 
-  // TODO doriesit co namiesto turba
   async function updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedContent, blob_id) {
     return new Promise((resolve, reject) => {
       blobWrapperId = `signature-for-blob-${blob_id}`

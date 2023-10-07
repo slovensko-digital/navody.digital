@@ -76,17 +76,21 @@ class Upvs::SubmissionsController < ApplicationController
   end
 
   def update_blob_after_signature
-    render_partial = params[:render_partial].in?(['signed_badge', 'blob_row']) ? params[:render_partial] : 'signed_badge'
+    render_partial = params[:render_partial].in?(['signed_badge', 'blob_row_content']) ? params[:render_partial] : 'signed_badge'
     new_blob =  ActiveStorage::Blob.create_and_upload!(
-      io: StringIO.new(params[:content]),
+      io: StringIO.new(Base64.decode64(params[:content])),
       filename: params[:name],
       content_type: params[:mimetype],
       metadata: { signed: true, signed_required: @blob.metadata[:signed_required] }.compact
     )
 
-    @blob.signed_blob.attach(new_blob)
+    @blob.signed_blob.attach(new_blob) # 'signed_blob' is defined in `config/initializers/active_storage.rb`
 
-    render json: { success: true, old_blob_id: @blob.id, html: render_to_string(partial: "upvs/submissions/#{render_partial}") }
+    render json: {
+      success: true,
+      old_blob_id: @blob.id,
+      html: render_to_string(partial: "upvs/submissions/#{render_partial}", locals: { blob: @blob })
+    }
   rescue StandardError, ScriptError => e
     render json: { success: false, error: "Nastala chyba pri podpisovaní. [#{e.class}]: #{e.message}" }
   end

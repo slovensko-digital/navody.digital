@@ -88,7 +88,7 @@
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
                   <%= attachment_template[:name] %><br>
-                  <%= attachment_template[:description] %>
+                  <small><%= attachment_template[:description] %></small>
                 </td>
                 <td class="govuk-table__cell"><%= lb attachment_template[:required] %></td>
                 <td class="govuk-table__cell"><%= lb attachment_template[:signed_required] %></td>
@@ -96,7 +96,7 @@
                   <% blob = @application_form.attachment_blobs[index] %>
 
                   <% if blob %>
-                    <%= link_to blob.filename, rails_blob_url(blob) %>
+                    <%= link_to blob.filename, rails_blob_url(blob, disposition: :download), target: :_blank %>
                     <%= f.hidden_field "attachments][#{index}", value: blob.id %>
                   <% end %>
 

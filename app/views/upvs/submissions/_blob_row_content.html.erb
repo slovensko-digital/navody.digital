@@ -1,0 +1,17 @@
+<td class="govuk-table__cell">
+  <%= blob.metadata[:original_template_name] %><br>
+</td>
+<td class="govuk-table__cell">
+  <%= link_to blob.filename, rails_blob_url(blob, disposition: :download), target: :_blank %>
+
+  <% if blob.signed_blob.attached? %>
+    <br>
+    <small>
+      Podpísaný súbor: <%= link_to blob.signed_blob.filename, rails_blob_url(blob.signed_blob, disposition: :download), target: :_blank %>
+    </small>
+  <% end %>
+</td>
+<td class="govuk-table__cell"><%= lb blob.metadata[:signed_required] %></td>
+<td class="govuk-table__cell">
+  <%= render 'upvs/submissions/blob_sign_button', blob: blob %>
+</td>

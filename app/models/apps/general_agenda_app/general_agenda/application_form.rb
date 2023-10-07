@@ -8,7 +8,6 @@ module Apps
         validate :validate_recipient_present
         validate :validate_subject
         validate :validate_text
-        validate :validate_placeholders
         validate :validate_attachments
 
         attr_accessor(
@@ -22,7 +21,6 @@ module Apps
           :recipient_uri,
           :subject,
           :text,
-          :text_hint,
           :signed_required,
           :attachments,
 
@@ -106,20 +104,25 @@ module Apps
 
         def validate_subject
           errors.add(:subject, 'Predmet je povinná položka') if subject.blank?
+
+          validate_placeholders(:subject)
         end
 
         def validate_text
           errors.add(:text, 'Text je povinná položka') if text.blank?
+
+          validate_placeholders(:text)
         end
 
-        def validate_placeholders
+        def validate_placeholders(attribute)
           pattern = /\{[^{}\s]+}/ # Define a regex pattern to match {PLACEHOLDER} without spaces within the text
+          value = send(attribute)
 
           # Check if the text contains any placeholders
-          if pattern.match(text)
-            placeholders = text.scan(pattern).uniq
+          if pattern.match(value.to_s)
+            placeholders = value.to_s.scan(pattern).uniq
 
-            errors.add(:text, "Prosím nahraďte #{placeholders.join(', ')} za skutočnú hodnotu.")
+            errors.add(attribute, "Prosím nahraďte #{placeholders.join(', ')} za skutočnú hodnotu.")
           end
         end
 

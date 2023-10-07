@@ -11,8 +11,7 @@ module Apps
           subject: params[:subject_placeholder],
           text: params[:text_placeholder],
           signed_required: params[:signed_required],
-          text_hint: params[:text_hint],
-          attachments_template: params[:attachments_template] || [{name: 'F1', signed_required: '1'}, {name: 'F2', signed_required: '0', required: '1'}]
+          attachments_template: params[:attachments_template],
         }.with_indifferent_access
 
         # Appending whatever user submitted into recipient, subject, text and attachments
@@ -43,7 +42,6 @@ module Apps
           :description,
           :subject,
           :text,
-          :text_hint,
           :signed_required,
           :recipient_name,
           :recipient_uri,
