@@ -220,7 +220,10 @@ module Apps
       end
 
       private def sk_citizen_step(listener)
-        if valid?(:sk_citizen)
+        if go_back?
+          self.step = 'start'
+          listener.render :start
+        elsif valid?(:sk_citizen)
           case sk_citizen
           when 'yes'
             self.step = 'permanent_resident'
@@ -234,7 +237,10 @@ module Apps
       end
 
       private def permanent_resident_step(listener)
-        if valid?(:permanent_resident)
+        if go_back?
+          self.step = 'sk_citizen'
+          listener.render :sk_citizen
+        elsif valid?(:permanent_resident)
           case permanent_resident
           when 'yes'
             self.step = 'place'
@@ -269,7 +275,10 @@ module Apps
 
       # Home flow
       private def delivery_step(listener)
-        if valid?(:delivery)
+        if go_back?
+          self.step = 'place'
+          listener.render :place
+        elsif valid?(:delivery)
           case delivery
           when 'post'
             self.step = 'identity'

@@ -4,6 +4,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/parliament_vote_app/application_forms/back', form: f %>
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
       <%= f.radios :sk_citizen, 'Ste občan Slovenskej republiky?', inline: true do %>
