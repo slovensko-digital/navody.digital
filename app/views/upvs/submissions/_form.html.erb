@@ -22,19 +22,158 @@
     </iframe>
   </div>
 
-
-<!-- TODO -->
-  <%# if signed_required %>
-<!--    <button>podpisat</button>-->
-    <%# end %>
-
-<!--  <table>-->
-    <%# files.each %>
-
-    <%# if signed_required %>
-<!--      <button>podpisat</button>-->
-    <%# end %>
-<!--  </table>-->
+  <div id="signature-for-blob-<%= @upvs_submission.form.id %>" data-partial="signed_badge">
+    <% if @upvs_submission.form.metadata[:signed] %>
+      <%= render 'upvs/submissions/signed_badge' %>
+    <% elsif @upvs_submission.form.metadata[:signed_required] %>
+      <button type="button" class="govuk-button govuk-button__secondary" onclick=sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>')>Podpísať</button>
+    <% end %>
+  </div>
 
   <%= render partial: 'actions' %>
 <% end %>
+
+<script>
+  const authenticityToken = '<%= form_authenticity_token %>';
+
+  async function sign(messageObjectPath, batchId = null) {
+    return new Promise((resolve, reject) => {
+      fetch(messageObjectPath)
+        .then(function (response) {
+          return response.json();
+        }).then(async function (messageObjectData) {
+        let payloadMimeType = `${messageObjectData.mime_type};base64`;
+        let signatureLevel = "XAdES_BASELINE_B";
+        let signatureContainer = "ASiC_E";
+
+        let signedFileName = await setSignedFileName(messageObjectData);
+        let signedFileMimeType = "application/vnd.etsi.asic-e+zip";
+
+        switch(messageObjectData.mime_type) {
+          case "application/pdf":
+            signatureLevel = "PAdES_BASELINE_B";
+            signatureContainer = null;
+
+            signedFileName = messageObjectData.file_name;
+            signedFileMimeType = messageObjectData.mime_type;
+            break;
+          // TODO check what in this case
+          // case 'application/xml':
+          //   break;
+          case 'application/x-eform-xml':
+            payloadMimeType = "application/xml;base64"
+            break;
+          case 'application/msword':
+          case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+            payloadMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64"
+            break;
+          case 'image/jpeg':
+          case 'image/tiff':
+          case 'image/png':
+            signatureLevel = "CAdES_BASELINE_B";
+            break;
+        }
+
+        fetch("http://localhost:37200/sign", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            batchId: batchId,
+            document: {
+              filename: messageObjectData.file_name,
+              content: messageObjectData.content
+            },
+            parameters: {
+              level: signatureLevel,
+              container: signatureContainer,
+              identifier: messageObjectData.identifier,
+              schema: messageObjectData.schema,
+              containerXmlns: messageObjectData.container_xmlns,
+              transformation: messageObjectData.transformation
+            },
+            payloadMimeType: payloadMimeType
+          })
+        }).then(function (response) {
+          if (response.ok) {
+            return response.json();
+          }
+          else {
+            throw new Error
+          }
+        }).then(function (signedData) {
+          updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedData.content);
+        }).then(function () {
+          resolve();
+        }).catch(function (err) {
+          if (err.message === "Failed to fetch") {
+            alert("Spustite aplikáciu autogram.")
+          }
+          else {
+            alert("Podpisovanie neprebehlo úspešne.");
+          }
+        });
+      })
+    });
+  }
+
+  // TODO doriesit co namiesto turba
+  async function updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedContent) {
+    return new Promise((resolve, reject) => {
+      blobWrapperId = `signature-for-blob-${response.old_blob_id}`
+      blobWrapper = document.getElementById(blobWrapperId)
+
+      // request.js lib is used, responseKind: "turbo-stream" option is very important (be careful if case of changes)
+      fetch(messageObjectPath, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          authenticity_token: authenticityToken,
+          name: signedFileName,
+          mimetype: signedFileMimeType,
+          is_signed: true,
+          content: signedContent,
+          render_partial: blobWrapper.dataset.partial
+        })
+      }).then(function (response) {
+        if (response.success) {
+          blobWrapper.innerHTML(response.html)
+        } else {
+          alert(response.error);
+        }
+      }).catch(function () {
+        alert("Podpisovanie neprebehlo úspešne.")
+      });
+    });
+  }
+
+  async function setSignedFileName(messageObjectData) {
+    return messageObjectData.file_name.substring(0, messageObjectData.file_name.lastIndexOf('.')).concat(".asice") || messageObjectData.file_name;
+  }
+
+  function signMultipleFiles() {
+    const messageObjectsToBeSigned = JSON.parse(this.data.get("filesToBeSigned"));
+
+    fetch("http://localhost:37200/batch", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "totalNumberOfDocuments": messageObjectsToBeSigned.length
+      })
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      return data.batchId;
+    }).then(async function (batchId) {
+      for(const messageObject of messageObjectsToBeSigned) {
+        await sign(messageObject.path, batchId);
+      }
+    }).catch(function (err) {
+      if (err.message === "Failed to fetch") {
+        alert("Spustite aplikáciu autogram.")
+      }
+      else {
+        alert("Podpisovanie neprebehlo úspešne.")
+      }
+    });
+  }
+</script>

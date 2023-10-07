@@ -14,4 +14,8 @@
 
 class Upvs::FormTemplateRelatedDocument < ApplicationRecord
   self.table_name = "upvs.form_template_related_documents"
+
+  def identifier
+    "http://schemas.gov.sk/form/#{posp_id}/#{posp_version}"
+  end
 end
