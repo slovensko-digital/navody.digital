@@ -102,10 +102,7 @@ Rails.application.routes.draw do
 
     namespace :general_agenda_app, path: 'vseobecna-agenda' do
       resource :general_agenda, controller: 'general_agenda', path: '' do
-        get :index
-        get :create
-        post :fill_message, path: 'vyplnenie'
-        post :fill_message, path: 'vyplnenie'
+        match :index, via: [:get, :post]
         get :callback, path: 'odoslane'
       end
     end

@@ -1,17 +1,21 @@
 module Apps
   module GeneralAgendaApp
     class GeneralAgendaController < ApplicationController
-      before_action :load_application_form, only: [:fill_message]
+
       def index
-        @application_form = Apps::GeneralAgendaApp::GeneralAgenda::ApplicationForm.new
+        attributes = {
+          title: params[:title].presence || 'Všeobecná agenda',
+          description: params[:description].presence || 'Formulár pre odoslanie podania pre všeobecnú agendu',
+          subject: params[:subject_placeholder],
+          text: params[:text_placeholder],
+          signed_required: params[:signed_required],
+          text_hint: params[:text_hint],
+          attachments_template: params[:attachments],
+        }.merge(general_agenda_params || {})
 
-        render :index
-      end
+        @application_form = Apps::GeneralAgendaApp::GeneralAgenda::ApplicationForm.new(attributes)
 
-      def fill_message
-        return render action: :index unless @application_form.valid?(:recipient_uri)
-
-        redirect_to_upvs_submission if @application_form.should_redirect_to_upvs_submission?
+        redirect_to_upvs_submission if @application_form.is_submitted && @application_form.valid?
       end
 
       def callback
@@ -25,17 +29,17 @@ module Apps
         render :redirect_to_upvs_submission
       end
 
-      def load_application_form
-        @application_form = GeneralAgendaApp::GeneralAgenda::ApplicationForm.new(message_form_params)
-      end
-
-      def message_form_params
-        params.require(:apps_general_agenda_app_general_agenda_application_form).permit(
+      def general_agenda_params
+        params[:apps_general_agenda_app_general_agenda_application_form]&.permit(
+          :title,
+          :description,
+          :attachments_template,
           :subject,
           :text,
+          :attachments,
           :recipient_name,
           :recipient_uri,
-          :current_step
+          :is_submitted
         )
       end
     end
