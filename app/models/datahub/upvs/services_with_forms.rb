@@ -2,8 +2,8 @@ module Datahub
   module Upvs
     class ServicesWithForms < DatahubRecord
       def self.search(query)
-        select('DISTINCT ON (institution_name) *').where('unaccent(institution_name) ilike unaccent(?)', "%#{query}%").is_valid
-          .order(:institution_name).limit(15).pluck(:institution_name)
+        select('DISTINCT ON (institution_name) *').where('unaccent(institution_name) ilike unaccent(?)', "%#{query}%")
+          .is_valid.order(:institution_name).limit(15).pluck(:institution_name)
       end
 
       def self.is_valid

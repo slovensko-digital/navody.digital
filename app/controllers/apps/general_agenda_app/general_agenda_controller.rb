@@ -4,8 +4,8 @@ module Apps
       before_action :load_application_form, only: [:fill_message]
 
       def search_recipient
-        data = { name: 'Mesto Bratislava', uri: 'X' }, { name: 'Mesto Trnava', uri: 'Y' }
-        result = data.select { |e| e[:name].to_s.downcase.include?(params[:q]) }
+        # TODO: move to different controller
+        result = Datahub::Upvs::PublicAuthorityEdesk.search(params[:q])
 
         render json: { result: result }
       end
