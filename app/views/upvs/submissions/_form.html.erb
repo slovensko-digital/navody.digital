@@ -22,9 +22,13 @@
     </iframe>
   </div>
 
-  <% if @upvs_submission.to_be_signed %>
-    <button type="button" class="govuk-button govuk-button__secondary" onclick=sign('<%= request.path %>/objekty/1')>Podpísať</button>
-  <% end %>
+  <div id="signature-for-blob-<%= @upvs_submission.form.id %>" data-partial="signed_badge">
+    <% if @upvs_submission.form.metadata[:signed] %>
+      <%= render 'upvs/submissions/signed_badge' %>
+    <% elsif @upvs_submission.form.metadata[:signed_required] %>
+      <button type="button" class="govuk-button govuk-button__secondary" onclick=sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>')>Podpísať</button>
+    <% end %>
+  </div>
 
   <%= render partial: 'actions' %>
 <% end %>
@@ -34,7 +38,7 @@
 
   async function sign(messageObjectPath, batchId = null) {
     return new Promise((resolve, reject) => {
-      fetch(`${messageObjectPath}/signing_data.json`)
+      fetch(messageObjectPath)
         .then(function (response) {
           return response.json();
         }).then(async function (messageObjectData) {
@@ -115,20 +119,27 @@
   // TODO doriesit co namiesto turba
   async function updateObject(messageObjectPath, signedFileName, signedFileMimeType, signedContent) {
     return new Promise((resolve, reject) => {
+      blobWrapperId = `signature-for-blob-${response.old_blob_id}`
+      blobWrapper = document.getElementById(blobWrapperId)
+
       // request.js lib is used, responseKind: "turbo-stream" option is very important (be careful if case of changes)
       fetch(messageObjectPath, {
-        method: "PATCH",
-        headers: {'Content-Type': 'application/json'},
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           authenticity_token: authenticityToken,
           name: signedFileName,
           mimetype: signedFileMimeType,
           is_signed: true,
-          content: signedContent
-        }),
-        responseKind: "turbo-stream"
-      }).then(function () {
-        resolve();
+          content: signedContent,
+          render_partial: blobWrapper.dataset.partial
+        })
+      }).then(function (response) {
+        if (response.success) {
+          blobWrapper.innerHTML(response.html)
+        } else {
+          alert(response.error);
+        }
       }).catch(function () {
         alert("Podpisovanie neprebehlo úspešne.")
       });

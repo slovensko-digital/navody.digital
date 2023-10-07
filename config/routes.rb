@@ -169,6 +169,9 @@ Rails.application.routes.draw do
       post :submit, path: 'odoslat'
       get :submission_error, path: 'chyba'
       get :finish, path: 'dokoncene'
+
+      get 'signing_data/:submission_id/:signed_blob_id', action: :signing_data, as: :signing_data
+      patch 'signing_data/:submission_id/:signed_blob_id', action: :update_blob_after_signature
     end
   end
 

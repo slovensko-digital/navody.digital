@@ -40,6 +40,14 @@ class Upvs::Submission  < ApplicationRecord
 
   self.table_name = "upvs.submissions"
 
+  def form
+    ActiveStorage::Blob.find_by(filename: "upvs-submission-#{id}.xml") || ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new(attributes['form']),
+      filename: "upvs-submission-#{id}.xml",
+      content_type: 'application/x-eform-xml'
+    )
+  end
+
   def recipient_name
     return recipient_uri if Rails.env.development?
 
@@ -122,7 +130,7 @@ class Upvs::Submission  < ApplicationRecord
 
     xslt_template = Nokogiri::XSLT(form_related_document.xslt_transformation)
 
-    xslt_template.transform(Nokogiri::XML(form)).to_s.gsub('"', '\'')
+    xslt_template.transform(Nokogiri::XML(form.download)).to_s.gsub('"', '\'')
   end
 
   def recipient_uri_allowed?
