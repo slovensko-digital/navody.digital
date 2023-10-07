@@ -25,21 +25,24 @@
         </div>
         <%= form_tag subscribe_to_deadline_notification_journey_step_path(@current_step.journey, @current_step) , remote: true, authenticity_token: true do  %>
           <div class="govuk-form-group">
+            <span id="dob-error" class="govuk-error-message sdn-appear-link-hide">
+              <span class="govuk-visually-hidden">Chyba:</span> Zadali ste neplatný dátum
+            </span>
             <div class="govuk-date-input" id="dob">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <%= label_tag 'dob-day', 'Deň', class: "govuk-label govuk-date-input__label" %>
-                  <%= number_field_tag 'day', current_user_step.expected_resolution_date.day, min: 1, max: 31, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-day' %></div>
+                  <%= number_field_tag 'day', current_user_step.expected_resolution_date.day, required: true, min: 1, max: 31, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-day' %></div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <%= label_tag 'dob-month', 'Mesiac', class: "govuk-label govuk-date-input__label" %>
-                  <%= number_field_tag 'month', current_user_step.expected_resolution_date.month, min: 1, max: 12, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-month' %></div>
+                  <%= number_field_tag 'month', current_user_step.expected_resolution_date.month, required: true, min: 1, max: 12, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-month' %></div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <%= label_tag 'dob-year', 'Rok', class: "govuk-label govuk-date-input__label" %>
-                  <%= number_field_tag 'year', current_user_step.expected_resolution_date.year, min: 2023, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-year' %></div>
+                  <%= number_field_tag 'year', current_user_step.expected_resolution_date.year, required: true, min: 2023, class: 'govuk-input govuk-date-input__input govuk-input--width-2', id: 'dob-year' %></div>
               </div>
             </div>
           </div>

@@ -61,6 +61,16 @@ class StepsController < ApplicationController
         render 'step_subscription_updated'
       end
     end
+
+  rescue Date::Error => e
+    respond_to do |format|
+      format.html do
+        redirect_to [@journey, @current_step]
+      end
+      format.js do
+        render 'step_subscription_update_error'
+      end
+    end
   end
 
   def unsubscribe_deadline_notification
