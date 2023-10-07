@@ -14,7 +14,7 @@
 #  recipient_uri                     :string           not null
 #  sender_business_reference         :string
 #  recipient_business_reference      :string
-#  form                              :text             not null
+#  form                              :text
 #  callback_url                      :string
 #  callback_step_id                  :string
 #  callback_step_status              :string
@@ -23,10 +23,27 @@
 #  updated_at                        :datetime         not null
 #
 
-class Upvs::Submission  < ApplicationRecord
+class Upvs::Submission < ApplicationRecord
+  self.ignored_columns += [:form] # TODO: drop
+
   belongs_to :user, optional: true
   belongs_to :callback_step, optional: true, class_name: 'Step'
   attr_accessor :subscription_types, :raw_extra, :skip_subscribe, :current_user, :callback_step_path
+
+  # form_id: 123
+  # signed_required: true
+
+  # attachments
+  # signed_required
+  # [
+  #   { blob_id: 1, signed_required: false },
+  #   { blob_id: 2, signed_required: true }
+  # ]
+
+  # blob_id: 1 | signed: false | signed_required: true
+
+  has_one_attached :form
+  has_many_attached :signable_files
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   before_create { set_new_expiration_time }
@@ -34,7 +51,6 @@ class Upvs::Submission  < ApplicationRecord
   validates_presence_of :posp_id, :posp_version, :message_type, :recipient_uri, :message_subject, :form, on: :create
   validate :recipient_uri_allowed?, if: -> { Rails.env.production? }, on: :create
   validate :egov_application_allowed?, if: -> { Rails.env.production? }, on: :create
-  validate :valid_xml_form?, on: :create
 
   scope :expired, -> { where('expires_at < ?', Time.zone.now) }
 
@@ -89,8 +105,8 @@ class Upvs::Submission  < ApplicationRecord
 
   def submit_to_sk_api(client, url, eid_token)
     begin
-      headers =  { "Content-Type": "application/json" }
-      data =  { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(self, eid_token) }.to_json
+      headers = { "Content-Type": "application/json" }
+      data = { message: UpvsSubmissions::SktalkMessageBuilder.new.build_sktalk_message(self, eid_token) }.to_json
 
       client.post(url, data, headers)
     rescue Exception
@@ -122,7 +138,11 @@ class Upvs::Submission  < ApplicationRecord
 
     xslt_template = Nokogiri::XSLT(form_related_document.xslt_transformation)
 
-    xslt_template.transform(Nokogiri::XML(form)).to_s.gsub('"', '\'')
+    doc = form.open do |temp_file|
+      Nokogiri::XML(temp_file)
+    end
+
+    xslt_template.transform(doc).to_s.gsub('"', '\'')
   end
 
   def recipient_uri_allowed?

@@ -109,4 +109,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'hirb'
 
+# signing verification
+gem 'pdf-reader'
+
 gem "rails-controller-testing", "~> 1.0"

@@ -27,7 +27,8 @@ class AnonymousUser
   end
 
   def build_upvs_submission(params, callback_step:)
-    upvs_submission = Upvs::Submission.new(params)
+    upvs_submission = Upvs::Submission.new(params.except(:form_blob_id))
+    upvs_submission.form.attach(ActiveStorage::Blob.find_by(id: params[:form_blob_id]))
     upvs_submission.anonymous_user_uuid = @uuid
     upvs_submission.current_user = self
     upvs_submission.callback_step = callback_step

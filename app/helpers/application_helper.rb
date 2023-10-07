@@ -18,4 +18,10 @@ module ApplicationHelper
   def dont_show_small_search_bar?
     current_page?(root_path) || current_page?(search_path)
   end
+
+  def localize_boolean(value)
+    value.to_s.in?(['1', 'true']) ? 'Áno' : 'Nie'
+  end
+
+  alias :lb :localize_boolean
 end

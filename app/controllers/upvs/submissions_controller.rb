@@ -3,7 +3,8 @@ class Upvs::SubmissionsController < ApplicationController
 
   before_action :set_metadata
   before_action :build_upvs_submission, only: :create
-  before_action :load_upvs_submission, only: [:show, :submit, :finish]
+  before_action :load_upvs_submission, only: [:show, :submit, :finish, :signing_data, :update_blob_after_signature]
+  before_action :load_blob, only: [:signing_data, :update_blob_after_signature]
 
   rescue_from Upvs::Submission::SkApiError, :with => :handle_error
 
@@ -52,7 +53,51 @@ class Upvs::SubmissionsController < ApplicationController
   def submission_error
   end
 
+  def signing_data
+    response = {
+      file_name: @blob.filename,
+      mime_type: @blob.content_type,
+      content: Base64.strict_encode64(@blob.download)
+    }
+
+    # This mime type is set in `UpvsSubmissions::Forms::GeneralAgenda#create_form_attachment`
+    if @blob.content_type == 'application/x-eform-xml'
+      form_template = Upvs::FormTemplateRelatedDocument.find_by!(message_type: 'App.GeneralAgenda')
+
+      response.merge!({
+        identifier: form_template.identifier,
+        container_xmlns: 'http://data.gov.sk/def/container/xmldatacontainer+xml/1.1',
+        schema: Base64.strict_encode64(form_template.xsd_schema),
+        transformation: Base64.strict_encode64(form_template.xslt_transformation)
+      })
+    end
+
+    render json: response
+  end
+
+  def update_blob_after_signature
+    render_partial = params[:render_partial].in?(['signed_badge', 'blob_row']) ? params[:render_partial] : 'signed_badge'
+    new_blob =  ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new(params[:content]),
+      filename: params[:name],
+      content_type: params[:mimetype],
+      metadata: { signed: true, signed_required: @blob.metadata[:signed_required] }.compact
+    )
+
+    ActiveStorage::Attachment
+      .where(blob_id: @blob.id, record: @upvs_submission)
+      .update_all(blob_id: new_blob.id)
+
+    render json: { success: true, old_blob_id: @blob.id, badge: render_to_string(partial: "upvs/submissions/#{render_partial}") }
+  rescue StandardError, ScriptError => e
+    render json: { success: false, error: "Nastala chyba pri podpisovaní. [#{e.class}]: #{e.message}" }
+  end
+
   private
+
+  def load_blob
+    @blob = ActiveStorage::Blob.find_signed!(params[:signed_blob_id]) # This is only 'hashed blob ID', not signed blob object nor file
+  end
 
   def load_upvs_submission
     @upvs_submission = current_user.find_upvs_submission!(params[:id] || params[:submission_id])
@@ -87,7 +132,7 @@ class Upvs::SubmissionsController < ApplicationController
       :sender_business_reference,
       :recipient_business_reference,
       :message_subject,
-      :form,
+      :form_blob_id,
       :attachments,
       :callback_url
     ).except(:authenticity_token)

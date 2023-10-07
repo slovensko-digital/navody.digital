@@ -100,6 +100,13 @@ Rails.application.routes.draw do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end
 
+    namespace :general_agenda_app, path: 'vseobecna-agenda' do
+      resource :general_agenda, controller: 'general_agenda', path: '' do
+        match :index, via: [:get, :post]
+        get :callback, path: 'odoslane'
+      end
+    end
+
     namespace :acts_or_sr_app, path: 'or-sr-listiny' do
       resource :acts_submissions, path: '' do
         member do
@@ -169,6 +176,9 @@ Rails.application.routes.draw do
       post :submit, path: 'odoslat'
       get :submission_error, path: 'chyba'
       get :finish, path: 'dokoncene'
+
+      get 'signing_data/:submission_id/:signed_blob_id', action: :signing_data, as: :signing_data
+      patch 'signing_data/:submission_id/:signed_blob_id', action: :update_blob_after_signature
     end
   end
 
@@ -176,7 +186,7 @@ Rails.application.routes.draw do
   namespace :datahub do
     namespace :upvs do
       resources :public_authority_edesks do
-        get :search, on: :collection
+        get :search_recipient, to: 'services_with_forms#search_recipient', defaults: { format: :json }, on: :collection
       end
     end
   end

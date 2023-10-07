@@ -49,6 +49,12 @@ module NavodySlovenskoDigital
         },
       }
     }
+
+    config.after_initialize do
+      config.active_storage.analyzers.prepend ::Analyzers::SignedPdfAnalyzer
+      config.active_storage.analyzers.prepend ::Analyzers::SignedXAnalyzer
+      config.active_storage.analyzers.prepend ::Analyzers::SignedXmlAnalyzer
+    end
   end
 end
 

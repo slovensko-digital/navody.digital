@@ -1,0 +1,28 @@
+<%= render partial: 'header' %>
+
+<div class="spinner spinner-lg"></div>
+
+<!-- This form is automatically immediately submitted as a POST request to the Upvs::SubmissionController -->
+
+<%= form_with model: @submission_form, url: upvs_submissions_path, scope: 'upvs_submission', html: { id: 'upvs_submissions_form' } do |f| %>
+  <%= f.hidden_field :title, value: 'Podanie všeobecnej agendy' %>
+  <%= f.hidden_field :form_blob_id %>
+  <%= f.hidden_field :callback_url, value: callback_apps_general_agenda_app_general_agenda_path %>
+  <%= f.hidden_field :recipient_uri %>
+  <%= f.hidden_field :posp_version %>
+  <%= f.hidden_field :posp_id %>
+  <%= f.hidden_field :message_type %>
+  <%= f.hidden_field :message_subject %>
+
+  <%= f.hidden_field 'files[][blob_id]', value: 1 %>
+  <%= f.hidden_field 'files[][blob_id]', value: 2 %>
+
+  <!-- files: [blob_id -->
+  <!-- files: [signed_required -->
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  document.addEventListener('turbolinks:load', function () {
+    document.getElementById('upvs_submissions_form').submit()
+  })
+</script>
