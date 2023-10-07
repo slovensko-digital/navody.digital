@@ -35,7 +35,7 @@ jobs:
       - run: bundle exec rails webpacker:compile
         env:
           NODE_OPTIONS: "--openssl-legacy-provider"
-      - run: bundle exec rails db:create db:structure:load --trace
+      - run: bundle exec rails db:test:prepare --trace
 
       - uses: paambaati/codeclimate-action@v2.7.5
         env:
