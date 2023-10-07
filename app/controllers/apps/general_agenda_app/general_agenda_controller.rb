@@ -10,10 +10,12 @@ module Apps
           text: params[:text_placeholder],
           signed_required: params[:signed_required],
           text_hint: params[:text_hint],
-          attachments_template: params[:attachments],
+          attachments_template: params[:attachments] || [{name: 'Subor 1', description: 'Popis suboru 1', signed_required: '1'},{name: 'Subor 2', description: 'Popis suboru 1', signed_required: '0'}],
         }.merge(general_agenda_params || {})
 
         @application_form = Apps::GeneralAgendaApp::GeneralAgenda::ApplicationForm.new(attributes)
+
+        return render :invalid_template unless @application_form.valid_template?
 
         redirect_to_upvs_submission if @application_form.is_submitted && @application_form.valid?
       end
