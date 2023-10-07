@@ -22,5 +22,19 @@
     </iframe>
   </div>
 
+
+<!-- TODO -->
+  <%# if signed_required %>
+<!--    <button>podpisat</button>-->
+    <%# end %>
+
+<!--  <table>-->
+    <%# files.each %>
+
+    <%# if signed_required %>
+<!--      <button>podpisat</button>-->
+    <%# end %>
+<!--  </table>-->
+
   <%= render partial: 'actions' %>
 <% end %>

@@ -32,7 +32,8 @@ class User < ApplicationRecord
   end
 
   def build_upvs_submission(params, callback_step:)
-    upvs_submission = upvs_submissions.build(params)
+    upvs_submission = upvs_submissions.build(params.except(:form_blob_id))
+    upvs_submission.form.attach(ActiveStorage::Blob.find_by(id: params[:form_blob_id]))
     upvs_submission.current_user = self
     upvs_submission.callback_step = callback_step
     upvs_submission

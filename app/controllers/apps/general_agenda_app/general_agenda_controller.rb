@@ -41,7 +41,9 @@ module Apps
           :attachments,
           :recipient_name,
           :recipient_uri,
-          :is_submitted
+          :is_submitted,
+          :form_blob_id,
+          # TODO :files,
         )
       end
     end

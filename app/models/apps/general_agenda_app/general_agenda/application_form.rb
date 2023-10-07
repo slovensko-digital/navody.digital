@@ -23,7 +23,8 @@ module Apps
           :text_hint,
           :signed_required,
           :attachments,
-          :is_submitted
+          :is_submitted,
+          # TODO: :files,
         )
 
         def template_errors

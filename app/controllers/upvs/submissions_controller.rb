@@ -88,6 +88,7 @@ class Upvs::SubmissionsController < ApplicationController
       :recipient_business_reference,
       :message_subject,
       :form,
+      :form_blob_id,
       :attachments,
       :callback_url
     ).except(:authenticity_token)
