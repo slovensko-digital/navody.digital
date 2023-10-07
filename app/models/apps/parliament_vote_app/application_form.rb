@@ -40,6 +40,7 @@ module Apps
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
+      validate :pin_is_ok, on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
                             on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
@@ -153,6 +154,26 @@ module Apps
           partial: "apps/parliament_vote_app/application_forms/world_sk_resident_email_body",
           locals: { model: self },
         )
+      end
+
+      private def pin_is_ok
+        return errors.add(:pin, 'Rodné číslo je pocinná položka') if pin.blank?
+
+        pin = self.pin.gsub(%r{/}, '')
+        return errors.add(:pin, 'Rodné číslo nie je deliteľné číslom 11') if pin.length == 10 and pin % 11 != 0
+        return errors.add(:pin, 'Rodné číslo má nesprávnu dĺžku') if pin.length != 10 and pin.length != 9
+
+        case pin[2..3].to_i
+          when 0, 13..50, 63..99
+            return errors.add(:pin, 'Rodné číslo obsahuje neplatný mesiac')
+
+        month = pin[2..3].to_i % 50
+        year = pin[0..1].to_i + (pin[2..3].to_i > 12 ? 1900 : 2000)
+        begin
+          Date.new(year, month, pin[4..5].to_i)
+        rescue ArgumentError
+          errors.add(:pin, 'Rodné číslo obsahuje neplatný dátum')
+        end
       end
 
       def run(listener)
