@@ -5,7 +5,6 @@ class UpvsSubmissions::SktalkMessageBuilder
 
   XML_ENTITIES = HTMLEntities.new(:expanded)
 
-  # TODO add #{build_attachment_objects(egov_application.attachments)} when attachments added to upvs_submission
   def build_sktalk_message(egov_application, eid_token)
     <<~SKTALK
       <?xml version="1.0" encoding="utf-8"?>
@@ -27,7 +26,7 @@ class UpvsSubmissions::SktalkMessageBuilder
             <RecipientId>#{egov_application.recipient_uri}</RecipientId>
             <MessageType>#{egov_application.message_type}</MessageType>
             <MessageSubject>#{sanitize(egov_application.message_subject)}</MessageSubject>
-            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form.download)}
+            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form)}#{build_attachment_objects(egov_application.attachments)}
           </MessageContainer>
         </Body>
       </SKTalkMessage>
@@ -47,16 +46,16 @@ class UpvsSubmissions::SktalkMessageBuilder
   end
 
   def build_form_object(form)
-    build_object(content: format_xml_form(form), object_class: 'FORM')
+    build_object(name: form.blob.filename.to_s, signed: form.signed?, mime_type: form.blob.content_type, content: format_xml_form(form.blob_for_upvs.download), object_class: 'FORM')
   end
 
   def build_attachment_objects(attachments = [])
     separator = "\n      "
-    (separator + attachments.map { |attachment| build_object(attachment) }.join(separator)) if attachments.present?
+    (separator + attachments.map { |attachment| build_object(name: attachment.blob.filename.to_s, signed: attachment.signed?, mime_type: attachment.blob.content_type, content: attachment.blob_for_upvs.download) }.join(separator)) if attachments.present?
   end
 
-  def build_object(id: uuid, name: 'Formulár.xml', description: nil, signed: false, mime_type: 'application/x-eform-xml', encoding: 'XML', content: nil, object_class: 'ATTACHMENT')
-    %Q{<Object Id="#{id}"#{%Q{ Name="#{sanitize(name)}"} if name.present?}#{%Q{ Description="#{sanitize(description)}"} if description.present?} Class="#{object_class}"#{%Q{ IsSigned="#{signed}"} unless signed.nil?} MimeType="#{mime_type}" Encoding="#{encoding}">#{content}</Object>}
+  def build_object(id: uuid, name: 'Dokument.xml', description: nil, signed: false, mime_type: 'application/x-eform-xml', encoding: 'Base64', content: nil, object_class: 'ATTACHMENT')
+    %Q{<Object Id="#{id}"#{%Q{ Name="#{sanitize(name)}"} if name.present?}#{%Q{ Description="#{sanitize(description)}"} if description.present?} Class="#{object_class}"#{%Q{ IsSigned="#{signed}"} unless signed.nil?} MimeType="#{mime_type}" Encoding="#{encoding}">#{Base64.strict_encode64(content)}</Object>}
   end
 
   def format_xml_form(form)

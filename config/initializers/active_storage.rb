@@ -19,7 +19,7 @@ module ActiveStorageBlobInitializer
 
     # If the signature is required, return signed version of this blob, otherwise the blob itself
     def blob_for_upvs
-      metadata[:signed_required] ? get_signed_blob : self
+      get_signed_blob || self
     end
   end
 end
