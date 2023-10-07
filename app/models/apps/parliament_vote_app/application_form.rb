@@ -159,13 +159,20 @@ module Apps
       private def pin_is_ok
         return errors.add(:pin, 'Rodné číslo je pocinná položka') if pin.blank?
 
+        begin
+          pin.to_i
+        rescue ArgumentError
+          return errors.add(:pin, 'Rodné číslo obsahuje neplatné znaky')
+        end
+
         pin = self.pin.gsub(%r{/}, '')
-        return errors.add(:pin, 'Rodné číslo nie je deliteľné číslom 11') if pin.length == 10 and pin % 11 != 0
+        return errors.add(:pin, 'Rodné číslo nie je deliteľné číslom 11') if pin.length == 10 and pin.to_i % 11 != 0
         return errors.add(:pin, 'Rodné číslo má nesprávnu dĺžku') if pin.length != 10 and pin.length != 9
 
         case pin[2..3].to_i
-          when 0, 13..50, 63..99
-            return errors.add(:pin, 'Rodné číslo obsahuje neplatný mesiac')
+        when 0, 13..50, 63..99
+          return errors.add(:pin, 'Rodné číslo obsahuje neplatný mesiac')
+        end
 
         month = pin[2..3].to_i % 50
         year = pin[0..1].to_i + (pin[2..3].to_i > 12 ? 1900 : 2000)
