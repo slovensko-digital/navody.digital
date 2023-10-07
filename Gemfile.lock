@@ -145,6 +145,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     ethon (0.16.0)
       ffi (>= 1.15.0)
     exception_handler (0.8.0.2)
@@ -170,8 +172,18 @@ GEM
       rake
     friendly_id (5.5.0)
       activerecord (>= 4.0.0)
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    good_job (3.19.4)
+      activejob (>= 6.0.0)
+      activerecord (>= 6.0.0)
+      concurrent-ruby (>= 1.0.2)
+      fugit (>= 1.1)
+      railties (>= 6.0.0)
+      thor (>= 0.14.1)
     hashie (5.0.0)
     hirb (0.7.3)
     htmlentities (4.3.4)
@@ -302,6 +314,7 @@ GEM
     que-web (0.10.0)
       que (>= 1)
       sinatra
+    raabro (1.4.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-protection (3.1.0)
@@ -478,6 +491,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   friendly_id
+  good_job
   hirb
   http
   invisible_captcha

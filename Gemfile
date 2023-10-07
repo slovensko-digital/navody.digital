@@ -38,6 +38,8 @@ gem 'jbuilder'
 gem 'que'
 gem 'que-web'
 
+gem 'good_job'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 

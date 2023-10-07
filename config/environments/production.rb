@@ -58,10 +58,6 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :que
-  # config.active_job.queue_name_prefix = "navody_slovensko_digital_#{Rails.env}"
-
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :aws_sdk
