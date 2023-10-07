@@ -3,11 +3,11 @@ module Datahub
     class ServicesWithFormsController < ApplicationController
       def search_recipient
         result = if testing?
-                   [{ name: 'Testing - ico://sk/83369507', uri: 'ico://sk/83369507' }]
+                  # Datahub::Upvs::ServicesWithForms.search(params[:q])
+                  [{ name: 'Testing - ico://sk/83369507', uri: 'ico://sk/83369507' }]
                  else
-                   Datahub::Upvs::PublicAuthorityEdesk.search(params[:q])
+                  Datahub::Upvs::ServicesWithForms.search(params[:q])
                  end
-
         render json: { result: result }
       end
 
