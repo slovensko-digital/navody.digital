@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
 
     user = User.find_by('lower(email) = lower(?)', auth_email) || User.create!(email: auth_email)
 
-    notice = user.previously_new_record? ? :first_time_login : 'Prihlásenie úspešné. Vitajte!'
+    notice = user.previously_new_record? ? 'first_time_login' : 'Prihlásenie úspešné. Vitajte!'
 
     if eid_identity_approval?
       user.update!(eid_sub: eid_sub_from_auth)
