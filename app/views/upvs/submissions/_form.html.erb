@@ -22,13 +22,34 @@
     </iframe>
   </div>
 
-  <div id="signature-for-blob-<%= @upvs_submission.form.id %>" data-partial="signed_badge">
-    <% if @upvs_submission.form.signed? %>
-      <%= render 'upvs/submissions/signed_badge' %>
-    <% elsif @upvs_submission.form.metadata[:signed_required] %>
-      <button type="button" class="govuk-button govuk-button__secondary" onclick="sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>', <%= @upvs_submission.form.id %>)">Podpísať</button>
-    <% end %>
-  </div>
+  <%= render 'upvs/submissions/blob_sign_button', blob: @upvs_submission.form %>
+
+  <% if @upvs_submission.attachments.attached? %>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <td scope="col" class="govuk-table__header">Požadovaný súbor</td>
+        <td scope="col" class="govuk-table__header">Názov súboru</td>
+        <td scope="col" class="govuk-table__header">Vyžaduje podpis?</td>
+        <td scope="col" class="govuk-table__header"></td>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @upvs_submission.attachments.each do |blob| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= blob.metadata[:original_template_name] %><br>
+            </td>
+            <td class="govuk-table__cell"><%= blob.filename %></td>
+            <td class="govuk-table__cell"><%= lb blob.metadata[:signed_required] %></td>
+            <td class="govuk-table__cell">
+              <%= render 'upvs/submissions/blob_sign_button', blob: blob %>
+            </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  <% end %>
 
   <%= render partial: 'actions' %>
 <% end %>

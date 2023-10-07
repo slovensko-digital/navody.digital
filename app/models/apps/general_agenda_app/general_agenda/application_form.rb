@@ -9,6 +9,7 @@ module Apps
         validate :validate_subject
         validate :validate_text
         validate :validate_placeholders
+        validate :validate_attachments
 
         attr_accessor(
           # Static/template attributes
@@ -24,8 +25,8 @@ module Apps
           :text_hint,
           :signed_required,
           :attachments,
-          :is_submitted,
-          # TODO: :files,
+
+          :is_submitted # Whether the form is submitted internally via the submit button or just open from POST request from external site (API functionality)
         )
 
         # `signed_required` is stored as string and this method converts it into boolean
@@ -56,8 +57,45 @@ module Apps
           @template_errors.blank?
         end
 
+        # Process uploaded files and store them as blobs
         def attachments=(value)
-          value # TODO
+          @attachments = {}
+
+          value&.each do |index, value|
+            index = index.to_i # Index submitted from form like `name="something[0]"` is treated as string
+
+            # Check if the value is directly a blob's integer and then just use it
+            if value.is_a?(Integer) || (value.is_a?(String) && /\A\d+\z/.match?(value))
+              @attachments[index] = value
+            elsif value.is_a?(ActionDispatch::Http::UploadedFile) # Upload the file and use the blob's ID
+              attachment_template = attachments_template.try(:[], index)
+              signed_required = UtilityService.yes?(attachment_template.try(:[], 'signed_required'))
+
+              blob =  ActiveStorage::Blob.create_and_upload!(
+                io: value.tempfile,
+                filename: value.original_filename,
+                metadata: {
+                  original_template_name: attachment_template.try(:[], :name),
+                  signed_required: signed_required
+                }
+              )
+
+              @attachments[index] = blob.id
+            end
+          end
+        end
+
+        # attachments contains index->blob_id mapping like `{ 1 => 123, 2 => 456 }`
+        # index represents index in the `attachments_template`
+        #
+        # This method returns actual `ActiveStorage::Blob` objects instead of IDs like:
+        # { 1 => <ActiveStorage::Blob#123>, 2 => <ActiveStorage::Blob#456> }
+        def attachment_blobs
+          return @attachment_blobs unless @attachment_blobs.nil?
+
+          blobs = ActiveStorage::Blob.where(id: attachments&.values).index_by(&:id)
+
+          @attachment_blobs = attachments.to_h.transform_values { |blob_id| blobs[blob_id.to_i] }
         end
 
         private
@@ -82,6 +120,14 @@ module Apps
             placeholders = text.scan(pattern).uniq
 
             errors.add(:text, "Prosím nahraďte #{placeholders.join(', ')} za skutočnú hodnotu.")
+          end
+        end
+
+        def validate_attachments
+          attachments_template&.each_with_index do |attachment_template, index|
+            if UtilityService.yes?(attachment_template[:required]) && attachments.to_h[index].blank?
+              errors.add(:base, "Nahrajte povinnú prílohu pre '#{attachment_template[:name]}'")
+            end
           end
         end
       end

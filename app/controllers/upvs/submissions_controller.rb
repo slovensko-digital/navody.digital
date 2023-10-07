@@ -132,7 +132,8 @@ class Upvs::SubmissionsController < ApplicationController
       :message_subject,
       :form_blob_id,
       :attachments,
-      :callback_url
+      :callback_url,
+      attachments_ids: []
     ).except(:authenticity_token)
   end
 

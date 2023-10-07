@@ -14,11 +14,9 @@
   <%= f.hidden_field :message_type %>
   <%= f.hidden_field :message_subject %>
 
-  <%= f.hidden_field 'files[][blob_id]', value: 1 %>
-  <%= f.hidden_field 'files[][blob_id]', value: 2 %>
-
-  <!-- files: [blob_id -->
-  <!-- files: [signed_required -->
+  <% @submission_form.attachments_blob_ids.each do |blob_id| %>
+    <%= f.hidden_field 'attachments_ids[', value: blob_id %>
+  <% end %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">

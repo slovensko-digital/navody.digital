@@ -1,0 +1,7 @@
+<div id="signature-for-blob-<%= blob.id %>" data-partial="signed_badge">
+  <% if blob.signed? %>
+    <%= render 'upvs/submissions/signed_badge' %>
+  <% elsif blob.metadata[:signed_required] %>
+    <button type="button" class="govuk-button govuk-button__secondary" onclick="sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: blob.signed_id) %>', <%= blob.id %>)">Podpísať</button>
+  <% end %>
+</div>

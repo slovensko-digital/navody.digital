@@ -41,6 +41,10 @@ module UpvsSubmissions
         @correlation_id ||= uuid
       end
 
+      def attachments_blob_ids
+        application_form.attachments.to_h.values.map(&:to_i)
+      end
+
       private
 
       delegate :uuid, to: self

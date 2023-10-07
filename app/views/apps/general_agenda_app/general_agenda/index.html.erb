@@ -83,7 +83,7 @@
               <td scope="col" class="govuk-table__header">Príloha</td>
             </tr>
           </thead>
-          <body class="govuk-table__body>
+          <tbody class="govuk-table__body">
             <% @application_form.attachments_template.each_with_index do |attachment_template, index| %>
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
@@ -93,14 +93,18 @@
                 <td class="govuk-table__cell"><%= lb attachment_template[:required] %></td>
                 <td class="govuk-table__cell"><%= lb attachment_template[:signed_required] %></td>
                 <td class="govuk-table__cell">
-                  <% if attachment_template[:blob_id] %>
-                  <% else %>
-                    <%= f.file_field "attachments[#{index}]" %>
-                  <% end  %>
+                  <% blob = @application_form.attachment_blobs[index] %>
+
+                  <% if blob %>
+                    <%= link_to blob.filename, rails_blob_url(blob) %>
+                    <%= f.hidden_field "attachments][#{index}", value: blob.id %>
+                  <% end %>
+
+                  <%= f.file_field "attachments][#{index}" %>
                 </td>
               </tr>
             <% end %>
-          </body>
+          </tbody>
         </table>
       <% end %>
 
