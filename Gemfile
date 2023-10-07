@@ -34,10 +34,7 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Gems for tracking the statuses of jobs
-gem 'que'
-gem 'que-web'
-
+# Workers
 gem 'good_job'
 
 # Reduces boot times through caching; required in config/boot.rb
