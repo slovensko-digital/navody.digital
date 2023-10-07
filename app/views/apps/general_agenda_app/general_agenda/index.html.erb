@@ -113,7 +113,7 @@
           const currentTime = new Date().getTime();
           latestQuery = currentTime;
 
-          const res = await fetch(`/aplikacie/vseobecna-agenda/search_recipient?q=${encodeURIComponent(query)}`);
+          const res = await fetch(`/datahub/upvs/public_authority_edesks/search_recipient?q=${encodeURIComponent(query)}`);
           const data = (await res.json()).result;
 
           if (currentTime === latestQuery) {

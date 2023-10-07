@@ -2,14 +2,6 @@ module Apps
   module GeneralAgendaApp
     class GeneralAgendaController < ApplicationController
       before_action :load_application_form, only: [:fill_message]
-
-      def search_recipient
-        # TODO: move to different controller
-        result = Datahub::Upvs::PublicAuthorityEdesk.search(params[:q])
-
-        render json: { result: result }
-      end
-
       def index
         @application_form = Apps::GeneralAgendaApp::GeneralAgenda::ApplicationForm.new
 

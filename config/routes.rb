@@ -108,7 +108,6 @@ Rails.application.routes.draw do
         post :fill_message, path: 'vyplnenie'
         get :callback, path: 'odoslane'
       end
-      get :search_recipient, to: 'general_agenda#search_recipient', defaults: { format: :json }
     end
 
     namespace :acts_or_sr_app, path: 'or-sr-listiny' do
@@ -187,7 +186,7 @@ Rails.application.routes.draw do
   namespace :datahub do
     namespace :upvs do
       resources :public_authority_edesks do
-        get :search, on: :collection
+        get :search_recipient, to: 'services_with_forms#search_recipient', defaults: { format: :json }, on: :collection
       end
     end
   end
