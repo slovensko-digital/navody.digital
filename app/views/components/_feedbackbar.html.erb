@@ -33,7 +33,7 @@
           <a href="#" data-module="sdn-appear-link" data-appear="sdn-feedbackbar-container" data-disappear="sdn-feedbackbar-form-yes">Zatvoriť</a>
         </div>
       </div>
-      <%= form_with url: feedbacks_path do |form| %>
+      <%= form_with url: feedbacks_path, local: false do |form| %>
         <%= hidden_field_tag :feedback_type, 'Useful' %>
         <%= hidden_field_tag :current_path, request.fullpath %>
         <div class="govuk-form-group">
@@ -54,7 +54,7 @@
       </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <%= form_with url: feedbacks_path do |form| %>
+          <%= form_with url: feedbacks_path, local: false do |form| %>
             <%= hidden_field_tag :feedback_type, 'Not useful' %>
             <%= hidden_field_tag :current_path, request.fullpath %>
             <div class="govuk-form-group">
@@ -86,7 +86,7 @@
       </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-          <%= form_with url: feedbacks_path do |form| %>
+          <%= form_with url: feedbacks_path, local: false do |form| %>
             <%= hidden_field_tag :feedback_type, 'Bug report' %>
             <%= hidden_field_tag :current_path, request.fullpath %>
             <div class="govuk-form-group">
