@@ -3,18 +3,17 @@ module UpvsSubmissions
     class GeneralAgenda
       include ActiveModel::Model
 
-      attr_accessor :sender_uri, :recipient_uri, :sender_business_reference, :recipient_business_reference, :form_blob_id, :attachments
+      attr_accessor :application_form, :form_blob_id, :attachments
+
+      delegate :recipient_uri, to: :application_form
 
       class << self
         delegate :uuid, to: SecureRandom
       end
 
-      def initialize(recipient_uri: nil, sender_uri: nil, sender_business_reference: nil, recipient_business_reference: nil, form_params: nil)
-        @sender_uri = sender_uri
-        @recipient_uri = recipient_uri || default_recipient_uri
-        @sender_business_reference = sender_business_reference
-        @recipient_business_reference = recipient_business_reference
-        @form_blob_id = form_params ? create_form_attachment(form_params) : nil
+      def initialize(application_form)
+        @application_form = application_form
+        @form_blob_id = create_form_attachment
         @attachments = []
       end
 
@@ -34,10 +33,6 @@ module UpvsSubmissions
         "Všeobecná agenda"
       end
 
-      def default_recipient_uri
-        (Rails.env.production? || Rails.env.staging?) ? "ico://sk/00166073_10006" : "ico://sk/83369507"
-      end
-
       def message_id
         @message_id ||= uuid
       end
@@ -50,16 +45,14 @@ module UpvsSubmissions
 
       delegate :uuid, to: self
 
-      def create_form_attachment(form_params)
-        form = UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder.build_form(form_params)
+      def create_form_attachment
+        document_xml = UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder.build_form(application_form)
 
         blob = ActiveStorage::Blob.create_and_upload!(
-          io: StringIO.new(form.to_xml),
+          io: StringIO.new(document_xml.to_xml),
           filename: 'Dokument.xml', # This is how the XML is called in slovensko.sk
           content_type: 'application/x-eform-xml', # Mandatory content type for the Autogram and UPVS app. See `Upvs::SubmissionsController#signing_data`
-          metadata: {
-            signed_required: UtilityService.yes?(form_params.signed_required)
-          }
+          metadata: { signed_required: application_form.signed_required? }
         )
 
         blob.id

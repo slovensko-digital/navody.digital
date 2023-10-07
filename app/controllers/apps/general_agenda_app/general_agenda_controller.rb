@@ -1,17 +1,23 @@
 module Apps
   module GeneralAgendaApp
     class GeneralAgendaController < ApplicationController
+      skip_forgery_protection only: [:index]
 
       def index
+        # Configuration of the form - as API
         attributes = {
           title: params[:title].presence || 'Všeobecná agenda',
           description: params[:description].presence || 'Formulár pre odoslanie podania pre všeobecnú agendu',
           subject: params[:subject_placeholder],
           text: params[:text_placeholder],
-          signed_required: params[:signed_required] || '1',
+          signed_required: params[:signed_required],
           text_hint: params[:text_hint],
-          attachments_template: params[:attachments] || [{name: 'Subor 1', description: 'Popis suboru 1', signed_required: '1'},{name: 'Subor 2', description: 'Popis suboru 1', signed_required: '0'}],
-        }.merge(general_agenda_params || {})
+          attachments_template: params[:attachments_template] || [{name: 'F1', signed_required: '1'}, {name: 'F2', signed_required: '0', required: '1'}]
+        }.with_indifferent_access
+
+        # Appending whatever user submitted into recipient, subject, text and attachments
+        # + remembers the form configuration between submits
+        attributes.merge!(general_agenda_params || {})
 
         @application_form = Apps::GeneralAgendaApp::GeneralAgenda::ApplicationForm.new(attributes)
 
@@ -26,7 +32,7 @@ module Apps
       private
 
       def redirect_to_upvs_submission
-        @submission_form = UpvsSubmissions::Forms::GeneralAgenda.new(form_params: @application_form)
+        @submission_form = UpvsSubmissions::Forms::GeneralAgenda.new(@application_form)
 
         render :redirect_to_upvs_submission
       end
@@ -35,16 +41,15 @@ module Apps
         params[:apps_general_agenda_app_general_agenda_application_form]&.permit(
           :title,
           :description,
-          :attachments_template,
           :subject,
           :text,
+          :text_hint,
           :signed_required,
-          :attachments,
           :recipient_name,
           :recipient_uri,
           :is_submitted,
-          :form_blob_id,
-          # TODO :files,
+          attachments: {},
+          attachments_template: [:name, :description, :required, :signed_required]
         )
       end
     end

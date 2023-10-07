@@ -84,11 +84,9 @@ class Upvs::SubmissionsController < ApplicationController
       metadata: { signed: true, signed_required: @blob.metadata[:signed_required] }.compact
     )
 
-    ActiveStorage::Attachment
-      .where(blob_id: @blob.id, record: @upvs_submission)
-      .update_all(blob_id: new_blob.id)
+    @blob.signed_blob.attach(new_blob)
 
-    render json: { success: true, old_blob_id: @blob.id, badge: render_to_string(partial: "upvs/submissions/#{render_partial}") }
+    render json: { success: true, old_blob_id: @blob.id, html: render_to_string(partial: "upvs/submissions/#{render_partial}") }
   rescue StandardError, ScriptError => e
     render json: { success: false, error: "Nastala chyba pri podpisovaní. [#{e.class}]: #{e.message}" }
   end

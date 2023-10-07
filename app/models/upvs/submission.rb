@@ -43,7 +43,7 @@ class Upvs::Submission < ApplicationRecord
   # blob_id: 1 | signed: false | signed_required: true
 
   has_one_attached :form
-  has_many_attached :signable_files
+  has_many_attached :attachments
 
   before_create { self.uuid = SecureRandom.uuid } # TODO ensure unique in loop
   before_create { set_new_expiration_time }
@@ -57,9 +57,7 @@ class Upvs::Submission < ApplicationRecord
   self.table_name = "upvs.submissions"
 
   def recipient_name
-    return recipient_uri if Rails.env.development?
-
-    @recipient_name ||= Datahub::Upvs::PublicAuthorityEdesk.where(uri: recipient_uri).pluck(:name).first
+    @recipient_name ||= Datahub::Upvs::PublicAuthorityEdesk.where(uri: recipient_uri).pluck(:name).first || recipient_uri
   end
 
   def message_id

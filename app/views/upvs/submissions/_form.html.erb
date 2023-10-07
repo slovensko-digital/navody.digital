@@ -23,7 +23,7 @@
   </div>
 
   <div id="signature-for-blob-<%= @upvs_submission.form.id %>" data-partial="signed_badge">
-    <% if @upvs_submission.form.metadata[:signed] %>
+    <% if @upvs_submission.form.signed? %>
       <%= render 'upvs/submissions/signed_badge' %>
     <% elsif @upvs_submission.form.metadata[:signed_required] %>
       <button type="button" class="govuk-button govuk-button__secondary" onclick="sign('<%= upvs_submission_signing_data_path(submission_id: @upvs_submission.to_param, signed_blob_id: @upvs_submission.form.signed_id) %>', <%= @upvs_submission.form.id %>)">Podpísať</button>
@@ -96,8 +96,7 @@
         }).then(function (response) {
           if (response.ok) {
             return response.json();
-          }
-          else {
+          } else {
             throw new Error
           }
         }).then(function (signedData) {
@@ -107,9 +106,7 @@
         }).catch(function (err) {
           if (err.message === "Failed to fetch") {
             alert("Spustite aplikáciu autogram.")
-          }
-          else {
-            console.log(err);
+          } else {
             alert("Podpisovanie neprebehlo úspešne.");
           }
         });
@@ -136,10 +133,14 @@
           render_partial: blobWrapper.dataset.partial
         })
       }).then(function (response) {
-        console.log(response);
-
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error;
+        }
+      }).then(function (response) {
         if (response.success) {
-          blobWrapper.innerHTML(response.html)
+          blobWrapper.innerHTML = response.html;
         } else {
           alert(response.error);
         }

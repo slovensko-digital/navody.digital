@@ -18,10 +18,12 @@
       <%= f.hidden_field :signed_required %>
 
       <% @application_form.attachments_template.to_a.each do |attachment_template| %>
-        <%= f.hidden_field "attachments_template[][name]", value: attachment_template[:name] %>
-        <%= f.hidden_field "attachments_template[][description]", value: attachment_template[:description] %>
-        <%= f.hidden_field "attachments_template[][required]", value: attachment_template[:required] %>
-        <%= f.hidden_field "attachments_template[][signed_required]", value: attachment_template[:signed_required] %>
+        <% # Rails will wrap this as `name="apps_general_agenda_app_general_agenda_application_form[attachments_template][][name]"` %>
+
+        <%= f.hidden_field "attachments_template][][name", value: attachment_template[:name] %>
+        <%= f.hidden_field "attachments_template][][description", value: attachment_template[:description] %>
+        <%= f.hidden_field "attachments_template][][required", value: attachment_template[:required] %>
+        <%= f.hidden_field "attachments_template][][signed_required", value: attachment_template[:signed_required] %>
       <% end %>
 
       <%= f.hidden_field :recipient_name %>
@@ -61,6 +63,12 @@
         </div>
       </div>
 
+      <% if @application_form.signed_required? %>
+        <div class="govuk-inset-text">
+          Tento typ správy bude vyžadovať váš podpis občianskym preukazom
+        </div>
+      <% end %>
+
       <% if @application_form.attachments_template.present? %>
         <p class="govuk-label-wrapper">
           <b>Prílohy</b>
@@ -76,7 +84,7 @@
             </tr>
           </thead>
           <body class="govuk-table__body>
-            <% @application_form.attachments_template.each do |attachment_template| %>
+            <% @application_form.attachments_template.each_with_index do |attachment_template, index| %>
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
                   <%= attachment_template[:name] %><br>
@@ -85,7 +93,10 @@
                 <td class="govuk-table__cell"><%= lb attachment_template[:required] %></td>
                 <td class="govuk-table__cell"><%= lb attachment_template[:signed_required] %></td>
                 <td class="govuk-table__cell">
-                  <%=  %>
+                  <% if attachment_template[:blob_id] %>
+                  <% else %>
+                    <%= f.file_field "attachments[#{index}]" %>
+                  <% end  %>
                 </td>
               </tr>
             <% end %>
