@@ -27,7 +27,7 @@ class UpvsSubmissions::SktalkMessageBuilder
             <RecipientId>#{egov_application.recipient_uri}</RecipientId>
             <MessageType>#{egov_application.message_type}</MessageType>
             <MessageSubject>#{sanitize(egov_application.message_subject)}</MessageSubject>
-            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form)}
+            #{build_business_references(egov_application) if references_present?(egov_application)}#{build_form_object(egov_application.form.download)}
           </MessageContainer>
         </Body>
       </SKTalkMessage>
