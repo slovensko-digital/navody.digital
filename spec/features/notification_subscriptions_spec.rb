@@ -29,7 +29,7 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     visit link_in_last_email
 
-    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
+    expect(page).to have_content('Aktivovali ste si užitočné notifikácie')
     expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
   end
 
@@ -67,7 +67,7 @@ RSpec.feature "Notification subscriptions", type: :feature do
 
     visit link_in_last_email
 
-    expect(page).to have_content('Úspešne ste si aktivovali tieto notifikácie')
+    expect(page).to have_content('Aktivovali ste si užitočné notifikácie')
   end
 
   scenario 'As a logged user I want to subscribe to blank journey notification' do
