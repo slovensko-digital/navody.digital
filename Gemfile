@@ -101,7 +101,7 @@ group :test do
   gem 'capybara', "~> 3.39.2"
   gem 'show_me_the_cookies'
   gem 'selenium-webdriver', "~> 4.13"
-  gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
+  gem 'simplecov', '~> 0.22.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
