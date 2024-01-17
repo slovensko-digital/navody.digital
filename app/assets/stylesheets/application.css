@@ -125,6 +125,19 @@
     margin-bottom: 0;
 }
 
+.light-button {
+    border: 2px solid #3a67e8;
+    color: #3a67e8;
+    background-color: inherit;
+    border-radius: 3px;
+    margin-bottom: 0;
+}
+
+.light-button:hover {
+    background-color: #3a67e8;
+    color: white;
+}
+
 .active-topic {
     background-color: #F3F2F1;
     padding: 20px 0;

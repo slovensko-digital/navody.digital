@@ -94,6 +94,8 @@ group :development do
   gem 'spring-watcher-listen'
   gem 'letter_opener_web'
   gem 'wdm', '~> 0.1.0', platforms: [:mingw, :mswin, :x64_mingw]
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 group :test do
