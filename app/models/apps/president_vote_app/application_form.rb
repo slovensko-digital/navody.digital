@@ -1,8 +1,7 @@
 module Apps
   module PresidentVoteApp
     class ApplicationForm
-      VOTE_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_VOTE_DATE', '2023-09-30'))
-      PICKUP_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_PICKUP_DEADLINE_DATE', '2023-09-29'))
+      FIRST_ROUND_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_VOTE_DATE', '2023-09-30'))
       REQUEST_SENDING_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_REQUEST_SENDING_DEADLINE_DATE', '2023-09-08'))
 
       include ActiveModel::Model
@@ -72,7 +71,7 @@ module Apps
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
-        VOTE_DATE >= Date.current
+        (Date.current - FIRST_ROUND_DATE).to_i < 14
       end
 
       def minv_email
@@ -80,7 +79,7 @@ module Apps
       end
 
       def year
-        VOTE_DATE.year
+        FIRST_ROUND_DATE.year
       end
 
       def custom_delivery_address?
@@ -112,15 +111,23 @@ module Apps
       end
 
       def pickup_remaining_days
-        (PICKUP_DEADLINE_DATE - Date.current).to_i
+        if place_first_round == 'sk'
+          (FIRST_ROUND_DATE - Date.current).to_i - 1
+        else
+          (FIRST_ROUND_DATE - Date.current).to_i + 13
+        end
       end
 
       def request_sending_remaining_days
-        (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i
+        if place_first_round == 'sk'
+          (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i
+        else
+          (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i + 14
+        end
       end
 
       def pickup_expired?
-        Date.current > PICKUP_DEADLINE_DATE
+        pickup_remaining_days < 1
       end
 
       def request_sending_first_round_expired?
