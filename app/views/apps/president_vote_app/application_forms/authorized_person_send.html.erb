@@ -1,0 +1,67 @@
+<%= content_for :title, build_page_title('Zaslanie žiadosti', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/president_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step %>
+    <% end %>
+
+    <h1 class="govuk-heading-xl">Pošlite email so žiadosťou na úrad</h1>
+
+    <div>
+      <% if @application_form.municipality_email.present? %>
+        <p class="govuk-body-l">Vygenorovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú adresu obce:
+        <%= mail_to @application_form.municipality_email, @application_form.municipality_email,
+          target: '_blank',
+          body: @application_form.from_slovakia_authorized_person_email_body,
+          subject: 'Žiadosť o hlasovací preukaz do prezidentských volieb.'
+        %>
+        </p>
+      <% else %>
+        <p class="govuk-body-l">Vygenorovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú emailovú adresu obce
+        <%= @application_form.municipality %></p>
+        <p class="govuk-body-l">Emailovú adresu je možné nájsť na webovej stránke obce.</p>
+      <% end %>
+    </div>
+
+    <div class="govuk-form-group">
+      <textarea id=emailContent onclick="this.focus();this.select();" rows="10" class="govuk-textarea"><%= @application_form.from_slovakia_authorized_person_email_body %></textarea>
+    </div>
+    <script>
+      function copyToClipboard(elementId) {
+        var copyText = document.getElementById(elementId);
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(copyText.value);
+      }
+    </script>
+
+    <div class="govuk-button-group">
+      <%= button_tag 'Skopírovať text', class: 'govuk-button light-button', onclick: 'copyToClipboard("emailContent")' %>
+        <%= mail_to @application_form.municipality_email, "Poslať emailovým klientom",
+          target: '_blank',
+          body: @application_form.from_slovakia_authorized_person_email_body,
+          subject: 'Žiadosť o hlasovací preukaz do prezidentských volieb.'
+        %>
+    </div>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+        Na odoslanie zostáva ešte <%= format_remaining_days_count(@application_form.request_sending_remaining_days) %>.
+      </strong>
+    </div>
+
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses" onchange="document.getElementById('nextButton').disabled = !this.checked;">
+      <label class="govuk-label govuk-checkboxes__label" for="waste">Poslal/a som žiadosť zo svojho emailu na úrad</label>
+    </div>
+
+    <%= form_with url: end_apps_president_vote_app_application_forms_url, method: :get, local: true do |form| %>
+      <%= form.submit 'Dokončiť návod', id: 'nextButton', class: 'govuk-button govuk-!-margin-top-5', disabled: true %>
+    <% end %>
+  </div>
+</div>

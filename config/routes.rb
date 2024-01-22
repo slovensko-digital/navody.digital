@@ -96,6 +96,20 @@ Rails.application.routes.draw do
       end
     end
 
+    if ENV['DISABLED_FEATURES'].to_s.exclude?('president_vote_app')
+      namespace :president_vote_app, path: 'prezidentske-volby' do
+        resource :application_forms, path: '' do
+          member do
+            get :end, path: 'volte-zodpovedne'
+            get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
+            get :world, path: 'hlasovanie-cestovny-doklad'
+            get :person, path: 'hlasovaci-preukaz-osobne'
+            get :non_sk_nationality, path: 'hlasovanie-neobcana'
+          end
+        end
+      end
+    end
+
     namespace :child_birth_app, path: 'narodenie-dietata' do
       get :picking_up_protocol, to: 'picking_up_protocol#show', path: 'vyzdvihnutie-rodneho-listu'
     end

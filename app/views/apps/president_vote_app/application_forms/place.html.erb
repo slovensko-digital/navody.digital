@@ -1,0 +1,30 @@
+<%= content_for :title, build_page_title('Miesto voľby', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
+      <%= render 'apps/president_vote_app/application_forms/back', form: f %>
+      <%= render 'components/error_summary', form: @application_form %>
+      <%= f.hidden_field :step %>
+      <% hint = 'Prezidentské voľby sa na Slovensku konajú v sobotu 23. marca 2024 (prvé kolo) a 6. apríla 2024 (druhé kolo), od 7:00 do 22:00. Hlasovať je možné jedine osobne na území Slovenska.' %>
+      <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
+        <h2 class="govuk-heading-m">1. kolo</h2>
+        <% if @application_form.request_sending_first_round_expired? %>
+          <%= f.hidden_field :place_first_round, :value => 'home' %>
+          <p>
+            Prvé kolo sa už konalo
+          </p>
+        <% else %>
+          <%= f.radio_button :place_first_round, 'sk', label: "Mimo trvalého bydliska", hint: "Ak ešte neviete, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku - aj v mieste trvalého bydliska." %>
+          <%= f.radio_button :place_first_round, 'home', label: "V mieste trvalého bydliska" %>
+        <% end %>
+        <h2 class="govuk-heading-m">2. kolo</h2>
+        <%= f.radio_button :place_second_round, 'sk', label: "Mimo trvalého bydliska", hint: "Ak ešte neviete, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku - aj v mieste trvalého bydliska." %>
+        <%= f.radio_button :place_second_round, 'home', label: "V mieste trvalého bydliska" %>
+        <%= f.radio_button :place_second_round, 'none', label: "Ešte neviem a nechcem teraz riešiť druhé kolo" %>
+      <% end %>
+      <%= f.submit 'Pokračovať' %>
+    <% end %>
+  </div>
+</div>
