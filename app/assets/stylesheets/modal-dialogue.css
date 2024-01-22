@@ -1,0 +1,168 @@
+.govuk-modal-dialogue__continue,
+.govuk-modal-dialogue__cancel {
+    margin-bottom: 0;
+}
+
+.govuk-modal-dialogue__continue {
+    margin-top: 10px;
+}
+
+.govuk-modal-dialogue__cancel {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__continue {
+        margin-top: 0;
+    }
+    .govuk-modal-dialogue__cancel {
+        display: inline-block;
+        margin: 9px 0 0 15px;
+    }
+}
+
+.govuk-modal-dialogue,
+.govuk-modal-dialogue__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.govuk-modal-dialogue {
+    display: none;
+    z-index: 1100;
+}
+
+.govuk-modal-dialogue--open {
+    display: table;
+    display: flex;
+    flex-direction: column;
+}
+
+.govuk-modal-dialogue__wrapper {
+    box-sizing: border-box;
+    display: table-cell;
+    display: flex;
+    height: inherit;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    overflow-y: auto;
+    vertical-align: middle;
+    align-items: center;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__wrapper {
+        padding-top: 40px;
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__wrapper {
+        padding-bottom: 40px;
+    }
+}
+
+.govuk-modal-dialogue__box {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    z-index: 1100;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+    border: 3px solid #0b0c0c;
+    background: #ffffff;
+}
+
+.govuk-modal-dialogue__box:focus {
+    outline: 3px solid #ffdd00;
+}
+
+.govuk-modal-dialogue__box::backdrop {
+    display: none;
+}
+
+.govuk-modal-dialogue__header {
+    margin-bottom: 15px;
+    padding-bottom: 3px;
+    color: #ffffff;
+    background-color: #0b0c0c;
+    text-align: right;
+}
+
+.govuk-modal-dialogue__header:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__header {
+        margin-bottom: 25px;
+    }
+}
+
+.govuk-modal-dialogue__content {
+    padding: 20px;
+    padding-top: 0;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__content {
+        padding: 30px;
+    }
+}
+
+.govuk-modal-dialogue__backdrop {
+    opacity: .8;
+    background: #0b0c0c;
+    pointer-events: none;
+    touch-action: none;
+}
+
+.govuk-modal-dialogue__close {
+    display: block;
+    width: auto;
+    min-width: 44px;
+    margin: 0;
+    padding: 2px 5px;
+    float: right;
+    color: #ffffff;
+    background-color: #0b0c0c;
+    box-shadow: none !important;
+    font-size: 36px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.govuk-modal-dialogue__close:hover {
+    color: #0b0c0c;
+    background-color: #ffdd00;
+}
+
+.govuk-modal-dialogue__close:active {
+    top: 0;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-modal-dialogue__content {
+        padding-top: 0;
+    }
+    .govuk-modal-dialogue__box {
+        width: 83.22497%;
+    }
+}
+
+@media (min-width: 48.0625em) {
+    .govuk-modal-dialogue__box {
+        width: 640px;
+    }
+}

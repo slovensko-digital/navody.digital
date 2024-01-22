@@ -19,6 +19,13 @@ Page.find_or_create_by!(
   is_faq: false
 )
 
+Page.find_or_create_by!(
+  title: 'Vitajte na Návody.Digital',
+  content: 'Vitajte na Návody.Digital. Toto je onboarding stránka.',
+  slug: 'vitajte',
+  is_faq: false
+)
+
 journey = Journey.find_or_create_by!(
   position: 1,
   title: "Založenie živnosti",
