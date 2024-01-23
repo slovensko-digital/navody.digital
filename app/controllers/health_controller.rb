@@ -3,10 +3,12 @@ class HealthController < ApplicationController
   def index
     database_check_results = check_db_connections
     if all_database_healthy?(database_check_results)
-      render json: {status: "ok", databases: database_check_results}, status: :ok
+      render json: {status: "ok"}, status: :ok
     else
-      render json: {status: "error", databases: database_check_results}, status: :internal_server_error
+      render json: {status: "fail"}, status: :internal_server_error
     end
+  rescue StandardError
+    render json: {status: "fail"}, status: :internal_server_error
   end
 
   private
@@ -36,9 +38,7 @@ class HealthController < ApplicationController
       connection.execute('SELECT 1')
       {status: 'ok'}
     else
-      {status: 'error', message: 'Connection not established'}
+      {status: 'fail'}
     end
-  rescue => e
-    {status: 'error', message: e.message}
   end
 end
