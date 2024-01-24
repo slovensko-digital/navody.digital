@@ -40,7 +40,7 @@ module Apps
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
                             on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
-      validate :pin_is_ok, on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
+      # validate :pin_is_ok, on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
                             on: [:identity, :world_sk_permanent_resident, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
