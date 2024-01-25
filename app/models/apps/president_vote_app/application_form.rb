@@ -22,10 +22,10 @@ module Apps
       attr_accessor :municipality_email_verified
       attr_accessor :back
 
-      validates_presence_of :place_first_round, message: 'Vyberte si jednu z možností v prvom kole',
-                            on: [:place, :identity, :delivery_address, :authorized_person]
-      validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
-                            on: [:place, :identity, :delivery_address, :authorized_person]
+      # validates_presence_of :place_first_round, message: 'Vyberte si jednu z možností v prvom kole',
+      #                       on: [:place, :identity, :delivery_address, :authorized_person]
+      # validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
+      #                       on: [:place, :identity, :delivery_address, :authorized_person]
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
