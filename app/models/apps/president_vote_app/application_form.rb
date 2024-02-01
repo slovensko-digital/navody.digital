@@ -1,8 +1,7 @@
 module Apps
   module PresidentVoteApp
     class ApplicationForm
-      FIRST_ROUND_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_VOTE_DATE', '2023-09-30'))
-      REQUEST_SENDING_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PRESIDENT_REQUEST_SENDING_DEADLINE_DATE', '2023-09-08'))
+      FIRST_ROUND_DATE = Date.parse('2024-03-23')
 
       include ActiveModel::Model
 
@@ -22,10 +21,8 @@ module Apps
       attr_accessor :municipality_email_verified
       attr_accessor :back
 
-      # validates_presence_of :place_first_round, message: 'Vyberte si jednu z možností v prvom kole',
-      #                       on: [:place, :identity, :delivery_address, :authorized_person]
-      # validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
-      #                       on: [:place, :identity, :delivery_address, :authorized_person]
+      validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
+                            on: [:place_second_round]
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
@@ -71,7 +68,7 @@ module Apps
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
-        (Date.current - FIRST_ROUND_DATE).to_i < 14
+        Date.current < Date.parse('2024-04-06')
       end
 
       def minv_email
@@ -79,7 +76,7 @@ module Apps
       end
 
       def year
-        FIRST_ROUND_DATE.year
+        Date.parse('2024-03-23').year
       end
 
       def custom_delivery_address?
@@ -120,9 +117,9 @@ module Apps
 
       def request_sending_remaining_days
         if place_first_round == 'sk'
-          (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i
+          (Date.parse('2024-03-04') - Date.current).to_i
         else
-          (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i + 14
+          (Date.parse('2024-03-14') - Date.current).to_i
         end
       end
 
@@ -131,11 +128,11 @@ module Apps
       end
 
       def request_sending_first_round_expired?
-        false
+        (Date.parse('2024-03-04') - Date.current).to_i < 0
       end
 
       def request_sending_expired?
-        Date.current > REQUEST_SENDING_DEADLINE_DATE
+        request_sending_remaining_days < 0
       end
 
       def from_slovakia_email_body
@@ -252,13 +249,28 @@ module Apps
           self.step = 'permanent_resident'
           listener.render :permanent_resident
         elsif valid?(:place)
-          if place_first_round == 'sk' || place_second_round == 'sk'
-            self.place_first_round = place_first_round
-            self.place_second_round = place_second_round
-            self.step = 'delivery'
-            listener.render :delivery
+          if request_sending_first_round_expired?
+            if valid?(:place_second_round)
+              if place_second_round == 'sk'
+                self.place_first_round = 'home'
+                self.place_second_round = place_second_round
+                self.step = 'delivery'
+                listener.render :delivery
+              else
+                listener.redirect_to action: :home
+              end
+            else
+              listener.render :place
+            end
           else
-            listener.redirect_to action: :home
+            if place_first_round == 'sk' || place_second_round == 'sk'
+              self.place_first_round = place_first_round
+              self.place_second_round = place_second_round
+              self.step = 'delivery'
+              listener.render :delivery
+            else
+              listener.redirect_to action: :home
+            end
           end
         else
           listener.render :place

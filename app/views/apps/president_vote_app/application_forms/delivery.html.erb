@@ -29,7 +29,7 @@
                                 label: "Nechám si ho poslať poštou",
                                 disabled: @application_form.request_sending_expired?,
                                 hint: @application_form.request_sending_expired? ?
-                                        "Termín na zaslanie žiadosti o hlasovací preukaz uplynul 8.3.2024." :
+                                        "Termín na zaslanie žiadosti o hlasovací preukaz už uplynul." :
                                         "O hlasovací preukaz môžete požiadať elektronicky (emailom) a bude vám doručený na adresu uvedenú v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
                                 strong_label: true
               %>
@@ -37,7 +37,7 @@
                                 label: "Vyzdvihne ho za mňa iná osoba",
                                 disabled: @application_form.request_sending_expired?,
                                 hint: @application_form.request_sending_expired? ?
-                                        "Termín na zaslanie žiadosti o hlasovací preukaz uplynul 22.3.2024." :
+                                        "Termín na zaslanie žiadosti o hlasovací preukaz už uplynul." :
                                         "Hlasovací preukaz za vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
                                 strong_label: true
               %>
