@@ -22,7 +22,7 @@
 
         <%= f.submit 'Pokračovať' %>
       <% else %>
-        <% hint = 'Prezidentské voľby sa na Slovensku konajú od 7:00 do 22:00. Hlasovať je možné jedine osobne na území Slovenska.' %>
+        <% hint = 'Prezidentské voľby sa na Slovensku konajú od 7:00 do 22:00. Zvoľte, či budete hlasovať mimo trvalého bydliska v prvom, druhom, alebo v oboch kolách.' %>
         <%= f.radios :place, 'V ktorých kolách plánujete hlasovať mimo trvalého bydliska?', hint: hint do %>
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="apps_president_vote_app_application_form[place_first_round]" name="apps_president_vote_app_application_form[place_first_round]" type="checkbox" value="sk">
