@@ -22,7 +22,7 @@
       <div class="govuk-form-group <% if @application_form.errors[:same_delivery_address].any? %> govuk-form-group--error<% end %>">
         <%= f.error_message :same_delivery_address %>
 
-        <div class="govuk-radios" data-module="radios">
+        <div class="govuk-radios" data-module="govuk-radios">
           <%= f.radio_button :same_delivery_address, '1', label: "Na adresu trvalého bydliska", hint: @application_form.full_address%>
           <%= f.radio_button :same_delivery_address, '0', label: "Na inú adresu", data: {'aria-controls' => 'conditional-delivery-address'}%>
 
