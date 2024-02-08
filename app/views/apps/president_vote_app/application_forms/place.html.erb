@@ -7,7 +7,7 @@
       <%= render 'apps/president_vote_app/application_forms/back', form: f %>
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
-      <% if @application_form.request_sending_first_round_expired? %>
+      <% if @application_form.first_round_expired? %>
         <% hint = 'Druhé kolo prezidentských volieb sa na Slovensku koná 6. apríla od 7:00 do 22:00. Hlasovať je možné jedine osobne na území Slovenska.' %>
         <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
           <h2 class="govuk-heading-m">1. kolo</h2>

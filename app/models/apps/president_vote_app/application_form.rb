@@ -2,6 +2,8 @@ module Apps
   module PresidentVoteApp
     class ApplicationForm
       FIRST_ROUND_DATE = Date.parse('2024-03-23')
+      FIRST_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 19.day
+      SECOND_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 9.day
 
       include ActiveModel::Model
 
@@ -68,7 +70,7 @@ module Apps
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
-        Date.current < Date.parse('2024-04-06')
+        Date.current < FIRST_ROUND_DATE + 14.day
       end
 
       def minv_email
@@ -76,7 +78,7 @@ module Apps
       end
 
       def year
-        Date.parse('2024-03-23').year
+        FIRST_ROUND_DATE.year
       end
 
       def custom_delivery_address?
@@ -117,9 +119,9 @@ module Apps
 
       def request_sending_remaining_days
         if place_first_round == 'sk'
-          (Date.parse('2024-03-04') - Date.current).to_i
+          (FIRST_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
         else
-          (Date.parse('2024-03-14') - Date.current).to_i
+          (SECOND_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
         end
       end
 
@@ -128,7 +130,11 @@ module Apps
       end
 
       def request_sending_first_round_expired?
-        (Date.parse('2024-03-04') - Date.current).to_i < 0
+        (FIRST_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i < 0
+      end
+
+      def first_round_expired?
+        (FIRST_ROUND_DATE - Date.current).to_i < 1
       end
 
       def request_sending_expired?
@@ -249,7 +255,7 @@ module Apps
           self.step = 'permanent_resident'
           listener.render :permanent_resident
         elsif valid?(:place)
-          if request_sending_first_round_expired?
+          if first_round_expired?
             if valid?(:place_second_round)
               if place_second_round == 'sk'
                 self.place_first_round = 'home'
