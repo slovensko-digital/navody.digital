@@ -129,10 +129,6 @@ module Apps
         pickup_remaining_days < 1
       end
 
-      def request_sending_first_round_expired?
-        (FIRST_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i < 0
-      end
-
       def first_round_expired?
         (FIRST_ROUND_DATE - Date.current).to_i < 1
       end
