@@ -52,7 +52,7 @@ class Apps::PresidentVoteApp::ApplicationFormsController < ApplicationController
 
   private def set_metadata
     @metadata.og.title = 'Žiadosť o hlasovací preukaz'
-    @metadata.og.image = 'facebook_share_2020.png'
+    @metadata.og.image = 'https://volby.digital/images/share-2024.png'
     @metadata.og.description = 'Aj keď budete počas volieb mimo trvalého pobytu, voliť sa dá. Stačí požiadať.'
   end
 
