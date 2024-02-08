@@ -40,11 +40,6 @@
 
     <div class="govuk-button-group">
       <%= button_tag 'Skopírovať text', class: 'govuk-button light-button', onclick: 'copyToClipboard("emailContent")' %>
-        <%= mail_to @application_form.municipality_email, "Poslať emailovým klientom",
-          target: '_blank',
-          body: @application_form.from_slovakia_authorized_person_email_body,
-          subject: 'Žiadosť o hlasovací preukaz do prezidentských volieb.'
-        %>
     </div>
 
     <div class="govuk-warning-text">
