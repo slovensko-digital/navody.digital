@@ -1,7 +1,7 @@
 require 'rails_helper'
-require_relative '../../../app/models/apps/ep_vote_app/application_form'
+require_relative '../../../app/models/apps/parliament_vote_app/application_form'
 
-def start
+def start_parliament_vote_app
   visit apps_parliament_vote_app_application_forms_path
   click_button 'Súhlasím a chcem začať'
 end
@@ -12,7 +12,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote in a different voting district' do
-    start
+    start_parliament_vote_app
 
     choose 'Áno'
     click_button 'Pokračovať'
@@ -33,7 +33,7 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a citizen I want to request voting permit personally after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -48,7 +48,7 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a citizen I want to request voting permit by authorized person after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::PICKUP_DEADLINE_DATE + 1.day
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -63,7 +63,7 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a citizen I want to request voting permit by post after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::DELIVERY_BY_POST_DEADLINE_DATE + 1.day
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -78,7 +78,7 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a pernament citizen with I want to vote by post after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_BY_POST_DEADLINE_DATE + 1.day
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -93,7 +93,7 @@ RSpec.feature "Parliament vote app", type: :feature do
 
   scenario 'As a abroad citizen I want to vote by post after the deadline' do
     travel_to Apps::ParliamentVoteApp::ApplicationForm::VOTE_BY_POST_DEADLINE_DATE + 1.day
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -104,7 +104,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit personally' do
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -121,7 +121,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via authorized person' do
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -152,7 +152,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote at home address' do
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -166,7 +166,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency in Slovakia' do
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -184,7 +184,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario 'As a citizen I want to vote in foregin country with permanent residency outside Slovakia' do
-    start
+    start_parliament_vote_app
     choose 'Áno'
     click_button 'Pokračovať'
 
@@ -199,7 +199,7 @@ RSpec.feature "Parliament vote app", type: :feature do
   end
 
   scenario "As a non-SK citizen I can't vote in parliament votes" do
-    start
+    start_parliament_vote_app
     choose 'Nie'
     click_button 'Pokračovať'
 
