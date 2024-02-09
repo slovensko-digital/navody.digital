@@ -1,6 +1,6 @@
 class Apps::PresidentVoteApp::ApplicationFormsController < ApplicationController
   helper FormatDaysHelper
-  before_action :set_metadata, :check_inactive_president_application
+  before_action :set_metadata, :check_inactive_president_application, :disable_current_topic
   before_action :disable_feedback, only: [:show, :delivery, :create]
 
   def show
