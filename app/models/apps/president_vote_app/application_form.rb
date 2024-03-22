@@ -126,11 +126,11 @@ module Apps
       end
 
       def pickup_expired?
-        pickup_remaining_days < 1
+        pickup_remaining_days < 0
       end
 
       def first_round_expired?
-        (FIRST_ROUND_DATE - Date.current).to_i < 1
+        (FIRST_ROUND_DATE - Date.current).to_i < 0
       end
 
       def request_sending_expired?
