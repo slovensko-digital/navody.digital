@@ -1,5 +1,5 @@
-<%= content_for :title, build_page_title('Zaslanie žiadosti', 'Parlamentné voľby') %>
-<%= content_for(:headerline, 'Parlamentné voľby') %>
+<%= content_for :title, build_page_title('Zaslanie žiadosti', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -7,21 +7,19 @@
 
     <div>
       <% if @application_form.municipality_email.present? %>
-        <p class="govuk-body-l">Vygenorovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú adresu obce:
+        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú adresu obce:
         <%= mail_to @application_form.municipality_email, @application_form.municipality_email,
           target: '_blank',
           body: @application_form.from_slovakia_email_body,
-          subject: 'Žiadosť o hlasovací preukaz do parlamentných volieb.'
+          subject: 'Žiadosť o hlasovací preukaz do prezidentských volieb.'
         %>
         </p>
       <% else %>
-        <p class="govuk-body-l">Vygenorovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú emailovú adresu obce
+        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú emailovú adresu obce
         <%= @application_form.municipality %></p>
         <p class="govuk-body-l">Emailovú adresu je možné nájsť na webovej stránke obce.</p>
       <% end %>
     </div>
-
-    <%= render 'municipality_email_warning' %>
 
     <div class="govuk-form-group">
       <textarea id=emailContent onclick="this.focus();this.select();" rows="10" class="govuk-textarea"><%= @application_form.from_slovakia_email_body %></textarea>
@@ -35,18 +33,24 @@
       }
     </script>
 
-    <div class="govuk-form-group">
-      <% if @application_form.municipality_email.present? %>
-        <%= button_tag 'Skopírovať text', class: 'govuk-button light-button', onclick: 'myFunction("emailContent")' %>
-      <% end %>
+    <div class="govuk-button-group">
+      <%= button_tag 'Skopírovať text', class: 'govuk-button light-button', onclick: 'copyToClipboard("emailContent")' %>
+    </div>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+        Na odoslanie zostáva ešte <%= format_remaining_days_count(@application_form.request_sending_remaining_days) %>.
+      </strong>
     </div>
 
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses" onchange="document.getElementById('nextButton').disabled = !this.checked;">
-      <label class="govuk-label govuk-checkboxes__label" for="waste">Poslal/a som žiadosť na úrad</label>
+      <label class="govuk-label govuk-checkboxes__label" for="waste">Poslal/a som žiadosť zo svojho emailu na úrad</label>
     </div>
 
-    <%= form_with url: end_apps_parliament_vote_app_application_forms_url, method: :get, local: true do |form| %>
+    <%= form_with url: end_apps_president_vote_app_application_forms_url, method: :get, local: true do |form| %>
       <%= form.submit 'Dokončiť návod', id: 'nextButton', class: 'govuk-button govuk-!-margin-top-5', disabled: true %>
     <% end %>
   </div>

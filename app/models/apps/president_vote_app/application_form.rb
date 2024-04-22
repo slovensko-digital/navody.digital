@@ -1,15 +1,15 @@
 module Apps
-  module ParliamentVoteApp
+  module PresidentVoteApp
     class ApplicationForm
-      VOTE_DATE = Date.parse(ENV.fetch('APP_PARLIAMENT_VOTE_DATE', '2023-09-30'))
-      DELIVERY_BY_POST_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PARLIAMENT_DELIVERY_BY_POST_DEADLINE_DATE', '2023-09-08'))
-      PICKUP_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PARLIAMENT_PICKUP_DEADLINE_DATE', '2023-09-29'))
-      VOTE_BY_POST_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PARLIAMENT_VOTE_BY_POST_DEADLINE_DATE', '2023-08-09'))
-      REQUEST_SENDING_DEADLINE_DATE = Date.parse(ENV.fetch('APP_PARLIAMENT_REQUEST_SENDING_DEADLINE_DATE', '2023-09-08'))
+      FIRST_ROUND_DATE = Date.parse('2024-03-23')
+      FIRST_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 19.day
+      SECOND_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 9.day
 
       include ActiveModel::Model
 
       attr_accessor :step
+      attr_accessor :place_first_round
+      attr_accessor :place_second_round
       attr_accessor :place
       attr_accessor :sk_citizen
       attr_accessor :permanent_resident
@@ -23,7 +23,8 @@ module Apps
       attr_accessor :municipality_email_verified
       attr_accessor :back
 
-      validates_presence_of :place, message: 'Vyberte si jednu z možností', on: :place
+      validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
+                            on: [:place_second_round]
 
       validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
       validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
@@ -37,16 +38,16 @@ module Apps
                              message: 'Termín na vybavenie hlasovacieho preukazu uplynul 28.2.2020.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
+                            on: [:identity, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
-                            on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
-      # validate :pin_is_ok, on: [:identity, :world_sk_permanent_resident, :world_abroad_permanent_resident, :authorized_person]
+                            on: [:identity, :world_abroad_permanent_resident, :authorized_person]
+      # validate :pin_is_ok, on: [:identity, :world_abroad_permanent_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :authorized_person]
       validates_presence_of :municipality, message: 'Vyberte obec',
-                            on: [:identity, :world_sk_permanent_resident, :authorized_person]
+                            on: [:identity, :authorized_person]
 
       validates_presence_of :authorized_person_full_name, message: 'Meno splnomocnenej osoby je povinná položka',
                             on: [:authorized_person]
@@ -56,20 +57,20 @@ module Apps
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
                             on: :delivery_address
       validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_municipality, message: 'Zadajte obec',
-                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát',
-                            on: [:delivery_address, :world_sk_permanent_resident, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :world_abroad_permanent_resident],
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
-        VOTE_DATE >= Date.current
+        Date.current < FIRST_ROUND_DATE + 14.day
       end
 
       def minv_email
@@ -77,7 +78,7 @@ module Apps
       end
 
       def year
-        VOTE_DATE.year
+        FIRST_ROUND_DATE.year
       end
 
       def custom_delivery_address?
@@ -96,64 +97,58 @@ module Apps
         back == "true"
       end
 
-      def delivery_by_post_remaining_days
-        (DELIVERY_BY_POST_DEADLINE_DATE - Date.current).to_i
+      def place_choice
+        if place_first_round == 'sk'
+          if place_second_round == 'sk'
+            'obe kolá'
+          else
+            'prvé kolo'
+          end
+        else
+          'druhé kolo'
+        end
       end
 
       def pickup_remaining_days
-        (PICKUP_DEADLINE_DATE - Date.current).to_i
-      end
-
-      def vote_by_post_remaining_days
-        (VOTE_BY_POST_DEADLINE_DATE - Date.current).to_i
+        if place_first_round == 'sk'
+          (FIRST_ROUND_DATE - Date.current).to_i - 1
+        else
+          (FIRST_ROUND_DATE - Date.current).to_i + 13
+        end
       end
 
       def request_sending_remaining_days
-        (REQUEST_SENDING_DEADLINE_DATE - Date.current).to_i
-      end
-
-      def delivery_by_post_expired?
-        Date.current > DELIVERY_BY_POST_DEADLINE_DATE
+        if place_first_round == 'sk'
+          (FIRST_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
+        else
+          (SECOND_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
+        end
       end
 
       def pickup_expired?
-        Date.current > PICKUP_DEADLINE_DATE
+        pickup_remaining_days < 0
       end
 
-      def vote_by_post_expired?
-        Date.current > VOTE_BY_POST_DEADLINE_DATE
+      def first_round_expired?
+        (FIRST_ROUND_DATE - Date.current).to_i < 0
       end
 
       def request_sending_expired?
-        Date.current > REQUEST_SENDING_DEADLINE_DATE
+        request_sending_remaining_days < 0
       end
 
       def from_slovakia_email_body
         ActionController::Base.new.render_to_string(
-          partial: "apps/parliament_vote_app/application_forms/from_slovakia_email_body",
+          partial: "apps/president_vote_app/application_forms/from_slovakia_email_body",
           locals: { model: self },
         ).gsub(/\n/, "\r\n")
       end
 
       def from_slovakia_authorized_person_email_body
         ActionController::Base.new.render_to_string(
-          partial: "apps/parliament_vote_app/application_forms/from_slovakia_authorized_person_email_body",
+          partial: "apps/president_vote_app/application_forms/from_slovakia_authorized_person_email_body",
           locals: { model: self },
         ).gsub(/\n/, "\r\n")
-      end
-
-      def world_abroad_resident_email_body
-        ActionController::Base.new.render_to_string(
-          partial: "apps/parliament_vote_app/application_forms/world_abroad_resident_email_body",
-          locals: { model: self },
-        )
-      end
-
-      def world_sk_resident_email_body
-        ActionController::Base.new.render_to_string(
-          partial: "apps/parliament_vote_app/application_forms/world_sk_resident_email_body",
-          locals: { model: self },
-        )
       end
 
       private def pin_is_ok
@@ -203,14 +198,12 @@ module Apps
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
-        when 'world_sk_permanent_resident'
-          world_sk_permanent_resident_step(listener)
-        when 'world_sk_permanent_resident_end'
-          world_sk_permanent_resident_end_step(listener)
         when 'world_abroad_permanent_resident'
           world_abroad_permanent_resident_step(listener)
-        when 'world_abroad_permanent_resident_end'
-          world_abroad_permanent_resident_end_step(listener)
+        when 'non_sk_nationality'
+          non_sk_nationality(listener)
+        when 'home'
+          home(listener)
         end
       end
 
@@ -246,8 +239,7 @@ module Apps
             self.step = 'place'
             listener.render :place
           when 'no'
-            self.step = 'world_abroad_permanent_resident'
-            listener.render :world_abroad_permanent_resident
+            listener.redirect_to action: :world
           end
         else
           listener.render :permanent_resident
@@ -259,21 +251,34 @@ module Apps
           self.step = 'permanent_resident'
           listener.render :permanent_resident
         elsif valid?(:place)
-          case place
-          when 'home'
-            listener.redirect_to action: :home
-          when 'sk'
-            listener.redirect_to action: :delivery
-          when 'world'
-            self.step = 'world_sk_permanent_resident'
-            listener.render :world_sk_permanent_resident
+          if first_round_expired?
+            if valid?(:place_second_round)
+              if place_second_round == 'sk'
+                self.place_first_round = 'home'
+                self.place_second_round = place_second_round
+                self.step = 'delivery'
+                listener.render :delivery
+              else
+                listener.redirect_to action: :home
+              end
+            else
+              listener.render :place
+            end
+          else
+            if place_first_round == 'sk' || place_second_round == 'sk'
+              self.place_first_round = place_first_round
+              self.place_second_round = place_second_round
+              self.step = 'delivery'
+              listener.render :delivery
+            else
+              listener.redirect_to action: :home
+            end
           end
         else
           listener.render :place
         end
       end
 
-      # Home flow
       private def delivery_step(listener)
         if go_back?
           self.step = 'place'
@@ -323,6 +328,7 @@ module Apps
           self.step = 'delivery'
           listener.render :delivery
         elsif valid?(:authorized_person)
+          self.step = 'authorized_person_send'
           listener.render :authorized_person_send
         else
           self.step = 'authorized_person'
@@ -330,38 +336,31 @@ module Apps
         end
       end
 
-      private def world_sk_permanent_resident_step(listener)
-        if go_back?
-          self.step = 'place'
-          listener.render :place
-        elsif valid?(:world_sk_permanent_resident)
-          self.step = 'world_sk_permanent_resident_end'
-          listener.render :world_sk_permanent_resident_end
-        else
-          listener.render :world_sk_permanent_resident
-        end
-      end
-
-      private def world_sk_permanent_resident_end_step(listener)
-        self.step = 'world_sk_permanent_resident_end'
-        listener.render :world_sk_permanent_resident_end
-      end
-
       private def world_abroad_permanent_resident_step(listener)
         if go_back?
           self.step = 'permanent_resident'
           listener.render :permanent_resident
-        elsif valid?(:world_abroad_permanent_resident)
-          self.step = 'world_abroad_permanent_resident_end'
-          listener.render :world_abroad_permanent_resident_end
         else
           listener.render :world_abroad_permanent_resident
         end
       end
 
-      private def world_abroad_permanent_resident_end_step(listener)
-        self.step = 'world_abroad_permanent_resident_end'
-        listener.render :world_abroad_permanent_resident_end
+      private def non_sk_nationality(listener)
+        if go_back?
+          self.step = 'sk_citizen'
+          listener.render :sk_citizen
+        else
+          listener.render :non_sk_nationality
+        end
+      end
+
+      private def home(listener)
+        if go_back?
+          self.step = 'place'
+          listener.render :place
+        else
+          listener.render :home
+        end
       end
     end
   end

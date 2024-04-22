@@ -1,0 +1,25 @@
+<%= content_for :title, build_page_title('Notifikácie', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
+
+<div class="govuk-grid-row govuk-!-padding-bottom-6">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Počkajte na hlasovací preukaz</h1>
+    <p class="govuk-body-lead">Nezabudnite voliť a voľte zodpovedne.</p>
+    <p class="govuk-body-lead">Ak ste odoslali žiadosť na úrad, do 3 dní by ste mali od obce dostať potvrdenie o prijatí.</p>
+    <p class="govuk-body-lead">Volebný preukaz si so sebou musíte vziať, aj keď sa nakoniec rozhodnete voliť v mieste trvalého bydliska.</p>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+         Ak vám do 3 dní nepríde potvrdenie o prijatí žiadosti, kontaktujte obec telefonicky alebo osobne.
+      </strong>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render 'apps/president_vote_app/application_forms/subscribe' %>
+  </div>
+</div>

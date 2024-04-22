@@ -11,6 +11,16 @@ module FormatDaysHelper
       "Dnes je posledný možný termín."
     end
   end
+
+  def format_remaining_days_count(remaining_days)
+    if remaining_days > 4
+      "#{remaining_days} dní"
+    elsif remaining_days > 1
+      "#{remaining_days} dni"
+    elsif remaining_days == 1
+      "1 deň"
+    elsif remaining_days == 0
+      "posledný deň"
+    end
+  end
 end
-
-

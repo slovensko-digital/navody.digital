@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
     @disable_feedback = true
   end
 
+  def disable_current_topic
+    @active_current_topic = nil
+  end
+
   private
 
   def set_default_metadata
