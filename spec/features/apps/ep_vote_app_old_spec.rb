@@ -7,7 +7,7 @@ RSpec.feature "EP vote app old", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via post' do
-    travel_to Date.new(2019, 5, 3)
+    travel_to Date.new(2024, 6, 3)
 
     visit apps_ep_vote_app_old_application_forms_path
 
@@ -45,7 +45,7 @@ RSpec.feature "EP vote app old", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit via post to a different address' do
-    travel_to Date.new(2019, 5, 3)
+    travel_to Date.new(2024, 6, 3)
     visit apps_ep_vote_app_old_application_forms_path
 
     click_button 'Súhlasím a chcem začať'
@@ -88,7 +88,7 @@ RSpec.feature "EP vote app old", type: :feature do
   end
 
   scenario 'As a citizen I want to request voting permit by post after the deadline' do
-    travel_to Date.new(2019, 5, 4)
+    travel_to Date.new(2024, 6, 4)
 
     visit apps_ep_vote_app_old_application_forms_path
 
