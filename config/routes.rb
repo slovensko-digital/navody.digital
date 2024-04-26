@@ -78,7 +78,7 @@ Rails.application.routes.draw do
       end
     end
 
-    namespace :ep_vote_app, path: 'volby-do-europskeho-parlamentu-old' do
+    namespace :ep_vote_app_old, path: 'volby-do-europskeho-parlamentu-old' do
       resource :application_forms, path: '' do
         member do
           get :end, path: 'hlasovacim-preukazom'
