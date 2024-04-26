@@ -36,7 +36,7 @@ module OmniAuth
       end
 
       def on_callback_path?
-        on_path?('/login')
+        on_path?('/auth/eid/callback') || on_path?('/login')
       end
 
       uid do
