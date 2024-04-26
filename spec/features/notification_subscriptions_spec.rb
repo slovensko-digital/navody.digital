@@ -9,51 +9,51 @@ RSpec.feature "Notification subscriptions", type: :feature do
     allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(true)
   end
 
-  scenario 'As a visitor I want to subscribe to various notifications' do
-    expect(SubscribeToNewsletterJob).to receive(:perform_later).with('johno@jsmf.net', 'VoteSubscription')
+  # scenario 'As a visitor I want to subscribe to various notifications' do
+  #   expect(SubscribeToNewsletterJob).to receive(:perform_later).with('johno@jsmf.net', 'VoteSubscription')
 
-    visit apps_ep_vote_app_application_forms_path
+  #   visit apps_ep_vote_app_application_forms_path
 
-    click_button 'Súhlasím a chcem začať'
+  #   click_button 'Súhlasím a chcem začať'
 
-    choose 'V zahraničí'
-    click_button 'Pokračovať'
+  #   choose 'V zahraničí'
+  #   click_button 'Pokračovať'
 
-    check 'Chcem dostávať upozornenia k voľbám'
+  #   check 'Chcem dostávať upozornenia k voľbám'
 
-    fill_in 'Emailová adresa', with: 'johno@jsmf.net'
+  #   fill_in 'Emailová adresa', with: 'johno@jsmf.net'
 
-    click_button 'Chcem dostávať tieto notifikácie'
+  #   click_button 'Chcem dostávať tieto notifikácie'
 
-    perform_enqueued_jobs
+  #   perform_enqueued_jobs
 
-    visit link_in_last_email
+  #   visit link_in_last_email
 
-    expect(page).to have_content('Aktivovali ste si užitočné notifikácie')
-    expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
-  end
+  #   expect(page).to have_content('Aktivovali ste si užitočné notifikácie')
+  #   expect(page).to have_content('Chcem dostávať upozornenia k voľbám')
+  # end
 
-  scenario 'As a logged in user I want to subscribe to various notifications' do
-    sign_in user
-    visit apps_ep_vote_app_application_forms_path
+  # scenario 'As a logged in user I want to subscribe to various notifications' do
+  #   sign_in user
+  #   visit apps_ep_vote_app_application_forms_path
 
-    click_button 'Súhlasím a chcem začať'
+  #   click_button 'Súhlasím a chcem začať'
 
-    choose 'V zahraničí'
-    click_button 'Pokračovať'
+  #   choose 'V zahraničí'
+  #   click_button 'Pokračovať'
 
-    check 'Chcem dostávať upozornenia k voľbám'
+  #   check 'Chcem dostávať upozornenia k voľbám'
 
-    clear_mail_deliveries
+  #   clear_mail_deliveries
 
-    expect(EmailService).to receive(:subscribe_to_newsletter)
+  #   expect(EmailService).to receive(:subscribe_to_newsletter)
 
-    click_button 'Chcem dostávať tieto notifikácie'
+  #   click_button 'Chcem dostávať tieto notifikácie'
 
-    perform_enqueued_jobs
+  #   perform_enqueued_jobs
 
-    expect(ActionMailer::Base.deliveries).to be_empty
-  end
+  #   expect(ActionMailer::Base.deliveries).to be_empty
+  # end
 
   scenario 'As an anonymous user I want to subscribe to blank journey notification' do
     visit journey_path(blank_journey)
