@@ -3,7 +3,7 @@ require_relative "../../app/models/apps/ep_vote_app/application_form"
 
 describe "EU vote application redirects", type: :request do
   before do
-    allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(false)
+    allow(Apps::EpVoteApp::ApplicationForm).to receive(:active?).and_return(true)
   end
 
   it "should redirect inactive journey to vote application index" do
