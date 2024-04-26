@@ -1,7 +1,7 @@
 module Apps
   module EpVoteAppOld
     class ApplicationForm
-      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2019, 5, 3)
+      DELIVERY_BY_POST_DEADLINE_DATE = Date.new(2024, 6, 3)
 
       include ActiveModel::Model
 
@@ -39,7 +39,7 @@ module Apps
       validates_presence_of :delivery_country, message: 'Zadajte štát', on: :delivery_address, unless: ->(f) { f.same_delivery_address? }
 
       def self.active?
-        false
+        true
       end
 
       def nationality
