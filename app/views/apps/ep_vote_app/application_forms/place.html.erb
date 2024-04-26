@@ -1,19 +1,40 @@
-<%= content_for :title, build_page_title('Miesto voľby', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Miesto voľby', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
-      <% hint = 'Voľby do Európskeho parlamentu sa na Slovensku konajú v sobotu 25. mája 2019, od 7:00 do 22:00 h. Hlasovať je možné jedine osobne, v čase konania volieb' %>
-      <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
-          <%= f.radio_button :place, 'sk', label: "Na Slovensku, mimo trvalého bydliska", hint: "Ak si nie ste istý, či budete počas volieb v mieste trvalého bydliska, zvoľte si túto možnosť. Budete tak môcť hlasovať kdekoľvek na Slovensku." %>
-          <%= f.radio_button :place, 'home', label: "Na Slovensku, v mieste trvalého bydliska"%>
-          <%= f.radio_button :place, 'eu', label: "V zahraničí, kde mám povolený pobyt"%>
-          <%= f.radio_button :place, 'world', label: "V zahraničí"%>
-      <% end %>
+      <% if @application_form.first_round_expired? %>
+        <% hint = 'Druhé kolo prezidentských volieb sa na Slovensku koná 6. apríla od 7:00 do 22:00. Hlasovať je možné jedine osobne na území Slovenska.' %>
+        <%= f.radios :place, 'Kde plánujete ísť voliť?', hint: hint do %>
+          <h2 class="govuk-heading-m">1. kolo</h2>
+            <%= f.hidden_field :place_first_round, :value => 'home' %>
+            <p class="govuk-hint">
+              Prvé kolo sa už konalo
+            </p>
+          <h2 class="govuk-heading-m">2. kolo</h2>
+          <%= f.radio_button :place_second_round, 'sk', label: "Mimo trvalého bydliska" %>
+          <%= f.radio_button :place_second_round, 'home', label: "V mieste trvalého bydliska" %>
+        <% end %>
 
-      <%= f.submit 'Pokračovať' %>
+        <%= f.submit 'Pokračovať' %>
+      <% else %>
+        <% hint = 'Prezidentské voľby sa na Slovensku konajú od 7:00 do 22:00. Zvoľte, či budete hlasovať mimo trvalého bydliska v prvom, druhom, alebo v oboch kolách.' %>
+        <%= f.radios :place, 'V ktorých kolách plánujete hlasovať mimo trvalého bydliska?', hint: hint do %>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="apps_ep_vote_app_application_form[place_first_round]" name="apps_ep_vote_app_application_form[place_first_round]" type="checkbox" value="sk">
+            <label class="govuk-label govuk-checkboxes__label" for="apps_ep_vote_app_application_form[place_first_round]">V prvom kole 23. marca 2024</label>
+          </div>
+          <div class="govuk-checkboxes__item govuk-!-margin-bottom-5">
+            <input class="govuk-checkboxes__input" id="apps_ep_vote_app_application_form[place_second_round]" name="apps_ep_vote_app_application_form[place_second_round]" type="checkbox" value="sk">
+            <label class="govuk-label govuk-checkboxes__label" for="apps_ep_vote_app_application_form[place_second_round]">V druhom kole 6. apríla 2024</label>
+          </div>
+          <%= f.submit 'Pokračovať' %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>

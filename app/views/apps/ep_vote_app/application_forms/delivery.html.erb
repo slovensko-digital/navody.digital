@@ -1,26 +1,58 @@
-<%= content_for :title, build_page_title('Hlasovací preukaz', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Hlasovací preukaz', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h3 class="govuk-heading-xl">Hlasovací preukaz</h3>
-    <p class="govuk-body-lead">Aby ste mohli hlasovať aj mimo trvalého bydliska, potrebujete hlasovací preukaz.</p>
-    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
-      <%= f.hidden_field :step %>
-      <%= f.hidden_field :sk_citizen %>
-      <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
+      <h1 class="govuk-heading-xl">
+        Potrebujete požiadať o hlasovací preukaz pre <%= @application_form.place_choice %> volieb
+      </h1>
+      <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
+      <% if false %>
+        <p class="govuk-body-lead"><strong>Obce potrebné informácie k žiadostiam v súčastnosti ešte len zverejňujú, ak nám však necháte email, dáme Vám vedieť, keď už bude možné o hlasovací preukaz požiadať.</strong> Posledný termín na zaslanie žiadosti je 8.&nbsp;septembra.</p>
+        <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
+      <% else %>
+        <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+          <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+          <%= render 'components/error_summary', form: @application_form %>
+          <%= f.hidden_field :step %>
+          <%= f.hidden_field :sk_citizen %>
+          <%= f.hidden_field :place_first_round %>
+          <%= f.hidden_field :place_second_round %>
+          <div class="govuk-form-group<% if @application_form.errors[:delivery].any? %> govuk-form-group--error<% end %>">
             <h3 class="govuk-heading-l">
               Ako prevezmete hlasovací preukaz?
             </h3>
-        <%= f.error_message :delivery %>
+            <%= f.error_message :delivery %>
 
-          <div class="govuk-radios">
-            <%= f.radio_button :delivery, 'post', label: "Chcem ho dostať poštou", hint: "O doručenie poštou možete požiadať do 3.5.", strong_label: true%>
-            <%= f.radio_button :delivery, 'person', label: "Osobne si ho vyzdvihnem na úrade", hint: "Vyzdvihnúť preukaz na úrade si môžete najneskôr 24.5.", strong_label: true%>
+            <div class="govuk-radios">
+              <%= f.radio_button :delivery, 'post',
+                                label: "Nechám si ho poslať poštou",
+                                disabled: @application_form.request_sending_expired?,
+                                hint: @application_form.request_sending_expired? ?
+                                        "Termín na zaslanie žiadosti o hlasovací preukaz už uplynul." :
+                                        "O hlasovací preukaz môžete požiadať elektronicky (emailom) a bude vám doručený na adresu uvedenú v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
+                                strong_label: true
+              %>
+              <%= f.radio_button :delivery, 'authorized_person',
+                                label: "Vyzdvihne ho za mňa iná osoba",
+                                disabled: @application_form.request_sending_expired?,
+                                hint: @application_form.request_sending_expired? ?
+                                        "Termín na zaslanie žiadosti o hlasovací preukaz už uplynul." :
+                                        "Hlasovací preukaz za vás môže vyzdvihnúť aj iná osoba, ktorú uvediete v žiadosti. #{format_remaining_days(@application_form.request_sending_remaining_days)}",
+                                strong_label: true
+              %>
+              <%= f.radio_button :delivery, 'person',
+                                label: "Vyzdvihnem ho osobne na úrade",
+                                disabled: @application_form.pickup_expired?,
+                                hint:  @application_form.pickup_expired? ?
+                                          "Termín na vyzdvihnutie hlasovacieho preukazu už uplynul." :
+                                          "O hlasovací preukaz môžete požiadať osobne najneskôr posledný pracovný deň pred konaním volieb v úradných hodinách obce. Hlasovací preukaz vám vystavia na počkanie. #{format_remaining_days(@application_form.pickup_remaining_days)}",
+                                strong_label: true
+              %>
+            </div>
           </div>
-      </div>
-
-      <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
-    <% end %>
+          <%= submit_tag 'Pokračovať', class: 'govuk-button' %>
+        <% end %>
+      <% end %>
   </div>
 </div>
