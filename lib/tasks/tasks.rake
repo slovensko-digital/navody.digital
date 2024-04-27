@@ -3,6 +3,7 @@ namespace :navody do
   task cleanup: :environment do
     Submission.expired.destroy_all
     Upvs::Submission.expired.destroy_all
+    RemoveStaleBlobs.perform_later
   end
 
   task check_or_sr_identifiers_status: :environment do
