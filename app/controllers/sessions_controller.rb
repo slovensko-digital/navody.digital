@@ -57,7 +57,10 @@ class SessionsController < ApplicationController
 
   def destroy
     if should_perform_eid_logout?
-      redirect_to eid_token.generate_logout_url(expires_in: 5.minutes)
+      eid_logout_url = eid_token.generate_logout_url(expires_in: 5.minutes)
+      reset_session
+
+      redirect_to eid_logout_url
     else
       logout
     end
