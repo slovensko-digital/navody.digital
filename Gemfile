@@ -46,6 +46,8 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
+gem 'altcha-rails'
+
 gem 'pry-rails'
 
 gem 'aws-sdk-rails'
