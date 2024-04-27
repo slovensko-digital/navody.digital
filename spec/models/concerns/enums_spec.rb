@@ -7,11 +7,10 @@ describe Enums do
     class << self
       attr_reader :enum_definition
 
-      def enum(enum_definition)
-        @enum_definition = enum_definition
+      def enum(name, values)
+        @enum_definition = [name, values]
       end
     end
-
 
     enumerates :status, with: %w{IDLE WORKING FINISHED}
   end
@@ -20,13 +19,11 @@ describe Enums do
     TestClass.new
   end
 
-  it 'should define enum' do
-    expect(subject.class.enum_definition).to eq({
-        status: {
-            'IDLE' => 'IDLE',
-            'WORKING' => 'WORKING',
-            'FINISHED' => 'FINISHED',
-        }
-    })
+  it 'defines enum' do
+    expect(subject.class.enum_definition).to eq([:status, {
+      'IDLE' => 'IDLE',
+      'WORKING' => 'WORKING',
+      'FINISHED' => 'FINISHED',
+    }])
   end
 end

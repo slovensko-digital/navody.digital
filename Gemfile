@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 7.0.8'
 gem 'rails-i18n'
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -34,7 +34,10 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Gems for tracking the statuses of jobs
+# Workers
+gem 'good_job'
+
+# Remove after migration to good_job
 gem 'que'
 gem 'que-web'
 
@@ -80,7 +83,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '4.0.2'
+  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'faker'
 end
@@ -100,9 +103,8 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', "~> 3.39.2"
   gem 'show_me_the_cookies'
-  gem 'selenium-webdriver', "~> 4.9.0"
-  gem "webdrivers", "= 5.3.0"
-  gem 'simplecov', '< 0.18' # https://github.com/codeclimate/test-reporter/issues/413
+  gem 'selenium-webdriver', "~> 4.13"
+  gem 'simplecov', '~> 0.22.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
