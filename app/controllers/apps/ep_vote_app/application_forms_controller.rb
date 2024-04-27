@@ -1,45 +1,62 @@
 class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
-  before_action :set_metadata, :check_inactive_eu_application
+  helper FormatDaysHelper
+  before_action :set_metadata, :check_inactive_ep_application, :disable_current_topic
+  before_action :disable_feedback, only: [:show, :delivery, :create]
 
   def show
-    @metadata.og.title = 'Voľby do Európskeho parlamentu'
+    render_step('start')
+  end
 
-    @application_form = Apps::EpVoteApp::ApplicationForm.new(
-      step: 'start'
-    )
-    render 'start'
+  def delivery
+    return render_self if request.post?
+    render_step('delivery')
+  end
+
+  def permanent_resident
+    return render_self if request.post?
+    render_step('permanent_resident')
   end
 
   def create
+    render_self
+  end
+
+  private def render_self
     @application_form = Apps::EpVoteApp::ApplicationForm.new(form_params)
     @application_form.run(self)
   end
 
-  def end
+  private def render_step(step)
+    @application_form = Apps::EpVoteApp::ApplicationForm.new(step: step)
+    render step
   end
 
-  private
-
-  def form_params
+  private def form_params
     params.require(:apps_ep_vote_app_application_form).permit(
       :step,
-      :place,
+      :place_first_round,
+      :place_second_round,
       :sk_citizen,
       :delivery,
-      :full_name, :pin, :nationality,
+      :full_name, :pin, :nationality, :maiden_name,
+      :authorized_person_full_name, :authorized_person_pin,
       :street, :pobox, :municipality,
       :same_delivery_address,
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
-      :municipality_email
+      :municipality_email,
+      :municipality_email_verified,
+      :permanent_resident,
+      :back
     )
   end
 
-  def set_metadata
-    @metadata.og.image = 'og-ep-vote-app.png'
-    @metadata.og.description = 'Zistite kde a ako môžete voliť. Vybavte si hlasovací preukaz.'
+  private def set_metadata
+    @metadata.og.title = 'Žiadosť o hlasovací preukaz'
+    @metadata.og.image = 'https://volby.digital/images/share-2024.png'
+    @metadata.og.description = 'Aj keď budete počas volieb mimo trvalého pobytu, voliť sa dá. Stačí požiadať.'
   end
 
-  def check_inactive_eu_application
+  private def check_inactive_ep_application
     return if Apps::EpVoteApp::ApplicationForm.active?
     return redirect_to apps_ep_vote_app_application_forms_path if action_name != "show"
     render 'inactive'
