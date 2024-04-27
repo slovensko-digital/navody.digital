@@ -2110,13 +2110,6 @@ CREATE UNIQUE INDEX index_users_on_email_lower_unique ON public.users USING btre
 
 
 --
--- Name: index_users_on_subject_edesk_number; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_subject_edesk_number ON public.users USING btree (subject_edesk_number);
-
-
---
 -- Name: que_jobs_args_gin_idx; Type: INDEX; Schema: public; Owner: -
 --
 

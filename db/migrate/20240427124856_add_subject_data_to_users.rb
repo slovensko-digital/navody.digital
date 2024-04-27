@@ -3,6 +3,5 @@ class AddSubjectDataToUsers < ActiveRecord::Migration[6.1]
     add_column :users, :subject_name, :string
     add_column :users, :subject_cin, :string
     add_column :users, :subject_edesk_number, :string
-    add_index :users, :subject_edesk_number
   end
 end
