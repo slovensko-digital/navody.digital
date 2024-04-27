@@ -1,10 +1,10 @@
-<%= content_for :title, build_page_title('Miesto voľby', 'Parlamentné voľby') %>
-<%= content_for(:headerline, 'Parlamentné voľby') %>
+<%= content_for :title, build_page_title('Miesto voľby', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
-      <%= render 'apps/parliament_vote_app/application_forms/back', form: f %>
+      <%= render 'apps/president_vote_app/application_forms/back', form: f %>
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step %>
       <%= f.radios :permanent_resident, 'Máte trvalý pobyt na Slovensku?' do %>
@@ -12,9 +12,7 @@
         <%= f.radio_button :permanent_resident, 'yes', label: "Áno" %>
         <%= f.radio_button :permanent_resident, 'no',
           label: "Nie, mám odhlásený trvalý pobyt zo Slovenska",
-          hint: @application_form.vote_by_post_expired? ?
-                  'Termín zaslanie žiadosti o voľbu poštou uplynul 9.8.2023.' :
-                  "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali, zvoľte túto možnosť. #{format_remaining_days(@application_form.vote_by_post_remaining_days)}"
+          hint: "Pri odhlasovaní trvalého pobytu sa odovzdáva občiansky preukaz. Ak ste ho odovzdali, zvoľte túto možnosť."
         %>
       <% end %>
 

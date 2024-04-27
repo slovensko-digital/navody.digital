@@ -3,7 +3,8 @@ ingress:
     nginx.ingress.kubernetes.io/server-snippet: |
       location /sitemaps/sitemap.xml.gz {
         return 302 https://navodydigital.s3.eu-central-1.amazonaws.com/sitemaps/sitemap.xml.gz;
-      }      
+      }
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
 service:
   externalPort: 3000
   internalPort: 3000
@@ -11,7 +12,7 @@ image:
   secrets:
   - name: skdigital-bonet-registry
 livenessProbe.initialDelaySeconds: 20
-readinessProbe.initialDelaySeconds: 20 
+readinessProbe.initialDelaySeconds: 20
 application.migrateCommand: ["bundle", "exec", "rails", "db:migrate"]
 resources:
   requests:
