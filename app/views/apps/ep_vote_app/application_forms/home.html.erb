@@ -1,16 +1,16 @@
-<%= content_for :title, build_page_title('Hlasovanie v mieste trvalého bydliska', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Hlasovanie v mieste trvalého bydliska', 'Prezidentské voľby') %>
+<%= content_for(:headerline, 'Prezidentské voľby') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-xl">Hlasovanie v mieste trvalého bydliska</h2>
-    <p class="govuk-body-lead">Pre hlasovanie v mieste svojho trvalého bydliska, stačí vo volebnej miestnosti predložiť občiansky preukaz.</p>
-
-    <%= render_notification_subscription_component ['VoteSubscription', 'NewsletterSubscription'] do %>
-      <h3 class="govuk-heading-m">Aktivujte si aj notifikácie na email, aby ste na nič nezabudli.</h3>
+    <%= form_for 'apps_ep_vote_app_application_form', :builder => AppFormBuilder, url: apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, :value => 'home' %>
     <% end %>
 
-    <h3 class="govuk-heading-l">Čo ďalej?</h3>
-    <p class="govuk-body">Ak sa Vám táto aplikácia páčila, na portáli Návody.Digital nájdete <%= link_to 'množstvo ďalších návodov', root_path %> ako vyriešiť aj iné životné situácie, ktoré si vyžadujú kontakt so štátnou byrokraciou.</p>
+    <h1 class="govuk-heading-xl">Nepotrebujete nič vybavovať</h1>
+    <p class="govuk-body-lead">V čase volieb volíte vo volebnom okrsku, v ktorom ste zapísaný podľa miesta vášho trvalého bydliska.</p>
+    <p class="govuk-body-lead">O volebnom okrsku informuje obec v oznámení o čase a miesta konania volieb. V deň konania volieb si nezabudnite do volebnej miestnosti priniesť občiansky preukaz.</p>
+    <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
   </div>
 </div>
