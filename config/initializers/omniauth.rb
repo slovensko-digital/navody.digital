@@ -16,6 +16,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   }
   provider :eid, {
     config: Rails.application.config_for(:auth).fetch(:eid),
+    callback_path: '/login',
   }
 end
 
