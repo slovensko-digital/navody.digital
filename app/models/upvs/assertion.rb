@@ -1,17 +1,24 @@
 module Upvs
   class Assertion
     include ActiveModel::Model
-    attr_accessor(:raw, :subject_name, :subject_id, :subject_ico)
+    attr_accessor(:raw, :subject_name, :subject_id, :subject_cin, :subject_edesk_number)
 
     def self.new_from_xml(raw:)
       return unless raw
 
-      h = Hash.from_xml(raw)
+      doc  = Nokogiri::XML(raw)
+      return unless doc
+
+      doc.remove_namespaces!
+      doc_attrs = doc.xpath('//Assertion/AttributeStatement/Attribute')
+      return unless doc_attrs
+
       new(
         raw:,
-        subject_name: h.dig('Assertion', 'AttributeStatement', 'Attribute').detect{|e| e['Name'] == 'Subject.FormattedName' }.dig('AttributeValue'),
-        subject_id: h.dig('Assertion', 'AttributeStatement', 'Attribute').detect{|e| e['Name'] == 'SubjectID' }.dig('AttributeValue'),
-        subject_ico: h.dig('Assertion', 'AttributeStatement', 'Attribute').detect{|e| e['Name'] == 'Subject.ICO' }.dig('AttributeValue'),
+        subject_name: doc_attrs.detect{|n| n['Name'] == 'Subject.FormattedName' }&.xpath('AttributeValue')&.text,
+        subject_id: doc_attrs.detect{|n| n['Name'] == 'SubjectID' }&.xpath('AttributeValue')&.text,
+        subject_cin: doc_attrs.detect{|n| n['Name'] == 'Subject.ICO' }&.xpath('AttributeValue')&.text,
+        subject_edesk_number: doc_attrs.detect{|n| n['Name'] == 'Subject.eDeskNumber' }&.xpath('AttributeValue')&.text,
       )
     end
 

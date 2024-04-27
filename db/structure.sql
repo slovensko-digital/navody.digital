@@ -1233,7 +1233,10 @@ CREATE TABLE public.users (
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    eid_sub character varying
+    eid_sub character varying,
+    subject_name character varying,
+    subject_cin character varying,
+    subject_edesk_number character varying
 );
 
 
@@ -2107,6 +2110,13 @@ CREATE UNIQUE INDEX index_users_on_email_lower_unique ON public.users USING btre
 
 
 --
+-- Name: index_users_on_subject_edesk_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_subject_edesk_number ON public.users USING btree (subject_edesk_number);
+
+
+--
 -- Name: que_jobs_args_gin_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2436,6 +2446,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221022143119'),
 ('20230325092744'),
 ('20230325095737'),
-('20230325151049');
+('20230325151049'),
+('20240427124856');
 
 

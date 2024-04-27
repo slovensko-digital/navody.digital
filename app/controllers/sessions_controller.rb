@@ -25,7 +25,14 @@ class SessionsController < ApplicationController
     notice = user.previously_new_record? ? 'first_time_login' : 'Prihlásenie úspešné. Vitajte!'
 
     if eid_identity_approval?
-      user.update!(eid_sub: eid_sub_from_auth)
+      assertion = Upvs::Assertion.assertion(eid_token)
+
+      user.update!(
+        eid_sub: eid_sub_from_auth,
+        subject_name: assertion.subject_name,
+        subject_cin: assertion.subject_cin,
+        subject_edesk_number: assertion.subject_edesk_number,
+      )
     end
 
     unless should_keep_eid_token_in_session?(user.eid_sub)
