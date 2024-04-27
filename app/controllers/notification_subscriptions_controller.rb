@@ -20,6 +20,12 @@ class NotificationSubscriptionsController < ApplicationController
     end
   end
 
+  def newsletter_subscribe
+    email = params.permit(:email)[:email]
+    list_name = 'Návody.Digital'
+    SubscribeToNewsletterJob.perform_later(email, list_name) if email
+  end
+
   def confirm
     @subscriptions = NotificationSubscription.where(confirmation_token: params[:id])
     @subscriptions.each do |subscription|

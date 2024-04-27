@@ -169,6 +169,7 @@ Rails.application.routes.draw do
   end
 
   resources :notification_subscription_groups, controller: :notification_subscriptions, path: 'notifikacie' do
+    post :newsletter_subscribe, on: :collection, path: 'novinky'
     get :confirm, on: :member, path: 'potvrdit'
   end
 
