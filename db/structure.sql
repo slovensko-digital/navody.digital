@@ -468,6 +468,41 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 
 --
+-- Name: altcha_solutions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.altcha_solutions (
+    id bigint NOT NULL,
+    algorithm character varying,
+    challenge character varying,
+    salt character varying,
+    signature character varying,
+    number integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: altcha_solutions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.altcha_solutions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: altcha_solutions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.altcha_solutions_id_seq OWNED BY public.altcha_solutions.id;
+
+
+--
 -- Name: apps; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1648,6 +1683,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
+-- Name: altcha_solutions altcha_solutions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.altcha_solutions
+    ADD CONSTRAINT altcha_solutions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1897,6 +1940,13 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_altcha_solutions; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_altcha_solutions ON public.altcha_solutions USING btree (algorithm, challenge, salt, signature, number);
 
 
 --
@@ -2439,6 +2489,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221022143119'),
 ('20230325092744'),
 ('20230325095737'),
+('20230325151049'),
+('20240427082705');
 ('20230325151049'),
 ('20240427124856');
 

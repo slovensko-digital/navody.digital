@@ -7,17 +7,23 @@ class NotificationSubscriptionsController < ApplicationController
 
   def create
     @group = NotificationSubscriptionGroup.new(notification_group_params.except(:more))
-    @group.user = current_user
-    @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
-
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to root_path }
-        format.js
-      else
-        format.js { render :new }
+    if AltchaSolution.verify_and_save(params.permit(:altcha)[:altcha])
+      @group.user = current_user
+      @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
+      respond_to do |format|
+        if @group.save
+          format.html { redirect_to root_path }
+          format.js
+        else
+          format.js { render :new }
+        end
+      end
+    else
+      respond_to do |format|
+        format.js { render :failure }
       end
     end
+
   end
 
   def confirm

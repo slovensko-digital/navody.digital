@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get '/altcha', to: 'altcha#new'
   get :health, to: 'health#index'
   get 'robots.:format', to: 'robots#index'
 
