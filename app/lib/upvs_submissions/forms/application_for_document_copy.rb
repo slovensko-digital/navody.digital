@@ -3,7 +3,7 @@ module UpvsSubmissions
     class ApplicationForDocumentCopy
       include ActiveModel::Model
 
-      attr_accessor :sender_uri, :recipient_uri, :sender_business_reference, :recipient_business_reference, :form, :attachments
+      attr_accessor :sender_uri, :recipient_uri, :sender_business_reference, :recipient_business_reference, :form_blob_id, :attachments
 
       class << self
         delegate :uuid, to: SecureRandom
@@ -14,8 +14,20 @@ module UpvsSubmissions
         @recipient_uri = recipient_uri || default_recipient_uri
         @sender_business_reference = sender_business_reference
         @recipient_business_reference = recipient_business_reference
-        @form = form_params ? build_form(form_params) : nil
         @attachments = []
+      end
+
+      def self.create_form_attachment(application_form)
+        document_xml = UpvsSubmissions::FormBuilders::ApplicationForDocumentCopyFormBuilder.build_form(application_form)
+
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: StringIO.new(document_xml.to_xml),
+          filename: 'Dokument.xml', # This is how the XML is called in slovensko.sk
+          content_type: 'application/x-eform-xml', # Mandatory content type for the Autogram and UPVS app. See `Upvs::SubmissionsController#signing_data`
+          metadata: { signed_required: false }
+        )
+
+        blob.id
       end
 
       def posp_id

@@ -1382,7 +1382,6 @@ CREATE TABLE upvs.submissions (
     recipient_uri character varying NOT NULL,
     sender_business_reference character varying,
     recipient_business_reference character varying,
-    form text,
     callback_url character varying,
     callback_step_id bigint,
     callback_step_status character varying,
@@ -2494,6 +2493,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230325092744'),
 ('20230325095737'),
 ('20230325151049'),
-('20231007115021');
+('20231007115021'),
+('20240427100139');
 
 

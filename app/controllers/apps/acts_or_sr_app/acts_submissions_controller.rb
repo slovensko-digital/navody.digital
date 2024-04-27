@@ -85,8 +85,7 @@ module Apps
 
       # generates XML to be submitted
       def create
-        xml_form = UpvsSubmissions::FormBuilders::ApplicationForDocumentCopyFormBuilder.build_form(@application_form)
-        render xml: xml_form.to_xml
+        render json: { id: UpvsSubmissions::Forms::ApplicationForDocumentCopy.create_form_attachment(@application_form) }.to_json
       end
 
       def callback

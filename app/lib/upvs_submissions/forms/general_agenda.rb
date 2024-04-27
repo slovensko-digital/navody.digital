@@ -47,8 +47,6 @@ module UpvsSubmissions
 
       private
 
-      delegate :uuid, to: self
-
       def create_form_attachment
         document_xml = UpvsSubmissions::FormBuilders::GeneralAgendaFormBuilder.build_form(application_form)
 
@@ -61,6 +59,8 @@ module UpvsSubmissions
 
         blob.id
       end
+
+      delegate :uuid, to: self
     end
   end
 end
