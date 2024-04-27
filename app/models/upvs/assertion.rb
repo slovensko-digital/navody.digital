@@ -1,7 +1,17 @@
 module Upvs
   class Assertion
     include ActiveModel::Model
-    attr_accessor(:raw, :subject_name, :subject_id, :subject_cin, :subject_edesk_number)
+    attr_accessor(:raw, :subject_name, :subject_id, :subject_cin, :subject_edesk_number, :delegation_type)
+
+    DELEGATION_TYPES = {
+      legal_representation: '0',
+      full_representation: '1',
+      partial_representation: '2',
+    }
+
+    def fully_represents_subject?
+      delegation_type&.to_s&.in?(full_representations)
+    end
 
     def self.new_from_xml(raw:)
       return unless raw
@@ -19,6 +29,7 @@ module Upvs
         subject_id: doc_attrs.detect{|n| n['Name'] == 'SubjectID' }&.xpath('AttributeValue')&.text,
         subject_cin: doc_attrs.detect{|n| n['Name'] == 'Subject.ICO' }&.xpath('AttributeValue')&.text,
         subject_edesk_number: doc_attrs.detect{|n| n['Name'] == 'Subject.eDeskNumber' }&.xpath('AttributeValue')&.text,
+        delegation_type: doc_attrs.detect{|n| n['Name'] == 'DelegationType' }&.xpath('AttributeValue')&.text,
       )
     end
 
@@ -47,6 +58,14 @@ module Upvs
       nil
     end
 
+    private
+
+    def full_representations
+      [
+        DELEGATION_TYPES[:legal_representation],
+        DELEGATION_TYPES[:full_representation],
+      ]
+    end
 
     class SkApiError < StandardError
     end

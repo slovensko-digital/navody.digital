@@ -11,6 +11,11 @@ class SessionsController < ApplicationController
     end
 
     if new_eid_identity?
+      unless fully_represents_subject?
+        render :insufficient_representation, locals: { eid_token: eid_token }
+        return
+      end
+
       render :new_eid_identity, locals: { eid_token: eid_token }
       return
     end
@@ -27,12 +32,16 @@ class SessionsController < ApplicationController
     if eid_identity_approval?
       assertion = Upvs::Assertion.assertion(eid_token)
 
-      user.update!(
-        eid_sub: eid_sub_from_auth,
-        subject_name: assertion.subject_name,
-        subject_cin: assertion.subject_cin,
-        subject_edesk_number: assertion.subject_edesk_number,
-      )
+      if assertion
+        user.update!(
+          eid_sub: eid_sub_from_auth,
+          subject_name: assertion.subject_name,
+          subject_cin: assertion.subject_cin,
+          subject_edesk_number: assertion.subject_edesk_number,
+          )
+      else
+        user.update!(eid_sub: eid_sub_from_auth)
+      end
     end
 
     unless should_keep_eid_token_in_session?(user.eid_sub)
@@ -104,5 +113,10 @@ class SessionsController < ApplicationController
   def after_login_redirect_path
     return session[:after_login_callback] if session[:after_login_callback]&.start_with?("/") # Only allow local redirects
     root_path
+  end
+
+  def fully_represents_subject?
+    assertion = Upvs::Assertion.assertion(eid_token)
+    assertion&.fully_represents_subject?
   end
 end
