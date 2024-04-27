@@ -4,14 +4,14 @@ class Apps::EpVoteAppOld::ApplicationFormsController < ApplicationController
   def show
     @metadata.og.title = 'Voľby do Európskeho parlamentu'
 
-    @application_form = Apps::EpVoteApp::ApplicationForm.new(
+    @application_form = Apps::EpVoteAppOld::ApplicationForm.new(
       step: 'start'
     )
     render 'start'
   end
 
   def create
-    @application_form = Apps::EpVoteApp::ApplicationForm.new(form_params)
+    @application_form = Apps::EpVoteAppOld::ApplicationForm.new(form_params)
     @application_form.run(self)
   end
 
@@ -21,7 +21,7 @@ class Apps::EpVoteAppOld::ApplicationFormsController < ApplicationController
   private
 
   def form_params
-    params.require(:apps_ep_vote_app_application_form).permit(
+    params.require(:apps_ep_vote_app_old_application_form).permit(
       :step,
       :place,
       :sk_citizen,
@@ -40,8 +40,8 @@ class Apps::EpVoteAppOld::ApplicationFormsController < ApplicationController
   end
 
   def check_inactive_eu_application
-    return if Apps::EpVoteApp::ApplicationForm.active?
-    return redirect_to apps_ep_vote_app_application_forms_path if action_name != "show"
+    return if Apps::EpVoteAppOld::ApplicationForm.active?
+    return redirect_to apps_ep_vote_app_old_application_forms_path if action_name != "show"
     render 'inactive'
   end
 end

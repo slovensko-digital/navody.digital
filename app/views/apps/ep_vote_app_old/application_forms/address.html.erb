@@ -53,7 +53,7 @@
   }
 </style>
 
-<%= javascript_include_tag 'apps/ep_vote_app/libs.js', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'apps/ep_vote_app_old/libs.js', 'data-turbolinks-track': 'reload' %>
 <script>
   var municipalities = [];
   var municipalityEmails = {};
@@ -84,8 +84,8 @@
 
   accessibleAutocomplete({
     element: document.getElementById('municipality-field'),
-    id: 'apps_ep_vote_app_application_form_municipality',
-    name: 'apps_ep_vote_app_application_form[municipality]',
+    id: 'apps_ep_vote_app_old_application_form_municipality',
+    name: 'apps_ep_vote_app_old_application_form[municipality]',
     displayMenu: 'overlay',
     showAllValues: true,
     autoselect: true,
@@ -124,7 +124,7 @@
       return 'Obec sa nenašla.'
     },
     onConfirm: function (value) {
-      document.querySelector('#apps_ep_vote_app_application_form_municipality_email').value = municipalityEmails[value] ? municipalityEmails[value] : '';
+      document.querySelector('#apps_ep_vote_app_old_application_form_municipality_email').value = municipalityEmails[value] ? municipalityEmails[value] : '';
     }
   });
 </script>
