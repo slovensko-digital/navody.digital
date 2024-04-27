@@ -15,7 +15,7 @@
             <strong></strong>
           </p>
         </div>
-        <%= form_tag newsletter_subscribe_notification_subscription_groups_path do %>
+        <%= form_tag newsletter_subscribe_notification_subscription_groups_path, id: 'newsletter-form', remote: true do %>
           <div class='govuk-form-group sdn-footer__newsletter-form-group'>
             <%= email_field_tag :email, '', class: 'govuk-input sdn-footer__newsletter-input', placeholder: 'Zadajte emailovú adresu'  %>
             <%= submit_tag 'Prihlásiť', class: 'govuk-button sdn-footer__newsletter-button' %>
