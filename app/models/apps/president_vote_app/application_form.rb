@@ -1,7 +1,7 @@
 module Apps
   module PresidentVoteApp
     class ApplicationForm
-      FIRST_ROUND_DATE = Date.parse('2024-06-23')
+      FIRST_ROUND_DATE = Date.parse('2024-03-23')
       FIRST_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 19.day
       SECOND_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 9.day
 
