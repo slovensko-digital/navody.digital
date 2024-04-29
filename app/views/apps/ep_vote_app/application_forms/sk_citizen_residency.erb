@@ -8,7 +8,7 @@
       <%= render 'components/error_summary', form: @application_form %>
       <%= f.hidden_field :step, value: 'sk_citizen_residency' %>
       <%= f.radios :sk_citizen_residency, 'Máte trvalý pobyt v SR?' do %>
-        <p class="govuk-body-lead">Na to aby ste nemali trvalý pobyt na Slovensku, museli ste si ho odhlásiť.</p>
+        <p class="govuk-body-lead">Na to, aby ste nemali trvalý pobyt na Slovensku, museli ste si ho odhlásiť.</p>
         <%= f.radio_button :sk_citizen_residency, 'sk', label: "Áno, mám trvalý pobyt v SR" %>
         <%= f.radio_button :sk_citizen_residency, 'eu',
           label: "Nie, mám trvalý pobyt v inej členskej krajine EÚ",

@@ -1,7 +1,7 @@
 class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
   helper FormatDaysHelper
   before_action :set_metadata, :check_inactive_ep_application, :disable_current_topic
-  before_action :disable_feedback, only: [:show, :delivery, :create]
+  before_action :disable_feedback, only: [:show, :delivery, :create, :send_email, :authorized_person_send]
 
   def show
     render_step('start')

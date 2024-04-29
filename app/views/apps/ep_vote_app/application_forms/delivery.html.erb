@@ -8,8 +8,8 @@
       <%= f.hidden_field :step, value: 'delivery' %>
     <% end %>
 
-    <h1 class="govuk-heading-xl">Potrebujete požiadať o hlasovací preukaz</h1>
-    <p class="govuk-body-lead">Aby ste mohli v deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v SR.</p>
+    <h1 class="govuk-heading-xl">Potrebujete požiadať o&nbsp;hlasovací preukaz</h1>
+    <p class="govuk-body-lead">Aby ste mohli v&nbsp;deň volieb voliť mimo vášho trvalého bydliska, musíte požiadať vašu obec o&nbsp;vydanie hlasovacieho preukazu – osobne alebo elektronicky. Hlasovací preukaz vás oprávňuje voliť z&nbsp;ktoréhokoľvek volebného okrsku v&nbsp;SR.</p>
       <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
         <%= render 'components/error_summary', form: @application_form %>
         <%= f.hidden_field :step, value: 'delivery' %>

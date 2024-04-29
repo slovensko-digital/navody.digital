@@ -23,7 +23,7 @@
     <h1 class="govuk-heading-xl">Pošlite email so žiadosťou na úrad</h1>
     <div>
       <% if @application_form.municipality_email.present? %>
-        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú adresu obce:
+        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z&nbsp;Vašej emailovej adresy na príslušnú adresu obce:
         <%= mail_to @application_form.municipality_email, @application_form.municipality_email,
           target: '_blank',
           body: @application_form.from_slovakia_email_body,
@@ -31,8 +31,8 @@
         %>
         </p>
       <% else %>
-        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú emailovú adresu obce
-        <%= @application_form.municipality %> určenú pre žiadosti o vydávanie volebných preukazov.</p>
+        <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z&nbsp;Vašej emailovej adresy na príslušnú emailovú adresu obce
+        <%= @application_form.municipality %> určenú pre žiadosti o&nbsp;vydávanie volebných preukazov.</p>
         <p class="govuk-body-l">Emailovú adresu je možné nájsť na webovej stránke obce.</p>
       <% end %>
     </div>
@@ -63,7 +63,7 @@
 
     <div class="govuk-checkboxes__item">
       <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses" onchange="document.getElementById('nextButton').disabled = !this.checked;">
-      <label class="govuk-label govuk-checkboxes__label" for="waste">Poslal/a som žiadosť zo svojho emailu na úrad</label>
+      <label class="govuk-label govuk-checkboxes__label" for="waste">Áno, túto vygenerovanú žiadosť som odoslal/a na úrad emailom a&nbsp;chcem pokračovať.</label>
     </div>
 
     <%= form_with url: end_apps_ep_vote_app_application_forms_url, method: :get, local: true do |form| %>
