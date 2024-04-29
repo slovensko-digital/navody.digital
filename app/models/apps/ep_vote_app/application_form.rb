@@ -160,8 +160,8 @@ module Apps
           home_step(listener)
         when 'person'
           person_step(listener)
-        when 'send'
-          send_step(listener)
+        when 'send_email'
+          send_email_step(listener)
         end
       end
 
@@ -346,7 +346,7 @@ module Apps
         end
       end
 
-      def send_step(listener)
+      def send_email_step(listener)
         if go_back?
           listener.render :delivery_address
         else
