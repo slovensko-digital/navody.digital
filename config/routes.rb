@@ -89,21 +89,6 @@ Rails.application.routes.draw do
       end
     end
 
-    if ENV['DISABLED_FEATURES'].to_s.exclude?('ep_vote_app_old')
-      namespace :ep_vote_app_old, path: 'volby-do-europskeho-parlamentu-old' do
-        resource :application_forms, path: '' do
-          member do
-            get :end, path: 'hlasovacim-preukazom'
-            get :world, path: 'hlasovanie-v-zahranici'
-            get :eu, path: 'hlasovanie-v-inom-clenskom-state'
-            get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
-            get :person, path: 'hlasovaci-preukaz-osobne'
-            get :non_sk_nationality, path: 'hlasovanie-obcanov-eu-na-slovensku'
-          end
-        end
-      end
-    end
-
     if ENV['DISABLED_FEATURES'].to_s.exclude?('parliament_vote_app')
       namespace :parliament_vote_app, path: 'parlamentne-volby' do
         resource :application_forms, path: '' do
