@@ -1,8 +1,13 @@
-<%= content_for :title, build_page_title('Osobné prevzatie hlasovacieho preukazu', 'Prezidentské voľby') %>
-<%= content_for(:headerline, 'Prezidentské voľby') %>
+<%= content_for :title, build_page_title('Osobné prevzatie hlasovacieho preukazu', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= form_for 'apps_ep_vote_app_application_form', :builder => AppFormBuilder, url: delivery_apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, value: 'person' %>
+    <% end %>
+
     <h1 class="govuk-heading-xl">Prevzatie hlasovacieho preukazu osobne</h1>
     <p class="govuk-body-lead">Hlasovací preukaz vám vystavia na počkanie na obecnom úrade v mieste trvalého bydliska. Osobne si preukaz vybavíte najneskôr v posledný pracovný deň pred voľbami, počas pracovných hodín úradu.</p>
     <%= render 'apps/ep_vote_app/application_forms/subscribe' %>

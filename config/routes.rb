@@ -72,9 +72,18 @@ Rails.application.routes.draw do
           member do
             get :end, path: 'volte-zodpovedne'
             get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
-            get :world, path: 'hlasovanie-cestovny-doklad'
+            get :sk_citizen_world_resident, path: 'hlasovanie-cestovny-doklad'
+            get :sk_citizen_eu_resident, path: 'hlasovanie-mimo-sk-v-eu'
+            get :eu_citizen_sk_resident, path: 'hlasovanie-obcan-eu-na-slovensku'
+            get :eu_citizen_non_sk_resident, path: 'hlasovanie-obcan-eu'
             get :person, path: 'hlasovaci-preukaz-osobne'
-            get :non_sk_nationality, path: 'hlasovanie-neobcana'
+            get :other_nationality, path: 'nebocan-eu'
+            get :delivery, path: 'hlasovaci-preukaz'
+            post :delivery, path: 'hlasovaci-preukaz'
+            get :send_email, path: 'hlasovaci-preukaz-odoslanie'
+            post :send_email, path: 'hlasovaci-preukaz-odoslanie'
+            get :authorized_person_send, path: 'hlasovaci-preukaz-odoslanie-splnomocnene'
+            post :authorized_person_send, path: 'hlasovaci-preukaz-odoslanie-splnomocnene'
           end
         end
       end

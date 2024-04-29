@@ -12,13 +12,18 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
     render_step('delivery')
   end
 
-  def permanent_resident
-    return render_self if request.post?
-    render_step('permanent_resident')
-  end
-
   def create
     render_self
+  end
+
+  def authorized_person_send
+    return render_self if request.post?
+    redirect_to delivery_apps_ep_vote_app_application_forms_path
+  end
+
+  def send_email
+    return render_self if request.post?
+    redirect_to delivery_apps_ep_vote_app_application_forms_path
   end
 
   private def render_self
@@ -34,9 +39,8 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
   private def form_params
     params.require(:apps_ep_vote_app_application_form).permit(
       :step,
-      :place_first_round,
-      :place_second_round,
-      :sk_citizen,
+      :place,
+      :citizenship,
       :delivery,
       :full_name, :pin, :nationality, :maiden_name,
       :authorized_person_full_name, :authorized_person_pin,
@@ -45,14 +49,17 @@ class Apps::EpVoteApp::ApplicationFormsController < ApplicationController
       :delivery_street, :delivery_pobox, :delivery_municipality, :delivery_country,
       :municipality_email,
       :municipality_email_verified,
-      :permanent_resident,
-      :back
+      :sk_citizen_residency,
+      :back,
+      :eu_citizen_residency,
+      :eu_citizen_sk_resident,
+      :eu_citizen_non_sk_resident
     )
   end
 
   private def set_metadata
     @metadata.og.title = 'Žiadosť o hlasovací preukaz'
-    @metadata.og.image = 'https://volby.digital/images/share-2024.png'
+    @metadata.og.image = 'https://volby.digital/images/share-ep-2024.png'
     @metadata.og.description = 'Aj keď budete počas volieb mimo trvalého pobytu, voliť sa dá. Stačí požiadať.'
   end
 

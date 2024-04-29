@@ -1,0 +1,18 @@
+<%= content_for :title, build_page_title('Nemôžete voliť na Slovensku', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for 'apps_ep_vote_app_application_form', :builder => AppFormBuilder, url: apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, value: 'eu_citizen_non_sk_resident' %>
+    <% end %>
+
+    <h1 class="govuk-heading-xl">Nemôžete voliť na Slovensku</h1>
+    <p class="govuk-body-lead">
+      Vo voľbách do európskeho parlamentu volíte podľa podmienok krajiny EÚ, v ktorej máte trvalý pobyt.
+    </p>
+
+    <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
+  </div>
+</div>

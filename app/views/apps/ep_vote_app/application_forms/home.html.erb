@@ -1,16 +1,16 @@
-<%= content_for :title, build_page_title('Hlasovanie v mieste trvalého bydliska', 'Prezidentské voľby') %>
-<%= content_for(:headerline, 'Prezidentské voľby') %>
+<%= content_for :title, build_page_title('Hlasovanie v mieste trvalého bydliska', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_for 'apps_ep_vote_app_application_form', :builder => AppFormBuilder, url: apps_ep_vote_app_application_forms_path do |f| %>
       <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
-      <%= f.hidden_field :step, :value => 'home' %>
+      <%= f.hidden_field :step, value: 'home' %>
     <% end %>
 
     <h1 class="govuk-heading-xl">Nepotrebujete nič vybavovať</h1>
     <p class="govuk-body-lead">V čase volieb volíte vo volebnom okrsku, v ktorom ste zapísaný podľa miesta vášho trvalého bydliska.</p>
-    <p class="govuk-body-lead">O volebnom okrsku informuje obec v oznámení o čase a miesta konania volieb. V deň konania volieb si nezabudnite do volebnej miestnosti priniesť občiansky preukaz.</p>
+    <p class="govuk-body-lead">O volebnom okrsku informuje obec v oznámení o čase a mieste konania volieb. V deň konania volieb si nezabudnite do volebnej miestnosti priniesť občiansky preukaz.</p>
     <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
   </div>
 </div>

@@ -1,22 +1,38 @@
-<%= content_for :title, build_page_title('Zaslanie žiadosti', 'Prezidentské voľby') %>
-<%= content_for(:headerline, 'Prezidentské voľby') %>
+<%= content_for :title, build_page_title('Zaslanie žiadosti', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">Pošlite email so žiadosťou na úrad</h1>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: delivery_apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, value: 'send' %>
+      <%= f.hidden_field :full_name %>
+      <%= f.hidden_field :pin %>
+      <%= f.hidden_field :street %>
+      <%= f.hidden_field :pobox %>
+      <%= f.hidden_field :municipality %>
+      <%= f.hidden_field :municipality_email %>
+      <%= f.hidden_field :municipality_email_verified %>
+      <%= f.hidden_field :same_delivery_address %>
+      <%= f.hidden_field :delivery_street %>
+      <%= f.hidden_field :delivery_pobox %>
+      <%= f.hidden_field :delivery_municipality %>
+      <%= f.hidden_field :delivery_country %>
+    <% end %>
 
+    <h1 class="govuk-heading-xl">Pošlite email so žiadosťou na úrad</h1>
     <div>
       <% if @application_form.municipality_email.present? %>
         <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú adresu obce:
         <%= mail_to @application_form.municipality_email, @application_form.municipality_email,
           target: '_blank',
           body: @application_form.from_slovakia_email_body,
-          subject: 'Žiadosť o hlasovací preukaz do prezidentských volieb.'
+          subject: 'Žiadosť o hlasovací preukaz pre voľby do európskeho parlamentu'
         %>
         </p>
       <% else %>
         <p class="govuk-body-l">Vygenerovanú žiadosť potrebujete poslať z Vašej emailovej adresy na príslušnú emailovú adresu obce
-        <%= @application_form.municipality %></p>
+        <%= @application_form.municipality %> určenú pre žiadosti o vydávanie volebných preukazov.</p>
         <p class="govuk-body-l">Emailovú adresu je možné nájsť na webovej stránke obce.</p>
       <% end %>
     </div>

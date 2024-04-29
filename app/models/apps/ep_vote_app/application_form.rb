@@ -1,18 +1,18 @@
 module Apps
   module EpVoteApp
     class ApplicationForm
-      FIRST_ROUND_DATE = Date.parse('2024-06-23')
-      FIRST_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 19.day
-      SECOND_ROUND_REQUEST_SENDING_DEADLINE = FIRST_ROUND_DATE - 9.day
+      VOTE_DATE = Date.parse(ENV.fetch('EP_VOTE_DATE', '2024-06-08'))
+      REQUEST_SENDING_DEADLINE = VOTE_DATE - 19.days
 
       include ActiveModel::Model
 
       attr_accessor :step
-      attr_accessor :place_first_round
-      attr_accessor :place_second_round
       attr_accessor :place
-      attr_accessor :sk_citizen
-      attr_accessor :permanent_resident
+      attr_accessor :citizenship
+      attr_accessor :sk_citizen_residency
+      attr_accessor :eu_citizen_residency
+      attr_accessor :eu_citizen_sk_resident
+      attr_accessor :eu_citizen_non_sk_resident
       attr_accessor :delivery
       attr_accessor :full_name, :pin
       attr_accessor :authorized_person_full_name, :authorized_person_pin
@@ -23,11 +23,11 @@ module Apps
       attr_accessor :municipality_email_verified
       attr_accessor :back
 
-      validates_presence_of :place_second_round, message: 'Vyberte si jednu z možností v druhom kole',
-                            on: [:place_second_round]
+      validates_presence_of :citizenship, message: 'Vyberte vaše občianstvo', on: :citizenship
+      validates_presence_of :sk_citizen_residency, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :sk_citizen_residency
+      validates_presence_of :eu_citizen_residency, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :eu_citizen_residency
 
-      validates_presence_of :sk_citizen, message: 'Vyberte áno pokiaľ ste občan Slovenskej republiky', on: :sk_citizen
-      validates_presence_of :permanent_resident, message: 'Vyberte áno pokiaľ máte trvalý pobyt na Slovensku', on: :permanent_resident
+      validates_presence_of :place, message: 'Vyberte kde plánujete voliť', on: :place
 
       validates_presence_of :delivery, message: 'Vyberte si spôsob prevzatia hlasovacieho preukazu', on: :delivery
       validates_exclusion_of :delivery, in: %w(post authorized_person),
@@ -38,10 +38,9 @@ module Apps
                              message: 'Termín na vybavenie hlasovacieho preukazu uplynul 28.2.2020.', on: :delivery
 
       validates_presence_of :full_name, message: 'Meno je povinná položka',
-                            on: [:identity, :world_abroad_permanent_resident, :authorized_person]
+                            on: [:identity, :sk_citizen_world_resident, :authorized_person]
       validates_presence_of :pin, message: 'Rodné číslo je povinná položka',
-                            on: [:identity, :world_abroad_permanent_resident, :authorized_person]
-      # validate :pin_is_ok, on: [:identity, :world_abroad_permanent_resident, :authorized_person]
+                            on: [:identity, :sk_citizen_world_resident, :authorized_person]
       validates_presence_of :street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
                             on: [:identity, :authorized_person]
       validates_presence_of :pobox, message: 'Zadajte poštové smerové čislo',
@@ -57,32 +56,28 @@ module Apps
       validates_presence_of :same_delivery_address, message: 'Zadajte kam chcete zaslať hlasovací preukaz',
                             on: :delivery_address
       validates_presence_of :delivery_street, message: 'Zadajte ulicu alebo názov obce ak obec nemá ulice',
-                            on: [:delivery_address, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :sk_citizen_world_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_pobox, message: 'Zadajte poštové smerové čislo',
-                            on: [:delivery_address, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :sk_citizen_world_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_municipality, message: 'Zadajte obec',
-                            on: [:delivery_address, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :sk_citizen_world_resident],
                             if: -> (f) { f.custom_delivery_address? }
       validates_presence_of :delivery_country, message: 'Zadajte štát',
-                            on: [:delivery_address, :world_abroad_permanent_resident],
+                            on: [:delivery_address, :sk_citizen_world_resident],
                             if: -> (f) { f.custom_delivery_address? }
 
       def self.active?
-        Date.current < FIRST_ROUND_DATE + 14.day
+        Date.current < VOTE_DATE
       end
 
       def minv_email
         "volby@minv.sk"
       end
 
-      def year
-        FIRST_ROUND_DATE.year
-      end
-
       def custom_delivery_address?
-        same_delivery_address == '0' || step == 'world_abroad_permanent_resident'
+        same_delivery_address == '0'
       end
 
       def municipality_email_verified?
@@ -97,40 +92,16 @@ module Apps
         back == "true"
       end
 
-      def place_choice
-        if place_first_round == 'sk'
-          if place_second_round == 'sk'
-            'obe kolá'
-          else
-            'prvé kolo'
-          end
-        else
-          'druhé kolo'
-        end
-      end
-
       def pickup_remaining_days
-        if place_first_round == 'sk'
-          (FIRST_ROUND_DATE - Date.current).to_i - 1
-        else
-          (FIRST_ROUND_DATE - Date.current).to_i + 13
-        end
+        (VOTE_DATE - Date.current).to_i - 1
       end
 
       def request_sending_remaining_days
-        if place_first_round == 'sk'
-          (FIRST_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
-        else
-          (SECOND_ROUND_REQUEST_SENDING_DEADLINE - Date.current).to_i
-        end
+        (REQUEST_SENDING_DEADLINE - Date.current).to_i
       end
 
       def pickup_expired?
         pickup_remaining_days < 0
-      end
-
-      def first_round_expired?
-        (FIRST_ROUND_DATE - Date.current).to_i < 0
       end
 
       def request_sending_expired?
@@ -151,145 +122,143 @@ module Apps
         ).gsub(/\n/, "\r\n")
       end
 
-      private def pin_is_ok
-        return errors.add(:pin, 'Rodné číslo je pocinná položka') if pin.blank?
-
-        begin
-          pin.to_i
-        rescue ArgumentError
-          return errors.add(:pin, 'Rodné číslo obsahuje neplatné znaky')
-        end
-
-        pin = self.pin.gsub(%r{/}, '')
-        return errors.add(:pin, 'Rodné číslo nie je deliteľné číslom 11') if pin.length == 10 and pin.to_i % 11 != 0
-        return errors.add(:pin, 'Rodné číslo má nesprávnu dĺžku') if pin.length != 10 and pin.length != 9
-
-        case pin[2..3].to_i
-        when 0, 13..50, 63..99
-          return errors.add(:pin, 'Rodné číslo obsahuje neplatný mesiac')
-        end
-
-        month = pin[2..3].to_i % 50
-        year = pin[0..1].to_i + (pin[2..3].to_i > 12 ? 1900 : 2000)
-        begin
-          Date.new(year, month, pin[4..5].to_i)
-        rescue ArgumentError
-          errors.add(:pin, 'Rodné číslo obsahuje neplatný dátum')
-        end
-      end
-
       def run(listener)
         case step
         when 'start'
           start_step(listener)
+        when 'citizenship'
+          citizenship_step(listener)
+        when 'sk_citizen_residency'
+          sk_citizen_residency_step(listener)
+        when 'eu_citizen_residency'
+          eu_citizen_residency_step(listener)
+        when 'eu_citizen_sk_resident'
+          eu_citizen_sk_resident_step(listener)
+        when 'eu_citizen_non_sk_resident'
+          eu_citizen_non_sk_resident_step(listener)
+        when 'sk_citizen_eu_resident'
+          sk_citizen_eu_resident_step(listener)
+        when 'sk_citizen_world_resident'
+          sk_citizen_world_resident_step(listener)
         when 'place'
           place_step(listener)
-        when 'sk_citizen'
-          sk_citizen_step(listener)
-        when 'permanent_resident'
-          permanent_resident_step(listener)
         when 'delivery'
           delivery_step(listener)
         when 'identity'
           identity_step(listener)
         when 'authorized_person'
           authorized_person_step(listener)
+        when 'authorized_person_send'
+          authorized_person_send_step(listener)
         when 'address'
           address_step(listener)
         when 'delivery_address'
           delivery_address_step(listener)
-        when 'world_abroad_permanent_resident'
-          world_abroad_permanent_resident_step(listener)
-        when 'non_sk_nationality'
-          non_sk_nationality(listener)
+        when 'other_nationality'
+          other_nationality_step(listener)
         when 'home'
-          home(listener)
+          home_step(listener)
+        when 'person'
+          person_step(listener)
+        when 'send'
+          send_step(listener)
         end
       end
 
-      private def start_step(listener)
-        self.step = 'sk_citizen'
-        listener.render :sk_citizen
+      private
+
+      def start_step(listener)
+        listener.render :citizenship
       end
 
-      private def sk_citizen_step(listener)
+      def citizenship_step(listener)
         if go_back?
-          self.step = 'start'
           listener.render :start
-        elsif valid?(:sk_citizen)
-          case sk_citizen
-          when 'yes'
-            self.step = 'permanent_resident'
-            listener.render :permanent_resident
-          when 'no'
-            listener.redirect_to action: :non_sk_nationality
+        elsif valid?(:citizenship)
+          case citizenship
+          when 'sk'
+            listener.render :sk_citizen_residency
+          when 'eu'
+            listener.render :eu_citizen_residency
+          when 'other'
+            listener.redirect_to action: :other_nationality
           end
         else
-          listener.render :sk_citizen
+          listener.render :citizenship
         end
       end
 
-      private def permanent_resident_step(listener)
+      def sk_citizen_residency_step(listener)
         if go_back?
-          self.step = 'sk_citizen'
-          listener.render :sk_citizen
-        elsif valid?(:permanent_resident)
-          case permanent_resident
-          when 'yes'
-            self.step = 'place'
+          listener.render :citizenship
+        elsif valid?(:sk_citizen_residency)
+          case sk_citizen_residency
+          when 'sk'
             listener.render :place
-          when 'no'
-            listener.redirect_to action: :world
+          when 'eu'
+            listener.redirect_to action: :sk_citizen_eu_resident
+          when 'other'
+            listener.redirect_to action: :sk_citizen_world_resident
           end
         else
-          listener.render :permanent_resident
+          listener.render :sk_citizen_residency
         end
       end
 
-      private def place_step(listener)
+      def eu_citizen_residency_step(listener)
         if go_back?
-          self.step = 'permanent_resident'
-          listener.render :permanent_resident
+          listener.render :citizenship
+        elsif valid?(:eu_citizen_residency)
+          case eu_citizen_residency
+          when 'sk'
+            listener.redirect_to action: :eu_citizen_sk_resident
+          when 'other'
+            listener.redirect_to action: :eu_citizen_non_sk_resident
+          end
+        else
+          listener.render :eu_citizen_residency
+        end
+      end
+
+      def eu_citizen_sk_resident_step(listener)
+        if go_back?
+          listener.render :eu_citizen_residency
+        else
+          listener.render :eu_citizen_sk_resident
+        end
+      end
+
+      def eu_citizen_non_sk_resident_step(listener)
+        if go_back?
+          listener.render :eu_citizen_residency
+        else
+          listener.render :eu_citizen_non_sk_resident
+        end
+      end
+
+      def place_step(listener)
+        if go_back?
+          listener.render :sk_citizen_residency
         elsif valid?(:place)
-          if first_round_expired?
-            if valid?(:place_second_round)
-              if place_second_round == 'sk'
-                self.place_first_round = 'home'
-                self.place_second_round = place_second_round
-                self.step = 'delivery'
-                listener.render :delivery
-              else
-                listener.redirect_to action: :home
-              end
-            else
-              listener.render :place
-            end
-          else
-            if place_first_round == 'sk' || place_second_round == 'sk'
-              self.place_first_round = place_first_round
-              self.place_second_round = place_second_round
-              self.step = 'delivery'
-              listener.render :delivery
-            else
-              listener.redirect_to action: :home
-            end
+          case place
+          when 'home'
+            listener.redirect_to action: :home
+          when 'sk'
+            listener.redirect_to action: :delivery
           end
         else
           listener.render :place
         end
       end
 
-      private def delivery_step(listener)
+      def delivery_step(listener)
         if go_back?
-          self.step = 'place'
           listener.render :place
         elsif valid?(:delivery)
           case delivery
           when 'post'
-            self.step = 'identity'
             listener.render :identity
           when 'authorized_person'
-            self.step = 'authorized_person'
             listener.render :authorized_person
           when 'person'
             listener.redirect_to action: :person
@@ -299,67 +268,89 @@ module Apps
         end
       end
 
-      private def identity_step(listener)
+      def identity_step(listener)
         if go_back?
-          self.step = 'delivery'
           listener.render :delivery
         elsif valid?(:identity)
-          self.step = 'delivery_address'
           listener.render :delivery_address
         else
           listener.render :identity
         end
       end
 
-      private def delivery_address_step(listener)
+      def delivery_address_step(listener)
         if go_back?
-          self.step = 'identity'
           listener.render :identity
         elsif valid?(:delivery_address)
-          self.step = 'send'
-          listener.render :send
+          listener.render :send_email
         else
           listener.render :delivery_address
         end
       end
 
-      private def authorized_person_step(listener)
+      def authorized_person_step(listener)
         if go_back?
-          self.step = 'delivery'
           listener.render :delivery
         elsif valid?(:authorized_person)
-          self.step = 'authorized_person_send'
           listener.render :authorized_person_send
         else
-          self.step = 'authorized_person'
           listener.render :authorized_person
         end
       end
 
-      private def world_abroad_permanent_resident_step(listener)
+      def authorized_person_send_step(listener)
         if go_back?
-          self.step = 'permanent_resident'
-          listener.render :permanent_resident
+          listener.render :authorized_person
         else
-          listener.render :world_abroad_permanent_resident
+          listener.render :authorized_person_send
         end
       end
 
-      private def non_sk_nationality(listener)
+      def sk_citizen_world_resident_step(listener)
         if go_back?
-          self.step = 'sk_citizen'
-          listener.render :sk_citizen
+          listener.render :sk_citizen_residency
         else
-          listener.render :non_sk_nationality
+          listener.render :sk_citizen_world_resident
         end
       end
 
-      private def home(listener)
+      def sk_citizen_eu_resident_step(listener)
         if go_back?
-          self.step = 'place'
+          listener.render :sk_citizen_residency
+        else
+          listener.render :sk_citizen_eu_resident
+        end
+      end
+
+      def other_nationality_step(listener)
+        if go_back?
+          listener.render :citizenship
+        else
+          listener.render :other_nationality
+        end
+      end
+
+      def home_step(listener)
+        if go_back?
           listener.render :place
         else
           listener.render :home
+        end
+      end
+
+      def person_step(listener)
+        if go_back?
+          listener.render :delivery
+        else
+          listener.render :person
+        end
+      end
+
+      def send_step(listener)
+        if go_back?
+          listener.render :delivery_address
+        else
+          listener.render :send_email
         end
       end
     end
