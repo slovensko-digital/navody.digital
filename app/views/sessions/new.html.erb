@@ -13,8 +13,10 @@
       <%= image_submit_tag 'google/btn_google_signin_dark_normal.svg', class: 'govuk-link', title: 'Prihlásiť sa cez Google', alt: 'Prihlásiť sa cez Google', style: 'max-width: 300px' %>
     <% end %>
 
-    <%= form_tag(auth_path(:eid), method: :post, class: 'govuk-body govuk-!-margin-bottom-8') do %>
-      <%= image_submit_tag 'eid-sk.svg', class: 'govuk-link', title: 'Prihlásiť sa cez slovensko.sk', alt: 'Prihlásiť sa cez slovensko.sk', style: 'max-width: 300px' %>
+    <% if ENV['AUTH_EID_BASE_URL'].present? %>
+      <%= form_tag(auth_path(:eid), method: :post, class: 'govuk-body govuk-!-margin-bottom-8') do %>
+        <%= image_submit_tag 'eid-sk.svg', class: 'govuk-link', title: 'Prihlásiť sa cez slovensko.sk', alt: 'Prihlásiť sa cez slovensko.sk', style: 'max-width: 300px' %>
+      <% end %>
     <% end %>
 
     <%= form_tag(auth_path(:magiclink), method: :post, id: 'login-email') do %>
