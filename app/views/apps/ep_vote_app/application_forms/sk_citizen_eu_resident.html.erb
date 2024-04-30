@@ -1,0 +1,20 @@
+<%= content_for :title, build_page_title('Hlasovanie v inej členskej krajine EÚ', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for 'apps_ep_vote_app_application_form', :builder => AppFormBuilder, url: apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, value: 'sk_citizen_eu_resident' %>
+    <% end %>
+
+    <h1 class="govuk-heading-xl">Ak máte trvalý pobyt v&nbsp;inej členskej krajine EÚ, môžete voliť iba v&nbsp;tejto krajine</h1>
+    <p class="govuk-body-m">Občan, ktorý má povolený pobyt v inom členskom štáte EÚ má možnosť hlasovať v tomto štáte, pre kandidátov na poslancov, ktorí sú zaregistrovaní v&nbsp;danej krajine. Viac informácií vám poskytnú zodpovedné úrady v&nbsp;danom štáte.</p>
+    <p class="govuk-body-m">Hlasovanie na území štátu, kde nemá občan povolený alebo trvalý pobyt, nie je možné.</p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
+  </div>
+</div>

@@ -1,18 +1,20 @@
-<%= content_for :title, build_page_title('Osobné prevzatie hlasovacieho preukazu', 'Prezidentské voľby') %>
-<%= content_for(:headerline, 'Prezidentské voľby') %>
+<%= content_for :title, build_page_title('Osobné prevzatie hlasovacieho preukazu', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: delivery_apps_ep_vote_app_application_forms_path do |f| %>
       <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= f.hidden_field :step, value: 'authorized_person' %>
+    <% end %>
+
+    <%= form_for @application_form, :builder => AppFormBuilder, url: authorized_person_send_apps_ep_vote_app_application_forms_path do |f| %>
       <%= render 'components/error_summary', form: @application_form %>
       <h1 class="govuk-heading-xl">Prevzatie hlasovacieho preukazu splnomocnenou osobou</h2>
       <h2 class="govuk-heading-l">Vaše osobné údaje</h1>
-      <%= f.hidden_field :step %>
+      <%= f.hidden_field :step, value: 'authorized_person' %>
       <%= f.hidden_field :municipality_email %>
       <%= f.hidden_field :municipality_email_verified %>
-      <%= f.hidden_field :place_first_round %>
-      <%= f.hidden_field :place_second_round %>
 
       <%= f.text_field :full_name, class: 'govuk-input--width-20 person', label: 'Meno, priezvisko, titul', hint: 'Ako na občianskom preukaze. Napríklad: JUDr. Ján Mrkvička', autocomplete: 'name' %>
       <%= f.text_field :pin, class: 'govuk-input--width-10 person', label: 'Rodné číslo', hint: 'Napríklad: 123456/1234' %>

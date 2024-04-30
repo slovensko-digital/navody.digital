@@ -1,0 +1,26 @@
+<%= content_for :title, build_page_title('Miesto trvalého pobytu', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= render 'components/error_summary', form: @application_form %>
+      <%= f.hidden_field :step, value: 'sk_citizen_residency' %>
+      <%= f.radios :sk_citizen_residency, 'Máte trvalý pobyt v SR?' do %>
+        <p class="govuk-body-lead">Na to, aby ste nemali trvalý pobyt na Slovensku, museli ste si ho odhlásiť.</p>
+        <%= f.radio_button :sk_citizen_residency, 'sk', label: "Áno, mám trvalý pobyt v SR" %>
+        <%= f.radio_button :sk_citizen_residency, 'eu',
+          label: "Nie, mám trvalý pobyt v inej členskej krajine EÚ",
+          hint: "Pri odhlasovaní trvalého pobytu ste museli odovzdať občiansky preukaz."
+        %>
+        <%= f.radio_button :sk_citizen_residency, 'other',
+          label: "Nie, mám trvalý pobyt mimo EÚ",
+          hint: "Pri odhlasovaní trvalého pobytu ste museli odovzdať občiansky preukaz."
+        %>
+      <% end %>
+
+      <%= f.submit 'Pokračovať' %>
+    <% end %>
+  </div>
+</div>
