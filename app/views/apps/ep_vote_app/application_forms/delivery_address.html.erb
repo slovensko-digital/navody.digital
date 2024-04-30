@@ -1,12 +1,12 @@
-<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Prezidentské voľby') %>
-<%= content_for(:headerline, 'Prezidentské voľby') %>
+<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: send_email_apps_ep_vote_app_application_forms_path do |f| %>
       <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
       <%= render 'components/error_summary', form: @application_form %>
-      <%= f.hidden_field :step %>
+      <%= f.hidden_field :step, value: 'delivery_address' %>
       <%= f.hidden_field :full_name %>
       <%= f.hidden_field :pin %>
       <%= f.hidden_field :street %>
@@ -14,8 +14,6 @@
       <%= f.hidden_field :municipality %>
       <%= f.hidden_field :municipality_email %>
       <%= f.hidden_field :municipality_email_verified %>
-      <%= f.hidden_field :place_first_round %>
-      <%= f.hidden_field :place_second_round %>
 
       <h1 class="govuk-heading-l">Kam chcete zaslať hlasovací preukaz?</h1>
 
