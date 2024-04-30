@@ -11,6 +11,11 @@ class SessionsController < ApplicationController
     end
 
     if new_eid_identity?
+      unless fully_represents_subject?
+        render :insufficient_representation, locals: { eid_token: eid_token }
+        return
+      end
+
       render :new_eid_identity, locals: { eid_token: eid_token }
       return
     end
@@ -25,7 +30,18 @@ class SessionsController < ApplicationController
     notice = user.previously_new_record? ? 'first_time_login' : 'Prihlásenie úspešné. Vitajte!'
 
     if eid_identity_approval?
-      user.update!(eid_sub: eid_sub_from_auth)
+      assertion = Upvs::Assertion.assertion(eid_token)
+
+      if assertion
+        user.update!(
+          eid_sub: eid_sub_from_auth,
+          subject_name: assertion.subject_name,
+          subject_cin: assertion.subject_cin,
+          subject_edesk_number: assertion.subject_edesk_number,
+          )
+      else
+        user.update!(eid_sub: eid_sub_from_auth)
+      end
     end
 
     unless should_keep_eid_token_in_session?(user.eid_sub)
@@ -57,7 +73,10 @@ class SessionsController < ApplicationController
 
   def destroy
     if should_perform_eid_logout?
-      redirect_to eid_token.generate_logout_url(expires_in: 5.minutes)
+      eid_logout_url = eid_token.generate_logout_url(expires_in: 5.minutes)
+      reset_session
+
+      redirect_to eid_logout_url
     else
       logout
     end
@@ -94,5 +113,10 @@ class SessionsController < ApplicationController
   def after_login_redirect_path
     return session[:after_login_callback] if session[:after_login_callback]&.start_with?("/") # Only allow local redirects
     root_path
+  end
+
+  def fully_represents_subject?
+    assertion = Upvs::Assertion.assertion(eid_token)
+    assertion&.fully_represents_subject?
   end
 end

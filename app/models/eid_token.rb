@@ -14,7 +14,7 @@ class EidToken
   end
 
   def sub
-    decoded_token&.first&.fetch('actor')&.fetch('sub')
+    decoded_token&.first&.fetch('sub')
   end
 
   def name

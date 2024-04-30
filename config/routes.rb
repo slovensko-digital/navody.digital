@@ -171,6 +171,8 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
+  get '/login', to: 'sessions#create', as: :login
+  get '/logout', to: 'sessions#destroy', as: :logout
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'

@@ -510,8 +510,8 @@ ALTER SEQUENCE public.apps_id_seq OWNED BY public.apps.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1233,7 +1233,10 @@ CREATE TABLE public.users (
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    eid_sub character varying
+    eid_sub character varying,
+    subject_name character varying,
+    subject_cin character varying,
+    subject_edesk_number character varying
 );
 
 
@@ -1323,41 +1326,6 @@ CREATE SEQUENCE upvs.form_template_related_documents_id_seq
 --
 
 ALTER SEQUENCE upvs.form_template_related_documents_id_seq OWNED BY upvs.form_template_related_documents.id;
-
-
---
--- Name: form_template_related_documents_temp; Type: TABLE; Schema: upvs; Owner: -
---
-
-CREATE TABLE upvs.form_template_related_documents_temp (
-    id bigint NOT NULL,
-    posp_id character varying NOT NULL,
-    posp_version character varying NOT NULL,
-    message_type character varying NOT NULL,
-    xsd_schema text,
-    xslt_transformation text,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: form_template_related_documents_temp_id_seq; Type: SEQUENCE; Schema: upvs; Owner: -
---
-
-CREATE SEQUENCE upvs.form_template_related_documents_temp_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: form_template_related_documents_temp_id_seq; Type: SEQUENCE OWNED BY; Schema: upvs; Owner: -
---
-
-ALTER SEQUENCE upvs.form_template_related_documents_temp_id_seq OWNED BY upvs.form_template_related_documents_temp.id;
 
 
 --
@@ -1614,13 +1582,6 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules ALTER COLUMN id SET DEFAULT n
 --
 
 ALTER TABLE ONLY upvs.form_template_related_documents ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_id_seq'::regclass);
-
-
---
--- Name: form_template_related_documents_temp id; Type: DEFAULT; Schema: upvs; Owner: -
---
-
-ALTER TABLE ONLY upvs.form_template_related_documents_temp ALTER COLUMN id SET DEFAULT nextval('upvs.form_template_related_documents_temp_id_seq'::regclass);
 
 
 --
@@ -1900,14 +1861,6 @@ ALTER TABLE ONLY upvs.egov_application_allow_rules
 
 ALTER TABLE ONLY upvs.form_template_related_documents
     ADD CONSTRAINT form_template_related_documents_pkey PRIMARY KEY (id);
-
-
---
--- Name: form_template_related_documents_temp form_template_related_documents_temp_pkey; Type: CONSTRAINT; Schema: upvs; Owner: -
---
-
-ALTER TABLE ONLY upvs.form_template_related_documents_temp
-    ADD CONSTRAINT form_template_related_documents_temp_pkey PRIMARY KEY (id);
 
 
 --
@@ -2486,6 +2439,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221022143119'),
 ('20230325092744'),
 ('20230325095737'),
-('20230325151049');
+('20230325151049'),
+('20240427124856');
 
 
