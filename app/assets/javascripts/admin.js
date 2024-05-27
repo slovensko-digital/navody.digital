@@ -15,3 +15,4 @@
 //= require activestorage
 //= require turbolinks
 //= require tasks
+//= require copy_to_clipboard

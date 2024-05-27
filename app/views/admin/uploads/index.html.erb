@@ -15,7 +15,9 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header" scope="col">Filename</th>
-      <th class="govuk-table__header" scope="col">Url</th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col"></th>
+      <th class="govuk-table__header" scope="col"></th>
       <th class="govuk-table__header" scope="col"></th>
     </tr>
   </thead>
@@ -23,7 +25,15 @@
     <% @files.each do |file| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= file.key %></td>
-        <td class="govuk-table__cell"><%= link_to 'Link to file', UploadsService.get_url(file) %></td>
+        <td class="govuk-table__cell">
+          <% if file.content_type.include?('video') %>
+            <%= video_tag UploadsService.get_url(file), size: "320x200", :controls => true %>
+          <% elsif file.content_type.include?('image') %>
+            <%= link_to (image_tag UploadsService.get_url(file), size: "320x200"), UploadsService.get_url(file) %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell"><%= link_to 'Copy link', UploadsService.get_url(file), class: 'copy-to-clipboard', onclick: "copyToClipboard('#{UploadsService.get_url(file)}');return false;" %></td>
+        <td class="govuk-table__cell"><%= link_to 'Download️', UploadsService.get_url(file), download: file.filename %></td>
         <td class="govuk-table__cell"><%= link_to 'Delete', admin_upload_path(file.key), method: :delete, data: { confirm: 'Are you sure you want to delete file: ' + file.key + '?' } %></td>
       </tr>
     <% end %>
