@@ -54,6 +54,8 @@ Rails.application.routes.draw do
   resources :journeys, path: 'zivotne-situacie', only: [:show] do
     resources :steps, path: 'krok' do
       get :start, on: :member, path: 'spustit'
+      post :subscribe_to_deadline_notification, on: :member, path: 'vytvorit-notifikaciu'
+      delete :unsubscribe_deadline_notification, on: :member, path: 'zrusit-notifikaciu'
       resources :tasks do
         member do
           post :complete
