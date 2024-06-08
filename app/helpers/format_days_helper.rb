@@ -23,4 +23,12 @@ module FormatDaysHelper
       "posledný deň"
     end
   end
+
+  def format_past_days_count(past_days)
+    if past_days == 1
+      "1 dňom"
+    else
+      "#{past_days} dňami"
+    end
+  end
 end

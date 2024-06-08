@@ -26,14 +26,10 @@
           <% if step.waiting_time > 0 && user_step&.status == "waiting" && user_step&.submitted_at %>
             <% remaining_time = user_step.remaining_time %>
             <% if remaining_time < 0 %>
-              <strong class="govuk-tag govuk-tag--red">
-            <% elsif remaining_time < 5 %>
-              <strong class="govuk-tag govuk-tag--orange">
+              Lehota vypršala pred: <strong class="govuk-tag govuk-tag--red"><%= format_past_days_count(-1 * remaining_time) %></strong>
             <% else %>
-              <strong class="govuk-tag govuk-tag--green">
+              Čakacia lehota: <strong class="govuk-tag govuk-tag--blue"><%= format_remaining_days_count(remaining_time) %></strong>
             <% end %>
-              <%= remaining_time %>
-            </strong>
           <% end %>
         <% else %>
           <%= link_to step.title, [@journey, step], class: 'sdn-timeline__link' %>
