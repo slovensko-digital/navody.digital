@@ -18,10 +18,6 @@ class UserStep < ApplicationRecord
     end
   end
 
-  def update_status(new_status:)
-    update(status: new_status, submitted_at: new_status == 'waiting' ? Date.today : nil)
-  end
-
   def remaining_time
     step.waiting_time - (Date.today - submitted_at).to_i
   end

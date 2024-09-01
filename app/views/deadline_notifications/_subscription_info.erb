@@ -1,29 +1,24 @@
-<div id="step_subscription">
-  <% if current_user_step.submitted_at %>
-    <p>
-      Teraz treba počkať na rozhodnutie. Ostáva <%= current_user_step.remaining_time %> z
-      pôvodných <%= t('components.deadline.remaining_days', count: @current_step.waiting_time) %>.
-    </p>
-  <% end %>
+<div id="subsciption_info">
   <% if current_user_step.to_be_notified_at %>
     <p>
-      Budeme vás o tom notifikovať e-mailom <%= current_user_step.to_be_notified_at.strftime('%d.%m.%Y') %>.
+      O vypršaní lehoty vám zašleme notifikáciu e-mailom dňa <%= current_user_step.to_be_notified_at.strftime('%d.%m.%Y') %>.
+      <a id="change-notification-date-link" href="#">Zmeniť dátum</a>
     </p>
     <%= form_tag unsubscribe_deadline_notification_journey_step_path(@current_step.journey, @current_step), remote: true, authenticity_token: true, method: :delete do %>
       <%= hidden_field_tag :current_user_step_id, current_user_step.id %>
-      <%= submit_tag 'Zrušiť naplánovanú notifikáciu.', class: 'govuk-button' %>
+      <%= submit_tag 'Zrušiť notifikáciu', class: 'govuk-button govuk-button--warning' %>
     <% end %>
   <% else
        current_user_step.submitted_at %>
     <p>
-      Pošleme Vám na e-mail notifikáciu keď sa bude lehota blížiť?
-      Vychádza to na <%= current_user_step.expected_resolution_date.strftime('%d.%m.%Y') %>
+      Ak si želáte môžeme vám poslať notifikáciu dňa <%= current_user_step.expected_resolution_date.strftime('%d.%m.%Y') %>.
+      <a id="change-notification-date-link" href="#">Zmeniť dátum</a>
     </p>
 
     <%= form_tag subscribe_to_deadline_notification_journey_step_path(@current_step.journey, @current_step), remote: true, authenticity_token: true do %>
       <%= hidden_field_tag :current_user_step_id, current_user_step.id %>
       <%= hidden_field_tag :notification_date, current_user_step.expected_resolution_date %>
-      <%= submit_tag 'Áno, toto chcem.', class: 'govuk-button' %>
+      <%= submit_tag 'Zapnúť notifikáciu', class: 'govuk-button' %>
     <% end %>
   <% end %>
 </div>
