@@ -83,7 +83,8 @@ class Admin::StepsController < Admin::AdminController
         :position,
         :app_url,
         :app_link_text,
-        :type
+        :type,
+        :waiting_time
     )
   end
 end
