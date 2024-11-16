@@ -12,7 +12,6 @@ class NotificationSubscriptionsController < ApplicationController
       @group.journey = Journey.find(params[:notification_subscription_group][:journey_id]) if params[:notification_subscription_group][:journey_id].present?
       respond_to do |format|
         if @group.save
-          format.html { redirect_to root_path }
           format.js
         else
           format.js { render :new }
@@ -20,7 +19,7 @@ class NotificationSubscriptionsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { render :failure }
+        format.js { render :failure, status: :unprocessable_entity}
       end
     end
 
