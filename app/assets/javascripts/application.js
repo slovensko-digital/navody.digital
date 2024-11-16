@@ -50,4 +50,22 @@ $(document).on("turbolinks:load", function () {
         .classList.add("active-topic__hidden");
     });
   }
+
+  var changeNotificationDateLink = document.querySelector("#change-notification-date-link");
+  if (changeNotificationDateLink) {
+    changeNotificationDateLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      $("#change-notification-date").removeClass("sdn-appear-link-hide");
+      $("#deadline-notifications-info").addClass("sdn-appear-link-hide");
+    });
+  }
+
+  var changeNotificationDateClose = document.querySelector("#change-notification-date-close");
+  if (changeNotificationDateClose) {
+    changeNotificationDateClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      $("#change-notification-date").addClass("sdn-appear-link-hide");
+      $("#deadline-notifications-info").removeClass("sdn-appear-link-hide");
+    });
+  }
 });

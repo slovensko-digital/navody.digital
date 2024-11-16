@@ -1,0 +1,5 @@
+$('#subsciption_info').replaceWith('<%= j render "deadline_notifications/subscription_info", current_user_step: @user_step %>');
+$('#deadline-notifications-info').removeClass('sdn-appear-link-hide')
+$('#change-notification-date').addClass('sdn-appear-link-hide')
+$('#change-notification-date').find('.govuk-form-group').removeClass('govuk-form-group--error')
+$('#change-notification-date').find('#dob-error').addClass('sdn-appear-link-hide')
