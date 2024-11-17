@@ -72,24 +72,18 @@ Rails.application.routes.draw do
           member do
             get :end, path: 'volte-zodpovedne'
             get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
-            get :world, path: 'hlasovanie-cestovny-doklad'
+            get :sk_citizen_world_resident, path: 'hlasovanie-cestovny-doklad'
+            get :sk_citizen_eu_resident, path: 'hlasovanie-mimo-sk-v-eu'
+            get :eu_citizen_sk_resident, path: 'hlasovanie-obcan-eu-na-slovensku'
+            get :eu_citizen_non_sk_resident, path: 'hlasovanie-obcan-eu'
             get :person, path: 'hlasovaci-preukaz-osobne'
-            get :non_sk_nationality, path: 'hlasovanie-neobcana'
-          end
-        end
-      end
-    end
-
-    if ENV['DISABLED_FEATURES'].to_s.exclude?('ep_vote_app_old')
-      namespace :ep_vote_app_old, path: 'volby-do-europskeho-parlamentu-old' do
-        resource :application_forms, path: '' do
-          member do
-            get :end, path: 'hlasovacim-preukazom'
-            get :world, path: 'hlasovanie-v-zahranici'
-            get :eu, path: 'hlasovanie-v-inom-clenskom-state'
-            get :home, path: 'hlasovanie-v-mieste-trvaleho-bydliska'
-            get :person, path: 'hlasovaci-preukaz-osobne'
-            get :non_sk_nationality, path: 'hlasovanie-obcanov-eu-na-slovensku'
+            get :other_nationality, path: 'nebocan-eu'
+            get :delivery, path: 'hlasovaci-preukaz'
+            post :delivery, path: 'hlasovaci-preukaz'
+            get :send_email, path: 'hlasovaci-preukaz-odoslanie'
+            post :send_email, path: 'hlasovaci-preukaz-odoslanie'
+            get :authorized_person_send, path: 'hlasovaci-preukaz-odoslanie-splnomocnene'
+            post :authorized_person_send, path: 'hlasovaci-preukaz-odoslanie-splnomocnene'
           end
         end
       end
@@ -177,6 +171,11 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
   post '/auth/:provider', to: lambda { |_| [404, {}, ["Not Found"]] }, as: :auth
+
+  if ENV['AUTH_EID_BASE_URL'].present?
+    get '/login', to: 'sessions#create', as: :login
+    get '/logout', to: 'sessions#destroy', as: :logout
+  end
 
   resources :faqs, path: 'casto-kladene-otazky'
   resources :pages, path: '', only: 'show'

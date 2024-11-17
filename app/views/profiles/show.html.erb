@@ -3,6 +3,39 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-body sdn-content">
+      <% if current_user.subject_name.present? || current_user.subject_edesk_number.present? || current_user.subject_cin.present? %>
+        <h2 class="govuk-heading-l">Vaše identifikačné údaje</h2>
+        <% if current_user.subject_name.present? %>
+          <div class="govuk-text govuk-!-padding-bottom-5">
+            <div style = "color: #505a5f;" class="govuk-!-font-size-19 govuk-!-padding-bottom-1">
+              Meno
+            </div>
+            <div class="govuk-!-font-size-24">
+              <%= current_user.subject_name %>
+            </div>
+          </div>
+        <% end %>
+        <% if current_user.subject_edesk_number.present? %>
+          <div class="govuk-text govuk-!-padding-bottom-5">
+            <div style = "color: #505a5f;" class="govuk-!-font-size-19 govuk-!-padding-bottom-1">
+              Identifikátor schránky
+            </div>
+            <div class="govuk-!-font-size-24">
+              <%= current_user.subject_edesk_number %>
+            </div>
+          </div>
+        <% end %>
+        <% if current_user.subject_cin.present? %>
+          <div class="govuk-text govuk-!-padding-bottom-5">
+            <div style = "color: #505a5f;" class="govuk-!-font-size-19 govuk-!-padding-bottom-1">
+              IČO
+            </div>
+            <div class="govuk-!-font-size-24">
+              <%= current_user.subject_cin %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
       <h2 class="govuk-heading-l">Nastavenia</h2>
       <div class="govuk-inset-text">Jedného dňa tu pribudne veľa zaujímavých nastavení, ale zatiaľ je to tu také
         prázdne. Ak nám chceš pomôcť testovať novú funkcionalitu Návody.Digital, <%= link_to 'ozvi sa nám', page_path('kontakt') %>.
