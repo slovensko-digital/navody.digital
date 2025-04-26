@@ -6,6 +6,10 @@ ruby '3.2.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.8'
 gem 'rails-i18n'
+
+# temporary till upgrade to rails 7.1 to fix https://github.com/rails/rails/issues/54263#issuecomment-2594912828
+gem 'concurrent-ruby', '1.3.4'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
