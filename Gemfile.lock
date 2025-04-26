@@ -137,7 +137,7 @@ GEM
       addressable
     date (3.4.1)
     diff-lcs (1.5.1)
-    docile (1.4.0)
+    docile (1.4.1)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.8.1)
@@ -415,7 +415,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.12.3)
+    simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
     sinatra (3.1.0)
       mustermann (~> 3.0)
@@ -526,7 +526,7 @@ DEPENDENCIES
   selenium-webdriver (~> 4.16.0)
   show_me_the_cookies
   sib-api-v3-sdk
-  simplecov (~> 0.22.0)
+  simplecov
   sitemap_generator
   spring
   spring-watcher-listen

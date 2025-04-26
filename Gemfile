@@ -108,7 +108,7 @@ group :test do
   gem 'capybara'
   gem 'show_me_the_cookies'
   gem 'selenium-webdriver', "~> 4.16.0" # `base64` dependency is blocking higher version
-  gem 'simplecov', '~> 0.22.0'
+  gem 'simplecov'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
