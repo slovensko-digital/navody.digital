@@ -25,6 +25,7 @@ RUN bundle install
 # Cache everything
 COPY . .
 
+RUN yarn install
 RUN SECRET_KEY_BASE=NONE RAILS_ENV=production bundle exec rails assets:precompile
 
 # Run application by default

@@ -20,7 +20,7 @@ gem 'sass-rails'
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
-gem 'webpacker', '6.0.0.rc.6' # fixes assets:precompile problem https://github.com/rails/rails/issues/43906#issuecomment-1010987092
+gem 'webpacker'
 
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
