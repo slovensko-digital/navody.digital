@@ -17,6 +17,13 @@ CREATE SCHEMA code_list;
 
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: upvs; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -510,8 +517,8 @@ ALTER SEQUENCE public.apps_id_seq OWNED BY public.apps.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1327,7 +1334,10 @@ CREATE TABLE public.users (
     email text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    eid_sub character varying
+    eid_sub character varying,
+    subject_name character varying,
+    subject_cin character varying,
+    subject_edesk_number character varying
 );
 
 
@@ -2665,6 +2675,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231007083404'),
 ('20231007083405'),
 ('20231007083406'),
-('20231007141039');
+('20231007141039'),
+('20240427124856');
 
 
