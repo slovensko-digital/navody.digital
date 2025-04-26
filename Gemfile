@@ -41,10 +41,6 @@ gem 'jbuilder'
 # Workers
 gem 'good_job'
 
-# Remove after migration to good_job
-gem 'que'
-gem 'que-web'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
