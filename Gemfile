@@ -105,9 +105,9 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', "~> 3.39.2"
+  gem 'capybara'
   gem 'show_me_the_cookies'
-  gem 'selenium-webdriver', "~> 4.13"
+  gem 'selenium-webdriver', "~> 4.16.0" # `base64` dependency is blocking higher version
   gem 'simplecov', '~> 0.22.0'
 end
 

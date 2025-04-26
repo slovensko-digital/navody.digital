@@ -645,7 +645,8 @@ CREATE TABLE public.good_job_batches (
     callback_priority integer,
     enqueued_at timestamp(6) without time zone,
     discarded_at timestamp(6) without time zone,
-    finished_at timestamp(6) without time zone
+    finished_at timestamp(6) without time zone,
+    jobs_finished_at timestamp(6) without time zone
 );
 
 
@@ -664,7 +665,10 @@ CREATE TABLE public.good_job_executions (
     scheduled_at timestamp(6) without time zone,
     finished_at timestamp(6) without time zone,
     error text,
-    error_event smallint
+    error_event smallint,
+    error_backtrace text[],
+    process_id uuid,
+    duration interval
 );
 
 
@@ -676,7 +680,8 @@ CREATE TABLE public.good_job_processes (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    state jsonb
+    state jsonb,
+    lock_type smallint
 );
 
 
@@ -718,7 +723,10 @@ CREATE TABLE public.good_jobs (
     is_discrete boolean,
     executions_count integer,
     job_class text,
-    error_event smallint
+    error_event smallint,
+    labels text[],
+    locked_by_id uuid,
+    locked_at timestamp(6) without time zone
 );
 
 
@@ -2062,6 +2070,20 @@ CREATE INDEX index_good_job_executions_on_active_job_id_and_created_at ON public
 
 
 --
+-- Name: index_good_job_executions_on_process_id_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_executions_on_process_id_and_created_at ON public.good_job_executions USING btree (process_id, created_at);
+
+
+--
+-- Name: index_good_job_jobs_for_candidate_lookup; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_jobs_for_candidate_lookup ON public.good_jobs USING btree (priority, created_at) WHERE (finished_at IS NULL);
+
+
+--
 -- Name: index_good_job_settings_on_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2080,13 +2102,6 @@ CREATE INDEX index_good_jobs_jobs_on_finished_at ON public.good_jobs USING btree
 --
 
 CREATE INDEX index_good_jobs_jobs_on_priority_created_at_when_unfinished ON public.good_jobs USING btree (priority DESC NULLS LAST, created_at) WHERE (finished_at IS NULL);
-
-
---
--- Name: index_good_jobs_on_active_job_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_good_jobs_on_active_job_id ON public.good_jobs USING btree (active_job_id);
 
 
 --
@@ -2111,6 +2126,13 @@ CREATE INDEX index_good_jobs_on_batch_id ON public.good_jobs USING btree (batch_
 
 
 --
+-- Name: index_good_jobs_on_concurrency_key_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_concurrency_key_and_created_at ON public.good_jobs USING btree (concurrency_key, created_at);
+
+
+--
 -- Name: index_good_jobs_on_concurrency_key_when_unfinished; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2118,17 +2140,38 @@ CREATE INDEX index_good_jobs_on_concurrency_key_when_unfinished ON public.good_j
 
 
 --
--- Name: index_good_jobs_on_cron_key_and_created_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_on_cron_key_and_created_at_cond; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_good_jobs_on_cron_key_and_created_at ON public.good_jobs USING btree (cron_key, created_at);
+CREATE INDEX index_good_jobs_on_cron_key_and_created_at_cond ON public.good_jobs USING btree (cron_key, created_at) WHERE (cron_key IS NOT NULL);
 
 
 --
--- Name: index_good_jobs_on_cron_key_and_cron_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_on_cron_key_and_cron_at_cond; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_good_jobs_on_cron_key_and_cron_at ON public.good_jobs USING btree (cron_key, cron_at);
+CREATE UNIQUE INDEX index_good_jobs_on_cron_key_and_cron_at_cond ON public.good_jobs USING btree (cron_key, cron_at) WHERE (cron_key IS NOT NULL);
+
+
+--
+-- Name: index_good_jobs_on_labels; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_labels ON public.good_jobs USING gin (labels) WHERE (labels IS NOT NULL);
+
+
+--
+-- Name: index_good_jobs_on_locked_by_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_locked_by_id ON public.good_jobs USING btree (locked_by_id) WHERE (locked_by_id IS NOT NULL);
+
+
+--
+-- Name: index_good_jobs_on_priority_scheduled_at_unfinished_unlocked; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_priority_scheduled_at_unfinished_unlocked ON public.good_jobs USING btree (priority, scheduled_at) WHERE ((finished_at IS NULL) AND (locked_by_id IS NULL));
 
 
 --
@@ -2676,6 +2719,22 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231007083405'),
 ('20231007083406'),
 ('20231007141039'),
-('20240427124856');
+('20240427124856'),
+('20250426123357'),
+('20250426123358'),
+('20250426123359'),
+('20250426123360'),
+('20250426123361'),
+('20250426123362'),
+('20250426123363'),
+('20250426123364'),
+('20250426123365'),
+('20250426123366'),
+('20250426123367'),
+('20250426123368'),
+('20250426123369'),
+('20250426123370'),
+('20250426123635'),
+('20250426123636');
 
 
