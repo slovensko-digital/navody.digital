@@ -13,7 +13,7 @@ RUN npm install -g yarn
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
 RUN apt update
-RUN apt install -y postgresql-12 postgresql-client-12
+RUN apt install -y postgresql-14 postgresql-client-14
 
 # Install chromium-driver
 RUN apt install -y chromium-driver

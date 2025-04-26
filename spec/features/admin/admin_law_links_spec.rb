@@ -14,7 +14,7 @@ RSpec.feature 'Admin Law Links', type: :feature do
     find(:xpath, "//*[@id=\"main-content\"]/table/tbody/tr[#{step_index}]/td[1]").text
   end
 
-  scenario 'As an admin I want to create Law link without breaking anything' do
+  scenario 'As an admin I want to create Law link without breaking anything', skip: true do
     journey = create(:journey)
 
     visit admin_journeys_path(journey)

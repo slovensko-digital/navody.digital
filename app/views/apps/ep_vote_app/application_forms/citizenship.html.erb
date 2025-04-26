@@ -1,0 +1,19 @@
+<%= content_for :title, build_page_title('Aké je vaše občianstvo?', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @application_form, :builder => AppFormBuilder, url: request.original_url do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= render 'components/error_summary', form: @application_form %>
+      <%= f.hidden_field :step, value: 'citizenship' %>
+      <%= f.radios :citizenship, 'Aké je vaše občianstvo?' do %>
+        <%= f.radio_button :citizenship, 'sk', label: "Mám slovenské občianstvo" %>
+        <%= f.radio_button :citizenship, 'eu', label: "Mám občianstvo inej členskej krajiny EÚ" %>
+        <%= f.radio_button :citizenship, 'other', label: "Mám občianstvo mimo EÚ " %>
+      <% end %>
+
+      <%= f.submit 'Pokračovať' %>
+    <% end %>
+  </div>
+</div>

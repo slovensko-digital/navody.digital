@@ -1,16 +1,25 @@
-<%= content_for :title, build_page_title('Notifikácie', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Notifikácie', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
+
+<div class="govuk-grid-row govuk-!-padding-bottom-6">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Počkajte na hlasovací preukaz</h1>
+    <p class="govuk-body-lead">Nezabudnite voliť a&nbsp;voľte zodpovedne.</p>
+    <p class="govuk-body-lead">Ak ste odoslali žiadosť na úrad, do 3 dní by ste mali od obce dostať potvrdenie o&nbsp;prijatí.</p>
+    <p class="govuk-body-lead">Volebný preukaz si so sebou musíte vziať, aj keď sa nakoniec rozhodnete voliť v&nbsp;mieste trvalého bydliska.</p>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Upozornenie</span>
+         Ak vám do 3&nbsp;dní nepríde potvrdenie o&nbsp;prijatí žiadosti, kontaktujte obec telefonicky alebo osobne.
+      </strong>
+    </div>
+  </div>
+</div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-xl">Gratulujeme k&nbsp;úspešnej žiadosti o&nbsp;hlasovací preukaz</h2>
-    <p class="govuk-body-lead">Nezabudnite ísť voliť a voľte zodpovedne.</p>
-
-    <%= render_notification_subscription_component ['EpApplicationFormSubscription', 'NewsletterSubscription'] do %>
-      <h3 class="govuk-heading-m">Nastavte si aj notifikácie na email, aby ste na nič nezabudli.</h3>
-    <% end %>
-
-    <h3 class="govuk-heading-l">Čo ďalej?</h3>
-    <p class="govuk-body">Ak sa Vám táto aplikácia páčila, na portáli Návody.Digital nájdete <%= link_to 'množstvo ďalších návodov' , root_path %> ako vyriešiť aj iné životné situácie, ktoré si vyžadujú kontakt so štátnou byrokraciou.</p>
+    <%= render 'apps/ep_vote_app/application_forms/subscribe' %>
   </div>
 </div>

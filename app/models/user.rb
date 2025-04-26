@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :user_tasks, through: :user_steps
   has_many :notification_subscriptions
   has_many :submissions
-  has_many :upvs_submissions
+  has_many :upvs_submissions, class_name: 'Upvs::Submission'
 
   def logged_in?
     true

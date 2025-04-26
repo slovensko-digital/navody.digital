@@ -1,23 +1,26 @@
-<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Voľby do Európskeho parlamentu') %>
-<%= content_for(:headerline, 'Voľby do Európskeho parlamentu') %>
+<%= content_for :title, build_page_title('Spôsob prevzatia hlasovacieho preukazu', 'Voľby do európskeho parlamentu') %>
+<%= content_for(:headerline, 'Voľby do európskeho parlamentu') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_for @application_form, :builder => AppFormBuilder do |f| %>
-      <%= f.hidden_field :step %>
-      <%= f.hidden_field :sk_citizen %>
+    <%= form_for @application_form, :builder => AppFormBuilder, url: send_email_apps_ep_vote_app_application_forms_path do |f| %>
+      <%= render 'apps/ep_vote_app/application_forms/back', form: f %>
+      <%= render 'components/error_summary', form: @application_form %>
+      <%= f.hidden_field :step, value: 'delivery_address' %>
       <%= f.hidden_field :full_name %>
       <%= f.hidden_field :pin %>
-      <%= f.hidden_field :nationality %>
       <%= f.hidden_field :street %>
       <%= f.hidden_field :pobox %>
       <%= f.hidden_field :municipality %>
       <%= f.hidden_field :municipality_email %>
+      <%= f.hidden_field :municipality_email_verified %>
 
       <h1 class="govuk-heading-l">Kam chcete zaslať hlasovací preukaz?</h1>
 
-      <div class="govuk-form-group">
-        <div class="govuk-radios" data-module="radios">
+      <div class="govuk-form-group <% if @application_form.errors[:same_delivery_address].any? %> govuk-form-group--error<% end %>">
+        <%= f.error_message :same_delivery_address %>
+
+        <div class="govuk-radios" data-module="govuk-radios">
           <%= f.radio_button :same_delivery_address, '1', label: "Na adresu trvalého bydliska", hint: @application_form.full_address%>
           <%= f.radio_button :same_delivery_address, '0', label: "Na inú adresu", data: {'aria-controls' => 'conditional-delivery-address'}%>
 
@@ -31,7 +34,6 @@
       </div>
 
       <%= f.submit 'Pokračovať' %>
-
     <% end %>
   </div>
 </div>
