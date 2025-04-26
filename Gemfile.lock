@@ -413,7 +413,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_range (3.0.0)
+    semantic_range (3.1.0)
     show_me_the_cookies (6.0.0)
       capybara (>= 2, < 4)
     sib-api-v3-sdk (9.1.0)
@@ -471,7 +471,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.4.4)
+    webpacker (6.0.0.rc.6)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -545,7 +545,7 @@ DEPENDENCIES
   validate_url
   wdm (~> 0.1.0)
   web-console
-  webpacker
+  webpacker (= 6.0.0.rc.6)
 
 RUBY VERSION
    ruby 3.2.1p31
