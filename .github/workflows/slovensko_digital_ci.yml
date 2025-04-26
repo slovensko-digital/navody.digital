@@ -26,7 +26,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -35,9 +35,9 @@ jobs:
       - run: bundle exec rails webpacker:compile
         env:
           NODE_OPTIONS: "--openssl-legacy-provider"
-      - run: bundle exec rails db:create db:structure:load --trace
+      - run: bundle exec rails db:test:prepare --trace
 
-      - uses: paambaati/codeclimate-action@v2.7.5
+      - uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
         with:
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 

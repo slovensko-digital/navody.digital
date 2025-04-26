@@ -69,7 +69,9 @@
             <li class="govuk-header__navigation-item govuk-header__navigation-item<%= klass %>">
               <%= link_to 'Categories', admin_categories_path, class: 'govuk-header__link' %>
             </li>
-            <!--Added que link to navbar-->
+            <li class="govuk-header__navigation-item govuk-header__navigation-item">
+              <%= link_to 'Good Job', '/admin/good_job', class: 'govuk-header__link' %>
+            </li>
             <li class="govuk-header__navigation-item govuk-header__navigation-item">
               <%= link_to 'Que', '/admin/que', class: 'govuk-header__link' %>
             </li>
