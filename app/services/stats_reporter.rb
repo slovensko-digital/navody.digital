@@ -5,9 +5,9 @@ class StatsReporter
   end
 
   def report_quarter_hourly
-    report_metric('JobsCount', Que::ActiveRecord::Model.count)
-    report_metric('FailedJobsCount', Que::ActiveRecord::Model.errored.count)
-    report_metric('StuckJobsCount', Que::ActiveRecord::Model.where('run_at < ?', 1.hour.ago).count)
+    report_metric('JobsCount', GoodJob::Job.count - GoodJob::Job.succeeded.count)
+    report_metric('FailedJobsCount', GoodJob::Job.where.not(error: nil).count)
+    report_metric('StuckJobsCount', GoodJob::Job.where(finished_at: nil).where("COALESCE(scheduled_at, created_at) < ?", 1.hour.ago).count)
   end
 
   private
