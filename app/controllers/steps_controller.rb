@@ -38,7 +38,7 @@ class StepsController < ApplicationController
     journey = Journey.accessible_by_url.find_by!(slug: params[:journey_id])
     step = journey.steps.find_by!(slug: params[:id])
 
-    redirect_to step.app_url
+    redirect_to step.app_url, allow_other_host: true
   end
 
   private def redirect_inactive_eu_application

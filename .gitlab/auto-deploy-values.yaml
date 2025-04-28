@@ -45,7 +45,7 @@ workers:
         memory: 300Mi
   worker:
     replicaCount: "1"
-    command: ["bundle", "exec", "que", "-w1", "./config/environment.rb"]
+    command: ["bundle", "exec", "good_job", "start"]
     terminationGracePeriodSeconds:  60
     livenessProbe:
       initialDelaySeconds: 5
