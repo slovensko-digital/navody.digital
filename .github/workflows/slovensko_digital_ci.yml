@@ -2,9 +2,9 @@ name: Slovensko.Digital CI
 
 on:
   push:
-    branches: master
+    branches: [master]
   pull_request:
-    branches: '**'
+    branches: ['**']
 
 jobs:
   test:
@@ -36,12 +36,7 @@ jobs:
         env:
           NODE_OPTIONS: "--openssl-legacy-provider"
       - run: bundle exec rails db:test:prepare --trace
-
-      - uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: 17d259e00bbff5b020b7f1a6abb6736e0f65b9a517afdcbaeaa79e919730835f
-        with:
-          coverageCommand: bundle exec rspec
+      - run: bundle exec rspec
 
   gitlab-push:
     needs: test
