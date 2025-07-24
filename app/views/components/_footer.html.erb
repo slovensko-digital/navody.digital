@@ -15,20 +15,9 @@
             <strong></strong>
           </p>
         </div>
-        <form id="newsletter-form" role="form" method="POST" action="https://8ae9bea9.sibforms.com/serve/MUIFAH5PHN_x078PbK0dJY0ocvmMqMkGu1Wo6Qdgla0iK-mCVK5xQemexd5s8b9zUBFcL6tfk8VX4dGPgZ_8xeVkihF0iJCWOlL67WA3yAYTWpUVqoJsc5dUfwBeQ1Tv_8MrszTp3UT_4YI8X8_yLQwzQEsawoB5hgQLtuRn8ibGZI4SGc4l5n34eZ1StwFgWG5ABnecASr6fYVi" data-action="https://8ae9bea9.sibforms.com/serve/MUIFAH5PHN_x078PbK0dJY0ocvmMqMkGu1Wo6Qdgla0iK-mCVK5xQemexd5s8b9zUBFcL6tfk8VX4dGPgZ_8xeVkihF0iJCWOlL67WA3yAYTWpUVqoJsc5dUfwBeQ1Tv_8MrszTp3UT_4YI8X8_yLQwzQEsawoB5hgQLtuRn8ibGZI4SGc4l5n34eZ1StwFgWG5ABnecASr6fYVi">
-          <input type="text" name="email_address_check" value="" style="display: none;">
-          <input type="hidden" name="locale" value="sk">
-          <div class="govuk-form-group sdn-footer__newsletter-form-group">
-            <input type="email" name="EMAIL" id="email-input" required class="govuk-input sdn-footer__newsletter-input" autocomplete="off" placeholder="Zadajte emailovú adresu" data-required="true"/>
-            <button type="submit" class="govuk-button sdn-footer__newsletter-button">Prihlásiť</button>
-          </div>
-          <div style="margin-top: 10px; display: flex; align-items: flex-start; gap: 8px;">
-            <input type="checkbox" id="opt-in-checkbox" name="OPT_IN" value="1" class="input_replaced" required style="margin-top: 2px;">
-            <label for="opt-in-checkbox" class="sdn-footer__newsletter-disclaimer" style="color: white; font-size: 14px; line-height: 1.4; cursor: pointer;">
-              Súhlasím so zasielaním bezplatného newslettera na mnou zadaný e-mail. Tento súhlas môžem kedykoľvek odvolať na <%= mail_to ENV['DEFAULT_EMAIL_FROM'], ENV['DEFAULT_EMAIL_FROM'], class: 'sdn-footer__link' %>. Oboznámil(a) som sa s informáciami v sekcii <%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov'), class: 'sdn-footer__link' %>.
-            </label>
-          </div>
-        </form>
+        <%= render 'newsletter_subscriptions/form' %>
+        <span class="sdn-footer__newsletter-disclaimer">
+                Prihlásením dávam dobrovoľný súhlas OZ Slovensko.Digital na zasielanie bezplatného newslettera na mnou zadaný e-mail. Tento súhlas môžem kdykoľvek odvolať na <%= mail_to ENV['DEFAULT_EMAIL_FROM'], ENV['DEFAULT_EMAIL_FROM'], class: 'sdn-footer__link' %>. Oboznámil(a) som sa s informáciami v sekcii <%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov'), class: 'sdn-footer__link' %>.</span>
       </div>
       <div class="sdn-footer__donate" style="padding-top: 0;">
             <span class="sdn-footer__heart-wrapper">

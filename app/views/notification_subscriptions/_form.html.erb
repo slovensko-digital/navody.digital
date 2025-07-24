@@ -43,6 +43,8 @@
     <% if !form.journey.nil? and form.journey.blank? %>
       <%= hidden_field_tag 'notification_subscription_group[journey_id]', form.journey.id %>
     <% end %>
+    <altcha-widget hidelogo hidefooter strings="<%= JSON.dump({ 'label': 'Nie som robot', 'verifying': 'Overujem...', 'verified': 'Overené'}) %>" challengeurl="<%= altcha_url() %>"></altcha-widget>
+    <div class="altcha-error"></div>
     <%= submit_tag 'Chcem dostávať tieto notifikácie', class: 'govuk-button' %>
   </div>
 

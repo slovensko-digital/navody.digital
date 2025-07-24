@@ -1,0 +1,6 @@
+<%= form_tag newsletter_subscribe_path, method: :post, remote: true, id: "newsletter-form" do |f| %>
+  <%= email_field_tag :email, '',   class: 'govuk-input sdn-footer__newsletter-input', placeholder: "Zadajte emailovú adresu", autocomplete: :email %>
+  <%= submit_tag 'Prihlásiť', class: 'govuk-button sdn-footer__newsletter-button' %>
+  <altcha-widget hidelogo hidefooter strings="<%= JSON.dump({ 'label': 'Nie som robot', 'verifying': 'Overujem...', 'verified': 'Overené'}) %>" challengeurl="<%= altcha_url() %>"></altcha-widget>
+  <div class="newsletter-altcha-error"></div>
+<% end %>
