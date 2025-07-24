@@ -5,7 +5,7 @@
         <span class="sdn-footer__newsletter-heading"><label for="email-input">Novinky emailom</label> <small class="sdn-footer__newsletter-heading-tooltip">(raz mesačne)</small></span>
         <div id="newsletter-success" style="display: none">
           <p style="color: white;">
-            <strong>Na Váš e-mail sme poslali potvrdzovaciu správu. Ak nechodí, skúste to znova.</strong>
+            <strong>Zaslali sme vám potvrdzujúci email. Prosím kliknite v ňom na odkaz potvrdzujúci odber newslettra.</strong>
             <br>
             Ďakujeme za Váš záujem.
           </p>
@@ -19,7 +19,7 @@
         <span class="sdn-footer__newsletter-disclaimer">
                 Prihlásením dávam dobrovoľný súhlas OZ Slovensko.Digital na zasielanie bezplatného newslettera na mnou zadaný e-mail. Tento súhlas môžem kdykoľvek odvolať na <%= mail_to ENV['DEFAULT_EMAIL_FROM'], ENV['DEFAULT_EMAIL_FROM'], class: 'sdn-footer__link' %>. Oboznámil(a) som sa s informáciami v sekcii <%= link_to 'Ochrana osobných údajov', page_path('ochrana-osobnych-udajov'), class: 'sdn-footer__link' %>.</span>
       </div>
-      <div class="sdn-footer__donate">
+      <div class="sdn-footer__donate" style="padding-top: 0;">
             <span class="sdn-footer__heart-wrapper">
               <span class="sdn-footer__heart"></span>
             </span>

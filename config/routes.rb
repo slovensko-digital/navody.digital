@@ -43,9 +43,7 @@ Rails.application.routes.draw do
       put :hide, on: :member
     end
 
-    # Route for que
-    require 'que/web'
-    mount Que::Web => '/admin/que'
+    mount GoodJob::Engine => 'good_job'
   end
 
   root to: 'pages#index'

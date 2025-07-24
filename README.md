@@ -1,8 +1,6 @@
 # Návody.digital
 
 [![Slovensko.Digital CI](https://github.com/slovensko-digital/navody.digital/workflows/Slovensko.Digital%20CI/badge.svg)](https://github.com/slovensko-digital/navody.digital/actions/workflows/slovensko_digital_ci.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/78658a3b4aa6d98ce263/maintainability)](https://codeclimate.com/github/slovensko-digital/navody.digital/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/78658a3b4aa6d98ce263/test_coverage)](https://codeclimate.com/github/slovensko-digital/navody.digital/test_coverage)
 
 ### Deployment
 
@@ -14,8 +12,8 @@ Master ide automaticky na [staging.navody.digital](https://staging.navody.digita
 
 ### Setup OSX (homebrew)
 
- - `brew install postgresql`
- - `brew services start postgresql`
+ - `brew install postgresql@14`
+ - `brew services start postgresql@14`
  - `bundle install`
  - `yarn install`
  - `cp .env.sample .env`
