@@ -158,3 +158,49 @@ a.sdn-timeline-dropdown__option {
   background-color: #ffbf47;
   box-shadow: none;
 }
+
+/* Captcha */
+.altcha {
+    font-family: "Roboto", arial, sans-serif;
+    border: none;
+}
+
+.altcha-main {
+    padding-left: 0;
+}
+
+.altcha-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+
+    > input[type=checkbox] {
+        appearance: none;
+        background-color: #fff;
+        margin: 0;
+        font: inherit;
+        color: currentColor;
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 0.125rem solid currentColor;
+        border-radius: 0;
+        font-weight: 700;
+    }
+}
+
+.altcha-label {
+    padding-left: 0.625rem;
+    font-size: 1rem;
+}
+
+.altcha-spinner {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.altcha-error {
+    padding-left: 0;
+    padding-bottom: 0.625rem;
+    font-family: "Roboto", arial, sans-serif;
+    font-size: 0.875rem;
+    color: #d4351c;
+}
