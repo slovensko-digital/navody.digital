@@ -16,4 +16,10 @@ namespace :navody do
   task report_quarter_hourly: :environment do
     Environment.stats_reporter.report_quarter_hourly
   end
+
+  desc "Generate llms-full.txt into public/"
+  task generate_llms_full: :environment do
+    output_path = LlmsFullExporter.new.call
+    puts "Generated #{output_path}"
+  end
 end
