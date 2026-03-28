@@ -67,12 +67,12 @@
     <%= f.hidden_field :email %>
   <% end %>
 
-  <div class="govuk-button-group">
-    <%= f.submit 'Chcem takéto emaily a ísť ďalej', class: 'govuk-button' %>
-    <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-button--secondary', name: :skip_subscribe %>
-  </div>
+  <p class="govuk-body">
+    <%= f.submit 'Chcem takéto emaily a ísť ďalej', class: 'govuk-button govuk-!-margin-bottom-0' %>
+    <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link govuk-!-margin-bottom-0', name: :skip_subscribe %>
+  </p>
 
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
   <div>
     <h3 class="govuk-heading-s">Pomôžte nám zlepšiť túto službu</h3>
