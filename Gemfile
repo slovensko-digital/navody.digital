@@ -112,6 +112,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'hirb'
 
-gem "kamal", "~> 2.6"
+gem "kamal", "~> 2.6", require: false
 
 gem "rails-controller-testing", "~> 1.0"
