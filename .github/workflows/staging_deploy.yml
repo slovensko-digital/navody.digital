@@ -34,27 +34,27 @@ jobs:
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           AUTH_EID_PUBLIC_KEY: ${{ secrets.AUTH_EID_PUBLIC_KEY }}
           AUTH_EID_PRIVATE_KEY: ${{ secrets.AUTH_EID_PRIVATE_KEY }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_KEY_ID: ${{ vars.AWS_KEY_ID }}
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
           ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-          SLOVENSKO_SK_API_EFORM_SUB: ${{ secrets.SLOVENSKO_SK_API_EFORM_SUB }}
-          SLOVENSKO_SK_API_URL: ${{ secrets.SLOVENSKO_SK_API_URL }}
+          SLOVENSKO_SK_API_EFORM_SUB: ${{ vars.SLOVENSKO_SK_API_EFORM_SUB }}
+          SLOVENSKO_SK_API_URL: ${{ vars.SLOVENSKO_SK_API_URL }}
           DATAHUB_ACCESS_TOKEN: ${{ secrets.DATAHUB_ACCESS_TOKEN }}
           DATAHUB_DATABASE_URL: ${{ secrets.DATAHUB_DATABASE_URL }}
-          DATAHUB_URL: ${{ secrets.DATAHUB_URL }}
+          DATAHUB_URL: ${{ vars.DATAHUB_URL }}
           AUTOFORM_ACCESS_TOKEN: ${{ secrets.AUTOFORM_ACCESS_TOKEN }}
-          AUTOFORM_URL: ${{ secrets.AUTOFORM_URL }}
-          DEFAULT_EMAIL_FROM: ${{ secrets.DEFAULT_EMAIL_FROM }}
-          SITEMAP_ACCESS_KEY_ID: ${{ secrets.SITEMAP_ACCESS_KEY_ID }}
+          AUTOFORM_URL: ${{ vars.AUTOFORM_URL }}
+          DEFAULT_EMAIL_FROM: ${{ vars.DEFAULT_EMAIL_FROM }}
+          SITEMAP_ACCESS_KEY_ID: ${{ vars.SITEMAP_ACCESS_KEY_ID }}
           SITEMAP_SECRET_ACCESS_KEY: ${{ secrets.SITEMAP_SECRET_ACCESS_KEY }}
 
         run: kamal deploy -d staging

@@ -10,12 +10,18 @@ servers:
     cmd: bundle exec que -w 4 ./config/environment.rb
     options:
       "add-host": host.docker.internal:host-gateway
+  clock:
+    cmd: bundle exec clockwork config/clock.rb
+    options:
+      "add-host": host.docker.internal:host-gateway
 
 deploy_timeout: 200
 
 proxy:
   ssl: true
   app_port: 3000
+  healthcheck:
+    path: /health
 
 env:
   secret:
