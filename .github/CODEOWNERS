@@ -1,2 +1,2 @@
-# Changes to GitHub configuration require approval from the SD team
-/.github/ @slovensko-digital/sd-team
+# only internal staff can change workflows
+.github @slovensko-digital/sro-maintainers
