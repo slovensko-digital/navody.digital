@@ -7,7 +7,7 @@ servers:
     options:
       "add-host": host.docker.internal:host-gateway
   worker:
-    cmd: bundle exec que -w 4 ./config/environment.rb
+    cmd: bundle exec good_job start
     options:
       "add-host": host.docker.internal:host-gateway
   clock:
@@ -31,6 +31,7 @@ env:
     - GOOGLE_CLIENT_SECRET
     - AUTH_EID_PUBLIC_KEY
     - AUTH_EID_PRIVATE_KEY
+    - ADMIN_USERNAME
     - ADMIN_PASSWORD
     - AWS_KEY_ID
     - AWS_ACCESS_KEY
