@@ -40,7 +40,6 @@ env:
     - RECAPTCHA_SITE_KEY
     - RECAPTCHA_SECRET_KEY
     - ALTCHA_HMAC_KEY
-    - SLOVENSKO_SK_API_EFORM_SUB
     - SLOVENSKO_SK_API_URL
     - DATAHUB_ACCESS_TOKEN
     - DATAHUB_DATABASE_URL
@@ -48,8 +47,6 @@ env:
     - AUTOFORM_ACCESS_TOKEN
     - AUTOFORM_URL
     - DEFAULT_EMAIL_FROM
-    - SITEMAP_ACCESS_KEY_ID
-    - SITEMAP_SECRET_ACCESS_KEY
 
 aliases:
   console: app exec --interactive --reuse "bin/rails console"

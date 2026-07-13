@@ -29,7 +29,7 @@ jobs:
 
       - uses: webfactory/ssh-agent@v0.9.1
         with:
-          ssh-private-key: ${{ secrets.STAGING_DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.DEV_DEPLOY_KEY }}
 
       - name: Run deploy command
         env:
@@ -50,7 +50,6 @@ jobs:
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
           ALTCHA_HMAC_KEY: ${{ secrets.ALTCHA_HMAC_KEY }}
-          SLOVENSKO_SK_API_EFORM_SUB: ${{ vars.SLOVENSKO_SK_API_EFORM_SUB }}
           SLOVENSKO_SK_API_URL: ${{ vars.SLOVENSKO_SK_API_URL }}
           DATAHUB_ACCESS_TOKEN: ${{ secrets.DATAHUB_ACCESS_TOKEN }}
           DATAHUB_DATABASE_URL: ${{ secrets.DATAHUB_DATABASE_URL }}
@@ -58,7 +57,5 @@ jobs:
           AUTOFORM_ACCESS_TOKEN: ${{ secrets.AUTOFORM_ACCESS_TOKEN }}
           AUTOFORM_URL: ${{ vars.AUTOFORM_URL }}
           DEFAULT_EMAIL_FROM: ${{ vars.DEFAULT_EMAIL_FROM }}
-          SITEMAP_ACCESS_KEY_ID: ${{ vars.SITEMAP_ACCESS_KEY_ID }}
-          SITEMAP_SECRET_ACCESS_KEY: ${{ secrets.SITEMAP_SECRET_ACCESS_KEY }}
 
         run: kamal deploy -d staging
