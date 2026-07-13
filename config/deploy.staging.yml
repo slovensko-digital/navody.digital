@@ -3,17 +3,10 @@ servers:
     hosts:
       - dev.slovensko.digital
 
-  worker:
-    hosts:
-      - dev.slovensko.digital
-
-  clock:
-    hosts:
-      - dev.slovensko.digital
-
 env:
   clear:
     RAILS_ENV: production
+    GOOD_JOB_EXECUTION_MODE: async
     RAILS_LOG_LEVEL: info
     RAILS_LOG_TO_STDOUT: "true"
     RAILS_SERVE_STATIC_FILES: "true"

@@ -6,14 +6,6 @@ servers:
   web:
     options:
       "add-host": host.docker.internal:host-gateway
-  worker:
-    cmd: bundle exec good_job start
-    options:
-      "add-host": host.docker.internal:host-gateway
-  clock:
-    cmd: bundle exec clockwork config/clock.rb
-    options:
-      "add-host": host.docker.internal:host-gateway
 
 deploy_timeout: 200
 

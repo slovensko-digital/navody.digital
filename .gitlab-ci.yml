@@ -13,24 +13,6 @@ stages:
 include:
   - template: Jobs/Build.gitlab-ci.yml
 
-staging:
-  extends: .auto-deploy
-  stage: deploy
-  script:
-    - auto-deploy check_kube_domain
-    - auto-deploy download_chart
-    - auto-deploy use_kube_context || true
-    - auto-deploy ensure_namespace
-    - auto-deploy create_secret
-    - auto-deploy deploy
-  environment:
-    name: staging
-    url: http://$CI_PROJECT_PATH_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-  rules:
-    - if: '($CI_KUBERNETES_ACTIVE == null || $CI_KUBERNETES_ACTIVE == "") && ($KUBECONFIG == null || $KUBECONFIG == "")'
-      when: never
-    - when: on_success
-
 production:
   extends: .auto-deploy
   stage: deploy
