@@ -1,0 +1,61 @@
+service: navody-digital
+
+image: sd/navody-digital
+
+servers:
+  web:
+    options:
+      "add-host": host.docker.internal:host-gateway
+
+deploy_timeout: 200
+
+proxy:
+  ssl: true
+  app_port: 3000
+  healthcheck:
+    path: /health
+
+env:
+  secret:
+    - SECRET_KEY_BASE
+    - DATABASE_URL
+    - GOOGLE_CLIENT_ID
+    - GOOGLE_CLIENT_SECRET
+    - AUTH_EID_PUBLIC_KEY
+    - AUTH_EID_PRIVATE_KEY
+    - ADMIN_USERNAME
+    - ADMIN_PASSWORD
+    - AWS_KEY_ID
+    - AWS_ACCESS_KEY
+    - ROLLBAR_ACCESS_TOKEN
+    - BREVO_API_KEY
+    - RECAPTCHA_SITE_KEY
+    - RECAPTCHA_SECRET_KEY
+    - ALTCHA_HMAC_KEY
+    - SLOVENSKO_SK_API_URL
+    - DATAHUB_ACCESS_TOKEN
+    - DATAHUB_DATABASE_URL
+    - DATAHUB_URL
+    - AUTOFORM_ACCESS_TOKEN
+    - AUTOFORM_URL
+    - DEFAULT_EMAIL_FROM
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "sh"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
+
+registry:
+  server: registry.dev.slovensko.digital
+  username:
+    - KAMAL_REGISTRY_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  remote: ssh://kamal@dev.slovensko.digital
+  cache:
+    type: registry
+    options: mode=max,image-manifest=true,oci-mediatypes=true

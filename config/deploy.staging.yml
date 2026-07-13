@@ -1,0 +1,23 @@
+servers:
+  web:
+    hosts:
+      - dev.slovensko.digital
+
+env:
+  clear:
+    RAILS_ENV: production
+    GOOD_JOB_EXECUTION_MODE: async
+    RAILS_LOG_LEVEL: info
+    RAILS_LOG_TO_STDOUT: "true"
+    RAILS_SERVE_STATIC_FILES: "true"
+    APP_HOST: staging.navody.digital
+    APP_PORT: "3000"
+    APP_PROTOCOL: https
+    AWS_REGION: eu-central-1
+    BREVO_DOI_TEMPLATE_ID: "305"
+
+proxy:
+  host: staging.navody.digital
+
+ssh:
+  user: kamal
