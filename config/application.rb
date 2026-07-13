@@ -46,6 +46,7 @@ module NavodySlovenskoDigital
     # config.active_job.default_queue_name = :medium_priority
     # config.action_mailer.deliver_later_queue_name = :high_priority
 
+    config.good_job.enable_cron = true
     config.good_job.cron = {
       sitemap_refresh:                 { cron: "0 9 * * 1",  class: "SitemapRefreshJob" },
       check_or_sr_identifiers_status:  { cron: "0 9 * * *",  class: "EmailMeOrSrIdentifiersStatusEmailJob" },
