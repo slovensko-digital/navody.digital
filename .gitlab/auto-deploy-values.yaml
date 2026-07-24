@@ -17,51 +17,6 @@ application.migrateCommand: ["bundle", "exec", "rails", "db:migrate"]
 resources:
   requests:
     cpu: 20m
-    memory: 450Mi
+    memory: 600Mi
   limits:
     memory: 1Gi
-workers:
-  clock:
-    replicaCount: "1"
-    command: ["bundle", "exec", "clockwork", "config/clock.rb"]
-    terminationGracePeriodSeconds:  60
-    livenessProbe:
-      initialDelaySeconds: 5
-      timeoutSeconds: 10
-      probeType: "exec"
-      command:
-        - "pgrep"
-        - "bundle"
-    readinessProbe:
-      probeType: "exec"
-      command:
-        - "pgrep"
-        - "bundle"
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 300Mi
-  worker:
-    replicaCount: "1"
-    command: ["bundle", "exec", "good_job", "start"]
-    terminationGracePeriodSeconds:  60
-    livenessProbe:
-      initialDelaySeconds: 5
-      timeoutSeconds: 10
-      probeType: "exec"
-      command:
-        - "pgrep"
-        - "bundle"
-    readinessProbe:
-      probeType: "exec"
-      command:
-        - "pgrep"
-        - "bundle"
-    resources:
-      requests:
-        cpu: 200m
-        memory: 250Mi
-      limits:
-        memory: 500Mi
