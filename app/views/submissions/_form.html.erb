@@ -67,11 +67,23 @@
     <%= f.hidden_field :email %>
   <% end %>
 
-
   <p class="govuk-body">
-    <%= f.submit 'Chcem takéto emaily a ísť ďalej', class: 'govuk-button' %>
-    <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link', name: :skip_subscribe %>
+    <%= f.submit 'Chcem takéto emaily a ísť ďalej', class: 'govuk-button govuk-!-margin-bottom-0' %>
+    <%= f.button 'Súbory chcem len stiahnuť', class: 'govuk-button govuk-link govuk-!-margin-bottom-0', name: :skip_subscribe %>
   </p>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <div>
+    <h3 class="govuk-heading-s">Pomôžte nám zlepšiť túto službu</h3>
+    <p class="govuk-body">Zabrala vám príprava podania veľa času? Bolo niečo nejasné? Budeme vďační za každú radu.</p>
+
+    <%= link_to 'Dajte nám spätnú väzbu',
+                'https://docs.google.com/forms/d/1aSIhYhmhzE5gxcc-svITfHzMSGSQAaZF8NtubhfPDYQ',
+                class: 'govuk-button blue-button',
+                target: '_blank',
+                rel: 'noopener noreferrer' %>
+  </div>
 <% end %>
 
 <%= javascript_include_tag 'submission_analytics.js', 'data-turbolinks-track': 'reload' %>
