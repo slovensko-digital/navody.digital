@@ -4,6 +4,6 @@ class SitemapRefreshJob < ApplicationJob
   def perform
     return unless Rails.env.production?
 
-    SitemapGenerator::Sitemap.refresh
+    SitemapGenerator::Interpreter.run
   end
 end
