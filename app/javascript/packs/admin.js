@@ -15,6 +15,7 @@
 import '../application.sass'
 
 import { initAll } from 'navody-digital-frontend'
+import 'govuk_frontend'
 
 document.addEventListener('turbolinks:load', function () {
     // Initialize GovUK/Navody-frontend Javascript

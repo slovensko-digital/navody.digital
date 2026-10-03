@@ -4644,10 +4644,9 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-navody-digital-frontend@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/navody-digital-frontend/-/navody-digital-frontend-0.1.9.tgz#c7eebd613782230a9ebd10debf396b3bea794b09"
-  integrity sha512-nChtwScNeZBKUrC8e9W7wHvYjSPEeKCHbydGxHCh1puczBZSXN9OJSJkJBPFuWO/VoNP1RkD2IAevn7ScY/91g==
+"navody-digital-frontend@github:Ormi/navody-frontend#package-v6-alpha":
+  version "1.0.0-alpha.0"
+  resolved "https://codeload.github.com/Ormi/navody-frontend/tar.gz/b01c26952604a4c34759307686a3832a32773e3d"
 
 negotiator@0.6.3:
   version "0.6.3"

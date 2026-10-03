@@ -16,6 +16,7 @@
   <meta property="og:title" content="<%= @metadata.og.title.presence || yield(:title) %>"/>
   <meta property="og:description" content="<%= @metadata.og.description.presence || yield(:description) %>"/>
   <meta property="og:image" content="<%= @metadata.og.image.presence || image_url('placeholder.png') %>"/>
+  <%= yield :head %>
   <%= javascript_pack_tag 'application' %>
   <%= stylesheet_pack_tag 'application' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -28,6 +29,7 @@
   <%= javascript_include_tag 'iframe', 'data-turbolinks-track': 'reload' %>
   <script>
     document.body.classList.add('js-enabled');
+    if ('noModule' in HTMLScriptElement.prototype) document.body.classList.add('govuk-frontend-supported');
   </script>
 
   <a href="#hlavny-obsah" class="govuk-skip-link">Preskočiť na hlavný obsah</a>
