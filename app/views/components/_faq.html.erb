@@ -1,14 +1,15 @@
-<div class="govuk-accordion" data-module="govuk-accordion" data-attribute="value">
-  <% faqs.each do |faq| %>
-    <div class="govuk-accordion__section ">
+<% content_for :head, tag.meta(name: 'turbolinks-cache-control', content: 'no-cache') %>
+<div class="govuk-accordion" data-module="govuk-accordion" id="faq">
+  <% faqs.each_with_index do |faq, index| %>
+    <div class="govuk-accordion__section" id="<%= faq.to_param %>">
       <div class="govuk-accordion__section-header">
-        <h3 class="govuk-accordion__section-heading" id="<%= faq.to_param %>">
-          <span class="govuk-accordion__section-button">
+        <h3 class="govuk-accordion__section-heading">
+          <span class="govuk-accordion__section-button" id="faq-heading-<%= index + 1 %>">
             <%= faq.title %>
           </span>
         </h3>
       </div>
-      <div class="govuk-accordion__section-content" aria-labelledby="<%= faq.to_param %>">
+      <div class="govuk-accordion__section-content" id="faq-content-<%= index + 1 %>">
         <div class="govuk-body sdn-content">
           <%= raw faq.content %>
         </div>

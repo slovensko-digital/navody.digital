@@ -4,7 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "^5.4.3",
     "altcha": "^2.1.0",
-    "navody-digital-frontend": "^0.1.9",
+    "navody-digital-frontend": "github:Ormi/navody-frontend#package-v6-alpha",
     "resolve-url-loader": "^3.1.0",
     "script-loader": "^0.7.2",
     "stimulus": "^2.0.0"

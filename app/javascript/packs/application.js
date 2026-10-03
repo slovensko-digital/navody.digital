@@ -14,22 +14,10 @@
 import "../application.sass";
 import "controllers";
 import { initAll } from "navody-digital-frontend";
+import "govuk_frontend";
 import "script-loader!altcha/dist/altcha.umd.cjs";
-
-const deleteOriginalElement = (domElement) => {
-  if (domElement) {
-    domElement?.remove();
-  }
-};
 
 document.addEventListener("turbolinks:load", function () {
   // Initialize GovUK/Navody-frontend Javascript
   initAll();
-});
-
-document.addEventListener("turbolinks:before-cache", function () {
-  // HOTFIX: In the case of duplicated element causing original element to not work.
-  // Original element need to be removed from DOM before cache-event and before loading new one.
-
-  deleteOriginalElement(document.querySelector(".govuk-accordion__controls"));
 });
