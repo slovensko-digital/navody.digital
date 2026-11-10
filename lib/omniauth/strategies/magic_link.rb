@@ -14,7 +14,7 @@ module OmniAuth
       option :code_lifetime, 10.minutes
 
       def request_phase
-        email = request[:email]
+        email = request.params['email']
         return fail!(:empty_email) unless email.present?
         return fail!(:invalid_email) unless email.match? URI::MailTo::EMAIL_REGEXP
 
@@ -33,7 +33,7 @@ module OmniAuth
       end
 
       def callback_phase
-        token = request[:token]
+        token = request.params['token']
         @payload = parse_payload(token)
 
         return fail!(:invalid_credentials) unless payload
@@ -57,7 +57,7 @@ module OmniAuth
 
       def parse_payload(token)
         payload = verifier.verify(token, purpose: :magic_link).symbolize_keys
-        return false if payload[:session_id].public_id != session.id.public_id
+        return false if payload[:session_id].to_s != session.id.to_s
 
         payload
       rescue ActiveSupport::MessageVerifier::InvalidSignature
@@ -82,13 +82,16 @@ module OmniAuth
       end
 
       def secret_key
-        Rails.application.secrets.secret_key_base
+        Rails.application.config.secret_key_base
       end
 
       def verifier_payload(email, session_id, params = {})
+        # Store the session id as a plain string: the verifier serializes
+        # to JSON, which would otherwise turn rich session id objects
+        # into hashes that no longer compare equal.
         {}
           .merge(params)
-          .merge(email: email, session_id: session_id)
+          .merge(email: email, session_id: session_id.to_s)
       end
 
       def verifier

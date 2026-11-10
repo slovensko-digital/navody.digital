@@ -14,7 +14,7 @@
 import "../application.sass";
 import "controllers";
 import { initAll } from "navody-digital-frontend";
-import "script-loader!altcha/dist/altcha.umd.cjs";
+import "altcha";
 
 const deleteOriginalElement = (domElement) => {
   if (domElement) {

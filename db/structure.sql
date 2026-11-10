@@ -479,6 +479,21 @@ CREATE TABLE public.good_job_batches (
 
 
 --
+-- Name: good_job_concurrency_claims; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.good_job_concurrency_claims (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    job_id uuid NOT NULL,
+    locked_by_id uuid,
+    state smallint NOT NULL,
+    key text NOT NULL
+);
+
+
+--
 -- Name: good_job_executions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -554,7 +569,8 @@ CREATE TABLE public.good_jobs (
     error_event smallint,
     labels text[],
     locked_by_id uuid,
-    locked_at timestamp(6) without time zone
+    locked_at timestamp(6) without time zone,
+    lock_type smallint
 );
 
 
@@ -1585,6 +1601,14 @@ ALTER TABLE ONLY public.good_job_batches
 
 
 --
+-- Name: good_job_concurrency_claims good_job_concurrency_claims_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.good_job_concurrency_claims
+    ADD CONSTRAINT good_job_concurrency_claims_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: good_job_executions good_job_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1826,6 +1850,48 @@ CREATE INDEX index_categorizations_on_categorizable ON public.categorizations US
 
 
 --
+-- Name: index_good_job_batches_on_created_at_and_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_batches_on_created_at_and_id ON public.good_job_batches USING btree (created_at DESC, id DESC);
+
+
+--
+-- Name: index_good_job_batches_on_finished_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_batches_on_finished_at ON public.good_job_batches USING btree (finished_at) WHERE (finished_at IS NOT NULL);
+
+
+--
+-- Name: index_good_job_concurrency_claims_for_promotion; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_concurrency_claims_for_promotion ON public.good_job_concurrency_claims USING btree (key, state, created_at);
+
+
+--
+-- Name: index_good_job_concurrency_claims_on_job_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_concurrency_claims_on_job_id ON public.good_job_concurrency_claims USING btree (job_id);
+
+
+--
+-- Name: index_good_job_concurrency_claims_on_key_and_job_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_good_job_concurrency_claims_on_key_and_job_id ON public.good_job_concurrency_claims USING btree (key, job_id);
+
+
+--
+-- Name: index_good_job_concurrency_claims_on_locked_by_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_concurrency_claims_on_locked_by_id ON public.good_job_concurrency_claims USING btree (locked_by_id) WHERE (locked_by_id IS NOT NULL);
+
+
+--
 -- Name: index_good_job_executions_on_active_job_id_and_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1833,10 +1899,24 @@ CREATE INDEX index_good_job_executions_on_active_job_id_and_created_at ON public
 
 
 --
+-- Name: index_good_job_executions_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_executions_on_created_at ON public.good_job_executions USING btree (created_at);
+
+
+--
 -- Name: index_good_job_executions_on_process_id_and_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_good_job_executions_on_process_id_and_created_at ON public.good_job_executions USING btree (process_id, created_at);
+
+
+--
+-- Name: index_good_job_executions_on_scheduled_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_job_executions_on_scheduled_at ON public.good_job_executions USING btree (scheduled_at);
 
 
 --
@@ -1854,17 +1934,31 @@ CREATE UNIQUE INDEX index_good_job_settings_on_key ON public.good_job_settings U
 
 
 --
--- Name: index_good_jobs_jobs_on_finished_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_dequeue_by_queue; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_good_jobs_jobs_on_finished_at ON public.good_jobs USING btree (finished_at) WHERE ((retried_good_job_id IS NULL) AND (finished_at IS NOT NULL));
+CREATE INDEX index_good_jobs_dequeue_by_queue ON public.good_jobs USING btree (queue_name, priority, created_at) WHERE ((finished_at IS NULL) AND (locked_by_id IS NULL));
 
 
 --
--- Name: index_good_jobs_jobs_on_priority_created_at_when_unfinished; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_dequeue_by_queue_scheduled_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_good_jobs_jobs_on_priority_created_at_when_unfinished ON public.good_jobs USING btree (priority DESC NULLS LAST, created_at) WHERE (finished_at IS NULL);
+CREATE INDEX index_good_jobs_dequeue_by_queue_scheduled_at ON public.good_jobs USING btree (queue_name, priority, scheduled_at) WHERE ((finished_at IS NULL) AND (locked_by_id IS NULL));
+
+
+--
+-- Name: index_good_jobs_for_candidate_dequeue_unlocked; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_for_candidate_dequeue_unlocked ON public.good_jobs USING btree (priority, scheduled_at, id) WHERE ((finished_at IS NULL) AND (locked_by_id IS NULL));
+
+
+--
+-- Name: index_good_jobs_jobs_on_finished_at_only; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_jobs_on_finished_at_only ON public.good_jobs USING btree (finished_at) WHERE (finished_at IS NOT NULL);
 
 
 --
@@ -1882,10 +1976,24 @@ CREATE INDEX index_good_jobs_on_batch_callback_id ON public.good_jobs USING btre
 
 
 --
+-- Name: index_good_jobs_on_batch_callback_id_unfinished; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_batch_callback_id_unfinished ON public.good_jobs USING btree (batch_callback_id) WHERE ((batch_callback_id IS NOT NULL) AND (finished_at IS NULL));
+
+
+--
 -- Name: index_good_jobs_on_batch_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_good_jobs_on_batch_id ON public.good_jobs USING btree (batch_id) WHERE (batch_id IS NOT NULL);
+
+
+--
+-- Name: index_good_jobs_on_batch_id_unfinished; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_batch_id_unfinished ON public.good_jobs USING btree (batch_id) WHERE ((batch_id IS NOT NULL) AND (finished_at IS NULL));
 
 
 --
@@ -1903,6 +2011,13 @@ CREATE INDEX index_good_jobs_on_concurrency_key_when_unfinished ON public.good_j
 
 
 --
+-- Name: index_good_jobs_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_created_at ON public.good_jobs USING btree (created_at);
+
+
+--
 -- Name: index_good_jobs_on_cron_key_and_created_at_cond; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1913,7 +2028,28 @@ CREATE INDEX index_good_jobs_on_cron_key_and_created_at_cond ON public.good_jobs
 -- Name: index_good_jobs_on_cron_key_and_cron_at_cond; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_good_jobs_on_cron_key_and_cron_at_cond ON public.good_jobs USING btree (cron_key, cron_at) WHERE (cron_key IS NOT NULL);
+CREATE UNIQUE INDEX index_good_jobs_on_cron_key_and_cron_at_cond ON public.good_jobs USING btree (cron_key, cron_at DESC NULLS LAST) WHERE (cron_key IS NOT NULL);
+
+
+--
+-- Name: index_good_jobs_on_discarded; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_discarded ON public.good_jobs USING btree (finished_at DESC) WHERE ((finished_at IS NOT NULL) AND (error IS NOT NULL));
+
+
+--
+-- Name: index_good_jobs_on_discarded_job_class; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_discarded_job_class ON public.good_jobs USING btree (job_class, finished_at) WHERE ((finished_at IS NOT NULL) AND (error IS NOT NULL));
+
+
+--
+-- Name: index_good_jobs_on_job_class; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_job_class ON public.good_jobs USING btree (job_class);
 
 
 --
@@ -1931,17 +2067,24 @@ CREATE INDEX index_good_jobs_on_locked_by_id ON public.good_jobs USING btree (lo
 
 
 --
--- Name: index_good_jobs_on_priority_scheduled_at_unfinished_unlocked; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_on_priority_scheduled_at_unfinished; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_good_jobs_on_priority_scheduled_at_unfinished_unlocked ON public.good_jobs USING btree (priority, scheduled_at) WHERE ((finished_at IS NULL) AND (locked_by_id IS NULL));
+CREATE INDEX index_good_jobs_on_priority_scheduled_at_unfinished ON public.good_jobs USING btree (priority, scheduled_at, id) WHERE (finished_at IS NULL);
 
 
 --
--- Name: index_good_jobs_on_queue_name_and_scheduled_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_good_jobs_on_queue_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_good_jobs_on_queue_name_and_scheduled_at ON public.good_jobs USING btree (queue_name, scheduled_at) WHERE (finished_at IS NULL);
+CREATE INDEX index_good_jobs_on_queue_name ON public.good_jobs USING btree (queue_name);
+
+
+--
+-- Name: index_good_jobs_on_queue_name_priority_scheduled_at_unfinished; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_queue_name_priority_scheduled_at_unfinished ON public.good_jobs USING btree (queue_name, scheduled_at, id) WHERE (finished_at IS NULL);
 
 
 --
@@ -1949,6 +2092,20 @@ CREATE INDEX index_good_jobs_on_queue_name_and_scheduled_at ON public.good_jobs 
 --
 
 CREATE INDEX index_good_jobs_on_scheduled_at ON public.good_jobs USING btree (scheduled_at) WHERE (finished_at IS NULL);
+
+
+--
+-- Name: index_good_jobs_on_scheduled_at_and_queue_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_scheduled_at_and_queue_name ON public.good_jobs USING btree (scheduled_at, queue_name);
+
+
+--
+-- Name: index_good_jobs_on_unfinished_or_errored; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_good_jobs_on_unfinished_or_errored ON public.good_jobs USING btree (id) WHERE ((finished_at IS NULL) OR (error IS NOT NULL));
 
 
 --
@@ -2371,94 +2528,112 @@ ALTER TABLE ONLY upvs.submissions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20181201094003'),
-('20181201104550'),
-('20181201110114'),
-('20181201114726'),
-('20181201121129'),
-('20181201121130'),
-('20181201130356'),
-('20181201131820'),
-('20181201145710'),
-('20181201173440'),
-('20181201173548'),
-('20181201174333'),
-('20190116201226'),
-('20190117171028'),
-('20190118111308'),
-('20190122112950'),
-('20190301173059'),
-('20190321100731'),
-('20190411095826'),
-('20190411104731'),
-('20190423124647'),
-('20190423214925'),
-('20190424074855'),
-('20190529210530'),
-('20190529210630'),
-('20190608102251'),
-('20190608130459'),
-('20190608135807'),
-('20190608201245'),
-('20190914143708'),
-('20190914164512'),
-('20190915104202'),
-('20191209121011'),
-('20200316102804'),
-('20200316104715'),
-('20200919092214'),
-('20201029122539'),
-('20210314221503'),
-('20210318070336'),
-('20210321133303'),
-('20210321172132'),
-('20210321181737'),
-('20220322180237'),
-('20220323214831'),
-('20220407131258'),
-('20220623200232'),
-('20220624185928'),
-('20220624204655'),
-('20220715194212'),
-('20220727160233'),
-('20220815153512'),
-('20220815153557'),
-('20220815155429'),
-('20220815155542'),
-('20220815211829'),
-('20220907210125'),
-('20220914073624'),
-('20220914073645'),
-('20220914073653'),
-('20220921082415'),
-('20221022121113'),
-('20221022143119'),
-('20230325092744'),
-('20230325095737'),
-('20230325151049'),
-('20231007083404'),
-('20231007083405'),
-('20231007083406'),
-('20231007141039'),
-('20240427082705'),
-('20240427124856'),
-('20250426123357'),
-('20250426123358'),
-('20250426123359'),
-('20250426123360'),
-('20250426123361'),
-('20250426123362'),
-('20250426123363'),
-('20250426123364'),
-('20250426123365'),
-('20250426123366'),
-('20250426123367'),
-('20250426123368'),
-('20250426123369'),
-('20250426123370'),
-('20250426123635'),
-('20250426123636'),
+('20261110175738'),
+('20261110175737'),
+('20261110175736'),
+('20261110175735'),
+('20261110175734'),
+('20261110175733'),
+('20261110175732'),
+('20261110175731'),
+('20261110175730'),
+('20261110175729'),
+('20261110175728'),
+('20261110175727'),
+('20261110175726'),
+('20261110175725'),
+('20261110175724'),
+('20261110175723'),
+('20261110175722'),
+('20261110175721'),
+('20261110175720'),
+('20251011094046'),
 ('20250426170312'),
-('20251011094046');
-
+('20250426123636'),
+('20250426123635'),
+('20250426123370'),
+('20250426123369'),
+('20250426123368'),
+('20250426123367'),
+('20250426123366'),
+('20250426123365'),
+('20250426123364'),
+('20250426123363'),
+('20250426123362'),
+('20250426123361'),
+('20250426123360'),
+('20250426123359'),
+('20250426123358'),
+('20250426123357'),
+('20240427124856'),
+('20240427082705'),
+('20231007141039'),
+('20231007083406'),
+('20231007083405'),
+('20231007083404'),
+('20230325151049'),
+('20230325095737'),
+('20230325092744'),
+('20221022143119'),
+('20221022121113'),
+('20220921082415'),
+('20220914073653'),
+('20220914073645'),
+('20220914073624'),
+('20220907210125'),
+('20220815211829'),
+('20220815155542'),
+('20220815155429'),
+('20220815153557'),
+('20220815153512'),
+('20220727160233'),
+('20220715194212'),
+('20220624204655'),
+('20220624185928'),
+('20220623200232'),
+('20220407131258'),
+('20220323214831'),
+('20220322180237'),
+('20210321181737'),
+('20210321172132'),
+('20210321133303'),
+('20210318070336'),
+('20210314221503'),
+('20201029122539'),
+('20200919092214'),
+('20200316104715'),
+('20200316102804'),
+('20191209121011'),
+('20190915104202'),
+('20190914164512'),
+('20190914143708'),
+('20190608201245'),
+('20190608135807'),
+('20190608130459'),
+('20190608102251'),
+('20190529210630'),
+('20190529210530'),
+('20190424074855'),
+('20190423214925'),
+('20190423124647'),
+('20190411104731'),
+('20190411095826'),
+('20190321100731'),
+('20190301173059'),
+('20190122112950'),
+('20190118111308'),
+('20190117171028'),
+('20190116201226'),
+('20181201174333'),
+('20181201173548'),
+('20181201173440'),
+('20181201145710'),
+('20181201131820'),
+('20181201130356'),
+('20181201121130'),
+('20181201121129'),
+('20181201114726'),
+('20181201110114'),
+('20181201104550'),
+('20181201094003');
 

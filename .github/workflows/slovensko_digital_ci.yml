@@ -33,11 +33,13 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
 
-      - run: yarn install
-      - run: bundle exec rails webpacker:compile
-        env:
-          NODE_OPTIONS: "--openssl-legacy-provider"
+      - run: yarn install --frozen-lockfile
+      - run: bundle exec rails shakapacker:compile
       - run: bundle exec rails db:test:prepare --trace
       - run: bundle exec rspec
 

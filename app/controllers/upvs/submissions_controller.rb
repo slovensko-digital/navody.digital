@@ -11,7 +11,7 @@ class Upvs::SubmissionsController < ApplicationController
     if @upvs_submission.save!
       redirect_to @upvs_submission
     else
-      render :start, status: :unprocessable_entity
+      render :start, status: :unprocessable_content
     end
   end
 
@@ -42,7 +42,7 @@ class Upvs::SubmissionsController < ApplicationController
         redirect_to action: :finish
       end
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
