@@ -9,10 +9,7 @@ Bundler.require(*Rails.groups)
 module NavodySlovenskoDigital
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
-    # remove when `config.load_defaults` changes to 7.x
-    config.active_support.cache_format_version = 7.0
+    config.load_defaults 8.1
 
     # Configuration for the application, engines, and railties goes here.
     #

@@ -81,8 +81,8 @@
       <%= hidden_field_tag 'submission[callback_url]', '/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/podat-navrh-na-zapis-rc' %>
       <%= hidden_field_tag 'submission[callback_step_path]', '/zivotne-situacie/zapis-identifikacnych-udajov-do-or/krok/vytvorit-navrh-na-zapis' %>
       <%= hidden_field_tag 'submission[callback_step_status]', 'done' %>
-      <%= hidden_field_tag 'submission[attachments[]filename]', 'fuzs.xml' %>
-      <%= hidden_field_tag 'submission[attachments[]body_base64]', @xml_form %>
+      <%= hidden_field_tag 'submission[attachments][][filename]', 'fuzs.xml' %>
+      <%= hidden_field_tag 'submission[attachments][][body_base64]', @xml_form %>
       <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeSubmissionInstructionsEmail' %>
       <%= hidden_field_tag 'submission[subscription_types][]', 'EmailMeOrSrIdentifiersStatusEmail' %>
       <%= hidden_field_tag 'submission[subscription_types][]', 'CompanyNewsletterSubscription' %>

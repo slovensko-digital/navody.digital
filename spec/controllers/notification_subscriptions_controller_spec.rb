@@ -82,7 +82,7 @@ RSpec.describe NotificationSubscriptionsController, type: :controller do
       it "renders failure template" do
         post :create, params: valid_params, xhr: true
         expect(response).to render_template(:failure)
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 

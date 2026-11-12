@@ -18,7 +18,7 @@ module OmniAuth
       end
 
       def callback_phase
-        encoded_token = request[:token]
+        encoded_token = request.params['token']
 
         @eid_token = EidToken.new(encoded_token, config: config)
 

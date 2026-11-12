@@ -12,7 +12,7 @@ class SubmissionsController < ApplicationController
     if @submission.save
       redirect_to @submission
     else
-      render :start, status: :unprocessable_entity
+      render :start, status: :unprocessable_content
     end
   end
 
@@ -40,6 +40,7 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
+    normalize_legacy_attachments!
     params.require(:submission).permit(
       :email,
       :callback_url,
@@ -50,6 +51,24 @@ class SubmissionsController < ApplicationController
       selected_subscription_types: [],
       attachments: [:filename, :body_base64],
     )
+  end
+
+  # Rack 3 parses the legacy `submission[attachments[]filename]` field
+  # naming (used by older integrators) as a nested hash instead of an
+  # array of hashes. Convert it to the documented shape so it survives
+  # strong parameters.
+  def normalize_legacy_attachments!
+    submission = params[:submission]
+    return unless submission.is_a?(ActionController::Parameters)
+
+    legacy = submission.delete("attachments[")
+    return unless legacy.is_a?(ActionController::Parameters)
+
+    filename = legacy["filename]"].presence || legacy["filename"].presence
+    body = legacy["body_base64]"].presence || legacy["body_base64"].presence
+    return if filename.blank? && body.blank?
+
+    submission[:attachments] = [{ "filename" => filename, "body_base64" => body }]
   end
 
   private

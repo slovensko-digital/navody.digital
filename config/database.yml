@@ -21,6 +21,9 @@ test:
   datahub:
     <<: *default
     database: datahub_test
+    # Datahub is an external read-only database; the test dummy only needs
+    # to exist (see db/datahub_structure.sql), it has no app migrations.
+    migrations_paths: []
 
 staging:
   primary:

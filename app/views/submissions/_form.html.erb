@@ -13,8 +13,8 @@
       Pripravené súbory tohto podania si môžete teraz stiahnuť alebo Vám ich zašleme na email s ďalšími inštrukciami.
     </p>
     <% @submission.attachments.each do |attachment| %>
-      <%= hidden_field_tag 'submission[attachments[]filename]', attachment['filename'] %>
-      <%= hidden_field_tag 'submission[attachments[]body_base64]', attachment['body_base64'] %>
+      <%= hidden_field_tag 'submission[attachments][][filename]', attachment['filename'] %>
+      <%= hidden_field_tag 'submission[attachments][][body_base64]', attachment['body_base64'] %>
     <% end %>
   <% end %>
 

@@ -21,7 +21,7 @@ class NotificationSubscriptionsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { render :failure, status: :unprocessable_entity}
+        format.js { render :failure, status: :unprocessable_content}
       end
     end
   end

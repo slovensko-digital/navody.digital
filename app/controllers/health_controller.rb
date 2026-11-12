@@ -21,7 +21,7 @@ class HealthController < ApplicationController
     databases.each do |role, connection|
       db_status[role] = perform_health_check(connection)
     ensure
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecord::Base.connection_handler.clear_active_connections!
     end
     db_status
   end

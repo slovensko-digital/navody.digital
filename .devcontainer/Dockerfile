@@ -22,11 +22,11 @@ RUN apt install -y chromium-driver
 RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import -
 RUN curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
 RUN curl -sSL https://get.rvm.io | bash -s
-RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 3.2.9"
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && rvm install 4.0.9"
 
 # Install Rails
 RUN ln -s /bin/mkdir /usr/bin/mkdir
-RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && gem install rails webdrivers"
+RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && gem install rails"
 RUN chown -R vscode /usr/local/rvm
 
 # Default value to allow debug server to serve content over GitHub Codespace's port forwarding service
